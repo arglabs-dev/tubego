@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+.venv
+env/
+
+# Flet / Flutter / Android Build
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+.packages
+.pub/
+.pub-cache/
+android/app/debug/
+android/app/release/
+*.apk
+*.aab
+
+# Project Specific
+downloads/
+*.mp4
+*.mp3
+*.m4a
+*.webm
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
