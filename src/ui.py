@@ -6,7 +6,7 @@ import subprocess
 import sys
 
 def main(page: ft.Page):
-    page.title = "YouTube Downloader v0.2"
+    page.title = "TubeGo v0.3"
     page.theme_mode = ft.ThemeMode.LIGHT
     page.window_width = 450
     page.window_height = 700
@@ -134,7 +134,7 @@ def main(page: ft.Page):
     download_view = ft.Column([
         ft.Container(height=20),
         ft.Icon(ft.icons.CLOUD_DOWNLOAD, size=80, color=ft.colors.BLUE),
-        ft.Text("Pegar & Descargar", size=24, weight=ft.FontWeight.BOLD),
+        ft.Text("TubeGo", size=24, weight=ft.FontWeight.BOLD),
         ft.Container(height=20),
         url_input,
         quality_dropdown,

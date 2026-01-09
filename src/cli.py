@@ -13,7 +13,7 @@ def progress_hook(d):
         print("\nDescarga completada, procesando...")
 
 def run_cli():
-    parser = argparse.ArgumentParser(description="YouTube Downloader CLI v0.2")
+    parser = argparse.ArgumentParser(description="TubeGo CLI v0.3")
     parser.add_argument("url", help="URL del video de YouTube")
     parser.add_argument("--type", choices=['video', 'audio'], default='video', help="Tipo de descarga (default: video)")
     parser.add_argument("--quality", choices=['max', '1080', '720', '480'], default='480', help="Calidad del video (default: 480)")

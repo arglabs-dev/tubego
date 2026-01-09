@@ -1,10 +1,11 @@
-# Project Context: youtubeDownloader v0.3
+# Project Context: TubeGo v0.3
 
 ## Project Overview
+**Name:** TubeGo
 **Status:** Beta (v0.3) - Android Ready
 **Tech Stack:** Python 3, Flet (GUI), yt-dlp.
 
-A hybrid application designed to download YouTube videos for offline viewing. It works as a Desktop GUI, a CLI tool, and a native Android App.
+TubeGo is a hybrid application designed to download YouTube videos for offline viewing. It works as a Desktop GUI, a CLI tool, and a native Android App.
 
 ## Architecture
 - `main.py`: Entry point.
@@ -29,7 +30,7 @@ Run the automated builder script:
 ```bash
 ./scripts/build_android.sh
 ```
-The output file `YouTubeDownloader.apk` will be created in the project root.
+The output file `TubeGo.apk` will be created in the project root.
 
 ## Features
 - **Smart Core:** Downloads high-quality merged files on PC (with ffmpeg), and compatible m4a/mp4 files on Android (without ffmpeg).
