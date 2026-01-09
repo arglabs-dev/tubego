@@ -1,61 +1,82 @@
-# Youtubedownloader app
+# TubeGo - YouTube Downloader 📺
 
-## Run the app
+**TubeGo** is a hybrid application (CLI, Desktop, and Mobile) developed in Python to download YouTube content efficiently for offline use.
 
-### uv
+It is designed with an intelligent architecture that adapts to the device's capabilities: it uses **FFmpeg** on desktop for maximum quality and conversion, and **native codecs** on Android to run without heavy external dependencies.
 
-Run as a desktop app:
+---
 
-```
-uv run flet run
-```
+## 🚀 Quick Start
 
-Run as a web app:
+### 1. Environment Setup
+To start developing or using the tool, we have prepared an automatic script that creates the virtual environment and installs the dependencies.
 
-```
-uv run flet run --web
-```
+```bash
+# Grant execution permissions (first time only)
+chmod +x setup.sh
 
-For more details on running the app, refer to the [Getting Started Guide](https://docs.flet.dev/).
-
-## Build the app
-
-### Android
-
-```
-flet build apk -v
+# Run setup
+./setup.sh
 ```
 
-For more details on building and signing `.apk` or `.aab`, refer to the [Android Packaging Guide](https://docs.flet.dev/publish/android/).
-
-### iOS
-
-```
-flet build ipa -v
+Once finished, activate your environment:
+```bash
+source venv/bin/activate
 ```
 
-For more details on building and signing `.ipa`, refer to the [iOS Packaging Guide](https://docs.flet.dev/publish/ios/).
+### 2. CLI Usage (Command Line)
+TubeGo includes a powerful command-line interface.
 
-### macOS
-
-```
-flet build macos -v
-```
-
-For more details on building macOS package, refer to the [macOS Packaging Guide](https://docs.flet.dev/publish/macos/).
-
-### Linux
-
-```
-flet build linux -v
+**Basic Command (480p Video - Default):**
+```bash
+python main.py "https://www.youtube.com/watch?v=VIDEO_ID"
 ```
 
-For more details on building Linux package, refer to the [Linux Packaging Guide](https://docs.flet.dev/publish/linux/).
+**Advanced Options:**
+| Flag | Description | Values | Default |
+|------|-------------|---------|---------|
+| `--type` | Content type | `video`, `audio` | `video` |
+| `--quality` | Max resolution | `max`, `1080`, `720`, `480` | `480` |
 
-### Windows
+**Examples:**
+```bash
+# Download audio only (Ideal for music)
+python main.py "URL" --type audio
 
+# Download in Full HD
+python main.py "URL" --quality 1080
 ```
-flet build windows -v
+
+### 3. Graphical Interface (GUI)
+If you prefer a visual experience:
+```bash
+python main.py
+```
+This will open a Material Design window where you can paste links, choose quality, and view your history.
+
+---
+
+## 📱 Build for Android (APK)
+
+TubeGo can be transformed into a native Android app thanks to Flet.
+
+**Requirements:**
+- Flutter SDK installed.
+- Android SDK configured.
+
+**Generate APK:**
+Run our automated build script:
+
+```bash
+./scripts/build_android.sh
 ```
 
-For more details on building Windows package, refer to the [Windows Packaging Guide](https://docs.flet.dev/publish/windows/).
+Upon completion, you will find the `YouTubeDownloader.apk` file in the project root. Install it using `adb install` or by copying it to your mobile device.
+
+---
+
+## 📂 Project Structure
+- `main.py`: Intelligent entry point (CLI/GUI).
+- `src/`: Source code.
+- `scripts/`: Automation scripts (build, setup).
+- `downloads/`: Folder where files are saved.
