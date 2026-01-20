@@ -1,7 +1,7 @@
 [project]
-name = "youtubedownloader"
+name = "tubego"
 version = "0.1.0"
-description = "Descargador de videos offline"
+description = "TubeGo - Offline Video Downloader"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [
@@ -18,7 +18,7 @@ dev = [
 
 [tool.flet]
 org = "com.mycompany"
-product = "youtubedownloader"
+product = "tubego"
 company = "Flet"
 copyright = "Copyright (C) 2026 by Flet"
 
