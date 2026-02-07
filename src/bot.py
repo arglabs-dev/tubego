@@ -14,6 +14,7 @@ from src.manager import DownloadManager
 
 # --- TELETHON (Userbot for large files) ---
 from telethon import TelegramClient
+from telethon.tl.types import DocumentAttributeVideo
 
 # Load environment variables
 load_dotenv()
@@ -401,9 +402,16 @@ class MockContext:
 # --- CORE LOGIC ---
 
 async def upload_with_userbot(file_path, filename, target_username, status_msg):
-    """Uploads file using Telethon (Userbot)"""
+    """Uploads file using Telethon (Userbot). Tries to send as streamable video."""
     async with TelegramClient(SESSION_PATH, API_ID, API_HASH) as client:
-        await client.send_file(target_username, file_path, caption=f"✅ **{filename}**\n_(Userbot Upload)_")
+        # supports_streaming=True tells Telegram to treat it as a video if possible
+        await client.send_file(
+            target_username, 
+            file_path, 
+            caption=f"✅ **{filename}**\n_(Userbot Video)_",
+            force_document=False,
+            supports_streaming=True
+        )
 
 async def upload_file(task_id, bot, chat_id, message_id):
     task = manager.get_task(task_id)
@@ -415,24 +423,53 @@ async def upload_file(task_id, bot, chat_id, message_id):
             return
 
         size_mb = os.path.getsize(file_path) / (1024 * 1024)
+        is_video = file_path.lower().endswith(('.mp4', '.mkv', '.mov', '.avi'))
         
+        # --- LARGE FILES (>50MB) via USERBOT ---
         if size_mb > 50:
             await bot.edit_message_text(T('upload_userbot', task['filename'], size_mb), chat_id=chat_id, message_id=message_id, parse_mode='Markdown')
             bot_info = await bot.get_me()
-            await upload_with_userbot(file_path, task['filename'], bot_info.username, message_id)
+            
+            try:
+                await upload_with_userbot(file_path, task['filename'], bot_info.username, message_id)
+            except Exception as e:
+                # If video upload fails (rare), we could retry as document, but Telethon usually handles this.
+                raise e 
             
             manager.update_status(task_id, 'completed')
             manager.archive_task_file(task_id)
             
             await bot.send_message(chat_id=chat_id, text=T('upload_userbot_success'), parse_mode='Markdown')
             await bot.delete_message(chat_id=chat_id, message_id=message_id)
+        
+        # --- SMALL FILES (<50MB) via BOT API ---
         else:
             await bot.edit_message_text(T('upload_bot', task['filename'], size_mb), chat_id=chat_id, message_id=message_id, parse_mode='Markdown')
-            await bot.send_document(
-                chat_id=chat_id, document=open(file_path, 'rb'), 
-                read_timeout=3600, write_timeout=3600, connect_timeout=60, pool_timeout=3600,
-                caption=f"✅ {task['filename']}"
-            )
+            
+            uploaded = False
+            # 1. Try sending as Video (Streamable)
+            if is_video:
+                try:
+                    await bot.send_video(
+                        chat_id=chat_id, 
+                        video=open(file_path, 'rb'), 
+                        read_timeout=3600, write_timeout=3600, connect_timeout=60, pool_timeout=3600,
+                        caption=f"✅ {task['filename']}",
+                        supports_streaming=True
+                    )
+                    uploaded = True
+                except Exception as e:
+                    logger.warning(f"send_video failed, retrying as document: {e}")
+            
+            # 2. Fallback: Send as Document
+            if not uploaded:
+                await bot.send_document(
+                    chat_id=chat_id, 
+                    document=open(file_path, 'rb'), 
+                    read_timeout=3600, write_timeout=3600, connect_timeout=60, pool_timeout=3600,
+                    caption=f"✅ {task['filename']}"
+                )
+
             manager.update_status(task_id, 'completed')
             manager.archive_task_file(task_id)
             await bot.edit_message_text(

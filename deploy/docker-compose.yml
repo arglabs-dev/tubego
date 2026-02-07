@@ -1,0 +1,18 @@
+services:
+  tubego-bot:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: tubego_bot
+    restart: unless-stopped
+    env_file:
+      - ../.env
+    volumes:
+      - ../data:/app/data
+      - ../logs:/app/logs
+      - ../downloads:/app/downloads
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "1"
