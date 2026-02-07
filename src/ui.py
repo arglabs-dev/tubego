@@ -15,14 +15,14 @@ def main(page: ft.Page):
     downloader = Downloader()
 
     # --- UI Components: Download Tab ---
-    url_input = ft.TextField(label="Pegar Link de YouTube", width=400, prefix_icon=ft.icons.LINK)
+    url_input = ft.TextField(label="Pegar Link (YouTube, X.com...)", width=400, prefix_icon=ft.icons.LINK)
     
     quality_dropdown = ft.Dropdown(
         width=200,
         label="Calidad / Tipo",
         value="480",
         options=[
-            ft.dropdown.Option("max", "Máxima (4K/8K)"),
+            ft.dropdown.Option("best", "La Mejor Disponible"),
             ft.dropdown.Option("1080", "Full HD (1080p)"),
             ft.dropdown.Option("720", "HD (720p)"),
             ft.dropdown.Option("480", "Datos (480p)"),

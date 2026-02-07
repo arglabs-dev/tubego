@@ -14,15 +14,17 @@ def progress_hook(d):
 
 def run_cli():
     parser = argparse.ArgumentParser(description="TubeGo CLI v0.3")
-    parser.add_argument("url", help="URL del video de YouTube")
+    parser.add_argument("url", help="URL del video (YouTube, X, etc.)")
     parser.add_argument("--type", choices=['video', 'audio'], default='video', help="Tipo de descarga (default: video)")
-    parser.add_argument("--quality", choices=['max', '1080', '720', '480'], default='480', help="Calidad del video (default: 480)")
+    parser.add_argument("--quality", choices=['best', 'max', '1080', '720', '480'], default='480', help="Calidad del video (default: 480)")
+    parser.add_argument("-b", "--best", action="store_true", help="Descargar en la mejor calidad disponible (equivale a --quality best)")
     
     args = parser.parse_args()
     
     # Si el usuario elige audio, la calidad no importa, forzamos modo audio
     mode = args.type
-    quality = args.quality
+    # Unificamos 'best', 'max' y el flag -b
+    quality = 'max' if (args.best or args.quality == 'best' or args.quality == 'max') else args.quality
     
     print(f"Iniciando descarga de: {args.url}")
     print(f"Modo: {mode} | Calidad: {quality if mode == 'video' else 'N/A (Audio)'}")

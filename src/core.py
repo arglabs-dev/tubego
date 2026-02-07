@@ -30,24 +30,57 @@ class Downloader:
         if mode == 'audio':
             return 'bestaudio/best'
         
-        if quality == 'max':
-            return 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'
+        if quality == 'max' or quality == 'best':
+            # Intentar mejor video y mejor audio de cualquier formato, ffmpeg los unirá en MP4
+            return 'bestvideo+bestaudio/best'
         
         return f'bestvideo[height<={quality}][ext=mp4]+bestaudio[ext=m4a]/best[height<={quality}][ext=mp4]/best'
 
-    def download(self, url, mode='video', quality='720', progress_hook=None):
-        """
-        Descarga inteligente adaptada a la presencia de FFMPEG.
-        """
-        
+    def get_video_info(self, url):
+        """Extrae metadatos del video sin descargarlo"""
         ydl_opts = {
-            'outtmpl': os.path.join(self.download_dir, '%(title)s.%(ext)s'),
-            'progress_hooks': [progress_hook] if progress_hook else [],
             'quiet': True,
             'no_warnings': True,
+            'skip_download': True, # Crucial: No descargar
+        }
+        try:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(url, download=False)
+                return {
+                    "status": "success",
+                    "title": info.get('title', 'Desconocido'),
+                    "duration": info.get('duration_string', 'N/A'),
+                    "uploader": info.get('uploader', 'Desconocido'),
+                    "thumbnail": info.get('thumbnail', None)
+                }
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+
+    def download(self, url, mode='video', quality='720', progress_hook=None, check_cancel=None):
+        """
+        Descarga inteligente adaptada a la presencia de FFMPEG.
+        Permite cancelación mediante el callback check_cancel.
+        """
+        
+        # Wrapper para el hook que verifica cancelación
+        def internal_hook(d):
+            if check_cancel and check_cancel():
+                raise Exception("CANCELLED_BY_USER")
+            if progress_hook:
+                progress_hook(d)
+
+        ydl_opts = {
+            # Limitamos el titulo a 100 caracteres para evitar errores en sistemas de archivos
+            # Especialmente util para X/Twitter donde el titulo es el contenido del tweet
+            'outtmpl': os.path.join(self.download_dir, '%(title).100s.%(ext)s'),
+            'progress_hooks': [internal_hook],
+            'quiet': True,
+            'no_warnings': True,
+            'restrictfilenames': True, # Evita caracteres especiales
         }
 
         fmt = self.get_format_string(mode, quality)
+        ydl_opts['format'] = fmt
         ydl_opts['format'] = fmt
 
         # Solo configuramos post-procesadores si existe FFMPEG

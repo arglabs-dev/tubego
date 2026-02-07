@@ -1,61 +1,74 @@
-# Tubego app
+# TubeGo v0.9 Ultimate
 
-## Run the app
+TubeGo es una aplicación "Todo en Uno" para descargar contenido multimedia. Funciona como aplicación de Escritorio, herramienta de Línea de Comandos (CLI) y un potente **Bot de Telegram Híbrido**.
 
-### uv
+## 🚀 Características Principales
 
-Run as a desktop app:
+- **Multi-Plataforma:** Descarga desde YouTube, X (Twitter) y más.
+- **Calidad Inteligente:** Selector automático de 1080p, 720p, 480p o Audio.
+- **Bot Híbrido (Telegram):**
+    - Sube archivos < 50MB usando la API rápida de Bots.
+    - **Sube archivos hasta 2GB** usando la integración Userbot (Telethon).
+    - Gestión remota: `/files`, `/clean`, `/speedtest`.
+    - Auto-Actualizable: `/update`.
+- **Interfaz Gráfica:** GUI moderna construida con Flet (Python).
 
+---
+
+## 📚 Documentación
+
+Toda la documentación técnica se ha movido a la carpeta `docs/`:
+
+- **[🤖 Guía del Bot de Telegram](docs/telegram_bot.md):** Cómo configurar el Token, el Userbot y los comandos.
+- **[🏗 Arquitectura](docs/ARCHITECTURE.md):** Estructura interna del código y flujos de datos.
+- **[🧠 Contexto del Proyecto](docs/GEMINI.md):** Historial y contexto para desarrolladores/IA.
+
+---
+
+## 🛠 Instalación y Uso
+
+### 1. Requisitos Previos
+Necesitas Python 3.10+ y `ffmpeg` instalado en tu sistema.
+
+```bash
+# Crear entorno virtual
+python3 -m venv venv
+source venv/bin/activate
+
+# Instalar dependencias
+pip install -r requirements.txt
 ```
-uv run flet run
+
+### 2. Configuración (.env)
+Crea un archivo `.env` en la raíz con tus credenciales (Ver [Guía del Bot](docs/telegram_bot.md)):
+
+```env
+TELEGRAM_TOKEN=tu_token_aqui
+ALLOWED_USER_ID=tu_id_telegram
+API_ID=tu_app_id
+API_HASH=tu_app_hash
 ```
 
-Run as a web app:
-
+### 3. Ejecutar el Bot
+```bash
+python src/bot.py
 ```
-uv run flet run --web
+
+### 4. Ejecutar la GUI (Escritorio)
+```bash
+python main.py
 ```
 
-For more details on running the app, refer to the [Getting Started Guide](https://docs.flet.dev/).
-
-## Build the app
-
-### Android
-
+### 5. Ejecutar CLI
+```bash
+python main.py "URL_VIDEO" --quality 720
 ```
+
+---
+
+## 📱 Build para Android
+Para compilar la versión APK:
+```bash
 flet build apk -v
 ```
-
-For more details on building and signing `.apk` or `.aab`, refer to the [Android Packaging Guide](https://docs.flet.dev/publish/android/).
-
-### iOS
-
-```
-flet build ipa -v
-```
-
-For more details on building and signing `.ipa`, refer to the [iOS Packaging Guide](https://docs.flet.dev/publish/ios/).
-
-### macOS
-
-```
-flet build macos -v
-```
-
-For more details on building macOS package, refer to the [macOS Packaging Guide](https://docs.flet.dev/publish/macos/).
-
-### Linux
-
-```
-flet build linux -v
-```
-
-For more details on building Linux package, refer to the [Linux Packaging Guide](https://docs.flet.dev/publish/linux/).
-
-### Windows
-
-```
-flet build windows -v
-```
-
-For more details on building Windows package, refer to the [Windows Packaging Guide](https://docs.flet.dev/publish/windows/).
+_(Consulta la documentación oficial de Flet para requisitos de Android SDK)_
