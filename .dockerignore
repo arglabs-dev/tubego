@@ -1,0 +1,42 @@
+# Entornos y Dependencias
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Datos Locales y Temporales
+downloads/
+logs/
+data/
+*.session
+storage/
+
+# Git
+.git/
+.gitignore
+
+# Configuración Sensible
+.env
+
+# Build Artifacts
+build/
+build
+dist/
+*.apk
+*.aab
+*.spec
+
+# IDEs
+.idea/
+.vscode/
+
+# Docker (ya no se necesitan copiar a sí mismos dentro)
+deploy/
+Dockerfile
+docker-compose.yml
+
+# Documentación (Opcional, ahorra espacio)
+docs/
+README.md

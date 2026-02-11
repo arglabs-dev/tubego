@@ -2,6 +2,6 @@ yt-dlp
 flet
 python-telegram-bot
 python-dotenv
-speedtest-cli
 telethon
 cryptg
+speedtest-cli

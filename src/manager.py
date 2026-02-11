@@ -144,6 +144,13 @@ class DownloadManager:
                 self.tasks[task_id]['status'] = status
                 if error: self.tasks[task_id]['last_error'] = str(error)
 
+    def set_upload_progress(self, task_id, percent):
+        """Actualiza el progreso específico de subida"""
+        with self.lock:
+            if task_id in self.tasks:
+                self.tasks[task_id]['status'] = 'uploading'
+                self.tasks[task_id]['progress'] = f"UL {percent}%"
+
     def run_download(self, task_id):
         task = self.get_task(task_id)
         if not task: return {'status': 'error', 'message': 'Task not found'}
