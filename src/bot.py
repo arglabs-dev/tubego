@@ -6,6 +6,9 @@ import asyncio
 import traceback
 import concurrent.futures
 import speedtest
+import urllib.request
+import json
+import yt_dlp
 from dotenv import load_dotenv
 from telegram import Update, BotCommand, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.request import HTTPXRequest
@@ -34,10 +37,100 @@ if not TOKEN or not ALLOWED_USER_ID: logger.error("Error: Missing credentials");
 ALLOWED_USER_ID = int(ALLOWED_USER_ID)
 
 STRINGS = {
-    'en': {'start': "👋 **TubeGo Bot v1.0**\nCommands:\n/language, /quality, /files, /status, /speedtest", 'help': "📚 Guide:\n1. Send link to download.\n2. Auto-Userbot for >50MB files.", 'status_empty': "📭 No active downloads.", 'status_header': "📊 **Status:**\n", 'clean_done': "🧹 Cleaned.", 'files_empty': "📂 No files.", 'files_header': "📂 **Files:**\n", 'speedtest_start': "🚀 Testing speed...", 'speedtest_error': "❌ Error: {}", 'update_check': "📡 Checking updates...", 'update_done': "✅ Up to date.", 'update_downloaded': "⬇️ Updated. Restarting...", 'update_error': "❌ Error: {}", 'restart_msg': "🔄 Restarting...", 'menu_updated': "✅ Menu updated.", 'upload_userbot': "🚀 **Userbot Mode**\n`{}` ({:.1f} MB)", 'upload_bot': "📤 **Uploading**\n`{}` ({:.1f} MB)", 'upload_success': "✅ **Done**\n`{}`", 'upload_userbot_success': "✅ **Done (Userbot)**", 'upload_error': "❌ Error: {}", 'downloading': "⬇️ **Downloading ({})**\n`{}`", 'analyzing': "🔍 **Analyzing...**", 'quality_select': "📹 **{}**\n⏱ {}
-👇 Select Quality:", 'invalid_link': "⚠️ Invalid link.", 'task_init': "⏳ Starting `{}`...", 'error_generic': "❌ Error: {}", 'cancel_ok': "🛑 Cancelled.", 'file_not_found': "❌ Not found.", 'confirm_clean_ul': "⚠️ Delete ALL uploaded files?", 'clean_ul_success': "🗑️ Deleted `{}` files.", 'clean_ul_cancel': "❌ Cancelled.", 'lang_select': "🌐 Select Language:", 'lang_set': "✅ Language set.", 'quality_menu': "⚙️ **Quality**\nCurrent: `{}`", 'quality_set': "✅ Saved: **{}**", 'quality_selected': "👌 **{} Selected**", 'btn_cancel': "❌ Cancel", 'btn_retry': "🔄 Retry", 'btn_delete': "🗑️ Delete", 'btn_log': "📄 Log", 'btn_retry_ul': "📤 Retry Upload", 'btn_upload_now': "📤 Upload Now", 'btn_delete_server': "🗑️ Delete Server", 'btn_upload': "📤 Upload", 'btn_confirm_clean': "✅ YES", 'btn_cancel_clean': "❌ NO"},
-    'es': {'start': "👋 **TubeGo Bot v1.0**\nComandos:\n/language, /quality, /files, /status, /speedtest", 'help': "📚 Guía:\n1. Envía link.\n2. Userbot auto para >50MB.", 'status_empty': "📭 Nada activo.", 'status_header': "📊 **Estado:**\n", 'clean_done': "🧹 Limpio.", 'files_empty': "📂 Vacío.", 'files_header': "📂 **Archivos:**\n", 'speedtest_start': "🚀 Midiendo...", 'speedtest_error': "❌ Error: {}", 'update_check': "📡 Buscando...", 'update_done': "✅ Al día.", 'update_downloaded': "⬇️ Actualizado. Reiniciando...", 'update_error': "❌ Error: {}", 'restart_msg': "🔄 Reiniciando...", 'menu_updated': "✅ Menú act.", 'upload_userbot': "🚀 **Modo Userbot**\n`{}` ({:.1f} MB)", 'upload_bot': "📤 **Subiendo**\n`{}` ({:.1f} MB)", 'upload_success': "✅ **Listo**\n`{}`", 'upload_userbot_success': "✅ **Listo (Userbot)**", 'upload_error': "❌ Error: {}", 'downloading': "⬇️ **Descargando ({})**\n`{}`", 'analyzing': "🔍 **Analizando...**", 'quality_select': "📹 **{}**\n⏱ {}
-👇 Calidad:", 'invalid_link': "⚠️ Link inválido.", 'task_init': "⏳ Iniciando `{}`...", 'error_generic': "❌ Error: {}", 'cancel_ok': "🛑 Cancelado.", 'file_not_found': "❌ No encontrado.", 'confirm_clean_ul': "⚠️ ¿Borrar TODO subido?", 'clean_ul_success': "🗑️ `{}` borrados.", 'clean_ul_cancel': "❌ Cancelado.", 'lang_select': "🌐 Idioma:", 'lang_set': "✅ Idioma listo.", 'quality_menu': "⚙️ **Calidad**\nActual: `{}`", 'quality_set': "✅ Guardado: **{}**", 'quality_selected': "👌 **{} Seleccionado**", 'btn_cancel': "❌ Cancelar", 'btn_retry': "🔄 Reintentar", 'btn_delete': "🗑️ Borrar", 'btn_log': "📄 Log", 'btn_retry_ul': "📤 Reintentar Subida", 'btn_upload_now': "📤 Subir Ya", 'btn_delete_server': "🗑️ Borrar Servidor", 'btn_upload': "📤 Subir", 'btn_confirm_clean': "✅ SI", 'btn_cancel_clean': "❌ NO"}
+    'en': {
+        'start': "👋 **TubeGo Bot v1.1**\nCommands:\n/language, /quality, /files, /status, /speedtest, /lib", 
+        'help': "📚 Guide:\n1. Send link to download.\n2. Auto-Userbot for >50MB files.",
+        'status_empty': "📭 No active downloads.", 
+        'status_header': "📊 **Status:**\n", 
+        'clean_done': "🧹 Cleaned.", 
+        'files_empty': "📂 No files.", 
+        'files_header': "📂 **Files:**\n", 
+        'speedtest_start': "🚀 Testing speed...", 
+        'speedtest_error': "❌ Error: {}", 
+        'update_check': "📡 Checking updates...", 
+        'update_done': "✅ Up to date.", 
+        'update_downloaded': "⬇️ Updated. Restarting...", 
+        'update_error': "❌ Error: {}", 
+        'restart_msg': "🔄 Restarting...", 
+        'menu_updated': "✅ Menu updated.", 
+        'upload_userbot': "🚀 **Userbot Mode**\n`{}` ({:.1f} MB)", 
+        'upload_bot': "📤 **Uploading**\n`{}` ({:.1f} MB)", 
+        'upload_success': "✅ **Done**\n`{}`", 
+        'upload_userbot_success': "✅ **Done (Userbot)**", 
+        'upload_error': "❌ Error: {}", 
+        'downloading': "⬇️ **Downloading ({})**\n`{}`", 
+        'analyzing': "🔍 **Analyzing...**", 
+        'quality_select': "📹 **{}**\n⏱ {}\n👇 Select Quality:", 
+        'invalid_link': "⚠️ Invalid link.", 
+        'task_init': "⏳ Starting `{}`...", 
+        'error_generic': "❌ Error: {}", 
+        'cancel_ok': "🛑 Cancelled.", 
+        'file_not_found': "❌ Not found.", 
+        'confirm_clean_ul': "⚠️ Delete ALL uploaded files?", 
+        'clean_ul_success': "🗑️ Deleted `{}` files.", 
+        'clean_ul_cancel': "❌ Cancelled.", 
+        'lang_select': "🌐 Select Language:", 
+        'lang_set': "✅ Language set.", 
+        'quality_menu': "⚙️ **Quality**\nCurrent: `{}`", 
+        'quality_set': "✅ Saved: **{}**", 
+        'quality_selected': "👌 **{} Selected**",
+        'lib_check': "🔍 **Checking yt-dlp version...**",
+        'lib_info': "📦 **Library Status (yt-dlp)**\n\n🔹 Current: `{}`\n🔸 Latest: `{}`\n\n{}",
+        'lib_uptodate': "✅ Up to date.",
+        'lib_outdated': "⚠️ **Outdated!** Update recommended.",
+        'lib_updating': "⏳ **Updating yt-dlp...**\nThis may take a minute.",
+        'lib_updated': "✅ **Library Updated!**\nNew version installed. Restarting system...",
+        'lib_error': "❌ Update failed: {}",
+        'btn_update_lib': "⬆️ Update Library Now",
+        'btn_cancel': "❌ Cancel", 'btn_retry': "🔄 Retry", 'btn_delete': "🗑️ Delete", 'btn_log': "📄 Log", 'btn_retry_ul': "📤 Retry Upload", 'btn_upload_now': "📤 Upload Now", 'btn_delete_server': "🗑️ Delete Server", 'btn_upload': "📤 Upload", 'btn_confirm_clean': "✅ YES", 'btn_cancel_clean': "❌ NO"
+    },
+    'es': {
+        'start': "👋 **TubeGo Bot v1.1**\nComandos:\n/language, /quality, /files, /status, /speedtest, /lib", 
+        'help': "📚 Guía:\n1. Envía link.\n2. Userbot auto para >50MB.", 
+        'status_empty': "📭 Nada activo.", 
+        'status_header': "📊 **Estado:**\n", 
+        'clean_done': "🧹 Limpio.", 
+        'files_empty': "📂 Vacío.", 
+        'files_header': "📂 **Archivos:**\n", 
+        'speedtest_start': "🚀 Midiendo...", 
+        'speedtest_error': "❌ Error: {}", 
+        'update_check': "📡 Buscando...", 
+        'update_done': "✅ Al día.", 
+        'update_downloaded': "⬇️ Actualizado. Reiniciando...", 
+        'update_error': "❌ Error: {}", 
+        'restart_msg': "🔄 Reiniciando...", 
+        'menu_updated': "✅ Menú act.", 
+        'upload_userbot': "🚀 **Modo Userbot**\n`{}` ({:.1f} MB)", 
+        'upload_bot': "📤 **Subiendo**\n`{}` ({:.1f} MB)", 
+        'upload_success': "✅ **Listo**\n`{}`", 
+        'upload_userbot_success': "✅ **Listo (Userbot)**", 
+        'upload_error': "❌ Error: {}", 
+        'downloading': "⬇️ **Descargando ({})**\n`{}`", 
+        'analyzing': "🔍 **Analizando...**", 
+        'quality_select': "📹 **{}**\n⏱ {}\n👇 Calidad:", 
+        'invalid_link': "⚠️ Link inválido.", 
+        'task_init': "⏳ Iniciando `{}`...", 
+        'error_generic': "❌ Error: {}", 
+        'cancel_ok': "🛑 Cancelado.", 
+        'file_not_found': "❌ No encontrado.", 
+        'confirm_clean_ul': "⚠️ ¿Borrar TODO subido?", 
+        'clean_ul_success': "🗑️ `{}` borrados.", 
+        'clean_ul_cancel': "❌ Cancelado.", 
+        'lang_select': "🌐 Idioma:", 
+        'lang_set': "✅ Idioma listo.", 
+        'quality_menu': "⚙️ **Calidad**\nActual: `{}`", 
+        'quality_set': "✅ Guardado: **{}**", 
+        'quality_selected': "👌 **{} Seleccionado**",
+        'lib_check': "🔍 **Verificando versión yt-dlp...**",
+        'lib_info': "📦 **Estado Librería (yt-dlp)**\n\n🔹 Actual: `{}`\n🔸 Última: `{}`\n\n{}",
+        'lib_uptodate': "✅ Al día.",
+        'lib_outdated': "⚠️ **¡Desactualizada!** Se recomienda actualizar.",
+        'lib_updating': "⏳ **Actualizando yt-dlp...**\nEspere un momento.",
+        'lib_updated': "✅ **¡Librería Actualizada!**\nNueva versión instalada. Reiniciando sistema...",
+        'lib_error': "❌ Falló actualización: {}",
+        'btn_update_lib': "⬆️ Actualizar Librería",
+        'btn_cancel': "❌ Cancelar", 'btn_retry': "🔄 Reintentar", 'btn_delete': "🗑️ Borrar", 'btn_log': "📄 Log", 'btn_retry_ul': "📤 Reintentar Subida", 'btn_upload_now': "📤 Subir Ya", 'btn_delete_server': "🗑️ Borrar Servidor", 'btn_upload': "📤 Subir", 'btn_confirm_clean': "✅ SI", 'btn_cancel_clean': "❌ NO"
+    }
 }
 
 def T(key, *args): return STRINGS[CURRENT_LANG].get(key, STRINGS['en'].get(key, key)).format(*args) if args else STRINGS[CURRENT_LANG].get(key, STRINGS['en'].get(key, key))
@@ -98,6 +191,21 @@ async def speedtest_command(update, context):
         await msg.edit_text(f"🚀 **Results**\n⬇️ `{res[1]:.2f} Mbps`\n⬆️ `{res[2]:.2f} Mbps`", parse_mode='Markdown')
     except Exception as e: await msg.edit_text(T('speedtest_error', e))
 
+async def lib_command(update, context):
+    if update.effective_user.id != ALLOWED_USER_ID: return
+    msg = await update.message.reply_text(T('lib_check'), parse_mode='Markdown')
+    def check():
+        cur = yt_dlp.version.__version__
+        try:
+            with urllib.request.urlopen("https://pypi.org/pypi/yt-dlp/json", timeout=5) as u: lat = json.loads(u.read().decode())['info']['version']
+        except:
+            lat = "Unknown"
+        return cur, lat
+    cur, lat = await asyncio.get_running_loop().run_in_executor(None, check)
+    stat = T('lib_uptodate'); k = None
+    if lat != "Unknown" and cur != lat: stat = T('lib_outdated'); k = InlineKeyboardMarkup([[InlineKeyboardButton(T('btn_update_lib'), callback_data="update_lib")]])
+    await msg.edit_text(T('lib_info', cur, lat, stat), reply_markup=k, parse_mode='Markdown')
+
 def restart_process(): os.execle(sys.executable, sys.executable, os.path.abspath(__file__), os.environ)
 async def restart_command(update, context): 
     if update.effective_user.id != ALLOWED_USER_ID: return
@@ -110,7 +218,10 @@ async def update_command(update, context):
 async def refresh_menu_command(update, context): await post_init(context.application); await update.message.reply_text(T('menu_updated'))
 
 async def post_init(application):
-    cmds = [BotCommand("start","Start"), BotCommand("files","Files"), BotCommand("status","Status"), BotCommand("clean","Clean"), BotCommand("speedtest","Speed"), BotCommand("update","Update"), BotCommand("restart","Restart"), BotCommand("help","Help")]
+    desc_en = {'start': "Start", 'lib': "Check Lib", 'language': "Language", 'files': "Files", 'status': "Status", 'quality': "Quality", 'clean_uploaded': "Cleanup", 'speedtest': "Speedtest", 'update': "Update", 'restart': "Restart", 'help': "Help"}
+    desc_es = {'start': "Iniciar", 'lib': "Ver Librería", 'language': "Idioma", 'files': "Archivos", 'status': "Estado", 'quality': "Calidad", 'clean_uploaded': "Limpiar", 'speedtest': "Velocidad", 'update': "Actualizar", 'restart': "Reiniciar", 'help': "Ayuda"}
+    desc = desc_es if CURRENT_LANG == 'es' else desc_en
+    cmds = [BotCommand("start",desc['start']), BotCommand("files",desc['files']), BotCommand("lib",desc['lib']), BotCommand("status",desc['status']), BotCommand("clean_uploaded",desc['clean_uploaded']), BotCommand("speedtest",desc['speedtest']), BotCommand("update",desc['update']), BotCommand("restart",desc['restart']), BotCommand("help",desc['help']), BotCommand("quality",desc['quality']), BotCommand("language",desc['language'])]
     await application.bot.set_my_commands(cmds)
 
 # Logic
@@ -175,6 +286,11 @@ async def btn_handler(update, context):
     if d in ["lang_es","lang_en"]: CURRENT_LANG = d.split("_")[1]; await q.edit_message_text(T('lang_set'), parse_mode='Markdown'); await refresh_menu_command(None, context); return
     if d == "confirm_clean_ul": s, i = manager.clear_uploaded_dir(); await q.edit_message_text(T('clean_ul_success', i) if s else T('error_generic', i), parse_mode='Markdown'); return
     if d == "cancel_clean_ul": await q.edit_message_text(T('clean_ul_cancel')); return
+    if d == "update_lib":
+        await q.edit_message_text(T('lib_updating'), parse_mode='Markdown')
+        try: subprocess.check_output([sys.executable, "-m", "pip", "install", "--upgrade", "yt-dlp"]); await context.bot.send_message(q.message.chat_id, T('lib_updated'), parse_mode='Markdown'); restart_process()
+        except Exception as e: await q.edit_message_text(T('lib_error', e))
+        return
     if d.startswith("setqual_"): DEFAULT_QUALITY = d.split("_")[1]; await q.edit_message_text(T('quality_set', DEFAULT_QUALITY.upper()), parse_mode='Markdown'); return
     if d.startswith("qual_"): p = d.split("_"); await q.edit_message_text(T('quality_selected', p[1].upper()), parse_mode='Markdown'); asyncio.create_task(download_phase(p[2], q.message.chat_id, q.message.message_id, context.bot, p[1])); return
     if d.startswith("uploc_"):
@@ -202,6 +318,7 @@ if __name__ == '__main__':
     app.add_handler(CommandHandler('speedtest', speedtest_command)); app.add_handler(CommandHandler('update', update_command))
     app.add_handler(CommandHandler('restart', restart_command)); app.add_handler(CommandHandler('quality', quality_command))
     app.add_handler(CommandHandler('language', language_command)); app.add_handler(CommandHandler('refresh_menu', refresh_menu_command))
+    app.add_handler(CommandHandler('lib', lib_command))
     app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), handle_msg)); app.add_handler(CallbackQueryHandler(btn_handler))
-    print(f"🤖 Bot Ultimate v1.0 (Stable) Active...")
+    print(f"🤖 Bot Ultimate v1.1 (Stable + Lib Check) Active...")
     app.run_polling()
