@@ -73,9 +73,16 @@ def submit(database, principal, url, selection=None, request_id=None, resolver=N
         return {'resource_id':rid,'task':task_value(conn,task),'existing':False,'task_id':tid,'status':'queued'}
 
 
-def action(database, principal, task_id, kind):
+def action(database, principal, task_id, kind, request_id=None):
     with database.transaction() as conn:
         scope=live_scope(conn,principal); task=scope.task(task_id); resource=scope.resource(task['resource_id'])
+        receipt_key='task_action:'+str(request_id)
+        if request_id:
+            previous=conn.execute("SELECT value_json FROM settings WHERE scope='user' AND owner_id=? AND key=?",(scope.user_id,receipt_key)).fetchone()
+            if previous:
+                receipt=json.loads(previous[0])
+                if receipt['task_id']!=task_id or receipt['kind']!=kind:raise HTTPException(409,'Request identifier already used')
+                return receipt['result']
         ready=resource['ready_at'] and not resource['server_deleted_at']
         if kind=='cancel':
             if task['status'] in ('completed','failed') or ready: raise HTTPException(409,'Task is no longer cancellable')
@@ -100,4 +107,5 @@ def action(database, principal, task_id, kind):
         current=conn.execute('SELECT * FROM tasks WHERE id=?',(task_id,)).fetchone()
         payload=task_value(conn,current)
         conn.execute("INSERT INTO events(user_id,kind,payload_json,created_at) VALUES(?,'task_updated',?,?)",(scope.user_id,json.dumps(payload),utcnow()))
+        if request_id:put_setting(conn,'user',scope.user_id,receipt_key,{'task_id':task_id,'kind':kind,'result':payload})
         return payload

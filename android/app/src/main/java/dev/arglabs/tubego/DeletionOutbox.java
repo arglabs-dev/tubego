@@ -27,6 +27,7 @@ public final class DeletionOutbox {
         if(!directory.exists()&&!directory.mkdirs()) throw new IOException("No se pudo guardar el borrado");
         Properties record=new Properties();record.setProperty("id",entry.id);record.setProperty("resource",entry.resource);record.setProperty("scope",entry.scope);
         record.setProperty("state",entry.state);record.setProperty("error",entry.error);record.setProperty("resource_id",entry.resourceId);
+        if(entry.state.equals("queued")){CommandBridge.add(directory,entry.id,"delete",record);}
         File temporary=new File(directory,entry.id+".tmp"),target=new File(directory,entry.id+".properties");
         try(FileOutputStream output=new FileOutputStream(temporary)) {record.store(output,null);output.getFD().sync();}
         Files.move(temporary.toPath(),target.toPath(),StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);
