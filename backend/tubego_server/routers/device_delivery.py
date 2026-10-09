@@ -8,6 +8,7 @@ from tubego_server.auth import require_approved,utcnow
 from tubego_server.delivery import device_scope,read_setting,write_setting,transfer_allowed
 from tubego_server.private_media import open_private_media,byte_range
 from tubego_server.routers.library import public_resource
+from tubego_server.history import priority
 
 router=APIRouter(tags=['device delivery'])
 
@@ -140,7 +141,7 @@ def sync(request:Request,principal=Depends(require_approved),
             item=public_resource(row)
             item.update(delivery_status=row['delivery_status'],downloaded_bytes=row['downloaded_bytes'],
                         local_deleted_at=row['local_deleted_at'],sha256=read_setting(conn,'resource',row['id'],'media_sha256'),
-                        server_available=bool(row['ready_at'] and not row['server_deleted_at'] and row['server_path']))
+                        priority=priority(conn,row['id']),server_available=bool(row['ready_at'] and not row['server_deleted_at'] and row['server_path']))
             items.append(item)
     data={'device_id':did,'deliveries':items,
           'next_delivery_cursor':items[-1]['id'] if len(deliveries)>limit else None,
@@ -148,3 +149,12 @@ def sync(request:Request,principal=Depends(require_approved),
           'event_cursor':events[min(len(events),limit)-1]['id'] if events else event_cursor,
           'has_more_events':len(events)>limit}
     return Response(json.dumps(data),media_type='application/json',headers={'Cache-Control':'no-store'})
+
+
+@router.get('/device/queue-order')
+def queue_order(request:Request,principal=Depends(require_approved),cursor:str=Query('',max_length=256),limit:int=Query(100,ge=1,le=100)):
+    with request.app.state.db.transaction() as conn:
+        scope,did=device_scope(conn,principal)
+        rows=conn.execute("SELECT r.id,r.created_at FROM deliveries d JOIN resources r ON r.id=d.resource_id WHERE d.device_id=? AND r.user_id=? AND r.id>? AND d.deleted_at IS NULL AND d.status NOT IN ('approval_required','complete') ORDER BY r.id LIMIT ?",(did,scope.user_id,cursor,limit+1)).fetchall()
+        items=[{'id':row['id'],'priority':priority(conn,row['id']),'created_at':row['created_at']} for row in rows[:limit]]
+    return {'items':items,'next_cursor':items[-1]['id'] if len(rows)>limit else None}

@@ -94,9 +94,8 @@ def action(database, principal, task_id, kind):
             # Repeated retry while queued/running returns the same task.
         elif kind=='priority':
             if task['status']!='queued': raise HTTPException(409,'Only queued tasks can be prioritized')
-            previous=conn.execute("SELECT COALESCE(MAX(priority),0) FROM tasks WHERE user_id=? AND status='queued'",(scope.user_id,)).fetchone()[0]
-            # The explicitly selected video becomes next within this user's queue.
-            conn.execute('UPDATE tasks SET priority=?,updated_at=? WHERE id=?',(previous+1,utcnow(),task_id))
+            from tubego_server.history import prioritize
+            prioritize(conn,scope,resource['id'])
         else: raise ValueError('Invalid task action')
         current=conn.execute('SELECT * FROM tasks WHERE id=?',(task_id,)).fetchone()
         payload=task_value(conn,current)

@@ -32,6 +32,7 @@ public final class TransferDriver {
             if(!sameSession(store,token,control))return Outcome.STOPPED;
             if(!root.isDirectory() && !root.mkdirs()) throw new IOException("No se pudo crear la biblioteca");
         }
+        HistoryOpened.flush(context,origin,token,root);
         String eventKey=TransferKey.accountPrefix(origin,user,device)+"event_cursor";
         var preferences=context.getSharedPreferences("tubego_transfer_sync",Context.MODE_PRIVATE);
         long eventCursor=preferences.getLong(eventKey,0);String cursor="";List<JSONObject> rows=new ArrayList<>(),events=new ArrayList<>();
@@ -121,8 +122,9 @@ public final class TransferDriver {
         ConnectivityManager manager=context.getSystemService(ConnectivityManager.class);
         AndroidStorageGuard storage=new AndroidStorageGuard(context,origin,user,device);
         boolean waitWifi=false,waitAny=false,waitSpace=false,retryPending=false;
-        for(TransferRecord record:queue) {
+        while(!queue.isEmpty()) {
             if(control.stopped) return Outcome.STOPPED;
+            TransferRecord record=QueueOrder.next(queue,readQueuePriorities(api,token));
             TransferKey key=key(origin,user,device,record);
             if(record.state.equals("failed"))continue;
             if(record.nextRetryAt>System.currentTimeMillis()){
@@ -185,6 +187,15 @@ public final class TransferDriver {
         }
         if(!waitSpace)storage.recovered();
         return control.stopped?Outcome.STOPPED:waitAny?Outcome.WAIT_NETWORK:waitWifi?Outcome.WAIT_WIFI:waitSpace?Outcome.WAIT_SPACE:retryPending?Outcome.RETRY:Outcome.DONE;
+    }
+    private static Map<String,Long> readQueuePriorities(ApiClient api,String token) throws Exception {
+        Map<String,Long> priorities=new HashMap<>();String cursor="";
+        do {
+            JSONObject page=api.request("GET","/device/queue-order?limit=100&cursor="+java.net.URLEncoder.encode(cursor,"UTF-8"),null,token);
+            JSONArray items=page.getJSONArray("items");for(int i=0;i<items.length();i++){JSONObject item=items.getJSONObject(i);priorities.put(item.getString("id"),item.optLong("priority",0));}
+            cursor=page.isNull("next_cursor")?"":page.getString("next_cursor");
+        } while(!cursor.isEmpty());
+        return priorities;
     }
     private static boolean sameSession(SessionStore store,String token,TransferRuntime.Control control) {
         if(control.stopped)return false;
