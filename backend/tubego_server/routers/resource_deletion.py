@@ -40,7 +40,7 @@ def delete(resource_id:str,body:Deletion,request:Request,principal=Depends(requi
             lease=read_setting(conn,'global','','scheduler_lease')
             wait=lease.get('task_id') if lease and any(t['id']==lease.get('task_id') for t in tasks) else None
             schedule(conn,request.app.state.settings.data_dir/'media',scope.user_id,resource_id,resource['server_path'],wait)
-            conn.execute("UPDATE tasks SET status='cancelled',error_code='resource_deleted',error_message='Resource deleted by owner',updated_at=? WHERE resource_id=? AND user_id=? AND status IN ('queued','running')",(now,resource_id,scope.user_id))
+            conn.execute("UPDATE tasks SET status='cancelled',error_code='resource_deleted',error_message='Resource deleted by owner',updated_at=? WHERE resource_id=? AND user_id=? AND status IN ('queued','running','paused')",(now,resource_id,scope.user_id))
             for task in tasks:write_setting(conn,'task',task['id'],'cancel_requested',True)
             conn.execute('UPDATE resources SET server_deleted_at=?,server_path=NULL,updated_at=? WHERE id=?',(now,now,resource_id))
         result={'resource_id':resource_id,'scope':body.scope,'deleted_at':now,'status':'deleted'}
