@@ -73,7 +73,7 @@ independently of deleted user rows. API tokens will store only their hashes.
 8.11.1 and Android SDK installed:
 
 ```bash
-gradle -p android assembleDebug lintDebug
+gradle -p android assembleDebug lintDebug testDebugUnitTest
 adb install android/app/build/outputs/apk/debug/app-debug.apk
 ```
 
