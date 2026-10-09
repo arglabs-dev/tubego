@@ -49,7 +49,7 @@ public final class CommandDispatch {
      queue.finish(entry,accepted?"complete":"error",error,result.toString());CommandBridge.finishLegacy(root,entry,accepted?"submitted":"error",error,result.optString("resource_id",""));
     }
     if(accepted)TransferJobs.wake(c,origin,false);
-   }return true;
+   }LanguageCommands.refresh(c,origin);return true;
   }catch(Exception e){return false;}
  }}
  static boolean newerBarrier(CommandQueue queue,CommandQueue.Entry older,String resource)throws Exception {

@@ -28,5 +28,6 @@ public final class LanguageCommands {
   }
  }
  public static void pending(Context context,String origin)throws Exception{try{Class.forName("dev.arglabs.tubego.LanguagePreferences").getMethod("dispatchPending",Context.class,String.class).invoke(null,context,origin);}catch(ClassNotFoundException absent){/* No pending locale exists before PLA-255. */}}
+ public static void refresh(Context context,String origin){try{Class.forName("dev.arglabs.tubego.LanguagePreferences").getMethod("refresh",Context.class,String.class).invoke(null,context,origin);}catch(Exception unavailable){/* Metadata polling does not invalidate completed command receipts. */}}
  public static void acknowledge(Context context,String origin,String user,long revision)throws Exception{try{Class.forName("dev.arglabs.tubego.LanguagePreferences").getMethod("acknowledge",Context.class,String.class,String.class,long.class).invoke(null,context,origin,user,revision);}catch(ClassNotFoundException absent){/* No locale helper yet. */}}
 }
