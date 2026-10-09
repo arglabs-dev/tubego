@@ -1,16 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel, Field
 from tubego_server.media import MediaError, analyze_media
+from tubego_server.auth import require_approved
 
 router = APIRouter(tags=["media"])
 
 
 def approved_user(request: Request):
-    # Foundation can start before the account feature is integrated; fail closed.
-    try:
-        from tubego_server.auth import require_approved
-    except ImportError:
-        raise HTTPException(503, "Account service unavailable") from None
     return require_approved(request)
 
 
