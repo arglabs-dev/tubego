@@ -77,3 +77,11 @@ _(Consulta la documentación oficial de Flet para requisitos de Android SDK)_
 Telegram continues to work alongside the Android MVP with separate files and queues.
 See [storage configuration and deployment](docs/INDEPENDENT_CHANNELS.md) before
 running both services.
+
+## Android MVP y API móvil
+
+La nueva app Android nativa y API están en `android/` y `backend/` y conviven con
+el bot sin modificarlo. Esta primera entrega ofrece configuración HTTPS del
+servidor y comprobación de conexión; el flujo completo se implementa por tarjetas.
+Consulta [arquitectura, contrato API y ejecución](docs/MOBILE_ARCHITECTURE.md).
+El workflow `Mobile foundation` verifica Python y compila un APK debug descargable.
