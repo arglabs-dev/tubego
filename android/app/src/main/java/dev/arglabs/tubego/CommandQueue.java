@@ -23,7 +23,7 @@ public final class CommandQueue {
         UUID.fromString(id);
         if(!Arrays.asList("submit","recover","delete","server_cleanup","preferences","language","resource_priority","task_cancel","task_retry","task_priority","noop").contains(kind)||payload==null||payload.length()>16384)throw new IOException("Invalid command intention");
         synchronized(LOCK){
-            Entry existing=find(id);if(existing!=null)return existing;
+            Entry existing=find(id);if(existing!=null){if(!existing.kind.equals(kind)||!existing.payload.equals(payload))throw new IOException("Command identity conflict");return existing;}
             long sequence=0;for(Entry entry:entries())sequence=Math.max(sequence,entry.sequence);
             if(sequence==Long.MAX_VALUE)throw new IOException("Command sequence exhausted");
             Entry value=new Entry(id,sequence+1,kind,payload,"queued","","");write(value);return value;

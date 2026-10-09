@@ -88,3 +88,15 @@ def test_language_command_is_independent_from_media_preferences(service):
     assert send(client,user,2).json()['status']=='complete'
     with closing(app.state.db.connect()) as conn:assert read_setting(conn,'user',user['id'],'language')=='en'
     assert send(client,user,3,'language',{'language':'xx','revision':2}).json()['status']=='rejected'
+
+
+def test_resource_revisions_increase_and_are_present_in_snapshots(service):
+    from test_resource_deletion import ready
+    app,client=service;user=owner(app);rid,_,_=ready(app,user)
+    first=send(client,user,1,'delete',{'resource_id':rid,'scope':'devices'}).json()['result']
+    second=send(client,user,2,'recover',{'resource_id':rid,'approve_redownload':True}).json()['result']
+    assert second['revision']>first['revision']
+    resource=client.get('/api/v1/resources/'+rid,headers=user['headers']).json()
+    assert resource['revision']==second['revision']
+    snapshots=client.get('/api/v1/device/sync',headers=user['headers']).json()['deliveries']
+    assert next(row for row in snapshots if row['id']==rid)['revision']==second['revision']

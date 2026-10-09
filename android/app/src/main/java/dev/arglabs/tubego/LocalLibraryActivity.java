@@ -46,7 +46,7 @@ public final class LocalLibraryActivity extends Activity {
       collected.put(row.getString("id"),row);cache.put(row.getString("id"),row.toString());}
      synchronized(SessionStore.class){if(!sessionCurrent())return;new HistoryCache(currentRoot).merge(cache);}
      next=page.isNull("next_cursor")?"":page.getString("next_cursor");notice="Historial privado sincronizado. Cache sin conexión: hasta 2000 fichas consultadas; el historial completo permanece en el servidor.";
-    }catch(Exception e){if(!sessionCurrent())throw new Exception("La sesión dejó de estar disponible.");notice="Sin conexión al servidor. Mostrando fichas guardadas y archivos de este teléfono; los controles de cola requieren conexión.";}
+    }catch(Exception e){if(!sessionCurrent())throw new Exception("La sesión dejó de estar disponible.");notice="Sin conexión al servidor. Mostrando fichas guardadas y archivos de este teléfono; las acciones quedarán pendientes hasta recuperar conexión.";}
    }catch(Exception e){collected.clear();notice=e.getMessage();}
    final Map<String,JSONObject> result=collected;final String message=notice,cursorNext=next;
    runOnUiThread(()->{if(isDestroyed()||load!=generation)return;if(!result.isEmpty()&&!sessionCurrent()){rows.clear();list.removeAllViews();status.setText("Sesión no disponible.");return;}rows.clear();rows.putAll(result);nextCursor=cursorNext;more.setEnabled(!nextCursor.isEmpty());status.setText(message);render(query,selected);});
@@ -82,7 +82,12 @@ public final class LocalLibraryActivity extends Activity {
  }
  private void addButton(String title,Runnable run){Button button=new Button(this);button.setText(title);button.setOnClickListener(v->run.run());list.addView(button);}
  private void launch(String name,String id){try{startActivity(new Intent().setClassName(this,getPackageName()+"."+name).putExtra("server_url",origin).putExtra("resource_id",id));}catch(ActivityNotFoundException e){status.setText("Esta acción todavía no está disponible en esta versión.");}}
- private void action(String path,boolean priority){status.setText("Enviando acción…");disk.execute(()->{try{String current=new SessionStore(this,origin).token();if(current==null)throw new Exception();JSONObject body=priority?new JSONObject().put("request_id",UUID.randomUUID().toString()):new JSONObject();JSONObject result=new ApiClient(origin).request("POST",path,body,current);TransferJobs.wake(this,origin,false);runOnUiThread(()->{if(!isDestroyed()){status.setText("Acción confirmada: "+(priority?"será el siguiente, sin interrumpir la descarga actual":phase(result.optString("phase",result.optString("status")))));load(false);}});}catch(Exception e){runOnUiThread(()->{if(!isDestroyed())status.setText("No se confirmó la acción. Requiere conexión; vuelve a intentarlo. No se agregó otra descarga.");});}});}
+ private void action(String path,boolean priority){status.setText("Guardando acción…");disk.execute(()->{try{
+  String[] parts=path.split("/");String kind=priority?"resource_priority":"task_"+parts[3];JSONObject payload=new JSONObject().put(priority?"resource_id":"task_id",parts[2]);
+  synchronized(SessionStore.class){if(!sessionCurrent())throw new Exception();CommandDispatch.enqueue(this,origin,kind,payload);}
+  runOnUiThread(()->{if(!isDestroyed())status.setText("Acción guardada. Se enviará con cualquier conexión; consulta Acciones pendientes y errores.");});CommandDispatch.flush(this,origin);
+ }catch(Exception e){runOnUiThread(()->{if(!isDestroyed())status.setText("No se pudo guardar la acción. Revisa la sesión y el espacio del teléfono.");});}});}
+
  private void open(String id){status.setText("Verificando archivo local…");disk.execute(()->{
   try{String openingToken=new SessionStore(this,origin).token();Uri uri=PrivateMediaContentProvider.create(this,origin,id);if(!openingToken.equals(new SessionStore(this,origin).token()))throw new SecurityException("La sesión cambió");String mime=getContentResolver().getType(uri);
    runOnUiThread(()->{if(isDestroyed())return;Intent view=new Intent(Intent.ACTION_VIEW).setDataAndType(uri,mime).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);view.setClipData(ClipData.newRawUri("Tubego",uri));

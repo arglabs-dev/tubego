@@ -58,6 +58,7 @@ public final class TransferDriver {
             if(kind.equals("wipe_device")) {control.stop();LocalLibraryStorage.wipe(context,origin,user,device);store.clear();return Outcome.STOPPED;}
             if(kind.equals("resource.deleted") && payload!=null && payload.has("resource_id")) {
                 String deletedId=UUID.fromString(payload.getString("resource_id")).toString();
+                if(payload.optLong("revision",0)<LocalResourceRevision.current(root,deletedId))continue;
                 // An older event may remain unread after an explicit approved
                 // re-download. Current delivery snapshots win over stale events.
                 for(JSONObject row:rows)if(UUID.fromString(row.getString("id")).toString().equals(deletedId)
@@ -73,6 +74,7 @@ public final class TransferDriver {
         if(!sameSession(store,token,control))return Outcome.STOPPED;
         for(JSONObject row:rows) {
             String id=UUID.fromString(row.getString("id")).toString();
+            if(!LocalResourceRevision.accept(root,id,row.optLong("revision",0)))continue;
             File manifest=new File(root,id+".properties");
             TransferRecord record=manifest.isFile()?TransferRecord.read(manifest):null;
             if(!row.isNull("local_deleted_at") || row.optString("delivery_status").equals("approval_required")) {

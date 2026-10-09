@@ -38,10 +38,11 @@ public final class CommandDispatch {
     JSONObject result=response.optJSONObject("result");if(result==null)throw new IOException("Respuesta incompleta");
     boolean accepted="complete".equals(response.optString("status"));if(!accepted&&!"rejected".equals(response.optString("status")))throw new IOException("Estado de sincronización inválido");
     synchronized(SessionStore.class){if(!active(store,token))return false;
-     if(accepted&&entry.kind.equals("recover")&&!newerBarrier(queue,entry,resource)&&stamp.equals(LocalResourceDeletion.stamp(root,resource))){
+     if(accepted&&entry.kind.equals("recover")&&LocalResourceRevision.accept(root,resource,result.optLong("revision",0))&&!newerBarrier(queue,entry,resource)&&stamp.equals(LocalResourceDeletion.stamp(root,resource))){
       if(payload.optBoolean("approve_redownload"))LocalResourceDeletion.approve(root,resource);
       File manifest=new File(root,UUID.fromString(resource)+".properties");if(manifest.isFile()){TransferRecord record=TransferRecord.read(manifest);if(Arrays.asList("deleted","cancelled","unavailable","missing").contains(record.state)){record.state="pending";record.message="Solicitud aprobada. Esperando disponibilidad y red permitida.";record.save();}}
      }
+     if(accepted&&entry.kind.equals("delete"))LocalResourceRevision.accept(root,resource,result.optLong("revision",0));
      String error=accepted?"":"El servidor rechazó la acción: "+result.optString("code","command_rejected");
      queue.finish(entry,accepted?"complete":"error",error,result.toString());CommandBridge.finishLegacy(root,entry,accepted?"submitted":"error",error,result.optString("resource_id",""));
     }
