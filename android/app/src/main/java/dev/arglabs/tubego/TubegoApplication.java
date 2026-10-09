@@ -5,5 +5,6 @@ public final class TubegoApplication extends Application {
         super.onCreate();
         ApiClient.setSessionObserver((origin,token,code)->SessionLifecycle.remotelyRevoked(this,origin,token,code));
         SessionLifecycle.schedule(this);
+        LinkOutboxDispatch.schedule(this);
     }
 }

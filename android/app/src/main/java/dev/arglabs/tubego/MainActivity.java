@@ -32,7 +32,7 @@ public final class MainActivity extends Activity {
         url.setSingleLine(true);
         url.setHint("https://tubego.example.com");
         url.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI);
-        url.setText(getPreferences(MODE_PRIVATE).getString("server_url", ""));
+        url.setText(getSharedPreferences("server_connection",MODE_PRIVATE).getString("server_url", getPreferences(MODE_PRIVATE).getString("server_url", "")));
         layout.addView(url);
         connect = new Button(this);
         connect.setText("Guardar y comprobar conexión");
@@ -64,12 +64,19 @@ public final class MainActivity extends Activity {
                 startActivity(new android.content.Intent(this, AdminPriorityActivity.class).putExtra("server_url",origin));
             } catch (IllegalArgumentException e) { status.setText(e.getMessage()); }
         });
-        setContentView(layout);
+        Button addLink=new Button(this);addLink.setText("Agregar enlace / Pendientes de envío");layout.addView(addLink);
+        addLink.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();
+            getSharedPreferences("server_connection",MODE_PRIVATE).edit().putString("server_url",origin).apply();
+            startActivity(new android.content.Intent(this,LinkEntryActivity.class).putExtra("server_url",origin));
+        }catch(Exception e){status.setText("Configura una URL HTTPS de servidor válida.");}});
+        Button mediaPrefs=new Button(this);mediaPrefs.setText("Preferencias de reproducción y descarga");layout.addView(mediaPrefs);
+        mediaPrefs.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();startActivity(new android.content.Intent(this,MediaPreferencesActivity.class).putExtra("server_url",origin));}catch(Exception e){status.setText("Configura una URL HTTPS de servidor válida.");}});
+        android.widget.ScrollView scroll=new android.widget.ScrollView(this);scroll.addView(layout);setContentView(scroll);
         connect.setOnClickListener(v -> {
             final ApiClient client;
             try { client = new ApiClient(url.getText().toString()); }
             catch (IllegalArgumentException e) { status.setText(e.getMessage()); return; }
-            getPreferences(MODE_PRIVATE).edit().putString("server_url", client.getBaseUrl()).apply();
+            getSharedPreferences("server_connection",MODE_PRIVATE).edit().putString("server_url", client.getBaseUrl()).apply();
             status.setText("Comprobando conexión…");
             connect.setEnabled(false);
             network.execute(() -> {
@@ -89,7 +96,7 @@ public final class MainActivity extends Activity {
 
     @Override protected void onResume() {
         super.onResume();
-        String origin=getPreferences(MODE_PRIVATE).getString("server_url", "");
+        String origin=getSharedPreferences("server_connection",MODE_PRIVATE).getString("server_url", getPreferences(MODE_PRIVATE).getString("server_url", ""));
         if(origin.isEmpty()) return;
         network.execute(() -> {
             try {
