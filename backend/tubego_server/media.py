@@ -9,6 +9,7 @@ from urllib.parse import urlsplit, urlunsplit
 MESSAGES = {
     "invalid_url": "Use one public HTTP or HTTPS resource URL.",
     "unsupported": "This source or collection is not supported.",
+    "format_unavailable": "The selected audio or video format is unavailable. Choose another quality.",
     "unavailable": "The resource is no longer available.",
     "authentication_required": "The source requires authentication; portal credentials are not supported.",
     "source_restricted": "The source restricts access to this resource.",
@@ -70,6 +71,8 @@ class SilentLogger:
 def classify_error(error):
     # Return stable codes, never the raw diagnostic. Unknown errors remain retryable.
     message = str(error).lower()
+    if any(s in message for s in ("requested format is not available", "no video formats found")):
+        return "format_unavailable"
     if any(s in message for s in ("unsupported url", "no suitable extractor")):
         return "unsupported"
     if any(s in message for s in ("sign in", "login required", "private video", "authentication", "cookies")):

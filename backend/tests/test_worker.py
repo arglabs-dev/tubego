@@ -127,14 +127,14 @@ def test_failure_manual_retry_keeps_partial_and_state(service):
             path=self.options['outtmpl'].replace('%(ext)s','mp4.part')
             from pathlib import Path
             Path(path).write_bytes(b'partial')
-            raise RuntimeError('timeout secret=query /server/path')
+            raise RuntimeError('private video secret=query /server/path')
     with Worker(app.state.settings,Fake) as worker:assert worker.run_once()
     value=client.get('/api/v1/tasks/'+tid,headers=headers).json()
     assert value['status']=='failed' and value['attempts']==1 and 'secret' not in str(value)
     assert list((app.state.settings.data_dir/'media').rglob('*.part'))
     assert client.post('/api/v1/tasks/'+tid+'/retry',headers=headers).json()['status']=='queued'
     with Worker(app.state.settings,Fake) as worker:assert worker.run_once()
-    assert client.get('/api/v1/tasks/'+tid,headers=headers).json()['attempts']==2
+    assert client.get('/api/v1/tasks/'+tid,headers=headers).json()['attempts']==1
 
 
 def test_cancel_at_publication_digest_race(service,monkeypatch):

@@ -33,10 +33,10 @@ public final class ResumableTransfer {
             } else if(status==206) {
                 Matcher match=RANGE.matcher(value(response.header("Content-Range")));
                 if(!match.matches() || Long.parseLong(match.group(1))!=offset || Long.parseLong(match.group(3))!=r.size
-                        || Long.parseLong(match.group(2))!=r.size-1) throw new IOException("Rango incompatible con el archivo esperado");
-            } else throw new IOException("El servidor respondió HTTP "+status);
-            if(!etag.equals(response.header("ETag")) || !r.sha256.equals(response.header("X-Content-SHA256"))) throw new IOException("La identidad del archivo cambió. Actualiza la cola.");
-            if(Long.parseLong(value(response.header("Content-Length")))!=r.size-start) throw new IOException("Tamaño de respuesta incompatible");
+                        || Long.parseLong(match.group(2))!=r.size-1) throw new TransferRetry.Failure("range_mismatch",false);
+            } else throw new TransferRetry.Failure("http_"+status,status==429||status>=500&&status<=599);
+            if(!etag.equals(response.header("ETag")) || !r.sha256.equals(response.header("X-Content-SHA256"))) throw new TransferRetry.Failure("identity_changed",false);
+            if(Long.parseLong(value(response.header("Content-Length")))!=r.size-start) throw new TransferRetry.Failure("size_mismatch",false);
             RandomAccessFile opened;
             synchronized(storageLock) {if(!alive.getAsBoolean()) return Result.PAUSED;opened=new RandomAccessFile(r.part(),"rw");}
             try(RandomAccessFile output=opened;InputStream input=response.body()) {
@@ -58,7 +58,7 @@ public final class ResumableTransfer {
                 output.getFD().sync();
             }
         } catch(Exception e) {
-            r.state=permitted.getAsBoolean()?"pending":"paused";r.message=e.getMessage()==null?"Transferencia interrumpida":e.getMessage();save(r,storageLock,alive);
+            r.state=permitted.getAsBoolean()?"pending":"paused";r.message="Transferencia interrumpida; se conserva el parcial.";save(r,storageLock,alive);
             if(!permitted.getAsBoolean() || Thread.currentThread().isInterrupted()) return Result.PAUSED;
             throw e;
         }
@@ -73,7 +73,7 @@ public final class ResumableTransfer {
         synchronized(lock) {if(!alive.getAsBoolean())return;try(RandomAccessFile out=new RandomAccessFile(file,"rw")){out.setLength(0);out.getFD().sync();}}
     }
     private static Result finish(TransferRecord r,Object storageLock,BooleanSupplier alive) throws IOException {
-        if(!verifies(r.part(),r.size,r.sha256)) {truncate(r.part(),storageLock,alive);r.state="failed";r.message="El archivo no coincide con su checksum. Se descartó el parcial.";save(r,storageLock,alive);throw new IOException(r.message);}
+        if(!verifies(r.part(),r.size,r.sha256)) {truncate(r.part(),storageLock,alive);r.state="failed";r.message="El archivo no coincide con su checksum. Se descartó el parcial.";save(r,storageLock,alive);throw new TransferRetry.Failure("checksum_mismatch",false);}
         synchronized(storageLock) {
             if(!alive.getAsBoolean()) return Result.PAUSED;
             Files.move(r.part().toPath(),r.media().toPath(),StandardCopyOption.REPLACE_EXISTING,StandardCopyOption.ATOMIC_MOVE);

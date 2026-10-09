@@ -34,19 +34,20 @@ class Scheduler:
     def _next(self, conn):
         if conn.execute("SELECT 1 FROM tasks WHERE status IN ('running','paused') LIMIT 1").fetchone():
             return None
+        ready_time=json.dumps(now())
         users = conn.execute("""SELECT DISTINCT u.id, s.value_json FROM users u
             JOIN tasks t ON t.user_id=u.id LEFT JOIN settings s ON
             s.scope='user' AND s.owner_id=u.id AND s.key='priority_level'
-            WHERE t.status='queued' AND u.status='approved' AND u.email_verified_at IS NOT NULL
-            ORDER BY u.id""").fetchall()
+            WHERE t.status='queued' AND NOT EXISTS(SELECT 1 FROM settings r WHERE r.scope='task' AND r.owner_id=t.id AND r.key='next_retry_at' AND r.value_json>?) AND u.status='approved' AND u.email_verified_at IS NOT NULL
+            ORDER BY u.id""",(ready_time,)).fetchall()
         slots = sorted((stage, user['id']) for user in users
             for stage in range(3 if user['value_json'] == json.dumps('prioritario') else 1))
         if not slots:
             return None
         cursor = setting(conn, 'scheduler_cursor')
         slot = next((slot for slot in slots if cursor is None or slot > tuple(cursor)), slots[0])
-        task = conn.execute("""SELECT * FROM tasks WHERE user_id=? AND status='queued'
-            ORDER BY priority DESC,created_at,id LIMIT 1""", (slot[1],)).fetchone()
+        task = conn.execute("""SELECT * FROM tasks WHERE user_id=? AND status='queued' AND NOT EXISTS(SELECT 1 FROM settings r WHERE r.scope='task' AND r.owner_id=tasks.id AND r.key='next_retry_at' AND r.value_json>?)
+            ORDER BY priority DESC,created_at,id LIMIT 1""", (slot[1],ready_time)).fetchone()
         return dict(task), slot
 
     def preview(self):

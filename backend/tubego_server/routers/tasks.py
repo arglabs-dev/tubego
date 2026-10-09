@@ -3,11 +3,12 @@ from typing import Literal
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from pydantic import BaseModel, ConfigDict, Field
-from tubego_server.auth import require_approved
+import json
+from tubego_server.auth import require_approved,require_admin
 from tubego_server.ownership import LibraryScope
 from tubego_server.media import MediaError
 from tubego_server.preferences import Selection
-from tubego_server.tasks import action, submit, task_value
+from tubego_server.tasks import action, submit, task_value,live_scope
 
 router=APIRouter(tags=['tasks'])
 
@@ -45,3 +46,12 @@ def get_task(task_id:str,request:Request,principal=Depends(require_approved)):
 @router.post('/tasks/{task_id}/{kind}')
 def task_action(task_id:str,kind:Literal['cancel','retry','priority'],request:Request,principal=Depends(require_approved)):
     return action(request.app.state.db,principal,task_id,kind)
+
+
+@router.get('/admin/download-errors')
+def download_errors(request:Request,principal=Depends(require_admin),after:int=Query(0,ge=0),limit:int=Query(50,ge=1,le=100)):
+    with request.app.state.db.transaction() as conn:
+        scope=live_scope(conn,principal)
+        if conn.execute('SELECT role FROM users WHERE id=?',(scope.user_id,)).fetchone()[0]!='admin':raise HTTPException(403,'Administrator required')
+        rows=conn.execute("SELECT id,target_id,detail_json,created_at FROM audit WHERE action='download.failed' AND id>? ORDER BY id LIMIT ?",(after,limit+1)).fetchall()
+        return {'items':[{'id':row['id'],'task_id':row['target_id'],'created_at':row['created_at'],'diagnostic':json.loads(row['detail_json'])} for row in rows[:limit]],'next_cursor':rows[limit-1]['id'] if len(rows)>limit else None}
