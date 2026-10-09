@@ -112,7 +112,7 @@ class DownloadManager:
 
     def get_active_tasks(self):
         with self.lock:
-            return [t for t in self.tasks.values() if t['status'] in ['starting', 'downloading', 'processing']]
+            return [t for t in self.tasks.values() if t['status'] in ['starting', 'downloading', 'processing', 'paused']]
 
     def cancel_task(self, task_id):
         with self.lock:
@@ -174,6 +174,8 @@ class DownloadManager:
                     self.tasks[task_id]['progress'] = f"{p}%"
                     self.tasks[task_id]['status'] = 'downloading'
                 except: pass
+            elif d['status'] in ('paused','resuming'):
+                self.tasks[task_id]['status'] = 'paused' if d['status']=='paused' else 'downloading'
             elif d['status'] == 'finished':
                 self.tasks[task_id]['status'] = 'processing'
 
@@ -191,6 +193,9 @@ class DownloadManager:
                     self.tasks[task_id]['file_path'] = result['path']
                     self.tasks[task_id]['filename'] = os.path.basename(result['path'])
                     self.tasks[task_id]['status'] = 'success'
+                return result
+            elif result['status']=='cancelled':
+                self.update_status(task_id,'cancelled')
                 return result
             else:
                 self.update_status(task_id, 'failed_dl', result['message'])

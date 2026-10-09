@@ -44,7 +44,7 @@ def resources(request: Request, principal=Depends(require_approved),
     filters={
         'ready': 'r.ready_at IS NOT NULL AND r.server_deleted_at IS NULL',
         'deleted': 'r.server_deleted_at IS NOT NULL',
-        'processing': "EXISTS(SELECT 1 FROM tasks t WHERE t.resource_id=r.id AND t.user_id=r.user_id AND t.status IN ('queued','running'))",
+        'processing': "EXISTS(SELECT 1 FROM tasks t WHERE t.resource_id=r.id AND t.user_id=r.user_id AND t.status IN ('queued','running','paused'))",
         'failed': "EXISTS(SELECT 1 FROM tasks t WHERE t.resource_id=r.id AND t.user_id=r.user_id AND t.status='failed')",
     }
     if status:
