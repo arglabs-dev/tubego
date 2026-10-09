@@ -85,7 +85,7 @@ class Supervisor:
                 if job['action']=='update_backend' and job['payload']['revision']!=self.driver.revision:self.finish(conn,job,'failed','revision_not_staged');continue
                 if job['action']=='update_ytdlp' and job['payload']['version'] not in self.driver.versions:self.finish(conn,job,'failed','version_not_approved');continue
                 write_setting(conn,'global','','maintenance_gate',job['id'])
-                busy=read_setting(conn,'global','','scheduler_lease') or conn.execute("SELECT 1 FROM tasks WHERE status IN ('running','paused') LIMIT 1").fetchone()
+                busy=read_setting(conn,'global','','scheduler_lease') or conn.execute("SELECT 1 FROM tasks WHERE status='running' LIMIT 1").fetchone()
                 job.update(status='waiting_worker' if busy else 'running',phase='waiting_for_downloads' if busy else 'deploying',progress=0.2 if busy else 0.5);save(conn,job)
                 if not busy:selected=job
                 break

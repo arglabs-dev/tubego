@@ -151,3 +151,17 @@ def test_bounded_version_response_and_fixed_server_measurement(monkeypatch):
     with pytest.raises(MaintenanceError,match='version_check_failed'):fixed_json('https://pypi.org/pypi/yt-dlp/json')
     monkeypatch.setattr(Response,'iter_content',lambda self,size:iter([b'video'*1_000_000]))
     result=speed_test();assert result['bytes']==5_000_000 and result['location']=='server'
+
+
+def test_paused_task_without_worker_lease_does_not_deadlock_maintenance(service,monkeypatch):
+    from test_private_library import media
+    app,client=service;user=owner(app,role='admin');enable(app,monkeypatch)
+    rid,_=media(app,user);key=post(client,user,'restart',confirmed=True).json()['id']
+    with app.state.db.transaction() as conn:conn.execute("UPDATE tasks SET status='paused' WHERE id=?",(rid,))
+    driver=Driver();driver.calls=[]
+    assert Supervisor(app.state.db,driver).once() and driver.calls==['restart']
+    with closing(app.state.db.connect()) as conn:
+        assert read_setting(conn,'maintenance',key,'job')['status']=='succeeded'
+        assert not read_setting(conn,'global','','maintenance_gate')
+        assert conn.execute('SELECT status FROM tasks WHERE id=?',(rid,)).fetchone()[0]=='paused'
+        assert conn.execute('SELECT server_path FROM resources WHERE id=?',(rid,)).fetchone()[0]
