@@ -38,8 +38,15 @@ def logout(request:Request):
     header=request.headers.get('Authorization','')
     if not header.startswith('Bearer ') or len(header)>512: raise HTTPException(401,'Authentication required')
     with request.app.state.db.transaction() as conn:
-        principal=conn.execute('SELECT s.user_id,s.device_id,d.user_id AS owner FROM sessions s LEFT JOIN devices d ON d.id=s.device_id WHERE s.token_hash=?',(token_hash(header[7:]),)).fetchone()
+        principal=conn.execute('SELECT s.id,s.created_at,s.user_id,s.device_id,d.user_id AS owner FROM sessions s LEFT JOIN devices d ON d.id=s.device_id WHERE s.token_hash=?',(token_hash(header[7:]),)).fetchone()
         if principal is None or principal['device_id'] is None or principal['owner']!=principal['user_id']:
             raise HTTPException(401,'Invalid session')
+        # Delayed logout is a capability for this session's device incarnation.
+        # An old rotated token must never revoke the replacement session.
+        replacement=conn.execute('''SELECT 1 FROM sessions WHERE device_id=?
+            AND id<>? AND revoked_at IS NULL AND created_at>=? LIMIT 1''',
+            (principal['device_id'],principal['id'],principal['created_at'])).fetchone()
+        if replacement:
+            return {'status':'logged_out'}
         revoke_device(conn,principal['user_id'],principal['device_id'],principal['user_id'])
     return {'status':'logged_out'}

@@ -81,3 +81,13 @@ def test_login_after_pending_offline_logout_cannot_revoke_new_session(service):
     assert replacement['device_id']!=old['device_id']
     assert client.post('/api/v1/account/session/logout',headers=headers(old)).status_code==200
     assert client.get('/api/v1/account/status',headers=headers(replacement)).status_code==200
+
+def test_rotated_token_cannot_revoke_replacement_on_same_device(service):
+    app,client=service;old=login(client)
+    replacement=client.post('/api/v1/auth/login',json={'email':'a@example.com',
+        'password':'correct horse battery','device_name':'Phone','device_id':old['device_id']}).json()
+    assert replacement['device_id']==old['device_id']
+    assert client.post('/api/v1/account/session/logout',headers=headers(old)).status_code==200
+    assert client.get('/api/v1/account/status',headers=headers(replacement)).status_code==200
+    assert client.post('/api/v1/account/session/logout',headers=headers(replacement)).status_code==200
+    assert client.get('/api/v1/account/status',headers=headers(replacement)).status_code==401
