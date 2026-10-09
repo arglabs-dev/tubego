@@ -36,7 +36,7 @@ public final class ResourceDeletionActivity extends Activity {
             }
             try {
                 ApiClient api=new ApiClient(origin);String cursor="";
-                do {JSONObject page=api.request("GET","/resources?limit=50&cursor="+java.net.URLEncoder.encode(cursor,"UTF-8"),null,token);
+                do {JSONObject page=api.request("GET","/resources?limit=10&cursor="+java.net.URLEncoder.encode(cursor,"UTF-8"),null,token);
                     JSONArray list=page.getJSONArray("items");for(int i=0;i<list.length();i++){JSONObject row=list.getJSONObject(i);result.put(row.getString("id"),row.optString("title","Archivo"));}
                     cursor=page.isNull("next_cursor")?"":page.getString("next_cursor");
                 }while(!cursor.isEmpty());
@@ -48,6 +48,7 @@ public final class ResourceDeletionActivity extends Activity {
     });}
     private void render(){rows.removeAllViews();if(titles.isEmpty())status.setText("No hay recursos disponibles en la biblioteca.");
         for(Map.Entry<String,String> row:titles.entrySet()){
+            String selected=getIntent().getStringExtra("resource_id");if(selected!=null&&!UUID.fromString(selected).equals(UUID.fromString(row.getKey())))continue;
             TextView title=new TextView(this);title.setText(row.getValue());rows.addView(title);
             Button delete=new Button(this);delete.setText("Borrar…");rows.addView(delete);delete.setOnClickListener(v->
                 new AlertDialog.Builder(this).setTitle("Borrar "+row.getValue()).setMessage("Se borrará en todos tus dispositivos. El historial se conserva. Los equipos sin conexión lo harán al reconectar.")

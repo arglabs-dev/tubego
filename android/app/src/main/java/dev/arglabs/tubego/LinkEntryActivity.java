@@ -14,7 +14,7 @@ public final class LinkEntryActivity extends Activity {
  private final ExecutorService network=Executors.newSingleThreadExecutor();
  private final ExecutorService storage=Executors.newSingleThreadExecutor();
  private volatile boolean qualityOverride;
- private String origin;private JSONObject session,prefs;private TextView status,history;private Button submit,analyze;private EditText input;private Spinner quality;
+ private String origin;private JSONObject session,prefs;private TextView status,history;private LinearLayout resourceCards;private Button submit,analyze;private EditText input;private Spinner quality;
  @Override public void onCreate(Bundle state){super.onCreate(state);
   origin=getIntent().getStringExtra("server_url");
   if(origin==null)origin=getSharedPreferences("server_connection",MODE_PRIVATE).getString("server_url","");
@@ -26,15 +26,17 @@ public final class LinkEntryActivity extends Activity {
   submit=new Button(this);submit.setText("Agregar a la cola");layout.addView(submit);
   Button refresh=new Button(this);refresh.setText("Actualizar pendientes e intentar envío");layout.addView(refresh);
   Button preferences=new Button(this);preferences.setText("Preferencias de calidad");layout.addView(preferences);
+  Button library=new Button(this);library.setText("Ver fichas existentes / Historial");layout.addView(library);
+  library.setOnClickListener(v->startActivity(new Intent(this,ResubmitActivity.class).putExtra("server_url",origin)));
   Button account=new Button(this);account.setText("Mi cuenta / Estado de aprobación");layout.addView(account);
   account.setOnClickListener(v->{try{new ApiClient(origin);startActivity(new Intent(this,LoginActivity.class).putExtra("server_url",origin));finish();}catch(Exception e){startActivity(new Intent(this,MainActivity.class));finish();}});
-  status=new TextView(this);layout.addView(status);history=new TextView(this);layout.addView(history);
+  status=new TextView(this);layout.addView(status);history=new TextView(this);layout.addView(history);resourceCards=new LinearLayout(this);resourceCards.setOrientation(LinearLayout.VERTICAL);layout.addView(resourceCards);
   ScrollView scroll=new ScrollView(this);scroll.addView(layout);setContentView(scroll);
   try{
    origin=new ApiClient(origin).getBaseUrl();session=new SessionStore(this,origin).read();
    if(session==null||!"approved".equals(session.optString("status")))throw new Exception();
    prefs=new LocalMediaPreferences(LinkOutboxDispatch.root(this,origin,session)).read();quality.setSelection(MediaSelection.index(prefs.optString("selection","720")));
-  }catch(Exception e){submit.setEnabled(false);analyze.setEnabled(false);quality.setEnabled(false);refresh.setEnabled(false);preferences.setEnabled(false);
+  }catch(Exception e){submit.setEnabled(false);analyze.setEnabled(false);quality.setEnabled(false);refresh.setEnabled(false);preferences.setEnabled(false);library.setEnabled(false);
    String accountState=session==null?"Sin sesión":session.optString("status","Sin sesión");
    status.setText(accountState.equals("pending_verification")?"Verifica tu correo antes de utilizar el servicio.":accountState.equals("pending_approval")?"Tu cuenta espera aprobación del administrador.":"Configura el servidor e inicia sesión con una cuenta aprobada antes de agregar enlaces.");return;}
   String shared=getIntent().getStringExtra("shared_url");
@@ -54,8 +56,15 @@ public final class LinkEntryActivity extends Activity {
   }catch(Exception e){show("No se pudo guardar. Revisa sesión y almacenamiento.");}
   runOnUiThread(()->{if(!isDestroyed()){submit.setEnabled(true);refresh();}});
  });}
- private void refresh(){storage.execute(()->{try{StringBuilder rows=new StringBuilder();for(LinkOutbox.Entry entry:LinkOutboxDispatch.box(this,origin,session).entries())rows.append(entry.state.equals("submitted")?"Enviado":entry.state.equals("error")?"Error":"Pendiente de envío").append(" · ").append(entry.selection).append("\n").append(entry.url).append(entry.error.isEmpty()?"":"\n"+entry.error).append("\n\n");
-  runOnUiThread(()->{if(!isDestroyed())history.setText(rows.length()==0?"Sin enlaces enviados desde este dispositivo":rows.toString());});}catch(Exception e){show("No se pudo leer la cola local.");}});}
+ private void refresh(){storage.execute(()->{try{
+  java.util.List<LinkOutbox.Entry> entries=LinkOutboxDispatch.box(this,origin,session).entries();StringBuilder rows=new StringBuilder();
+  for(LinkOutbox.Entry entry:entries)rows.append(entry.state.equals("submitted")?"Enviado · consulta su ficha existente":entry.state.equals("error")?"Error":"Pendiente de envío").append(" · ").append(entry.selection).append("\n").append(entry.url).append(entry.error.isEmpty()?"":"\n"+entry.error).append("\n\n");
+  runOnUiThread(()->{try{if(isDestroyed()||!session.getString("token").equals(new SessionStore(this,origin).token()))return;
+   history.setText(rows.length()==0?"Sin enlaces enviados desde este dispositivo":rows.toString());resourceCards.removeAllViews();java.util.Set<String> shown=new java.util.HashSet<>();
+   for(LinkOutbox.Entry entry:entries)if(!entry.resourceId.isEmpty()&&shown.add(entry.resourceId)){Button card=new Button(this);card.setText("Ver ficha · "+entry.selection);resourceCards.addView(card);card.setOnClickListener(v->startActivity(new Intent(this,ResubmitActivity.class).putExtra("server_url",origin).putExtra("resource_id",entry.resourceId)));}
+  }catch(Exception ignored){resourceCards.removeAllViews();history.setText("Inicia sesión para ver los enlaces de esta cuenta.");}});
+ }catch(Exception e){show("No se pudo leer la cola local.");}});}
+
  private void syncPreferences(){network.execute(()->{try{JSONObject values=new ApiClient(origin).request("GET","/account/preferences",null,session.getString("token"));synchronized(SessionStore.class){JSONObject current=new SessionStore(this,origin).read();if(current==null||!session.getString("token").equals(current.getString("token")))return;new LocalMediaPreferences(LinkOutboxDispatch.root(this,origin,session)).save(values);prefs=values;}runOnUiThread(()->{if(!isDestroyed()&&!qualityOverride)quality.setSelection(MediaSelection.index(values.optString("selection","720")));});}catch(Exception ignored){/* offline cached selection stays usable */}});}
  private void analyze(){final String url;try{url=SharedUrl.parse(input.getText().toString());}catch(Exception e){status.setText(e.getMessage());return;}analyze.setEnabled(false);status.setText("Consultando metadatos…");network.execute(()->{
   try{MediaInfoClient.Info info=new MediaInfoClient(new ApiClient(origin)::request).analyze(url,session.getString("token"));show((info.title==null?"Sin título disponible":info.title)+(info.durationSeconds==null?"":" · duración "+Math.round(info.durationSeconds)+" segundos"));}
