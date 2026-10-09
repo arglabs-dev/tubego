@@ -18,7 +18,7 @@ public final class TransferRetry {
             ||error instanceof SocketException||error instanceof EOFException;
     }
     public static void failed(TransferRecord record,Exception error,long now)throws IOException{
-        record.failures++;
+        record.pauseReason="";record.failures++;
         record.failureCode=error instanceof Failure?((Failure)error).code:transientError(error)?"temporary_network_failure":"transfer_rejected";
         if(transientError(error)&&record.failures<=DELAYS.length){
             record.nextRetryAt=now+DELAYS[record.failures-1];record.state="retry_wait";
@@ -26,5 +26,5 @@ public final class TransferRetry {
         }else{record.nextRetryAt=0;record.state="failed";record.message="No se pudo completar la descarga ("+record.failureCode+"). Puedes reintentar manualmente.";}
         record.save();
     }
-    public static void reset(TransferRecord record)throws IOException{record.failures=0;record.nextRetryAt=0;record.failureCode="";record.state=record.media().isFile()?"complete":"pending";record.message="";record.save();}
+    public static void reset(TransferRecord record)throws IOException{record.pauseReason="";record.failures=0;record.nextRetryAt=0;record.failureCode="";record.state=record.media().isFile()?"complete":"pending";record.message="";record.save();}
 }

@@ -69,4 +69,29 @@ public final class ResumableTransferTest {
         Files.write(record.part().toPath(),Arrays.copyOf(bytes,500));record.save();Files.write(record.part().toPath(),Arrays.copyOf(bytes,700));
         TransferRecord restored=TransferRecord.read(record.manifest());assertEquals(700,restored.offset());
     }
+
+    @Test public void storagePauseBeforeRequestRetainsRetryBudgetAndPartial()throws Exception{
+        Files.write(record.part().toPath(),Arrays.copyOf(bytes,1234));record.failures=2;record.nextRetryAt=123456;record.save();
+        try{ResumableTransfer.run(record,(offset,etag)->{fail("Media socket opened under low space");return null;},()->true,new Object(),()->true,remaining->false);fail();}
+        catch(ResumableTransfer.StoragePause expected){}
+        assertEquals(1234,record.offset());assertEquals(2,record.failures);assertEquals(123456,record.nextRetryAt);assertEquals("device_storage",record.pauseReason);
+        TransferRecord restored=TransferRecord.read(record.manifest());assertEquals(2,restored.failures);assertEquals("paused",restored.state);
+        assertEquals(ResumableTransfer.Result.COMPLETE,ResumableTransfer.run(restored,(offset,etag)->{assertEquals(1234,offset);return response(206,(int)offset,Arrays.copyOfRange(bytes,(int)offset,bytes.length),sha);},()->true,new Object(),()->true,remaining->true));
+        assertArrayEquals(bytes,Files.readAllBytes(record.media().toPath()));assertEquals(2,record.failures);
+    }
+    @Test public void storageRecheckedAfterNetworkReadBeforeWritingItsBytes()throws Exception{
+        AtomicBoolean enough=new AtomicBoolean(true);
+        try{ResumableTransfer.run(record,(offset,etag)->new ResumableTransfer.Response(){
+            ResumableTransfer.Response normal=response(200,0,bytes,sha);
+            public int status(){return normal.status();}public String header(String key){return normal.header(key);}public void close(){}
+            public InputStream body(){return new ByteArrayInputStream(bytes){@Override public synchronized int read(byte[] b,int off,int len){int count=super.read(b,off,len);enough.set(false);return count;}};}
+        },()->true,new Object(),()->true,remaining->enough.get());fail();}catch(ResumableTransfer.StoragePause expected){}
+        assertEquals(0,record.offset());assertEquals(0,record.failures);assertEquals("device_storage",record.pauseReason);
+    }
+    @Test public void enospcIsPauseAndNotRetryFailure()throws Exception{
+        AtomicBoolean reported=new AtomicBoolean();
+        ResumableTransfer.StorageGuard guard=new ResumableTransfer.StorageGuard(){public boolean allows(long remaining){return true;}public void noSpace(){reported.set(true);}};
+        try{ResumableTransfer.run(record,(offset,etag)->{throw new IOException("ENOSPC secret/path");},()->true,new Object(),()->true,guard);fail();}catch(ResumableTransfer.StoragePause expected){}
+        assertTrue(reported.get());assertEquals(0,record.failures);assertEquals("paused",record.state);assertFalse(record.message.contains("secret"));
+    }
 }

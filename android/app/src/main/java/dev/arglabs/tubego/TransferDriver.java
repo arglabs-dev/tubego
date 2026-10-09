@@ -11,7 +11,7 @@ import javax.net.ssl.HttpsURLConnection;
 /** Drives durable server snapshots and transfers; all media sockets bind to one network. */
 public final class TransferDriver {
     private TransferDriver() {}
-    public enum Outcome {DONE,WAIT_WIFI,WAIT_NETWORK,RETRY,STOPPED}
+    public enum Outcome {DONE,WAIT_WIFI,WAIT_NETWORK,WAIT_SPACE,RETRY,STOPPED}
     public static Outcome run(Context context,String origin,TransferRuntime.Control control) throws Exception {
         synchronized(TransferRuntime.lock(origin)) {
             TransferRuntime.register(origin,control);
@@ -119,7 +119,8 @@ public final class TransferDriver {
         if(!preferences.edit().putLong(eventKey,eventCursor).commit()) throw new IOException("No se pudo guardar sincronización");
         queue.sort(Comparator.comparing((TransferRecord r)->r.createdAt).thenComparing(r->r.id));
         ConnectivityManager manager=context.getSystemService(ConnectivityManager.class);
-        boolean waitWifi=false,waitAny=false,retryPending=false;
+        AndroidStorageGuard storage=new AndroidStorageGuard(context,origin,user,device);
+        boolean waitWifi=false,waitAny=false,waitSpace=false,retryPending=false;
         for(TransferRecord record:queue) {
             if(control.stopped) return Outcome.STOPPED;
             TransferKey key=key(origin,user,device,record);
@@ -133,8 +134,13 @@ public final class TransferDriver {
                 catch(Exception e){if(Thread.currentThread().isInterrupted()||control.stopped)return Outcome.STOPPED;if(!controlNetworkAvailable(manager)){waitAny=true;continue;}synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;TransferRetry.failed(record,e,System.currentTimeMillis());}if(record.nextRetryAt>0){retryPending=true;control.retryAt=control.retryAt==0?record.nextRetryAt:Math.min(control.retryAt,record.nextRetryAt);}}
                 continue;
             }
+            if(!storage.allows(Math.max(0,record.size-record.offset()))){
+                record.state="paused";record.pauseReason="device_storage";record.message="Libera espacio para continuar. Se conserva el parcial.";
+                synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;record.save();}waitSpace=true;continue;
+            }
+            record.pauseReason="";
             Network selected=manager.getActiveNetwork();
-            if(!permitted(manager,selected,grants,key,control)) {record.state="paused";synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;record.save();}if(grants.authorized(key))waitAny=true;else waitWifi=true;continue;}
+            if(!permitted(manager,selected,grants,key,control)) {record.state="paused";record.message="Esperando Wi-Fi o una red autorizada para este archivo.";synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;record.save();}if(grants.authorized(key))waitAny=true;else waitWifi=true;continue;}
             control.transfer=key;
             try(NetworkMonitor monitor=new NetworkMonitor(context,state->{
                 if(control.connection!=null && !permitted(manager,selected,grants,key,control)) control.connection.disconnect();
@@ -160,7 +166,7 @@ public final class TransferDriver {
                         public InputStream body() throws IOException{return connection.getInputStream();}
                         public void close(){connection.disconnect();control.connection=null;}
                     };
-                },()->permitted(manager,selected,grants,key,control) && !new File(root,record.id+".deleted").exists(),SessionStore.class,()->sameSession(store,token,control) && !new File(root,record.id+".deleted").exists());
+                },()->permitted(manager,selected,grants,key,control) && !new File(root,record.id+".deleted").exists(),SessionStore.class,()->sameSession(store,token,control) && !new File(root,record.id+".deleted").exists(),storage);
                 if(result==ResumableTransfer.Result.PAUSED) {if(grants.authorized(key))waitAny=true;else waitWifi=true;continue;}
                 confirm(api,token,record);synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;TransferRetry.reset(record);}grants.revoke(key);
             } catch(Exception e) {
@@ -169,15 +175,16 @@ public final class TransferDriver {
                     record.state="paused";synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;record.save();}
                     if(grants.authorized(key))waitAny=true;else waitWifi=true;continue;
                 }
-                if(e instanceof IOException && String.valueOf(e.getMessage()).contains("No space left")){
-                    record.state="paused";record.message="Libera espacio para continuar.";synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;record.save();}continue;
+                if(e instanceof ResumableTransfer.StoragePause || ResumableTransfer.isNoSpace(e)){
+                    record.state="paused";record.pauseReason="device_storage";record.message="Libera espacio para continuar.";if(ResumableTransfer.isNoSpace(e))storage.noSpace();waitSpace=true;synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;record.save();}continue;
                 }
                 synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;TransferRetry.failed(record,e,System.currentTimeMillis());}
                 if(record.nextRetryAt>0){retryPending=true;control.retryAt=control.retryAt==0?record.nextRetryAt:Math.min(control.retryAt,record.nextRetryAt);}
 
             } finally {control.transfer=null;if(control.connection!=null){control.connection.disconnect();control.connection=null;}}
         }
-        return control.stopped?Outcome.STOPPED:waitAny?Outcome.WAIT_NETWORK:waitWifi?Outcome.WAIT_WIFI:retryPending?Outcome.RETRY:Outcome.DONE;
+        if(!waitSpace)storage.recovered();
+        return control.stopped?Outcome.STOPPED:waitAny?Outcome.WAIT_NETWORK:waitWifi?Outcome.WAIT_WIFI:waitSpace?Outcome.WAIT_SPACE:retryPending?Outcome.RETRY:Outcome.DONE;
     }
     private static boolean sameSession(SessionStore store,String token,TransferRuntime.Control control) {
         if(control.stopped)return false;

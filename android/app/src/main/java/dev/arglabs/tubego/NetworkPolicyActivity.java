@@ -41,7 +41,7 @@ public final class NetworkPolicyActivity extends Activity {
                 JSONObject account=session;
                 runOnUiThread(()->{
                     if(isDestroyed()) return;
-                    if(cursor.isEmpty()) {layout.removeAllViews();layout.addView(status);addFailedTransfers(account);}
+                    if(cursor.isEmpty()) {layout.removeAllViews();layout.addView(status);Button storage=new Button(this);storage.setText("Almacenamiento de este teléfono");layout.addView(storage);storage.setOnClickListener(v->startActivity(new android.content.Intent(this,DeviceStorageActivity.class).putExtra("server_url",origin)));addFailedTransfers(account);}
                     var rows=result.optJSONArray("deliveries");
                     for(int i=0;rows!=null && i<rows.length();i++) {
                         JSONObject row=rows.optJSONObject(i);
@@ -52,7 +52,11 @@ public final class NetworkPolicyActivity extends Activity {
                             TextView description=new TextView(this);
                             String title=row.optString("title","Archivo");
                             String size=row.isNull("size_bytes")?"tamaño desconocido":row.optLong("size_bytes")+" bytes";
-                            description.setText(title+" · "+size);layout.addView(description);
+                            String localMessage="";
+                            java.io.File localRoot=LocalLibraryStorage.root(this,origin,key.userId,key.deviceId);
+                            java.io.File manifest=new java.io.File(localRoot,key.resourceId+".properties");
+                            if(manifest.isFile()){TransferRecord local=TransferRecord.read(manifest);if("device_storage".equals(local.pauseReason))localMessage="\nDescarga pausada: libera espacio o ajusta el umbral.";}
+                            description.setText(title+" · "+size+localMessage);layout.addView(description);
                             Button allow=new Button(this);allow.setText(permissions.authorized(key)?"Datos móviles autorizados":"Permitir datos móviles");layout.addView(allow);
                             allow.setOnClickListener(v->new AlertDialog.Builder(this).setTitle("Usar datos móviles")
                                 .setMessage("¿Autorizar "+title+" ("+size+") en este teléfono? El permiso dura hasta completar o cancelar esta descarga. No incluye otros archivos ni dispositivos.")
