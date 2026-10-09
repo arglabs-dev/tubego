@@ -73,6 +73,8 @@ def publish_ready(database, media_root, resource_id, server_path, *, preconditio
         owner=conn.execute('SELECT * FROM users WHERE id=?',(resource['user_id'],)).fetchone()
         if owner['status']!='approved' or not owner['email_verified_at']:
             raise HTTPException(403,'Owner unavailable')
+        if read_setting(conn,'resource',resource_id,'cleanup_job'):
+            raise HTTPException(409,'Resource cleanup pending')
         old_digest=read_setting(conn,'resource',resource_id,'media_sha256')
         same=old_digest==digest and resource['size_bytes']==size
         timestamp=utcnow()
@@ -97,13 +99,14 @@ def publish_ready(database, media_root, resource_id, server_path, *, preconditio
             if existing and existing['status']=='complete' and not existing['deleted_at'] and confirmed==digest and existing['downloaded_bytes']==size:
                 if first is None:first=timestamp
                 continue
-            status='approval_required' if existing and existing['deleted_at'] else 'pending'
+            tombstone=existing['deleted_at'] if existing else read_setting(conn,'resource',resource_id,'deliberately_deleted')
+            status='approval_required' if tombstone else 'pending'
             # Preserve bytes for same file resumptions; a changed file starts at zero.
             transferred=existing['downloaded_bytes'] if existing and same and status=='pending' else 0
-            conn.execute('''INSERT INTO deliveries(resource_id,device_id,status,downloaded_bytes,updated_at)
-                VALUES(?,?,?,?,?) ON CONFLICT(resource_id,device_id) DO UPDATE SET
-                status=excluded.status,downloaded_bytes=excluded.downloaded_bytes,
-                confirmed_at=NULL,updated_at=excluded.updated_at''',(resource_id,did,status,transferred,timestamp))
+            conn.execute('''INSERT INTO deliveries(resource_id,device_id,status,downloaded_bytes,deleted_at,updated_at)
+                VALUES(?,?,?,?,?,?) ON CONFLICT(resource_id,device_id) DO UPDATE SET
+                status=excluded.status,downloaded_bytes=excluded.downloaded_bytes,deleted_at=COALESCE(deliveries.deleted_at,excluded.deleted_at),
+                confirmed_at=NULL,updated_at=excluded.updated_at''',(resource_id,did,status,transferred,tombstone,timestamp))
             if not existing or not same or existing['status']!=status:
                 payload={'resource_id':resource_id,'size_bytes':size,'sha256':digest,'delivery_status':status,'silent':True}
                 conn.execute("INSERT INTO events(user_id,device_id,kind,payload_json,created_at) VALUES(?,?,'resource_available',?,?)",(owner['id'],did,json.dumps(payload),timestamp))
