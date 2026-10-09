@@ -20,7 +20,10 @@ def schedule(conn,root,user_id,resource_id,path,task_id):
             relative=Path(path).relative_to(root.absolute()) if Path(path).is_absolute() else Path(path)
             unsafe=relative.parts[:2]!=(user_id,resource_id) or '..' in relative.parts
         except ValueError:unsafe=True
-    write_setting(conn,'resource',resource_id,'cleanup_job',{'user_id':user_id,'wait_task_id':task_id,'unsafe_reference':unsafe,'error':None})
+    previous=read_setting(conn,'resource',resource_id,'cleanup_job')
+    unsafe=unsafe or bool(previous and previous.get('unsafe_reference'))
+    wait=task_id or (previous.get('wait_task_id') if previous else None)
+    write_setting(conn,'resource',resource_id,'cleanup_job',{'user_id':user_id,'wait_task_id':wait,'unsafe_reference':unsafe,'error':None})
 
 def _remove(parent,name):
     try:info=os.stat(name,dir_fd=parent,follow_symlinks=False)
