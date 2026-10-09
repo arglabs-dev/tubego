@@ -3,8 +3,11 @@
 Each account/device's private library holds `command-outbox`, with a UUID and an
 immutable monotonic sequence allocated before an intention is presented as saved.
 The queue includes link submissions, explicit recovery, all-device deletion,
-server cleanup, preferences, resource priority, and task cancellation/retry.
+server cleanup, media/language preferences, resource priority, and task cancellation/retry.
 Every command uses any available network; media transfer permissions are separate.
+Language integration uses the PLA-255 dispatcher when installed, with an intent
+UUID derived from the local language revision and an acknowledgement that only
+clears that exact pending revision.
 No credential is stored in the queue. Logout/revocation clears the private library.
 
 The transport serializes all these command types for one server origin. It sends
@@ -25,7 +28,9 @@ User retry creates a new intention after intervening changes, with a fresh UUID.
 Delete/recovery mutations increment a resource revision in their transaction and
 include it in receipts/events. An older receipt cannot execute its effect again.
 A newer local deletion or cleanup sequence fences an earlier recovery reply;
-existing deliberate-deletion markers also fence stale delivery snapshots.
+existing deliberate-deletion markers also fence stale delivery snapshots. A local
+resource revision rejects an older delivery snapshot received after a newer
+recovery acknowledgement, so that snapshot cannot reapply the previous deletion.
 New recovery requires explicit approval after deliberate deletion.
 
 Legacy outboxes have no immutable creation timestamp: filesystem mtime changes

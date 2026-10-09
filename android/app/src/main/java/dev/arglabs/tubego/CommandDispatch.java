@@ -25,6 +25,7 @@ public final class CommandDispatch {
    SessionStore store=new SessionStore(c,origin);JSONObject session=store.read();if(session==null)return true;
    String token=session.getString("token");File root=LinkOutboxDispatch.root(c,origin,session);CommandQueue queue=new CommandQueue(root);
    synchronized(SessionStore.class){if(!active(store,token))return false;importLegacy(root,queue);}
+   LanguageCommands.pending(c,origin);
    ApiClient api=new ApiClient(origin);JSONObject status=api.request("GET","/account/status",null,token);if(!"approved".equals(status.optString("status")))return false;
    int count=0;for(CommandQueue.Entry entry:queue.entries()){
     if(!entry.state.equals("queued"))continue;if(++count>100)return false;if(!active(store,token))return false;
@@ -42,6 +43,7 @@ public final class CommandDispatch {
       if(payload.optBoolean("approve_redownload"))LocalResourceDeletion.approve(root,resource);
       File manifest=new File(root,UUID.fromString(resource)+".properties");if(manifest.isFile()){TransferRecord record=TransferRecord.read(manifest);if(Arrays.asList("deleted","cancelled","unavailable","missing").contains(record.state)){record.state="pending";record.message="Solicitud aprobada. Esperando disponibilidad y red permitida.";record.save();}}
      }
+     if(accepted&&entry.kind.equals("language"))LanguageCommands.acknowledge(c,origin,session.getString("user_id"),payload.getLong("revision"));
      if(accepted&&entry.kind.equals("delete"))LocalResourceRevision.accept(root,resource,result.optLong("revision",0));
      String error=accepted?"":"El servidor rechazó la acción: "+result.optString("code","command_rejected");
      queue.finish(entry,accepted?"complete":"error",error,result.toString());CommandBridge.finishLegacy(root,entry,accepted?"submitted":"error",error,result.optString("resource_id",""));
