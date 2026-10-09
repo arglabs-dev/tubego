@@ -60,20 +60,23 @@ def _process(database,root,user_id=None,stop=None):
         if user_id is not None:sql+=' AND owner_id=?';args.append(user_id)
         jobs=conn.execute(sql,args).fetchall()
     for job in jobs:
-        record=json.loads(job['value_json']);owner=job['owner_id']
-        with closing(database.connect()) as conn:
+        # SQLite serializes cleanup with unblock across API processes. Re-read
+        # the durable job after acquiring the write transaction; an older scan
+        # must never delete files created after a completed cleanup/unblock.
+        with database.transaction() as conn:
+            current=conn.execute("SELECT value_json FROM settings WHERE scope=? AND owner_id=? AND key='media'",(SCOPE,job['owner_id'])).fetchone()
+            if current is None:continue
+            record=json.loads(current['value_json']);owner=job['owner_id']
             lease=conn.execute("SELECT value_json FROM settings WHERE scope='global' AND owner_id='' AND key='scheduler_lease'").fetchone()
             if lease and record.get('wait_task_id')==json.loads(lease[0]).get('task_id'):continue
-        try:
-            remove_owned_directory(root,owner,stop)
-            if record['unsafe_reference']:raise ValueError('Foreign media reference')
-        except (OSError,ValueError):
-            record['status']='pending';record['last_error']='cleanup_interrupted' if stop and stop.is_set() else 'cleanup_failed'
-            with database.transaction() as conn:
-                conn.execute("UPDATE settings SET value_json=?,updated_at=? WHERE scope=? AND owner_id=? AND key='media' AND value_json=?",(json.dumps(record),utcnow(),SCOPE,owner,job['value_json']))
-        else:
-            with database.transaction() as conn:
-                conn.execute("DELETE FROM settings WHERE scope=? AND owner_id=? AND key='media' AND value_json=?",(SCOPE,owner,job['value_json']))
+            try:
+                remove_owned_directory(root,owner,stop)
+                if record['unsafe_reference']:raise ValueError('Foreign media reference')
+            except (OSError,ValueError):
+                record['status']='pending';record['last_error']='cleanup_interrupted' if stop and stop.is_set() else 'cleanup_failed'
+                conn.execute("UPDATE settings SET value_json=?,updated_at=? WHERE scope=? AND owner_id=? AND key='media'",(json.dumps(record),utcnow(),SCOPE,owner))
+            else:
+                conn.execute("DELETE FROM settings WHERE scope=? AND owner_id=? AND key='media'",(SCOPE,owner))
 
 class CleanupRunner:
     def __init__(self,database,root,interval=5):

@@ -133,3 +133,22 @@ def test_missing_media_is_already_clean_and_block_is_idempotent(service):
     app,client,accounts,sessions=service;_,_,path=media(app,accounts['first']);path.unlink()
     for _ in range(2):assert client.post('/api/v1/admin/users/'+accounts['first']+'/block',headers=headers(sessions['admin'])).json()['cleanup_pending'] is False
     with app.state.db.transaction() as conn:assert conn.execute("SELECT count(*) FROM audit WHERE action='account.blocked' AND target_id=?",(accounts['first'],)).fetchone()[0]==1
+
+def test_cleanup_serializes_unblock_across_database_connections(service,monkeypatch):
+    import sqlite3
+    import tubego_server.account_cleanup as cleanup
+    app,client,accounts,sessions=service;_,_,path=media(app,accounts['first'])
+    original=cleanup.remove_owned_directory
+    observed=[]
+    def removal(root,owner,stop=None):
+        other=app.state.db.connect();other.execute('PRAGMA busy_timeout=0')
+        try:
+            with pytest.raises(sqlite3.OperationalError,match='locked'):
+                other.execute("UPDATE users SET status='approved' WHERE id=?",(owner,))
+            observed.append(owner)
+        finally:other.close()
+        original(root,owner,stop)
+    monkeypatch.setattr(cleanup,'remove_owned_directory',removal)
+    response=client.post('/api/v1/admin/users/'+accounts['first']+'/block',headers=headers(sessions['admin']))
+    assert response.status_code==200 and observed==[accounts['first']] and not path.exists()
+    assert client.post('/api/v1/admin/users/'+accounts['first']+'/unblock',headers=headers(sessions['admin'])).status_code==200
