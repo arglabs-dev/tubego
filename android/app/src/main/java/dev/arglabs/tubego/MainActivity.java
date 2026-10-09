@@ -14,6 +14,8 @@ public final class MainActivity extends Activity {
     private final ExecutorService network = Executors.newSingleThreadExecutor();
     private TextView status;
     private Button connect;
+    private Button adminCenter;
+    private EditText serverUrl;
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -28,7 +30,7 @@ public final class MainActivity extends Activity {
         TextView description = new TextView(this);
         description.setText("Configura tu servidor para comenzar.");
         layout.addView(description);
-        EditText url = new EditText(this);
+        EditText url = new EditText(this);serverUrl=url;
         url.setSingleLine(true);
         url.setHint("https://tubego.example.com");
         url.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI);
@@ -52,20 +54,6 @@ public final class MainActivity extends Activity {
                 startActivity(new android.content.Intent(this, RegistrationActivity.class).putExtra("server_url",origin));
             } catch (IllegalArgumentException e) { status.setText(e.getMessage()); }
         });
-        Button approvals = new Button(this); approvals.setText("Administrar solicitudes"); layout.addView(approvals);
-        approvals.setOnClickListener(v -> {
-            try { String origin = new ApiClient(url.getText().toString()).getBaseUrl();
-                startActivity(new android.content.Intent(this, AdminRegistrationsActivity.class).putExtra("server_url",origin));
-            } catch (IllegalArgumentException e) { status.setText(e.getMessage()); }
-        });
-        Button priorities = new Button(this); priorities.setText("Administrar prioridades"); layout.addView(priorities);
-        priorities.setOnClickListener(v -> {
-            try { String origin = new ApiClient(url.getText().toString()).getBaseUrl();
-                startActivity(new android.content.Intent(this, AdminPriorityActivity.class).putExtra("server_url",origin));
-            } catch (IllegalArgumentException e) { status.setText(e.getMessage()); }
-        });
-        Button retention=new Button(this);retention.setText("Administrar conservación del servidor");layout.addView(retention);
-        retention.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();startActivity(new android.content.Intent(this,AdminRetentionActivity.class).putExtra("server_url",origin));}catch(Exception e){status.setText("Configura una URL HTTPS de servidor válida.");}});
         Button addLink=new Button(this);addLink.setText("Agregar enlace / Pendientes de envío");layout.addView(addLink);
         addLink.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();
             getSharedPreferences("server_connection",MODE_PRIVATE).edit().putString("server_url",origin).apply();
@@ -79,12 +67,13 @@ public final class MainActivity extends Activity {
                 startActivity(new android.content.Intent(this,NetworkPolicyActivity.class).putExtra("server_url",origin));
             } catch(IllegalArgumentException e) {status.setText(e.getMessage());}
         });
-        Button users=new Button(this);users.setText("Administrar usuarios");layout.addView(users);
-        users.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();startActivity(new android.content.Intent(this,AdminUsersActivity.class).putExtra("server_url",origin));}catch(Exception e){status.setText("Configura una URL HTTPS válida.");}});
         Button recovery=new Button(this);recovery.setText("Historial / Volver a solicitar");layout.addView(recovery);
         recovery.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();startActivity(new android.content.Intent(this,ResubmitActivity.class).putExtra("server_url",origin));}catch(Exception e){status.setText("Configura una URL HTTPS válida.");}});
         Button serverCleanup=new Button(this);serverCleanup.setText("Limpiar archivos del servidor");layout.addView(serverCleanup);
         serverCleanup.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();startActivity(new android.content.Intent(this,ServerCleanupActivity.class).putExtra("server_url",origin));}catch(Exception e){status.setText("Configura una URL HTTPS válida.");}});
+        adminCenter=new Button(this);adminCenter.setText("Administración");adminCenter.setVisibility(android.view.View.GONE);layout.addView(adminCenter);
+        adminCenter.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();if(!AdminAccess.allowed(this,origin)){adminCenter.setVisibility(android.view.View.GONE);return;}startActivity(new android.content.Intent(this,AdminCenterActivity.class).putExtra("server_url",origin));}catch(Exception e){status.setText("Inicia sesión como administrador.");}});
+        url.addTextChangedListener(new android.text.TextWatcher(){public void beforeTextChanged(CharSequence s,int start,int count,int after){}public void onTextChanged(CharSequence s,int start,int before,int count){updateAdminVisibility();}public void afterTextChanged(android.text.Editable e){}});
         Button deletion=new Button(this);deletion.setText("Biblioteca / Borrar recursos");layout.addView(deletion);
         deletion.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();startActivity(new android.content.Intent(this,ResourceDeletionActivity.class).putExtra("server_url",origin));}catch(Exception e){status.setText("Configura una URL HTTPS válida.");}});
         android.widget.ScrollView scroll=new android.widget.ScrollView(this);scroll.addView(layout);setContentView(scroll);
@@ -113,18 +102,28 @@ public final class MainActivity extends Activity {
 
     @Override protected void onResume() {
         super.onResume();
+        updateAdminVisibility();
         String origin=getSharedPreferences("server_connection",MODE_PRIVATE).getString("server_url", getPreferences(MODE_PRIVATE).getString("server_url", ""));
         if(origin.isEmpty()) return;
         try{TransferJobs.register(this,new ApiClient(origin).getBaseUrl());}catch(Exception ignored){}
         network.execute(() -> {
             try {
                 String token=new SessionStore(this,origin).token();
-                if(token!=null) new ApiClient(origin).request("GET","/account/status",null,token);
+                if(token!=null){org.json.JSONObject account=new ApiClient(origin).request("GET","/account/status",null,token);
+                    synchronized(SessionStore.class){SessionStore store=new SessionStore(this,origin);org.json.JSONObject current=store.read();if(current!=null&&token.equals(current.optString("token"))){current.put("role",account.getString("role")).put("status",account.getString("status"));store.save(current);}}
+                    runOnUiThread(()->{if(!isDestroyed())updateAdminVisibility();});
+                }
             } catch(ApiClient.ApiException e) {
+                if(e.status==401||e.status==403)runOnUiThread(()->{if(!isDestroyed())adminCenter.setVisibility(android.view.View.GONE);});
                 if(e.code.equals("session_revoked") || e.code.equals("account_unavailable"))
-                    runOnUiThread(() -> {if(!isDestroyed()) status.setText("Sesión revocada. Se han retirado las descargas locales de esta cuenta.");});
+                    runOnUiThread(() -> {if(!isDestroyed()){status.setText("Sesión revocada. Se han retirado las descargas locales de esta cuenta.");adminCenter.setVisibility(android.view.View.GONE);}});
             } catch(Exception ignored) { /* Offline access remains usable until revocation is known. */ }
         });
+    }
+
+    private void updateAdminVisibility(){
+        if(adminCenter==null||serverUrl==null||isDestroyed())return;adminCenter.setVisibility(android.view.View.GONE);final String selected=serverUrl.getText().toString();
+        network.execute(()->{boolean allowed=AdminAccess.allowed(this,selected);runOnUiThread(()->{if(!isDestroyed()&&selected.equals(serverUrl.getText().toString()))adminCenter.setVisibility(allowed?android.view.View.VISIBLE:android.view.View.GONE);});});
     }
 
     @Override protected void onDestroy() {

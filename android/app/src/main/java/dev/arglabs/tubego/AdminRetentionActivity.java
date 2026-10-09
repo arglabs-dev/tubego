@@ -15,12 +15,12 @@ public final class AdminRetentionActivity extends Activity {
     private TextView status;
     private String cursor="";
     private ApiClient api(){return new ApiClient(getIntent().getStringExtra("server_url"));}
-    private String token() throws Exception{return new SessionStore(this,api().getBaseUrl()).token();}
+    private String token() throws Exception{return AdminAccess.remoteToken(this,api().getBaseUrl());}
     @Override public void onCreate(Bundle state){
         super.onCreate(state);
         layout=new LinearLayout(this);layout.setOrientation(LinearLayout.VERTICAL);layout.setPadding(32,64,32,32);
         status=new TextView(this);layout.addView(status);
-        ScrollView scroll=new ScrollView(this);scroll.addView(layout);setContentView(scroll);load();
+        ScrollView scroll=new ScrollView(this);scroll.addView(layout);setContentView(scroll);if(!AdminAccess.allowed(this,getIntent().getStringExtra("server_url"))){status.setText("Se requiere una cuenta aprobada de administrador.");return;}load();
     }
     private void load(){
         status.setText("Cargando conservación del servidor…");

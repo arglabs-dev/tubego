@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".AdminDownloadErrorsActivity" android:exported="false" />
         <activity android:name=".AdminUsersActivity" android:exported="false" />
+        <activity android:name=".AdminCenterActivity" android:exported="false" />
         <activity android:name=".AdminRetentionActivity" android:exported="false" />
         <activity android:name=".AdminPriorityActivity" android:exported="false" />
         <service android:name=".TransferJobService" android:exported="true" android:permission="android.permission.BIND_JOB_SERVICE" />
