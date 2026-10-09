@@ -52,6 +52,12 @@ public final class MainActivity extends Activity {
                 startActivity(new android.content.Intent(this, AdminRegistrationsActivity.class).putExtra("server_url",origin));
             } catch (IllegalArgumentException e) { status.setText(e.getMessage()); }
         });
+        Button priorities = new Button(this); priorities.setText("Administrar prioridades"); layout.addView(priorities);
+        priorities.setOnClickListener(v -> {
+            try { String origin = new ApiClient(url.getText().toString()).getBaseUrl();
+                startActivity(new android.content.Intent(this, AdminPriorityActivity.class).putExtra("server_url",origin));
+            } catch (IllegalArgumentException e) { status.setText(e.getMessage()); }
+        });
         setContentView(layout);
         connect.setOnClickListener(v -> {
             final ApiClient client;
