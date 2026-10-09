@@ -9,6 +9,8 @@ from src.storage import validate_channel_paths
 import os
 from tubego_server.routers import system, registration, admin_priority, library, login, media, preferences, devices, device_delivery, tasks, retention, resource_deletion, resource_recovery, server_cleanup, alerts
 from tubego_server.mail import SmtpMailer
+from tubego_server.maintenance import ReadRunner
+from tubego_server.routers import maintenance
 from tubego_server.account_cleanup import CleanupRunner
 from tubego_server.routers import admin_users
 from tubego_server.resource_cleanup import Runner as ResourceCleanupRunner
@@ -24,9 +26,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         database.initialize()
         cleanup=CleanupRunner(database,settings.data_dir/'media',settings.account_cleanup_interval)
         resource_cleanup=ResourceCleanupRunner(database,settings.data_dir/'media')
-        cleanup.start();resource_cleanup.start()
+        maintenance_reads=ReadRunner(database)
+        cleanup.start();resource_cleanup.start();maintenance_reads.start()
         try:yield
-        finally:resource_cleanup.close();cleanup.close()
+        finally:maintenance_reads.close();resource_cleanup.close();cleanup.close()
 
     app = FastAPI(title="Tubego Mobile API", version=__version__,
                   lifespan=lifespan, docs_url="/api/v1/docs", redoc_url=None,
@@ -64,6 +67,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(resource_recovery.router, prefix="/api/v1")
     app.include_router(server_cleanup.router, prefix="/api/v1")
     app.include_router(alerts.router,prefix="/api/v1")
+    app.include_router(maintenance.router, prefix="/api/v1")
     return app
 
 

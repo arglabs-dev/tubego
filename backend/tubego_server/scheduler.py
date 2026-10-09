@@ -32,6 +32,7 @@ class Scheduler:
         self.database = database
 
     def _next(self, conn):
+        if setting(conn, 'maintenance_gate'):return None
         if conn.execute("SELECT 1 FROM tasks WHERE status IN ('running','paused') LIMIT 1").fetchone():
             return None
         ready_time=json.dumps(now())

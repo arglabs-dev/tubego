@@ -1,0 +1,31 @@
+# Operator opt-in overlay: migrate the existing volume to this bind directory FIRST.
+# Never mount a Docker socket into API containers.
+services:
+  api:
+    environment:
+      TUBEGO_MAINTENANCE_MUTATIONS: "true"
+    build:
+      args:
+        TUBEGO_BUILD_REVISION: ${TUBEGO_BUILD_REVISION:?approved revision required}
+        YTDLP_VERSION: ${TUBEGO_YTDLP_VERSION:?approved version required}
+    volumes:
+      - ${TUBEGO_HOST_DATA_DIR:?existing data directory required}:/data
+  worker:
+    build:
+      args:
+        TUBEGO_BUILD_REVISION: ${TUBEGO_BUILD_REVISION}
+        YTDLP_VERSION: ${TUBEGO_YTDLP_VERSION}
+    volumes:
+      - ${TUBEGO_HOST_DATA_DIR}:/data
+  retention:
+    build:
+      args:
+        TUBEGO_BUILD_REVISION: ${TUBEGO_BUILD_REVISION}
+        YTDLP_VERSION: ${TUBEGO_YTDLP_VERSION}
+    volumes:
+      - ${TUBEGO_HOST_DATA_DIR}:/data
+  egress:
+    build:
+      args:
+        TUBEGO_BUILD_REVISION: ${TUBEGO_BUILD_REVISION}
+        YTDLP_VERSION: ${TUBEGO_YTDLP_VERSION}
