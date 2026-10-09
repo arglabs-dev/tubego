@@ -3,7 +3,7 @@ from contextlib import contextmanager, closing
 from pathlib import Path
 import sqlite3
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 SCHEMA = [
     """CREATE TABLE users (
         id TEXT PRIMARY KEY, email TEXT NOT NULL UNIQUE COLLATE NOCASE,
@@ -71,6 +71,15 @@ SCHEMA = [
 ]
 
 
+MIGRATION_2 = [
+    """CREATE TABLE verification_tokens (
+        token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        expires_at TEXT NOT NULL, used_at TEXT, created_at TEXT NOT NULL
+    )""",
+    "CREATE INDEX verification_user_created ON verification_tokens(user_id, created_at)",
+]
+
+
 class Database:
     def __init__(self, path: Path):
         self.path = path
@@ -91,7 +100,11 @@ class Database:
             if version == 0:
                 for statement in SCHEMA:
                     connection.execute(statement)
-                connection.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")
+                version = 1
+            if version == 1:
+                for statement in MIGRATION_2:
+                    connection.execute(statement)
+            connection.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")
         with closing(self.connect()) as connection:
             connection.execute("PRAGMA journal_mode = WAL")
             connection.execute("PRAGMA synchronous = FULL")
