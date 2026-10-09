@@ -29,8 +29,10 @@ public final class MediaPreferencesActivity extends Activity {
         status = new TextView(this); layout.addView(status);
         save = new Button(this); save.setText("Guardar preferencias"); save.setEnabled(false); layout.addView(save);
         ScrollView scroll = new ScrollView(this); scroll.addView(layout); setContentView(scroll);
-        token = getSharedPreferences("tubego_account", MODE_PRIVATE).getString("session_token", null);
-        try { api = new ApiClient(getIntent().getStringExtra("server_url")); }
+        try {
+            api = new ApiClient(getIntent().getStringExtra("server_url"));
+            token = new SessionStore(this, api.getBaseUrl()).token();
+        }
         catch (Exception e) { status.setText("Configura una URL de servidor válida."); return; }
         status.setText("Cargando preferencias…");
         network.execute(() -> {
