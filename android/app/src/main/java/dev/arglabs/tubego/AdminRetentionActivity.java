@@ -27,7 +27,7 @@ public final class AdminRetentionActivity extends Activity {
         network.execute(()->{try{
             JSONObject response=api().request("GET","/admin/users/retention?after="+java.net.URLEncoder.encode(cursor,"UTF-8"),null,token());
             runOnUiThread(()->{if(isDestroyed())return;
-                layout.removeAllViews();layout.addView(status);
+                layout.removeAllViews();layout.addView(status);addDeadlines();
                 status.setText("Conservar evita la limpieza automática del servidor. No impide la limpieza manual ni el borrado por bloqueo. Los archivos del teléfono no cambian.");
                 var items=response.optJSONArray("items");
                 for(int i=0;items!=null && i<items.length();i++){
@@ -46,6 +46,32 @@ public final class AdminRetentionActivity extends Activity {
                 if(!cursor.isEmpty()){Button first=new Button(this);first.setText("Volver al inicio");layout.addView(first);first.setOnClickListener(v->{cursor="";load();});}
             });
         }catch(Exception e){runOnUiThread(()->{if(!isDestroyed())status.setText("Se requiere una sesión administrativa activa para consultar conservación.");});}});
+    }
+    private void addDeadlines(){
+        TextView heading=new TextView(this);heading.setText("Plazos globales (horas). Aplican también a archivos existentes.");layout.addView(heading);
+        EditText absolute=new EditText(this);absolute.setHint("Máximo desde archivo listo (72)");absolute.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);layout.addView(absolute);
+        EditText delivery=new EditText(this);delivery.setHint("Máximo desde primera entrega (4)");delivery.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);layout.addView(delivery);
+        Button save=new Button(this);save.setText("Revisar impacto y guardar plazos");save.setEnabled(false);layout.addView(save);
+        network.execute(()->{try{JSONObject values=api().request("GET","/admin/retention/deadlines",null,token());runOnUiThread(()->{if(!isDestroyed()){absolute.setText(String.valueOf(values.optInt("absolute_hours")));delivery.setText(String.valueOf(values.optInt("delivery_hours")));save.setEnabled(true);}});}catch(Exception e){runOnUiThread(()->{if(!isDestroyed())status.setText("No se pudieron consultar los plazos.");});}});
+        save.setOnClickListener(v->{final int a,d;
+            try{a=Integer.parseInt(absolute.getText().toString());d=Integer.parseInt(delivery.getText().toString());if(a<1||a>8760||d<1||d>8760)throw new IllegalArgumentException();}
+            catch(Exception e){status.setText("Los plazos deben ser horas enteras entre 1 y 8760.");return;}
+            save.setEnabled(false);network.execute(()->{try{
+                JSONObject preview=api().request("POST","/admin/retention/deadlines/preview",new JSONObject().put("absolute_hours",a).put("delivery_hours",d),token());
+                int count=preview.optInt("immediate_deletions");
+                runOnUiThread(()->{if(isDestroyed())return;
+                    new AlertDialog.Builder(this).setTitle("Confirmar plazos")
+                        .setMessage("Se aplicarán a todos los archivos existentes y nuevos, desde sus fechas originales. Copias del servidor que vencen ahora: "+count+". Los archivos del teléfono no cambian.")
+                        .setNegativeButton("Cancelar",(dialog,which)->save.setEnabled(true))
+                        .setOnCancelListener(dialog->save.setEnabled(true))
+                        .setPositiveButton("Aplicar",(dialog,which)->network.execute(()->{String result;
+                            try{JSONObject response=api().request("PUT","/admin/retention/deadlines",new JSONObject().put("absolute_hours",a).put("delivery_hours",d).put("preview_token",preview.optString("preview_token")).put("confirm_immediate_deletion",count>0),token());result="Plazos guardados. Copias retiradas: "+response.optInt("removed_server_copies");}
+                            catch(Exception e){result="No se pudo aplicar. Revisa el impacto otra vez; pudo cambiar o caducar.";}
+                            final String message=result;runOnUiThread(()->{if(!isDestroyed()){status.setText(message);save.setEnabled(true);}});
+                        })).show();
+                });
+            }catch(Exception e){runOnUiThread(()->{if(!isDestroyed()){status.setText("No se pudo revisar el impacto. Revisa conexión y permisos.");save.setEnabled(true);}});}});
+        });
     }
     private void save(String user,boolean preserve,Button button){
         button.setEnabled(false);network.execute(()->{String result;
