@@ -19,3 +19,17 @@ adb shell am instrument -w -e class dev.arglabs.tubego.PrivateMediaInstrumentedT
 ```
 
 La instrumentación utiliza archivos locales de prueba y Keystore real, sin servidor ni conectividad: lectura seekable, revocación sobre descriptor abierto, aislamiento de cuenta y sesión, modos de escritura y URI maliciosos, marcador de borrado y checksum. La prueba manual de VLC debe usar un video/audio válido, abrirlo sin red, probar PiP y bloquear la pantalla; la fixture de bytes del test de descargas no es un video reproducible. No confundir aprobación de las pruebas de proveedor con validación real de VLC.
+
+## VLC probado en emulador
+
+El 9 de octubre de 2026 se probó VLC Android 3.7.1 x86_64 oficial en emulador API 35 con un clip MP4/AAC sintético de 45 segundos, privado y verificado por SHA-256. APK SHA-256: `4646633ede40c4784c5584087cffc5c60cc45b16966ae0b36cedd784d7c4a11e`. Se confirmó reproducción real mediante MediaSession, PiP al ir a Home y reproducción de audio con pantalla apagada. Las cuatro pruebas de aislamiento del proveedor también pasaron. No es una prueba de dispositivo físico ni de retorno preciso de posición.
+
+Primero hay que completar los tutoriales iniciales de VLC. Para PiP, escoger **Background/PiP mode → Play videos in Picture-in-picture mode**; para audio con pantalla apagada, escoger **Play videos in background**. Son dos configuraciones externas distintas. La prueba detectó que la configuración PiP por sí sola no conserva el audio al apagar la pantalla. Tubego no altera las preferencias de VLC.
+
+La instrumentación opcional requiere VLC instalado y configurado antes de cada caso:
+
+```sh
+adb shell am instrument -w -e class dev.arglabs.tubego.VlcIntegrationInstrumentedTest#testVlcReadsVerifiedLocalClipWithoutBackend dev.arglabs.tubego.test/android.test.InstrumentationTestRunner
+# Cambiar en VLC al modo de segundo plano antes del siguiente caso.
+adb shell am instrument -w -e class dev.arglabs.tubego.VlcIntegrationInstrumentedTest#testVlcVideoAudioWithScreenOff dev.arglabs.tubego.test/android.test.InstrumentationTestRunner
+```
