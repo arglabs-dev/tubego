@@ -13,7 +13,7 @@ public final class TransferJobService extends JobService {
         TransferRuntime.Control control=new TransferRuntime.Control();controls.put(params.getJobId(),control);
         NotificationManager notices=getSystemService(NotificationManager.class);
         notices.createNotificationChannel(new NotificationChannel("transfers","Descargas en curso",NotificationManager.IMPORTANCE_LOW));
-        notices.notify(params.getJobId(),new Notification.Builder(this,"transfers").setSmallIcon(android.R.drawable.stat_sys_download).setContentTitle("Tubego · Descargas en curso").setContentText("Las transferencias respetan tus permisos de red.").setOngoing(true).build());
+        if(android.os.Build.VERSION.SDK_INT<33 || checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)==android.content.pm.PackageManager.PERMISSION_GRANTED) notices.notify(params.getJobId(),new Notification.Builder(this,"transfers").setSmallIcon(android.R.drawable.stat_sys_download).setContentTitle("Tubego · Descargas en curso").setContentText("Las transferencias respetan tus permisos de red.").setOngoing(true).build());
         futures.put(params.getJobId(),executor.submit(()->{
             TransferDriver.Outcome outcome=TransferDriver.Outcome.RETRY;
             try {outcome=TransferDriver.run(this,origin,control);}catch(Exception ignored){}
