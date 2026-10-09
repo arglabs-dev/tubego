@@ -39,7 +39,7 @@ def login(body: Login, request: Request):
         valid=verify_password(body.password,user['password_hash'] if user else DUMMY_HASH)
         if not valid or user is None:
             raise HTTPException(401,'Invalid email or password')
-        if user['status'] in ('blocked','rejected'):
+        if user['status'] in ('blocked','rejected','deleted'):
             raise HTTPException(403,{'code':'account_unavailable'})
         now=datetime.now(timezone.utc); stamp=now.isoformat(); device=str(uuid.uuid4())
         token=secrets.token_urlsafe(32); expires=(now+timedelta(days=30)).isoformat()
@@ -71,7 +71,7 @@ def forgot(body: EmailInput,request: Request):
     # Public responses remain generic even when account-specific SMTP fails.
     with request.app.state.db.transaction() as conn:
         user=conn.execute('SELECT * FROM users WHERE email=?',(body.email,)).fetchone()
-        if user and user['status'] not in ('blocked','rejected'):
+        if user and user['status'] not in ('blocked','rejected','deleted'):
             token=secrets.token_urlsafe(32); now=datetime.now(timezone.utc)
             try: request.app.state.mailer.send_reset(user['email'],token)
             except (OSError,RuntimeError): return {'message':'Si la cuenta permite recuperación, recibirás un correo.'}
@@ -105,7 +105,7 @@ def reset(body: PasswordReset,request: Request):
     digest=hash_password(body.password); now=utcnow()
     with request.app.state.db.transaction() as conn:
         row=conn.execute('SELECT t.*,u.status FROM password_reset_tokens t JOIN users u ON u.id=t.user_id WHERE t.token_hash=?',(token_hash(body.token),)).fetchone()
-        if row is None or row['used_at'] or row['expires_at']<=now or row['status'] in ('blocked','rejected'):
+        if row is None or row['used_at'] or row['expires_at']<=now or row['status'] in ('blocked','rejected','deleted'):
             raise HTTPException(400,'Invalid or expired reset link')
         conn.execute('UPDATE password_reset_tokens SET used_at=? WHERE token_hash=?',(now,row['token_hash']))
         conn.execute('UPDATE users SET password_hash=?,updated_at=? WHERE id=?',(digest,now,row['user_id']))

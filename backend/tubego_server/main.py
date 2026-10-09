@@ -9,6 +9,8 @@ from src.storage import validate_channel_paths
 import os
 from tubego_server.routers import system, registration, admin_priority, library, login, media, preferences, devices, device_delivery, tasks
 from tubego_server.mail import SmtpMailer
+from tubego_server.account_cleanup import CleanupRunner
+from tubego_server.routers import admin_users
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -19,7 +21,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     async def lifespan(app: FastAPI):
         validate_channel_paths(os.getenv("TUBEGO_BOT_DOWNLOAD_DIR", "downloads"), settings.data_dir)
         database.initialize()
-        yield
+        cleanup=CleanupRunner(database,settings.data_dir/'media',settings.account_cleanup_interval)
+        cleanup.start()
+        try:yield
+        finally:cleanup.close()
 
     app = FastAPI(title="Tubego Mobile API", version=__version__,
                   lifespan=lifespan, docs_url="/api/v1/docs", redoc_url=None,
@@ -51,6 +56,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(devices.router, prefix="/api/v1")
     app.include_router(device_delivery.router, prefix="/api/v1")
     app.include_router(tasks.router, prefix="/api/v1")
+    app.include_router(admin_users.router, prefix="/api/v1")
     return app
 
 

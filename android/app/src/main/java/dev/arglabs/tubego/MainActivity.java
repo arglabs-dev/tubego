@@ -77,6 +77,8 @@ public final class MainActivity extends Activity {
                 startActivity(new android.content.Intent(this,NetworkPolicyActivity.class).putExtra("server_url",origin));
             } catch(IllegalArgumentException e) {status.setText(e.getMessage());}
         });
+        Button users=new Button(this);users.setText("Administrar usuarios");layout.addView(users);
+        users.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();startActivity(new android.content.Intent(this,AdminUsersActivity.class).putExtra("server_url",origin));}catch(Exception e){status.setText("Configura una URL HTTPS válida.");}});
         android.widget.ScrollView scroll=new android.widget.ScrollView(this);scroll.addView(layout);setContentView(scroll);
         connect.setOnClickListener(v -> {
             final ApiClient client;
