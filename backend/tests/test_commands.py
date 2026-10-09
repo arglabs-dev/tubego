@@ -78,3 +78,13 @@ def test_task_priority_receipt_avoids_duplicate_increment_after_lost_reply(servi
     assert second['priority']>first['priority']
     assert action(app.state.db,principal(user),task['task_id'],'priority',identifier)==first
     with closing(app.state.db.connect()) as conn:assert conn.execute('SELECT priority FROM tasks WHERE id=?',(task['task_id'],)).fetchone()[0]==second['priority']
+
+
+def test_language_command_is_independent_from_media_preferences(service):
+    from tubego_server.delivery import read_setting
+    app,client=service;user=owner(app)
+    first=send(client,user,1,'language',{'language':'en','revision':1})
+    assert first.status_code==200 and first.json()['status']=='complete'
+    assert send(client,user,2).json()['status']=='complete'
+    with closing(app.state.db.connect()) as conn:assert read_setting(conn,'user',user['id'],'language')=='en'
+    assert send(client,user,3,'language',{'language':'xx','revision':2}).json()['status']=='rejected'

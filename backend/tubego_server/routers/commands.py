@@ -18,7 +18,7 @@ class Command(BaseModel):
     model_config=ConfigDict(extra='forbid')
     id:UUID
     sequence:int=Field(gt=0,strict=True)
-    kind:Literal['submit','recover','delete','server_cleanup','preferences','resource_priority','task_cancel','task_retry','task_priority','noop']
+    kind:Literal['submit','recover','delete','server_cleanup','preferences','language','resource_priority','task_cancel','task_retry','task_priority','noop']
     payload:dict=Field(default_factory=dict)
 
 
@@ -48,6 +48,16 @@ def execute(body, request, principal):
     if body.kind.startswith('task_'):
         if set(payload)!={'task_id'}:raise ValueError('Invalid task command')
         return action(request.app.state.db,principal,payload['task_id'],body.kind[5:],body.id)
+    if body.kind=='language':
+        if set(payload)!={'language','revision'} or payload['language'] not in ('es','en') or type(payload['revision']) is not int or payload['revision']<1:raise ValueError('Invalid language intention')
+        with request.app.state.db.transaction() as conn:
+            scope,did=device_scope(conn,principal)
+            key='language_command:'+rid
+            previous=read_setting(conn,'device',did,key)
+            if previous is not None:return previous
+            write_setting(conn,'user',scope.user_id,'language',payload['language'])
+            write_setting(conn,'device',did,key,payload)
+        return payload
     if body.kind=='preferences':
         value=MediaPreferences.model_validate(payload)
         # Save + effect receipt in one transaction. A replay must not overwrite

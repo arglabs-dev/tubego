@@ -21,7 +21,7 @@ public final class CommandQueue {
     /** Original UUID preserves a legacy effect receipt whose reply was lost. */
     public Entry importIntent(String id,String kind,String payload)throws IOException{
         UUID.fromString(id);
-        if(!Arrays.asList("submit","recover","delete","server_cleanup","preferences","resource_priority","task_cancel","task_retry","task_priority","noop").contains(kind)||payload==null||payload.length()>16384)throw new IOException("Invalid command intention");
+        if(!Arrays.asList("submit","recover","delete","server_cleanup","preferences","language","resource_priority","task_cancel","task_retry","task_priority","noop").contains(kind)||payload==null||payload.length()>16384)throw new IOException("Invalid command intention");
         synchronized(LOCK){
             Entry existing=find(id);if(existing!=null)return existing;
             long sequence=0;for(Entry entry:entries())sequence=Math.max(sequence,entry.sequence);
