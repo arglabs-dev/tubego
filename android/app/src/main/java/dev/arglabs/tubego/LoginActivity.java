@@ -12,6 +12,7 @@ public final class LoginActivity extends Activity {
     private TextView status; private Button login,forgot,refresh,change,logout,devices;
     private EditText email,password,newPassword; private CheckBox revoke;
     private String origin;
+    private static final class AccountSwitchRequired extends Exception {}
     @Override public void onCreate(Bundle state) {
         super.onCreate(state); origin=getIntent().getStringExtra("server_url");
         LinearLayout layout=new LinearLayout(this); layout.setOrientation(LinearLayout.VERTICAL); layout.setPadding(32,64,32,32);
@@ -52,6 +53,9 @@ public final class LoginActivity extends Activity {
                 if(operation.equals("logout")) {
                     SessionLifecycle.logout(this,origin);message="Sesión cerrada. Archivos locales borrados; el servidor recibirá el cierre cuando haya conexión.";
                 } else if(operation.equals("login")) {
+                    JSONObject active=store.read();
+                    if(active!=null && !active.optString("email","").equalsIgnoreCase(address.trim()))
+                        throw new AccountSwitchRequired();
                     JSONObject body=new JSONObject().put("email",address).put("password",secret).put("device_name",android.os.Build.MANUFACTURER+" "+android.os.Build.MODEL);
                     JSONObject previous=store.deviceIdentity(address);
                     if(previous==null) previous=store.read();
@@ -79,6 +83,8 @@ public final class LoginActivity extends Activity {
                         message=accountMessage(account.getString("status"));
                     }
                 }
+            } catch(AccountSwitchRequired e) {
+                message="Cierra la sesión actual antes de cambiar de cuenta. Se te pedirá confirmar el borrado de sus descargas locales.";
             } catch(ApiClient.ApiException e) {
                 if(e.code.equals("session_revoked") || e.code.equals("account_unavailable")) {
                     try {new SessionStore(this,origin).clear();} catch(Exception ignored) { }
