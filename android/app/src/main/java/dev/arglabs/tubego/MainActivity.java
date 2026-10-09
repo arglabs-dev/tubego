@@ -85,6 +85,7 @@ public final class MainActivity extends Activity {
             try { client = new ApiClient(url.getText().toString()); }
             catch (IllegalArgumentException e) { status.setText(e.getMessage()); return; }
             getSharedPreferences("server_connection",MODE_PRIVATE).edit().putString("server_url", client.getBaseUrl()).apply();
+            TransferJobs.register(this,client.getBaseUrl());
             status.setText("Comprobando conexión…");
             connect.setEnabled(false);
             network.execute(() -> {
@@ -106,6 +107,7 @@ public final class MainActivity extends Activity {
         super.onResume();
         String origin=getSharedPreferences("server_connection",MODE_PRIVATE).getString("server_url", getPreferences(MODE_PRIVATE).getString("server_url", ""));
         if(origin.isEmpty()) return;
+        try{TransferJobs.register(this,new ApiClient(origin).getBaseUrl());}catch(Exception ignored){}
         network.execute(() -> {
             try {
                 String token=new SessionStore(this,origin).token();

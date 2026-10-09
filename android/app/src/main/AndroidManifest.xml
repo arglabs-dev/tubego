@@ -16,6 +16,7 @@
         </activity>
         <activity android:name=".AdminUsersActivity" android:exported="false" />
         <activity android:name=".AdminPriorityActivity" android:exported="false" />
+        <service android:name=".TransferJobService" android:exported="true" android:permission="android.permission.BIND_JOB_SERVICE" />
         <service android:name=".LogoutJobService" android:exported="true" android:permission="android.permission.BIND_JOB_SERVICE" />
         <activity android:name=".DevicesActivity" android:exported="false" />
         <activity android:name=".LoginActivity" android:exported="false" />

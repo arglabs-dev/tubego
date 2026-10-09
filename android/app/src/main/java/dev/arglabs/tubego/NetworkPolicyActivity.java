@@ -58,13 +58,18 @@ public final class NetworkPolicyActivity extends Activity {
                                 .setMessage("¿Autorizar "+title+" ("+size+") en este teléfono? El permiso dura hasta completar o cancelar esta descarga. No incluye otros archivos ni dispositivos.")
                                 .setNegativeButton("Cancelar",null).setPositiveButton("Autorizar",(d,w)->{
                                     try {
-                                        JSONObject current=new SessionStore(this,origin).read();
-                                        if(current==null || !key.userId.equals(current.optString("user_id")) || !key.deviceId.equals(current.optString("device_id"))) throw new Exception("Cuenta cambió");
-                                        permissions.authorize(key);allow.setText("Datos móviles autorizados");status.setText("Autorización guardada para este archivo.");
+                                        synchronized(SessionStore.class) {
+                                            JSONObject current=new SessionStore(this,origin).read();
+                                            if(current==null || !key.userId.equals(current.optString("user_id")) || !key.deviceId.equals(current.optString("device_id"))) throw new Exception("Cuenta cambió");
+                                            java.io.File root=LocalLibraryStorage.root(this,origin,key.userId,key.deviceId);
+                                            if(new java.io.File(root,key.resourceId+".deleted").exists())throw new Exception("Archivo borrado");
+                                            permissions.authorize(key);
+                                        }
+                                        TransferJobs.wake(this,origin,false);allow.setText("Datos móviles autorizados");status.setText("Autorización guardada para este archivo.");
                                     } catch(Exception e) {status.setText("No se pudo guardar el permiso. Revisa tu sesión.");}
                                 }).show());
                             Button remove=new Button(this);remove.setText("Retirar permiso de datos");layout.addView(remove);
-                            remove.setOnClickListener(v->{try {permissions.revoke(key);allow.setText("Permitir datos móviles");status.setText("Este archivo vuelve a esperar Wi-Fi.");}catch(Exception e){status.setText("No se pudo retirar el permiso.");}});
+                            remove.setOnClickListener(v->{try {permissions.revoke(key);TransferRuntime.permissionRemoved(origin,key);allow.setText("Permitir datos móviles");status.setText("Este archivo vuelve a esperar Wi-Fi.");}catch(Exception e){status.setText("No se pudo retirar el permiso.");}});
                         } catch(Exception ignored) {status.setText("Algunos archivos todavía no están listos.");}
                     }
                     if(!result.isNull("next_delivery_cursor")) {

@@ -19,7 +19,8 @@ public final class SessionLifecycle {
     public static void logout(Context context,String origin) throws Exception {
         synchronized(SessionStore.class){
         SessionStore store=new SessionStore(context,origin);JSONObject session=store.read();if(session==null)return;
-        LocalLibraryStorage.wipe(context,origin,session.getString("user_id"),session.getString("device_id"));
+        TransferJobs.stop(context,origin);
+        synchronized(SessionStore.class) {LocalLibraryStorage.wipe(context,origin,session.getString("user_id"),session.getString("device_id"));}
         JSONObject pending=store.pendingLogout();
         org.json.JSONArray sessions=pending==null?new org.json.JSONArray():pending.getJSONArray("sessions");
         boolean duplicate=false;for(int i=0;i<sessions.length();i++) if(sessions.getJSONObject(i).getString("device_id").equals(session.getString("device_id"))) duplicate=true;
@@ -32,6 +33,7 @@ public final class SessionLifecycle {
         if(token==null || (!code.equals("session_revoked")&&!code.equals("account_unavailable")))return;
         SessionStore store=new SessionStore(context,origin);JSONObject session=store.read();
         if(session==null || !session.getString("token").equals(token))return;
+        TransferJobs.stop(context,origin);
         JSONObject previous=store.cleanup();
         org.json.JSONArray entries=previous==null?new org.json.JSONArray():previous.getJSONArray("devices");
         entries.put(new JSONObject().put("user_id",session.getString("user_id")).put("device_id",session.getString("device_id")));
@@ -45,7 +47,7 @@ public final class SessionLifecycle {
         org.json.JSONArray entries=pending.getJSONArray("devices"),remaining=new org.json.JSONArray();
         for(int i=0;i<entries.length();i++) {
             JSONObject identity=entries.getJSONObject(i);
-            try {LocalLibraryStorage.wipe(context,origin,identity.getString("user_id"),identity.getString("device_id"));}
+            try {synchronized(SessionStore.class){LocalLibraryStorage.wipe(context,origin,identity.getString("user_id"),identity.getString("device_id"));}}
             catch(Exception e) {remaining.put(identity);}
         }
         if(remaining.length()>0) {store.saveCleanup(new JSONObject().put("devices",remaining));throw new Exception("Limpieza local pendiente");}
