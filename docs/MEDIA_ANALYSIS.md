@@ -16,30 +16,58 @@ Errors have stable codes and fixed messages; raw diagnostics, paths, cookies, an
 signed download URLs are not returned or logged. Source failures are classified
 best-effort; unfamiliar extractor diagnostics become `temporary_failure`.
 
-## Mandatory deployment prerequisite
+## Restricted egress proxy
+
+`backend/tubego_server/egress_proxy.py` provides an HTTP forwarding and CONNECT
+proxy. It accepts destination ports 80/443, rejects localhost/local/internal names
+and all non-global, multicast, unspecified and mapped IPv6 DNS answers. Every
+connection resolves the destination, checks **all** returned addresses, then
+connects a validated numeric sockaddr without another lookup. HTTP redirects
+require a fresh proxy request and validation; HTTPS redirects open a fresh CONNECT.
+The original Host header is rebuilt for forwarded HTTP. Request headers are
+limited to 32 KiB, request bodies to 1 MiB, and connections to a 30-second inactivity
+timeout. It does not log destinations, headers, queries or exception diagnostics.
+GET, HEAD and POST are supported, plus CONNECT. Unsupported protocols, ports,
+chunked request bodies and malformed/duplicate headers are rejected.
 
 The engine fails closed (503 `temporary_failure`) unless
 `TUBEGO_MEDIA_EGRESS_PROXY=http://<restricted-proxy-host>:<port>` is configured.
-A boolean “isolated” flag is deliberately insufficient. This change **does not
-provide that proxy infrastructure**. Do not enable it with an ordinary open proxy.
-Before enabling production analysis, deploy/test a proxy which accepts only HTTP
-and HTTPS destinations on ports 80/443, resolves each target (including each HTTP
-redirect and HTTPS CONNECT) and rejects any non-global IPv4/IPv6 address. It must
-connect to the already validated public IP rather than resolve it again. Restrict
-the worker's network so requests cannot bypass that proxy, including loopback,
-private LAN, cloud metadata, IPv6 local routes and protocol handlers outside HTTP.
-No private credential-bearing proxy URL is accepted by the setting.
+`YoutubeDL.urlopen` validates every extractor request and forces the configured
+proxy even when the request has its own proxy map. The reusable
+`restricted_ytdlp(options)` engine limits networking to RequestsRH, whose session
+disables environment proxy overrides. This prevents urllib NO_PROXY redirect
+bypasses. yt-dlp and requests are pinned to tested versions; rerun these tests on
+upgrades. No boolean “isolated” flag is
+used. `compose.mobile.yaml` now starts the provided proxy as `egress`, passes its
+address to the API, and publishes **no proxy port on the host**:
 
-Input normalization and the `YoutubeDL.urlopen` guard reject private/local URLs
-and DNS answers for every extractor request, and validate the returned webpage
-identity. These are defense in depth, **not full SSRF protection**: urllib/requests
-may follow redirects internally and DNS can change after validation. Redirect and
-rebinding protection must therefore be enforced by the above proxy/network layer.
-Do not treat the post-extraction URL check as protection against a request already
-made. Reuse this policy for the full media-download worker.
+```sh
+docker compose -f compose.mobile.yaml up --build -d
+```
 
-Tests use fake extractors/DNS, verify skip-download, rejected collections,
-optional metadata, request guards, sanitization and fail-closed configuration.
-Real portal/network compatibility is not validated by offline tests; no library
-can guarantee all sites or bypass access restrictions. A proxy integration test
-is required before declaring this operation deployed and functional.
+For a non-container local setup, start the proxy (loopback binding by default):
+
+```sh
+PYTHONPATH=backend python -m tubego_server.egress_proxy
+TUBEGO_MEDIA_EGRESS_PROXY=http://127.0.0.1:8081 PYTHONPATH=backend uvicorn tubego_server.main:app
+```
+
+Do not publish this unauthenticated proxy or replace it with an unrestricted proxy.
+The Compose network is not a global egress sandbox: the API may need direct SMTP
+or other service traffic. Protection here applies to the mobile yt-dlp engine's
+HTTP requests, via the forced proxy and validated public destinations. It does not
+make arbitrary plugins/subprocesses safe. The later full download worker must reuse
+`restricted_ytdlp`. Its download hook permits only native HTTP/HLS/DASH downloaders
+and rejects ffmpeg, RTMP and external network downloaders before they run. FFmpeg
+postprocessing must be limited to already downloaded local files. Do not load untrusted extractor plugins. Network-level restrictions
+remain useful additional defense for a dedicated worker.
+
+Initial URL and final webpage validation are defense in depth; they do not alone
+prevent requests to private redirect targets. The supplied proxy performs that
+validation at connection time. The client/proxy integration tests use the **real
+installed yt-dlp** against a fake public source, with test-only socket mapping to a
+local fixture. They verify successful metadata extraction, a working CONNECT tunnel,
+public-to-private redirect denial, validated-IP pinning and parser limits. No
+production override permits private destinations. Real portal availability still
+requires portal-specific testing; no library guarantees all sites or bypasses access
+restrictions.

@@ -1,4 +1,4 @@
-"""Single-resource metadata. Deployment must isolate ALL extractor egress."""
+"""Single-resource metadata with public-destination proxy protection."""
 import ipaddress
 import math
 import os
@@ -46,7 +46,9 @@ def normalize_url(value, resolver=socket.getaddrinfo):
             addresses = [ipaddress.ip_address(record[4][0]) for record in
                          resolver(host, port or (443 if parts.scheme.lower() == "https" else 80),
                                   type=socket.SOCK_STREAM)]
-        if not addresses or any(not address.is_global for address in addresses):
+        if not addresses or any(not address.is_global or address.is_multicast or address.is_unspecified
+                or (isinstance(address, ipaddress.IPv6Address) and address.ipv4_mapped)
+                for address in addresses):
             raise ValueError()
         netloc = f"[{host}]" if ":" in host else host
         if port is not None:
@@ -79,6 +81,58 @@ def classify_error(error):
     return "temporary_failure"
 
 
+def restricted_ytdlp(options, *, resolver=socket.getaddrinfo):
+    """Reusable metadata/download engine. External network downloaders are denied."""
+    # A rejecting proxy is necessary for redirects and DNS rebinding protection.
+    proxy = os.environ.get("TUBEGO_MEDIA_EGRESS_PROXY", "")
+    try:
+        proxy_parts = urlsplit(proxy)
+        if (proxy_parts.scheme != "http" or not proxy_parts.hostname
+                or proxy_parts.username or proxy_parts.password
+                or proxy_parts.path not in ("", "/") or proxy_parts.query
+                or proxy_parts.fragment or proxy_parts.port is None):
+            raise ValueError()
+    except ValueError:
+        raise MediaError("temporary_failure") from None
+    import yt_dlp
+
+    class GuardedYoutubeDL(yt_dlp.YoutubeDL):
+        def dl(self, name, info, subtitle=False, test=False):
+            from yt_dlp.downloader import get_suitable_downloader
+            from yt_dlp.downloader.http import HttpFD
+            from yt_dlp.downloader.hls import HlsFD
+            from yt_dlp.downloader.dash import DashSegmentsFD
+            # Only native HTTP/HLS/DASH downloaders route every segment through
+            # guarded urlopen. FFmpeg and external executables may bypass proxy.
+            chosen = get_suitable_downloader(info, self.params, to_stdout=(name == '-'))
+            if chosen not in (HttpFD, HlsFD, DashSegmentsFD):
+                raise MediaError("unsupported")
+            return super().dl(name, info, subtitle=subtitle, test=test)
+
+        def build_request_director(self, handlers, preferences=None):
+            # urllib's stdlib proxy handler can bypass via environment NO_PROXY
+            # on internal redirects. Use only requests (trust_env=False).
+            from yt_dlp.networking._requests import RequestsRH
+            return super().build_request_director([RequestsRH])
+
+        def urlopen(self, request):
+            # Guard every extractor request; internal redirects MUST be filtered
+            # at the configured proxy as well. DNS resolution alone is not enough.
+            target = request if isinstance(request, str) else getattr(request, "url", None)
+            if target is None and hasattr(request, "get_full_url"):
+                target = request.get_full_url()
+            normalize_url(target, resolver)
+            if hasattr(request, "proxies"):
+                request.proxies = {"all": proxy, "http": proxy, "https": proxy}
+            return super().urlopen(request)
+
+    options = dict(options)
+    options.update(proxy=proxy, external_downloader=None, hls_prefer_native=True,
+                   cachedir=False, usenetrc=False, cookiefile=None, cookiesfrombrowser=None,
+                   enable_file_urls=False, logger=SilentLogger())
+    return GuardedYoutubeDL(options)
+
+
 def analyze_media(url, *, factory=None, resolver=socket.getaddrinfo):
     normalized = normalize_url(url, resolver)
     options = {"skip_download": True, "noplaylist": True, "extract_flat": False,
@@ -86,33 +140,7 @@ def analyze_media(url, *, factory=None, resolver=socket.getaddrinfo):
                "socket_timeout": 15, "retries": 0, "extractor_retries": 0,
                "cachedir": False, "usenetrc": False}
     if factory is None:
-        # A rejecting proxy is necessary for redirects and DNS rebinding protection.
-        proxy = os.environ.get("TUBEGO_MEDIA_EGRESS_PROXY", "")
-        try:
-            proxy_parts = urlsplit(proxy)
-            if (proxy_parts.scheme != "http" or not proxy_parts.hostname
-                    or proxy_parts.username or proxy_parts.password
-                    or proxy_parts.path not in ("", "/") or proxy_parts.query
-                    or proxy_parts.fragment or proxy_parts.port is None):
-                raise ValueError()
-        except ValueError:
-            raise MediaError("temporary_failure") from None
-        import yt_dlp
-
-        class GuardedYoutubeDL(yt_dlp.YoutubeDL):
-            def urlopen(self, request):
-                # Guard every extractor request; internal redirects MUST be filtered
-                # at the configured proxy as well. DNS resolution alone is not enough.
-                target = request if isinstance(request, str) else getattr(request, "url", None)
-                if target is None and hasattr(request, "get_full_url"):
-                    target = request.get_full_url()
-                normalize_url(target, resolver)
-                if hasattr(request, "proxies"):
-                    request.proxies = {"all": proxy, "http": proxy, "https": proxy}
-                return super().urlopen(request)
-
-        options["proxy"] = proxy
-        factory = GuardedYoutubeDL
+        factory = lambda options: restricted_ytdlp(options, resolver=resolver)
     try:
         with factory(options) as engine:
             info = engine.extract_info(normalized, download=False)
