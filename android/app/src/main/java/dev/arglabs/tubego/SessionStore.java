@@ -19,7 +19,11 @@ public final class SessionStore {
     private static final String ALIAS="tubego.sessions.v1";
     private final SharedPreferences prefs;
     private final String namespace;
+    private final Context context;
+    private final String origin;
     public SessionStore(Context context, String origin) throws Exception {
+        this.context=context.getApplicationContext();
+        this.origin=new ApiClient(origin).getBaseUrl();
         prefs=context.getSharedPreferences("tubego_sessions",Context.MODE_PRIVATE);
         namespace=Base64.encodeToString(MessageDigest.getInstance("SHA-256").digest(new ApiClient(origin).getBaseUrl().getBytes(StandardCharsets.UTF_8)),Base64.NO_WRAP);
     }
@@ -61,7 +65,10 @@ public final class SessionStore {
     public JSONObject deviceIdentity(String email) throws Exception {return readValue(identitySuffix(email));}
     public JSONObject read() throws Exception {return readValue("");}
     public String token() throws Exception {JSONObject session=read();return session==null?null:session.getString("token");}
-    public void clear() {clearValue("");}
+    public void clear() {
+        AndroidDownloadPermissions.create(context).revokeOrigin(origin);
+        clearValue("");
+    }
     public void savePendingLogout(JSONObject session) throws Exception {saveValue(".logout",session);}
     public JSONObject pendingLogout() throws Exception {return readValue(".logout");}
     public void clearPendingLogout() {clearValue(".logout");}

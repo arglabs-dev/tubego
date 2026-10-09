@@ -71,6 +71,12 @@ public final class MainActivity extends Activity {
         }catch(Exception e){status.setText("Configura una URL HTTPS de servidor válida.");}});
         Button mediaPrefs=new Button(this);mediaPrefs.setText("Preferencias de reproducción y descarga");layout.addView(mediaPrefs);
         mediaPrefs.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();startActivity(new android.content.Intent(this,MediaPreferencesActivity.class).putExtra("server_url",origin));}catch(Exception e){status.setText("Configura una URL HTTPS de servidor válida.");}});
+        Button dataPolicy = new Button(this); dataPolicy.setText("Permisos de datos por descarga"); layout.addView(dataPolicy);
+        dataPolicy.setOnClickListener(v -> {
+            try {String origin=new ApiClient(url.getText().toString()).getBaseUrl();
+                startActivity(new android.content.Intent(this,NetworkPolicyActivity.class).putExtra("server_url",origin));
+            } catch(IllegalArgumentException e) {status.setText(e.getMessage());}
+        });
         android.widget.ScrollView scroll=new android.widget.ScrollView(this);scroll.addView(layout);setContentView(scroll);
         connect.setOnClickListener(v -> {
             final ApiClient client;
