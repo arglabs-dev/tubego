@@ -4,6 +4,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <queries><intent><action android:name="android.intent.action.VIEW"/><data android:mimeType="video/*"/></intent><intent><action android:name="android.intent.action.VIEW"/><data android:mimeType="audio/*"/></intent><package android:name="org.videolan.vlc"/></queries>
     <application android:name=".TubegoApplication" android:label="Tubego" android:theme="@android:style/Theme.Material.Light.NoActionBar"
         android:allowBackup="false" android:usesCleartextTraffic="false" android:supportsRtl="true">
         <service android:name=".LinkOutboxJobService" android:exported="true" android:permission="android.permission.BIND_JOB_SERVICE" />
@@ -22,6 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".AdminDownloadErrorsActivity" android:exported="false" />
+        <provider android:name=".PrivateMediaContentProvider" android:authorities="dev.arglabs.tubego.private-media" android:exported="false" android:grantUriPermissions="true" />
+        <activity android:name=".LocalLibraryActivity" android:exported="false" />
         <activity android:name=".AdminUsersActivity" android:exported="false" />
         <activity android:name=".AdminCenterActivity" android:exported="false" />
         <activity android:name=".AdminRetentionActivity" android:exported="false" />
