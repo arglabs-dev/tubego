@@ -43,7 +43,7 @@ def get_principal(request: Request):
             WHERE s.token_hash=?""", (token_hash(header[7:]),)).fetchone()
     if row is None:
         raise HTTPException(401, {"code":"invalid_session"})
-    if row["status"] in ("blocked", "rejected"):
+    if row["status"] in ("blocked", "rejected", "deleted"):
         raise HTTPException(403, {"code":"account_unavailable", "wipe_local":True})
     if row["device_id"] is not None and row["device_owner"] != row["id"]:
         raise HTTPException(401, {"code":"invalid_session"})
