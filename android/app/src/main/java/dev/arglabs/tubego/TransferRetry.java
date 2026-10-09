@@ -23,8 +23,8 @@ public final class TransferRetry {
         if(transientError(error)&&record.failures<=DELAYS.length){
             record.nextRetryAt=now+DELAYS[record.failures-1];record.state="retry_wait";
             record.message="Fallo temporal. Reintento automático "+record.failures+" de 3 pendiente.";
-        }else{record.nextRetryAt=0;record.state="failed";record.message="No se pudo completar la descarga ("+record.failureCode+"). Puedes reintentar manualmente.";}
+        }else{record.nextRetryAt=0;if(!"failed".equals(record.state))record.failureIncident=java.util.UUID.randomUUID().toString();record.state="failed";record.message="No se pudo completar la descarga ("+record.failureCode+"). Puedes reintentar manualmente.";}
         record.save();
     }
-    public static void reset(TransferRecord record)throws IOException{record.pauseReason="";record.failures=0;record.nextRetryAt=0;record.failureCode="";record.state=record.media().isFile()?"complete":"pending";record.message="";record.save();}
+    public static void reset(TransferRecord record)throws IOException{record.failureIncident="";record.pauseReason="";record.failures=0;record.nextRetryAt=0;record.failureCode="";record.state=record.media().isFile()?"complete":"pending";record.message="";record.save();}
 }

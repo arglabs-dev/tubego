@@ -25,4 +25,10 @@ public class TransferRetryTest {
         r=TransferRecord.read(r.manifest());assertEquals(1,r.failures);assertEquals(31000,r.nextRetryAt);
         r.reconcile("b".repeat(64),20);assertEquals(0,r.failures);assertEquals(0,r.nextRetryAt);
     }
+
+    @Test public void newTerminalFailureGetsDurableDistinctIncidentAfterManualRetry()throws Exception{
+        TransferRecord r=record();TransferRetry.failed(r,new TransferRetry.Failure("http_404",false),1);String first=r.failureIncident;
+        assertFalse(first.isEmpty());assertEquals(first,TransferRecord.read(r.manifest()).failureIncident);
+        TransferRetry.reset(r);TransferRetry.failed(r,new TransferRetry.Failure("http_404",false),2);assertNotEquals(first,r.failureIncident);
+    }
 }

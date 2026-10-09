@@ -16,8 +16,9 @@ public final class TransferJobService extends JobService {
         if(android.os.Build.VERSION.SDK_INT<33 || checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)==android.content.pm.PackageManager.PERMISSION_GRANTED) notices.notify(params.getJobId(),new Notification.Builder(this,"transfers").setSmallIcon(android.R.drawable.stat_sys_download).setContentTitle("Tubego · Descargas en curso").setContentText("Las transferencias respetan tus permisos de red.").setOngoing(true).build());
         futures.put(params.getJobId(),executor.submit(()->{
             TransferDriver.Outcome outcome=TransferDriver.Outcome.RETRY;
-            try {outcome=TransferDriver.run(this,origin,control);}catch(Exception ignored){}
+            try {try{AlertSync.poll(this,origin);}catch(Exception ignoredAlerts){}outcome=TransferDriver.run(this,origin,control);}catch(Exception ignored){}
             finally {
+                try{org.json.JSONObject current=new SessionStore(this,origin).read();if(current!=null)AlertSync.local(this,origin,current);}catch(Exception ignoredAlerts){}
                 notices.cancel(params.getJobId());controls.remove(params.getJobId());futures.remove(params.getJobId());
                 if(!control.stopped) {
                                         boolean needsAny=outcome==TransferDriver.Outcome.RETRY || outcome==TransferDriver.Outcome.WAIT_NETWORK;

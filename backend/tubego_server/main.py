@@ -7,7 +7,7 @@ from tubego_server.config import Settings
 from tubego_server.db import Database
 from src.storage import validate_channel_paths
 import os
-from tubego_server.routers import system, registration, admin_priority, library, login, media, preferences, devices, device_delivery, tasks, retention, resource_deletion, resource_recovery, server_cleanup
+from tubego_server.routers import system, registration, admin_priority, library, login, media, preferences, devices, device_delivery, tasks, retention, resource_deletion, resource_recovery, server_cleanup, alerts
 from tubego_server.mail import SmtpMailer
 from tubego_server.account_cleanup import CleanupRunner
 from tubego_server.routers import admin_users
@@ -63,6 +63,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(resource_deletion.router, prefix="/api/v1")
     app.include_router(resource_recovery.router, prefix="/api/v1")
     app.include_router(server_cleanup.router, prefix="/api/v1")
+    app.include_router(alerts.router,prefix="/api/v1")
     return app
 
 

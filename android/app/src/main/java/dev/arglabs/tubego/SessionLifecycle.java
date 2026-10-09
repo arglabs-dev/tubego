@@ -20,7 +20,7 @@ public final class SessionLifecycle {
         synchronized(SessionStore.class){
         SessionStore store=new SessionStore(context,origin);JSONObject session=store.read();if(session==null)return;
         TransferJobs.stop(context,origin);
-        synchronized(SessionStore.class) {LocalLibraryStorage.wipe(context,origin,session.getString("user_id"),session.getString("device_id"));}
+        synchronized(SessionStore.class) {AlertNotifications.clear(context,origin,session.getString("user_id"),session.getString("device_id"));LocalLibraryStorage.wipe(context,origin,session.getString("user_id"),session.getString("device_id"));}
         JSONObject pending=store.pendingLogout();
         org.json.JSONArray sessions=pending==null?new org.json.JSONArray():pending.getJSONArray("sessions");
         boolean duplicate=false;for(int i=0;i<sessions.length();i++) if(sessions.getJSONObject(i).getString("device_id").equals(session.getString("device_id"))) duplicate=true;
@@ -47,7 +47,7 @@ public final class SessionLifecycle {
         org.json.JSONArray entries=pending.getJSONArray("devices"),remaining=new org.json.JSONArray();
         for(int i=0;i<entries.length();i++) {
             JSONObject identity=entries.getJSONObject(i);
-            try {synchronized(SessionStore.class){LocalLibraryStorage.wipe(context,origin,identity.getString("user_id"),identity.getString("device_id"));}}
+            try {synchronized(SessionStore.class){AlertNotifications.clear(context,origin,identity.getString("user_id"),identity.getString("device_id"));LocalLibraryStorage.wipe(context,origin,identity.getString("user_id"),identity.getString("device_id"));}}
             catch(Exception e) {remaining.put(identity);}
         }
         if(remaining.length()>0) {store.saveCleanup(new JSONObject().put("devices",remaining));throw new Exception("Limpieza local pendiente");}
