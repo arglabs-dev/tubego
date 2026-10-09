@@ -9,6 +9,10 @@ import java.nio.charset.StandardCharsets;
 
 /** Transport base. No auth or resource operations exist in this foundation. */
 public final class ApiClient {
+    public static final class ApiException extends IOException {
+        public final int status; public final String code;
+        public ApiException(int status,String code) {super("HTTP "+status);this.status=status;this.code=code;}
+    }
     private final String baseUrl;
 
     public ApiClient(String url) {
@@ -39,7 +43,23 @@ public final class ApiClient {
                 try (var stream = connection.getOutputStream()) { stream.write(body.toString().getBytes(StandardCharsets.UTF_8)); }
             }
             int status = connection.getResponseCode();
-            if (status < 200 || status >= 300) throw new IOException("HTTP " + status + ": no se pudo completar la operación");
+            if (status < 200 || status >= 300) {
+                String code="";
+                try(var stream=connection.getErrorStream()) {
+                    if(stream!=null) {
+                        ByteArrayOutputStream errors=new ByteArrayOutputStream();
+                        byte[] buffer=new byte[4096];int count;
+                        while((count=stream.read(buffer))!=-1) {
+                            if(errors.size()+count>65536) break;
+                            errors.write(buffer,0,count);
+                        }
+                        byte[] error=errors.toByteArray();
+                        JSONObject detail=new JSONObject(new String(error,StandardCharsets.UTF_8)).optJSONObject("detail");
+                        if(detail!=null) code=detail.optString("code");
+                    }
+                } catch(Exception ignored) { }
+                throw new ApiException(status,code);
+            }
             try (var stream = connection.getInputStream()) {
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 byte[] buffer = new byte[4096]; int count;

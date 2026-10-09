@@ -37,15 +37,20 @@ def get_principal(request: Request):
     if not header.startswith("Bearer ") or len(header) > 512:
         raise HTTPException(401, "Authentication required")
     with closing(request.app.state.db.connect()) as conn:
-        row = conn.execute("""SELECT u.*, s.id AS session_id, s.device_id FROM users u
+        row = conn.execute("""SELECT u.*, s.id AS session_id, s.device_id, s.revoked_at AS session_revoked,
+            s.expires_at AS session_expires, d.revoked_at AS device_revoked, d.user_id AS device_owner FROM users u
             JOIN sessions s ON u.id=s.user_id LEFT JOIN devices d ON d.id=s.device_id
-            WHERE s.token_hash=? AND s.revoked_at IS NULL AND s.expires_at>?
-            AND (s.device_id IS NULL OR d.revoked_at IS NULL)""",
-            (token_hash(header[7:]), utcnow())).fetchone()
+            WHERE s.token_hash=?""", (token_hash(header[7:]),)).fetchone()
     if row is None:
-        raise HTTPException(401, "Invalid or expired session")
+        raise HTTPException(401, {"code":"invalid_session"})
     if row["status"] in ("blocked", "rejected"):
-        raise HTTPException(403, "Account unavailable")
+        raise HTTPException(403, {"code":"account_unavailable"})
+    if row["device_id"] is not None and row["device_owner"] != row["id"]:
+        raise HTTPException(401, {"code":"invalid_session"})
+    if row["session_revoked"] or row["device_revoked"]:
+        raise HTTPException(401, {"code":"session_revoked"})
+    if row["session_expires"] <= utcnow():
+        raise HTTPException(401, {"code":"session_expired"})
     return dict(row)
 
 

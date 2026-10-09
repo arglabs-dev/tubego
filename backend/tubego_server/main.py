@@ -7,7 +7,7 @@ from tubego_server.config import Settings
 from tubego_server.db import Database
 from src.storage import validate_channel_paths
 import os
-from tubego_server.routers import system, registration, admin_priority, library
+from tubego_server.routers import system, registration, admin_priority, library, login
 from tubego_server.mail import SmtpMailer
 
 
@@ -24,6 +24,13 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app = FastAPI(title="Tubego Mobile API", version=__version__,
                   lifespan=lifespan, docs_url="/api/v1/docs", redoc_url=None,
                   openapi_url="/api/v1/openapi.json")
+    @app.middleware("http")
+    async def private_auth_responses(request: Request, call_next):
+        response = await call_next(request)
+        if request.url.path.startswith(("/api/v1/auth/", "/api/v1/account/", "/api/v1/admin/")):
+            response.headers["Cache-Control"] = "no-store"
+        return response
+
     @app.exception_handler(RequestValidationError)
     async def invalid_input(request: Request, exc: RequestValidationError):
         # Validation errors must not echo passwords/tokens or submitted credentials.
@@ -38,6 +45,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(registration.router, prefix="/api/v1")
     app.include_router(admin_priority.router, prefix="/api/v1")
     app.include_router(library.router, prefix="/api/v1")
+    app.include_router(login.router, prefix="/api/v1")
     return app
 
 

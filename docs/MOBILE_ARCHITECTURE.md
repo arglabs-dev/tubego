@@ -91,7 +91,7 @@ Configure `TUBEGO_PUBLIC_URL` as the public HTTPS origin, `TUBEGO_SMTP_HOST`,
 `TUBEGO_SMTP_USERNAME` / `TUBEGO_SMTP_PASSWORD`. STARTTLS is enabled by default;
 `TUBEGO_SMTP_TLS=false` is only appropriate for a trusted local mail relay.
 Secrets belong in deployment secret storage, not committed compose files.
-Registration fails with 503 if SMTP cannot accept the message; no phantom account
+Registration keeps a generic 202 if SMTP cannot accept the message; no phantom account
 or verification token is committed. SMTP success is acceptance by the relay, not
 a guarantee of inbox delivery. A relay error after remote acceptance can produce
 an unusable email; resend safely replaces the token.
@@ -126,3 +126,42 @@ Its integration seam is `tubego_account` preferences key `session_token`; sessio
 storage and login/status refresh are PLA-229 responsibilities. Verification itself
 opens in the HTTPS browser; it never passes account credentials to a browser URL.
 Migration 2 adds verification tokens without modifying the original schema.
+
+## Login and password recovery (PLA-229)
+
+POST `/auth/login` accepts normalized email, password, device_name and optional
+previous device_id at API v1. Credentials authenticate ownership before that device
+can be reused; a reused device rotates/revokes its previous session. Response has
+user_id, device_id, random bearer token, 30-day expires_at, role and account status.
+Only its SHA-256 token hash is saved in SQLite. Pending users may authenticate to
+check account status; protected content continues requiring verification/approval.
+Revoked and expired sessions return separate codes `session_revoked` and
+`session_expired`; blocked/rejected identities return `account_unavailable`.
+
+POST `/auth/password/forgot` always returns the same public response, including
+unknown, blocked identities and SMTP failures. The recovery link uses a fragment,
+explicit same-origin POST from the HTTPS reset page, one-hour expiry and one use.
+POST `/auth/password/reset` accepts token, password and revoke_other_sessions
+(default true); recovery revokes all existing sessions when selected. Authenticated
+POST `/account/password` checks current_password and supports revoking other
+sessions while keeping the requesting session. Both changes are audited; password
+change invalidates outstanding recovery tokens. Reset does not approve an account.
+
+Migration 3 adds reset-token hashes and persistent fixed-window rate counters:
+login/change/reset completion 10 attempts per identity per 15 minutes; recovery
+requests 3 per email per hour; registration/verification resend 5 per email per
+hour. Every scope also limits IP attempts to five times the identity limit.
+Proxy headers must only be trusted from configured reverse proxies; counters read
+ASGI request.client, not arbitrary X-Forwarded-For. Rejections return 429 with
+Retry-After. Registration SMTP failures now return the generic 202 to avoid public
+account-existence disclosures and roll back new accounts/token writes. Send/relay
+failures require checking deployment SMTP and requesting another message.
+
+Android LoginActivity provides login, account status, forgotten-password email and
+password change. SessionStore keeps the entire session JSON (including user_id and
+device_id) in AES-256-GCM ciphertext; the key stays in Android Keystore. Storage and
+AEAD associated data are scoped to the validated HTTPS server origin, so selecting
+another server never forwards a prior token. Keystore/decryption failure refuses
+session use rather than storing cleartext. Account credentials are never persisted.
+MainActivity exposes account navigation; admin approvals read SessionStore.
+Logout/device cleanup is delivered by PLA-231, not simulated by this card.

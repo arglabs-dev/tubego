@@ -79,7 +79,7 @@ def test_mail_failure_rolls_back(service):
     app,client=service
     def fail(email,token): raise OSError('smtp unavailable')
     app.state.mailer.send_verification=fail
-    assert client.post('/api/v1/auth/register',json={'email':'new@example.com','password':'correct horse battery'}).status_code==503
+    assert client.post('/api/v1/auth/register',json={'email':'new@example.com','password':'correct horse battery'}).status_code==202
     with app.state.db.transaction() as conn:
         assert conn.execute('SELECT count(*) FROM users').fetchone()[0]==0
 
@@ -108,7 +108,7 @@ def test_validation_never_echoes_secrets(service):
 
 def test_version_one_migrates_without_losing_users(tmp_path):
     import sqlite3
-    from tubego_server.db import SCHEMA,Database
+    from tubego_server.db import SCHEMA,Database,SCHEMA_VERSION
     path=tmp_path/'previous.sqlite3'
     with sqlite3.connect(path) as conn:
         for statement in SCHEMA: conn.execute(statement)
@@ -117,5 +117,5 @@ def test_version_one_migrates_without_losing_users(tmp_path):
     db=Database(path); db.initialize(); db.initialize()
     with db.transaction() as conn:
         assert conn.execute('SELECT email FROM users').fetchone()[0]=='test@example.com'
-        assert conn.execute('PRAGMA user_version').fetchone()[0]==2
+        assert conn.execute('PRAGMA user_version').fetchone()[0]==SCHEMA_VERSION
         assert conn.execute('SELECT count(*) FROM verification_tokens').fetchone()[0]==0

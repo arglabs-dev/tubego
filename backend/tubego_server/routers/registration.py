@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request, Query
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field, field_validator
 from tubego_server.auth import get_principal, require_admin, hash_password, token_hash, utcnow
+from tubego_server.rate_limits import rate_limit
 
 router = APIRouter()
 GENERIC = {"message": "Si la cuenta necesita verificación, recibirás un correo. Después requiere aprobación administrativa."}
@@ -38,6 +39,7 @@ def issue_verification(conn, request, user):
 
 @router.post("/auth/register", status_code=202)
 def register(body: Registration, request: Request):
+    rate_limit(request, "registration", body.email, 5, 60)
     digest = hash_password(body.password)  # Match expensive work for existing accounts.
     try:
         with request.app.state.db.transaction() as conn:
@@ -49,18 +51,19 @@ def register(body: Registration, request: Request):
             if user["status"] == "pending_verification":
                 issue_verification(conn, request, user)
     except (OSError, RuntimeError):
-        raise HTTPException(503, "Verification mail is temporarily unavailable") from None
+        return GENERIC
     return GENERIC
 
 @router.post("/auth/verification/resend", status_code=202)
 def resend(body: EmailInput, request: Request):
+    rate_limit(request, "verification.resend", body.email, 5, 60)
     try:
         with request.app.state.db.transaction() as conn:
             user = conn.execute("SELECT * FROM users WHERE email=?", (body.email,)).fetchone()
             if user and user["status"] == "pending_verification":
                 issue_verification(conn, request, user)
     except (OSError, RuntimeError):
-        raise HTTPException(503, "Verification mail is temporarily unavailable") from None
+        return GENERIC
     return GENERIC
 
 class Verification(BaseModel):
