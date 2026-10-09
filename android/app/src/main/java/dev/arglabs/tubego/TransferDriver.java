@@ -55,7 +55,16 @@ public final class TransferDriver {
         for(JSONObject event:events) {
             String kind=event.optString("kind");JSONObject payload=event.optJSONObject("payload");
             if(kind.equals("wipe_device")) {control.stop();LocalLibraryStorage.wipe(context,origin,user,device);store.clear();return Outcome.STOPPED;}
-            if((kind.equals("delete_local") || kind.equals("local_deleted") || kind.equals("resource.deleted")) && payload!=null && payload.has("resource_id")) removeRecord(root,payload.getString("resource_id"));
+            if(kind.equals("resource.deleted") && payload!=null && payload.has("resource_id")) {
+                String deletedId=UUID.fromString(payload.getString("resource_id")).toString();
+                // An older event may remain unread after an explicit approved
+                // re-download. Current delivery snapshots win over stale events.
+                for(JSONObject row:rows)if(UUID.fromString(row.getString("id")).toString().equals(deletedId)
+                        && (!row.isNull("local_deleted_at") || row.optString("delivery_status").equals("approval_required"))) {
+                    LocalResourceDeletion.apply(root,deletedId);break;
+                }
+            }
+            if((kind.equals("delete_local") || kind.equals("local_deleted")) && payload!=null && payload.has("resource_id")) removeRecord(root,payload.getString("resource_id"));
         }
         }
         List<TransferRecord> queue=new ArrayList<>(),missing=new ArrayList<>();
@@ -63,13 +72,14 @@ public final class TransferDriver {
         if(!sameSession(store,token,control))return Outcome.STOPPED;
         for(JSONObject row:rows) {
             String id=UUID.fromString(row.getString("id")).toString();
-            if(new File(root,id+".deleted").exists())continue;
             File manifest=new File(root,id+".properties");
             TransferRecord record=manifest.isFile()?TransferRecord.read(manifest):null;
             if(!row.isNull("local_deleted_at") || row.optString("delivery_status").equals("approval_required")) {
-                if(record!=null) {grants.revoke(key(origin,user,device,record));removeRecord(root,id);}
+                if(record!=null)grants.revoke(key(origin,user,device,record));
+                LocalResourceDeletion.apply(root,id);
                 continue;
             }
+            if(LocalResourceDeletion.deleted(root,id))continue;
             if(!row.optBoolean("server_available")) {
                 if(record!=null && !record.media().isFile()) {record.state="unavailable";record.message="El archivo ya no está en el servidor. Solicítalo nuevamente.";record.save();}
                 continue;

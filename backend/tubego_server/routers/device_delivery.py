@@ -110,7 +110,8 @@ def request_delivery(resource_id:str,body:DeliveryRequest,request:Request,princi
         scope,did=device_scope(conn,principal)
         resource,digest=available(scope,resource_id)
         prior=conn.execute('SELECT * FROM deliveries WHERE resource_id=? AND device_id=?',(resource_id,did)).fetchone()
-        if prior and (prior['deleted_at'] or prior['status']=='approval_required') and not body.approve_redownload:
+        tombstone=prior['deleted_at'] if prior else read_setting(conn,'resource',resource_id,'deliberately_deleted')
+        if (tombstone or (prior and prior['status']=='approval_required')) and not body.approve_redownload:
             raise HTTPException(409,'Approval required to download a deliberately deleted file')
         if prior and prior['status']=='complete' and not prior['deleted_at'] and not body.restore_missing and read_setting(conn,'delivery',did+':'+resource_id,'confirmed_sha256')==digest:
             return {'resource_id':resource_id,'status':'complete'}
