@@ -5,7 +5,7 @@ from fastapi.responses import Response,StreamingResponse
 from pydantic import BaseModel,Field
 from starlette.background import BackgroundTask
 from tubego_server.auth import require_approved,utcnow
-from tubego_server.delivery import device_scope,read_setting,write_setting
+from tubego_server.delivery import device_scope,read_setting,write_setting,transfer_allowed
 from tubego_server.private_media import open_private_media,byte_range
 from tubego_server.routers.library import public_resource
 
@@ -52,6 +52,7 @@ def download(resource_id: str,request: Request,principal=Depends(require_approve
         try:
             stream.seek(start);remaining=length
             while remaining:
+                if not transfer_allowed(request.app.state.db,principal,resource_id):break
                 chunk=stream.read(min(65536,remaining))
                 if not chunk:break
                 remaining-=len(chunk);yield chunk
@@ -84,6 +85,7 @@ def confirm(resource_id: str,body: Confirmation,request: Request,principal=Depen
 
 class DeliveryRequest(BaseModel):
     approve_redownload:bool=False
+    restore_missing:bool=False
 
 
 @router.post('/resources/{resource_id}/deliveries/request')
@@ -94,12 +96,12 @@ def request_delivery(resource_id:str,body:DeliveryRequest,request:Request,princi
         prior=conn.execute('SELECT * FROM deliveries WHERE resource_id=? AND device_id=?',(resource_id,did)).fetchone()
         if prior and (prior['deleted_at'] or prior['status']=='approval_required') and not body.approve_redownload:
             raise HTTPException(409,'Approval required to download a deliberately deleted file')
-        if prior and prior['status']=='complete' and not prior['deleted_at'] and read_setting(conn,'delivery',did+':'+resource_id,'confirmed_sha256')==digest:
+        if prior and prior['status']=='complete' and not prior['deleted_at'] and not body.restore_missing and read_setting(conn,'delivery',did+':'+resource_id,'confirmed_sha256')==digest:
             return {'resource_id':resource_id,'status':'complete'}
         timestamp=utcnow()
         conn.execute("""INSERT INTO deliveries(resource_id,device_id,status,updated_at) VALUES(?,?,'pending',?)
             ON CONFLICT(resource_id,device_id) DO UPDATE SET status='pending',deleted_at=NULL,
-            confirmed_at=NULL,downloaded_bytes=CASE WHEN deliveries.deleted_at IS NOT NULL THEN 0 ELSE deliveries.downloaded_bytes END,
+            confirmed_at=NULL,downloaded_bytes=CASE WHEN deliveries.deleted_at IS NOT NULL OR deliveries.status='complete' THEN 0 ELSE deliveries.downloaded_bytes END,
             updated_at=excluded.updated_at""",(resource_id,did,timestamp))
     return {'resource_id':resource_id,'status':'pending'}
 

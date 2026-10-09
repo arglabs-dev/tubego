@@ -5,7 +5,7 @@ from datetime import datetime,timezone,timedelta
 import pytest
 from fastapi import HTTPException
 from test_private_library import service,owner,media
-from tubego_server.delivery import publish_ready,device_scope
+from tubego_server.delivery import publish_ready,device_scope,transfer_allowed
 from tubego_server.auth import token_hash,utcnow
 
 
@@ -82,6 +82,17 @@ def test_confirmation_only_matching_complete_size_digest_idempotent_no_alert(ser
     # Republish the same immutable file never schedules a duplicate complete transfer.
     assert publish_ready(app.state.db,app.state.settings.data_dir/'media',key,key+'.mp4')['recipients']==[]
     assert client.post(f'/api/v1/resources/{key}/deliveries/request',json={},headers=alice['headers']).json()['status']=='complete'
+    assert client.post(f'/api/v1/resources/{key}/deliveries/request',json={'restore_missing':True},headers=alice['headers']).json()['status']=='pending'
+    with app.state.db.transaction() as conn:
+        assert conn.execute('SELECT downloaded_bytes FROM deliveries WHERE resource_id=?',(key,)).fetchone()[0]==0
+
+@pytest.mark.parametrize('change',["UPDATE sessions SET revoked_at='now'","UPDATE devices SET revoked_at='now'","UPDATE users SET status='blocked'","UPDATE resources SET server_deleted_at='now'","UPDATE deliveries SET deleted_at='now'"])
+def test_open_transfer_checks_revocation_between_chunks(service,change):
+    app,client=service;alice=owner(app);key,published=ready(app,alice)
+    principal={'id':alice['id'],'session_id':alice['session']}
+    assert transfer_allowed(app.state.db,principal,key)
+    with app.state.db.transaction() as conn:conn.execute(change)
+    assert not transfer_allowed(app.state.db,principal,key)
 
 
 def test_changed_file_requires_new_checksum_and_local_tombstone_needs_approval(service):

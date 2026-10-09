@@ -2,6 +2,7 @@
 import hashlib
 import os
 import json
+from contextlib import closing
 from fastapi import HTTPException
 from tubego_server.auth import utcnow
 from tubego_server.ownership import LibraryScope
@@ -29,6 +30,21 @@ def device_scope(conn, principal):
         raise HTTPException(401,'An active device session is required')
     scope=LibraryScope(conn,current)
     return scope,current['device_id']
+
+
+def transfer_allowed(database, principal, resource_id):
+    """Stop an open response when its account, session or delivery is revoked."""
+    with closing(database.connect()) as conn:
+        return conn.execute('''SELECT 1 FROM sessions s
+            JOIN users u ON u.id=s.user_id
+            JOIN devices d ON d.id=s.device_id AND d.user_id=u.id
+            JOIN resources r ON r.user_id=u.id AND r.id=?
+            JOIN deliveries l ON l.resource_id=r.id AND l.device_id=d.id
+            WHERE s.id=? AND u.id=? AND s.revoked_at IS NULL AND s.expires_at>?
+            AND u.status='approved' AND u.email_verified_at IS NOT NULL
+            AND d.revoked_at IS NULL AND r.server_deleted_at IS NULL
+            AND l.deleted_at IS NULL AND l.status!='approval_required' ''',
+            (resource_id,principal['session_id'],principal['id'],utcnow())).fetchone() is not None
 
 
 def media_digest(root, path):
