@@ -5,6 +5,7 @@
         android:allowBackup="false" android:usesCleartextTraffic="false" android:supportsRtl="true">
         <activity android:name=".AdminPriorityActivity" android:exported="false" />
         <activity android:name=".LoginActivity" android:exported="false" />
+        <activity android:name=".MediaPreferencesActivity" android:exported="false" />
         <activity android:name=".RegistrationActivity" android:exported="false" />
         <activity android:name=".AdminRegistrationsActivity" android:exported="false" />
         <activity android:name=".MainActivity" android:exported="true">
