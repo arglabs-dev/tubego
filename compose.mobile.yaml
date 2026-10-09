@@ -5,6 +5,15 @@ services:
       dockerfile: backend/Dockerfile
     environment:
       TUBEGO_MEDIA_EGRESS_PROXY: http://egress:8081
+      # These names are forwarded from the operator environment / Compose .env.
+      # Keep credentials outside version control; the worker does not need SMTP.
+      TUBEGO_PUBLIC_URL: ${TUBEGO_PUBLIC_URL:-https://localhost}
+      TUBEGO_SMTP_HOST: ${TUBEGO_SMTP_HOST:-}
+      TUBEGO_SMTP_PORT: ${TUBEGO_SMTP_PORT:-587}
+      TUBEGO_SMTP_SENDER: ${TUBEGO_SMTP_SENDER:-}
+      TUBEGO_SMTP_USERNAME: ${TUBEGO_SMTP_USERNAME:-}
+      TUBEGO_SMTP_PASSWORD: ${TUBEGO_SMTP_PASSWORD:-}
+      TUBEGO_SMTP_TLS: ${TUBEGO_SMTP_TLS:-true}
     depends_on:
       - egress
     ports:

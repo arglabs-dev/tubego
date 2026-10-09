@@ -91,6 +91,17 @@ Configure `TUBEGO_PUBLIC_URL` as the public HTTPS origin, `TUBEGO_SMTP_HOST`,
 `TUBEGO_SMTP_USERNAME` / `TUBEGO_SMTP_PASSWORD`. STARTTLS is enabled by default;
 `TUBEGO_SMTP_TLS=false` is only appropriate for a trusted local mail relay.
 Secrets belong in deployment secret storage, not committed compose files.
+Compose forwards these SMTP/public-URL variables from the operator environment
+or its private `.env` file into the API container. The default configuration has
+no SMTP service: registration/recovery emails require configuring an actual relay
+and the externally reachable, trusted HTTPS origin before opening registration.
+Restart/recreate the API after changing these deployment values. Use STARTTLS
+for production relays; disabling TLS is intended only for a trusted local relay.
+The default Compose port is localhost HTTP behind the separately provisioned HTTPS
+reverse proxy; entering an HTTP address or an untrusted certificate in Android
+will fail. Bootstrap the first administrator against the same deployment database,
+then log in from the Android account screen; this administrator is already verified
+and approved and can approve subsequently verified registrations.
 Registration keeps a generic 202 if SMTP cannot accept the message; no phantom account
 or verification token is committed. SMTP success is acceptance by the relay, not
 a guarantee of inbox delivery. A relay error after remote acceptance can produce
@@ -116,8 +127,17 @@ an unusable email; resend safely replaces the token.
 
 Bootstrap the initial administrator locally using
 `PYTHONPATH=backend python -m tubego_server.bootstrap_admin admin@example.com`.
-Password is read by hidden prompt or `TUBEGO_BOOTSTRAP_PASSWORD`; never pass it as
-an argument. Bootstrap is refused once any administrator exists. This local
+For a Compose deployment, bootstrap **inside the API container** so this command
+uses `/data/tubego.sqlite3` on the same persistent volume as API/worker:
+
+```bash
+docker compose -f compose.mobile.yaml exec api python -m tubego_server.bootstrap_admin admin@example.com
+```
+
+The host-local bootstrap command above applies to a host-local API with the same
+`TUBEGO_DATA_DIR`; its default `./data/mobile` is a different database from the
+Compose named volume. Password is read by hidden prompt or
+`TUBEGO_BOOTSTRAP_PASSWORD`; never pass it as an argument. Bootstrap is refused once any administrator exists. This local
 operator action establishes the first trusted identity and records its audit.
 
 Android provides registration/resend and pending approvals screens. Admin actions
