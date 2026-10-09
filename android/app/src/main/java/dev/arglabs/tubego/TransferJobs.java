@@ -15,12 +15,16 @@ public final class TransferJobs {
         wake(context,origin,false);
     }
     public static void wake(Context context,String origin,boolean wifiOnly) {
+        wakeAt(context,origin,wifiOnly,0);
+    }
+    public static void wakeAt(Context context,String origin,boolean wifiOnly,long retryAt) {
         JobScheduler scheduler=context.getSystemService(JobScheduler.class);int id=wifiOnly?wifiJobId(origin):jobId(origin,false);
         // Scheduling the same running job cancels it. Preserve existing work.
         if(scheduler.getPendingJob(id)!=null)return;
         PersistableBundle extras=new PersistableBundle();extras.putString("origin",origin);
         JobInfo.Builder job=new JobInfo.Builder(id,new ComponentName(context,TransferJobService.class)).setExtras(extras).setPersisted(true)
             .setBackoffCriteria(30000,JobInfo.BACKOFF_POLICY_EXPONENTIAL);
+        if(retryAt>System.currentTimeMillis())job.setMinimumLatency(retryAt-System.currentTimeMillis());
         if(wifiOnly) job.setRequiredNetwork(new NetworkRequest.Builder().addTransportType(NetworkCapabilities.TRANSPORT_WIFI).addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET).build());
         else job.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
         scheduler.schedule(job.build());

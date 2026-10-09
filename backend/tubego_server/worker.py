@@ -18,6 +18,7 @@ from tubego_server.scheduler import Scheduler, put_setting, setting
 from tubego_server.media import MediaError, classify_error, restricted_ytdlp, MESSAGES
 from tubego_server.preferences import download_options, quality_notice, verified_output_path
 from tubego_server.delivery import publish_ready
+from tubego_server.retries import transient,next_retry
 from src.disk_guard import DiskGuard, StoragePaused, DiskState, notify_admin_storage
 
 
@@ -76,22 +77,36 @@ class Worker:
             if progress is not None:
                 conn.execute('UPDATE tasks SET progress=?,updated_at=? WHERE id=?',(progress,utcnow(),task['id']))
 
-    def _complete(self,task,status,code=None):
+    def _complete(self,task,status,code=None,retry_at=None):
         phase={'completed':'ready','failed':'error','cancelled':'cancelled','queued':'pending'}[status]
+        if retry_at:phase='retry_wait'
         with self.database.transaction() as conn:
             # Terminal state, error, phase, event and lease release are atomic.
             if setting(conn,'scheduler_lease')!={'task_id':task['id'],'token':task['claim_token']}:return
-            current=conn.execute('SELECT status FROM tasks WHERE id=?',(task['id'],)).fetchone()
+            current=conn.execute('SELECT status,attempts FROM tasks WHERE id=?',(task['id'],)).fetchone()
             conn.execute("DELETE FROM settings WHERE scope='global' AND owner_id='' AND key='scheduler_lease'")
             if current is None:return
             if current['status'] not in ('running','paused'):return
             put_setting(conn,'task',task['id'],'phase',phase)
-            if status!='queued':conn.execute("DELETE FROM settings WHERE scope='task' AND owner_id=? AND key='attempt_active'",(task['id'],))
+            if retry_at:put_setting(conn,'task',task['id'],'next_retry_at',retry_at)
+            elif status!='queued':conn.execute("DELETE FROM settings WHERE scope='task' AND owner_id=? AND key='next_retry_at'",(task['id'],))
+            if status!='queued' or retry_at:conn.execute("DELETE FROM settings WHERE scope='task' AND owner_id=? AND key='attempt_active'",(task['id'],))
             message=(MESSAGES.get(code) or {'storage_error':'Server storage operation failed.',
                 'conversion_failed':'The local media conversion failed.'}.get(code,'Media processing failed.')) if code else None
             conn.execute("UPDATE tasks SET status=?,error_code=?,error_message=?,progress=CASE WHEN ?='completed' THEN 1 ELSE progress END,updated_at=? WHERE id=?",
                 (status,code,message,status,utcnow(),task['id']))
             conn.execute("INSERT INTO events(user_id,kind,payload_json,created_at) VALUES(?,'task_updated',?,?)",(task['user_id'],json.dumps({'task_id':task['id'],'status':status,'phase':phase,'error_code':code}),utcnow()))
+            if status=='failed':
+                payload=json.dumps({'task_id':task['id'],'resource_id':task['resource_id'],'error_code':code,'message':message,'manual_retry_available':True,'attempts':current['attempts']})
+                conn.execute("INSERT INTO events(user_id,kind,payload_json,created_at) VALUES(?,'download_failed',?,?)",(task['user_id'],payload,utcnow()))
+                conn.execute("INSERT INTO audit(action,target_id,detail_json,created_at) VALUES('download.failed',?,?,?)",(task['id'],payload,utcnow()))
+
+
+    def _failed(self,task,code,error):
+        with closing(self.database.connect()) as conn:
+            current=conn.execute('SELECT attempts FROM tasks WHERE id=?',(task['id'],)).fetchone()
+        retry_at=next_retry(current['attempts']) if current and transient(error) and code=='temporary_failure' else None
+        self._complete(task,'queued' if retry_at else 'failed',code,retry_at)
 
     def _storage_check(self,task,required_bytes=0):
         state=self.disk.sample(required_bytes)
@@ -164,12 +179,12 @@ class Worker:
             except Interrupted:
                 self._complete(task,'queued')
             except MediaError as error:
-                self._complete(task,'failed',error.code)
+                self._failed(task,error.code,error)
             except OSError as error:
                 if error.errno==errno.ENOSPC:
                     if self._wait_after_pause(task,self.disk.sample()):continue
                     break
-                self._complete(task,'failed','storage_error')
+                self._failed(task,'temporary_failure' if transient(error) else 'storage_error',error)
             except Exception as error:
                 if self.storage_pause is not None or self._no_space(error):
                     if self._wait_after_pause(task,self.storage_pause or self.disk.sample()):continue
@@ -181,7 +196,7 @@ class Worker:
                     self._complete(task,'queued');break
                 # No trace or raw diagnostic can expose a signed URL or local path.
                 code='conversion_failed' if type(error).__name__=='PostProcessingError' else classify_error(error)
-                self._complete(task,'failed',code)
+                self._failed(task,code,error)
             break
         return True
 
@@ -193,6 +208,9 @@ class Worker:
                 conn.execute('UPDATE tasks SET attempts=attempts+1,updated_at=? WHERE id=?',(utcnow(),task['id']))
                 put_setting(conn,'task',task['id'],'attempt_active',True)
             resource=dict(conn.execute('SELECT * FROM resources WHERE id=? AND user_id=?',(task['resource_id'],task['user_id'])).fetchone())
+        if resource['ready_at'] and not resource['server_deleted_at'] and resource['server_path']:
+            # Publication succeeded before a process interruption; never repeat it.
+            return
         user_id=str(uuid.UUID(task['user_id'])); rid=str(uuid.UUID(task['resource_id']))
         root=(self.settings.data_dir/'media').resolve()
         directory=root/user_id/rid

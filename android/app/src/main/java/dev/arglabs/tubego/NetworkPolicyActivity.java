@@ -41,7 +41,7 @@ public final class NetworkPolicyActivity extends Activity {
                 JSONObject account=session;
                 runOnUiThread(()->{
                     if(isDestroyed()) return;
-                    if(cursor.isEmpty()) {layout.removeAllViews();layout.addView(status);}
+                    if(cursor.isEmpty()) {layout.removeAllViews();layout.addView(status);addFailedTransfers(account);}
                     var rows=result.optJSONArray("deliveries");
                     for(int i=0;rows!=null && i<rows.length();i++) {
                         JSONObject row=rows.optJSONObject(i);
@@ -87,6 +87,22 @@ public final class NetworkPolicyActivity extends Activity {
                 runOnUiThread(()->{if(!isDestroyed()) status.setText("No se pudieron consultar descargas. Revisa tu conexión y tu sesión.");});
             }
         });
+    }
+    private void addFailedTransfers(JSONObject account){
+        try{
+            java.io.File root=LocalLibraryStorage.root(this,origin,account.getString("user_id"),account.getString("device_id"));
+            java.io.File[] files=root.listFiles((dir,name)->name.endsWith(".properties"));
+            if(files==null)return;
+            for(java.io.File file:files){TransferRecord record=TransferRecord.read(file);if(!"failed".equals(record.state))continue;
+                TextView title=new TextView(this);title.setText(record.title+" · "+record.message);layout.addView(title);
+                Button retry=new Button(this);retry.setText("Reintentar descarga");layout.addView(retry);
+                retry.setOnClickListener(v->{try{synchronized(SessionStore.class){JSONObject current=new SessionStore(this,origin).read();
+                    if(current==null||!current.optString("user_id").equals(account.optString("user_id"))||!current.optString("device_id").equals(account.optString("device_id")))throw new Exception();
+                    if(new java.io.File(root,record.id+".deleted").exists())throw new Exception();
+                    TransferRecord latest=TransferRecord.read(file);if("failed".equals(latest.state))TransferRetry.reset(latest);
+                }TransferJobs.wake(this,origin,false);retry.setEnabled(false);status.setText("Reintento solicitado. Se mantienen los permisos de red de este archivo.");}catch(Exception e){status.setText("No se pudo reintentar. Revisa tu sesión.");}});
+            }
+        }catch(Exception e){status.setText("No se pudieron consultar las descargas fallidas.");}
     }
     @Override protected void onDestroy() {if(monitor!=null) monitor.close();executor.shutdownNow();super.onDestroy();}
 }

@@ -80,6 +80,13 @@ public final class TransferDriver {
                 continue;
             }
             if(LocalResourceDeletion.deleted(root,id))continue;
+            if(record!=null && "complete".equals(row.optString("delivery_status")) && record.media().isFile()
+                && record.sha256.equals(row.optString("sha256")) && record.size==row.optLong("size_bytes",-1)){
+                // The confirmation response was lost, but the durable snapshot
+                // acknowledges success. Keep the verified file and clear its budget.
+                if(record.failures>0)TransferRetry.reset(record);
+                grants.revoke(key(origin,user,device,record));
+            }
             if(!row.optBoolean("server_available")) {
                 if(record!=null && !record.media().isFile()) {record.state="unavailable";record.message="El archivo ya no está en el servidor. Solicítalo nuevamente.";record.save();}
                 continue;
@@ -112,12 +119,19 @@ public final class TransferDriver {
         if(!preferences.edit().putLong(eventKey,eventCursor).commit()) throw new IOException("No se pudo guardar sincronización");
         queue.sort(Comparator.comparing((TransferRecord r)->r.createdAt).thenComparing(r->r.id));
         ConnectivityManager manager=context.getSystemService(ConnectivityManager.class);
-        boolean waitWifi=false,waitAny=false;
+        boolean waitWifi=false,waitAny=false,retryPending=false;
         for(TransferRecord record:queue) {
             if(control.stopped) return Outcome.STOPPED;
             TransferKey key=key(origin,user,device,record);
-            if(record.state.equals("complete") && ResumableTransfer.verifies(record.media(),record.size,record.sha256)) {
-                confirm(api,token,record);grants.revoke(key);continue;
+            if(record.state.equals("failed"))continue;
+            if(record.nextRetryAt>System.currentTimeMillis()){
+                retryPending=true;control.retryAt=control.retryAt==0?record.nextRetryAt:Math.min(control.retryAt,record.nextRetryAt);continue;
+            }
+            if(record.media().isFile() && ResumableTransfer.verifies(record.media(),record.size,record.sha256)) {
+                if(!controlNetworkAvailable(manager)){waitAny=true;continue;}
+                try{confirm(api,token,record);synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;TransferRetry.reset(record);}grants.revoke(key);}
+                catch(Exception e){if(Thread.currentThread().isInterrupted()||control.stopped)return Outcome.STOPPED;if(!controlNetworkAvailable(manager)){waitAny=true;continue;}synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;TransferRetry.failed(record,e,System.currentTimeMillis());}if(record.nextRetryAt>0){retryPending=true;control.retryAt=control.retryAt==0?record.nextRetryAt:Math.min(control.retryAt,record.nextRetryAt);}}
+                continue;
             }
             Network selected=manager.getActiveNetwork();
             if(!permitted(manager,selected,grants,key,control)) {record.state="paused";synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;record.save();}if(grants.authorized(key))waitAny=true;else waitWifi=true;continue;}
@@ -148,14 +162,22 @@ public final class TransferDriver {
                     };
                 },()->permitted(manager,selected,grants,key,control) && !new File(root,record.id+".deleted").exists(),SessionStore.class,()->sameSession(store,token,control) && !new File(root,record.id+".deleted").exists());
                 if(result==ResumableTransfer.Result.PAUSED) {if(grants.authorized(key))waitAny=true;else waitWifi=true;continue;}
-                confirm(api,token,record);grants.revoke(key);
+                confirm(api,token,record);synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;TransferRetry.reset(record);}grants.revoke(key);
             } catch(Exception e) {
                 if(control.stopped) return Outcome.STOPPED;
-                record.message="No se pudo completar la transferencia. Se conserva el parcial para reintentar.";synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;record.save();}
-                return Outcome.RETRY;
+                if(!permitted(manager,selected,grants,key,control) || Thread.currentThread().isInterrupted()){
+                    record.state="paused";synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;record.save();}
+                    if(grants.authorized(key))waitAny=true;else waitWifi=true;continue;
+                }
+                if(e instanceof IOException && String.valueOf(e.getMessage()).contains("No space left")){
+                    record.state="paused";record.message="Libera espacio para continuar.";synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;record.save();}continue;
+                }
+                synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;TransferRetry.failed(record,e,System.currentTimeMillis());}
+                if(record.nextRetryAt>0){retryPending=true;control.retryAt=control.retryAt==0?record.nextRetryAt:Math.min(control.retryAt,record.nextRetryAt);}
+
             } finally {control.transfer=null;if(control.connection!=null){control.connection.disconnect();control.connection=null;}}
         }
-        return control.stopped?Outcome.STOPPED:waitAny?Outcome.WAIT_NETWORK:waitWifi?Outcome.WAIT_WIFI:Outcome.DONE;
+        return control.stopped?Outcome.STOPPED:waitAny?Outcome.WAIT_NETWORK:waitWifi?Outcome.WAIT_WIFI:retryPending?Outcome.RETRY:Outcome.DONE;
     }
     private static boolean sameSession(SessionStore store,String token,TransferRuntime.Control control) {
         if(control.stopped)return false;
@@ -165,6 +187,10 @@ public final class TransferDriver {
         api.request("POST","/resources/"+record.id+"/deliveries/confirm",new JSONObject().put("size_bytes",record.size).put("sha256",record.sha256),token);
     }
     private static TransferKey key(String origin,String user,String device,TransferRecord record){return new TransferKey(origin,user,device,record.id,record.sha256);}
+    private static boolean controlNetworkAvailable(ConnectivityManager manager){
+        Network network=manager.getActiveNetwork();NetworkCapabilities caps=network==null?null:manager.getNetworkCapabilities(network);
+        return caps!=null && caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) && caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
+    }
     private static boolean permitted(ConnectivityManager manager,Network selected,DownloadPermissions grants,TransferKey key,TransferRuntime.Control control) {
         if(control.stopped || selected==null || !selected.equals(manager.getActiveNetwork()))return false;
         NetworkCapabilities caps=manager.getNetworkCapabilities(selected);

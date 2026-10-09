@@ -27,7 +27,8 @@ def task_value(conn, task):
     phase=json.loads(row[0]) if row else {'queued':'pending','completed':'ready','failed':'error','cancelled':'cancelled'}.get(task['status'],task['status'])
     pause=conn.execute("SELECT value_json FROM settings WHERE scope='task' AND owner_id=? AND key='pause_reason'",(task['id'],)).fetchone()
     notice=conn.execute("SELECT value_json FROM settings WHERE scope='resource' AND owner_id=? AND key='quality_notice'",(task['resource_id'],)).fetchone()
-    return {key:task[key] for key in ('id','resource_id','status','priority','progress','attempts','error_code','error_message','created_at','updated_at')} | {'phase':phase,'quality_notice':json.loads(notice[0]) if notice else None,'pause_reason':json.loads(pause[0]) if pause else None}
+    retry=conn.execute("SELECT value_json FROM settings WHERE scope='task' AND owner_id=? AND key='next_retry_at'",(task['id'],)).fetchone()
+    return {key:task[key] for key in ('id','resource_id','status','priority','progress','attempts','error_code','error_message','created_at','updated_at')} | {'phase':phase,'next_retry_at':json.loads(retry[0]) if retry else None,'quality_notice':json.loads(notice[0]) if notice else None,'pause_reason':json.loads(pause[0]) if pause else None}
 
 
 def submit(database, principal, url, selection=None, request_id=None, resolver=None):
@@ -87,8 +88,8 @@ def action(database, principal, task_id, kind):
         elif kind=='retry':
             if ready or task['status']=='completed': raise HTTPException(409,'Resource is already ready')
             if task['status'] in ('failed','cancelled'):
-                conn.execute("UPDATE tasks SET status='queued',error_code=NULL,error_message=NULL,updated_at=? WHERE id=?",(utcnow(),task_id))
-                conn.execute("DELETE FROM settings WHERE scope='task' AND owner_id=? AND key='cancel_requested'",(task_id,))
+                conn.execute("UPDATE tasks SET status='queued',attempts=0,error_code=NULL,error_message=NULL,updated_at=? WHERE id=?",(utcnow(),task_id))
+                conn.execute("DELETE FROM settings WHERE scope='task' AND owner_id=? AND key IN ('cancel_requested','attempt_active','next_retry_at')",(task_id,))
                 put_setting(conn,'task',task_id,'phase','pending')
             # Repeated retry while queued/running returns the same task.
         elif kind=='priority':

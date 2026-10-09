@@ -8,6 +8,7 @@ public final class TransferRuntime {
     private static final ConcurrentHashMap<String,Control> running=new ConcurrentHashMap<>();
     public static Object lock(String origin) {return locks.computeIfAbsent(origin,key->new Object());}
     public static final class Control {
+        public volatile long retryAt;
         public volatile boolean stopped;
         public volatile HttpURLConnection connection;
         public volatile TransferKey transfer;
