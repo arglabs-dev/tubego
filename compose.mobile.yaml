@@ -3,10 +3,21 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
+    environment:
+      TUBEGO_MEDIA_EGRESS_PROXY: http://egress:8081
+    depends_on:
+      - egress
     ports:
       - "127.0.0.1:8000:8000"
     volumes:
       - mobile-data:/data
     restart: unless-stopped
+  egress:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    command: ["python", "-m", "tubego_server.egress_proxy", "--host", "0.0.0.0", "--port", "8081"]
+    restart: unless-stopped
+    # Container network only: never publish the unauthenticated proxy to the host.
 volumes:
   mobile-data:
