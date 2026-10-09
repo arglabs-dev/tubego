@@ -26,7 +26,7 @@ public final class AdminPriorityActivity extends Activity {
         load();
     }
     private ApiClient api() { return new ApiClient(getIntent().getStringExtra("server_url")); }
-    private String token() { return getSharedPreferences("tubego_account",MODE_PRIVATE).getString("session_token",null); }
+    private String token() throws Exception { return new SessionStore(this, api().getBaseUrl()).token(); }
     private void load() {
         status.setText("Cargando prioridades…");
         network.execute(() -> {
