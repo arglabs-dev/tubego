@@ -10,7 +10,7 @@ playback are added by subsequent cards. It is not the complete MVP.
 ```bash
 python3 -m venv .venv-server
 .venv-server/bin/pip install -r backend/requirements-dev.txt
-TUBEGO_DATA_DIR=./data PYTHONPATH=backend .venv-server/bin/uvicorn tubego_server.main:app
+TUBEGO_DATA_DIR=./data/mobile PYTHONPATH=backend .venv-server/bin/uvicorn tubego_server.main:app
 .venv-server/bin/pytest -q backend/tests
 ```
 

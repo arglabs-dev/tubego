@@ -4,6 +4,8 @@ from tubego_server import __version__
 from tubego_server.config import Settings
 from tubego_server.db import Database
 from tubego_server.routers import system
+from src.storage import validate_channel_paths
+import os
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -12,6 +14,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
+        validate_channel_paths(os.getenv("TUBEGO_BOT_DOWNLOAD_DIR", "downloads"), settings.data_dir)
         database.initialize()
         yield
 

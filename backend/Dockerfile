@@ -6,6 +6,7 @@ WORKDIR /app
 COPY backend/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 COPY backend/tubego_server ./tubego_server
+COPY src/storage.py ./src/storage.py
 ENV TUBEGO_DATA_DIR=/data
 RUN mkdir /data && chown tubego:tubego /data
 USER tubego
