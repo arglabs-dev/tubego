@@ -55,7 +55,7 @@ def _revoke(request,target,admin,delete):
             conn.execute('UPDATE users SET status=?,updated_at=? WHERE id=?',(desired,now,target))
             conn.execute('UPDATE sessions SET revoked_at=? WHERE user_id=? AND revoked_at IS NULL',(now,target))
             for device in device_ids:revoke_device(conn,target,device,admin['id'])
-            conn.execute("UPDATE tasks SET status='cancelled',error_code='account_revoked',error_message='Account access revoked',updated_at=? WHERE user_id=? AND status IN ('queued','running')",(now,target))
+            conn.execute("UPDATE tasks SET status='cancelled',error_code='account_revoked',error_message='Account access revoked',updated_at=? WHERE user_id=? AND status IN ('queued','running','paused')",(now,target))
             for task in task_ids:
                 conn.execute("INSERT INTO settings VALUES ('task',?,'cancel_requested','true',?) ON CONFLICT(scope,owner_id,key) DO UPDATE SET value_json='true',updated_at=excluded.updated_at",(task,now))
             conn.execute('UPDATE resources SET server_deleted_at=?,server_path=NULL,updated_at=? WHERE user_id=?',(now,now,target))

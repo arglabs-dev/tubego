@@ -85,10 +85,11 @@ def test_cleanup_failure_is_durable_and_retry_blocks_unblock(service,monkeypatch
     response=client.post('/api/v1/admin/users/'+accounts['first']+'/cleanup/retry',headers=headers(sessions['admin']))
     assert not response.json()['cleanup_pending'] and not path.exists()
 
-def test_running_worker_lease_delays_cleanup_until_cancel_acknowledged(service):
+@pytest.mark.parametrize("worker_status",["running","paused"])
+def test_running_worker_lease_delays_cleanup_until_cancel_acknowledged(service,worker_status):
     app,client,accounts,sessions=service;_,tid,path=media(app,accounts['first'])
     with app.state.db.transaction() as conn:
-        conn.execute("UPDATE tasks SET status='running' WHERE id=?",(tid,))
+        conn.execute("UPDATE tasks SET status=? WHERE id=?",(worker_status,tid))
         conn.execute("INSERT INTO settings VALUES ('global','','scheduler_lease',?,?)",(json.dumps({'task_id':tid,'token':'claim'}),utcnow()))
     response=client.post('/api/v1/admin/users/'+accounts['first']+'/block',headers=headers(sessions['admin']))
     assert response.json()['cleanup_pending'] and path.exists()

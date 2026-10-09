@@ -138,7 +138,7 @@ def detect_language(user): global CURRENT_LANG; CURRENT_LANG = 'es' if user and 
 
 def get_keyboard(task_id, status):
     keyboard = []
-    if status in ['starting', 'downloading', 'processing', 'uploading']: keyboard.append([InlineKeyboardButton(T('btn_cancel'), callback_data=f"cancel_{task_id}")])
+    if status in ['starting', 'downloading', 'processing', 'uploading', 'paused']: keyboard.append([InlineKeyboardButton(T('btn_cancel'), callback_data=f"cancel_{task_id}")])
     elif status == 'failed_dl': keyboard.append([InlineKeyboardButton(T('btn_retry'), callback_data=f"retry_dl_{task_id}"), InlineKeyboardButton(T('btn_delete'), callback_data=f"delete_{task_id}"), InlineKeyboardButton(T('btn_log'), callback_data=f"log_{task_id}")])
     elif status == 'failed_ul': keyboard.append([InlineKeyboardButton(T('btn_retry_ul'), callback_data=f"retry_ul_{task_id}"), InlineKeyboardButton(T('btn_delete'), callback_data=f"delete_{task_id}")])
     elif status == 'success': keyboard.append([InlineKeyboardButton(T('btn_upload_now'), callback_data=f"retry_ul_{task_id}"), InlineKeyboardButton(T('btn_delete'), callback_data=f"delete_{task_id}")])
@@ -255,7 +255,7 @@ async def download_phase(task_id, chat_id, msg_id, bot, quality):
         task = manager.get_task(task_id)
         try:
             mode = 'audio' if quality == 'audio' else 'video'
-            res = task['downloader'].download(task['url'], mode, quality, progress_hook=lambda d: manager.tasks[task_id].update({'progress':d.get('_percent_str','0%')}) if d['status']=='downloading' else None, check_cancel=lambda: manager.tasks[task_id]['cancel_flag'])
+            res = task['downloader'].download(task['url'], mode, quality, progress_hook=lambda d: manager.tasks[task_id].update({'progress':d.get('_percent_str',manager.tasks[task_id]['progress']), 'status':'paused' if d['status']=='paused' else 'downloading' if d['status'] in ('downloading','resuming') else 'processing'}), check_cancel=lambda: manager.tasks[task_id]['cancel_flag'])
             if res['status'] == 'success': 
                 with manager.lock: manager.tasks[task_id].update({'file_path': res['path'], 'filename': os.path.basename(res['path']), 'status': 'success'})
             return res

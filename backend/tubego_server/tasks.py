@@ -24,8 +24,9 @@ def live_scope(conn, principal):
 def task_value(conn, task):
     row=conn.execute("SELECT value_json FROM settings WHERE scope='task' AND owner_id=? AND key='phase'",(task['id'],)).fetchone()
     phase=json.loads(row[0]) if row else {'queued':'pending','completed':'ready','failed':'error','cancelled':'cancelled'}.get(task['status'],task['status'])
+    pause=conn.execute("SELECT value_json FROM settings WHERE scope='task' AND owner_id=? AND key='pause_reason'",(task['id'],)).fetchone()
     notice=conn.execute("SELECT value_json FROM settings WHERE scope='resource' AND owner_id=? AND key='quality_notice'",(task['resource_id'],)).fetchone()
-    return {key:task[key] for key in ('id','resource_id','status','priority','progress','attempts','error_code','error_message','created_at','updated_at')} | {'phase':phase,'quality_notice':json.loads(notice[0]) if notice else None}
+    return {key:task[key] for key in ('id','resource_id','status','priority','progress','attempts','error_code','error_message','created_at','updated_at')} | {'phase':phase,'quality_notice':json.loads(notice[0]) if notice else None,'pause_reason':json.loads(pause[0]) if pause else None}
 
 
 def submit(database, principal, url, selection=None, request_id=None, resolver=None):
@@ -68,7 +69,7 @@ def action(database, principal, task_id, kind):
             if task['status']=='queued':
                 conn.execute("UPDATE tasks SET status='cancelled',updated_at=? WHERE id=?",(utcnow(),task_id))
                 put_setting(conn,'task',task_id,'phase','cancelled')
-            elif task['status']=='running':
+            elif task['status'] in ('running','paused'):
                 put_setting(conn,'task',task_id,'cancel_requested',True)
                 put_setting(conn,'task',task_id,'phase','cancelling')
         elif kind=='retry':

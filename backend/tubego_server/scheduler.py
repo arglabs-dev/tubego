@@ -32,7 +32,7 @@ class Scheduler:
         self.database = database
 
     def _next(self, conn):
-        if conn.execute("SELECT 1 FROM tasks WHERE status='running' LIMIT 1").fetchone():
+        if conn.execute("SELECT 1 FROM tasks WHERE status IN ('running','paused') LIMIT 1").fetchone():
             return None
         users = conn.execute("""SELECT DISTINCT u.id, s.value_json FROM users u
             JOIN tasks t ON t.user_id=u.id LEFT JOIN settings s ON
@@ -88,6 +88,6 @@ class Scheduler:
         Tokens fence stale completion calls after recovery.
         """
         with self.database.transaction() as conn:
-            result = conn.execute("UPDATE tasks SET status='queued',updated_at=? WHERE status='running'", (now(),))
+            result = conn.execute("UPDATE tasks SET status='queued',updated_at=? WHERE status IN ('running','paused')", (now(),))
             conn.execute("DELETE FROM settings WHERE scope='global' AND owner_id='' AND key='scheduler_lease'")
             return result.rowcount
