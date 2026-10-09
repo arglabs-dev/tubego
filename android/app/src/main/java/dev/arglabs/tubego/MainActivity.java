@@ -87,6 +87,21 @@ public final class MainActivity extends Activity {
         });
     }
 
+    @Override protected void onResume() {
+        super.onResume();
+        String origin=getPreferences(MODE_PRIVATE).getString("server_url", "");
+        if(origin.isEmpty()) return;
+        network.execute(() -> {
+            try {
+                String token=new SessionStore(this,origin).token();
+                if(token!=null) new ApiClient(origin).request("GET","/account/status",null,token);
+            } catch(ApiClient.ApiException e) {
+                if(e.code.equals("session_revoked") || e.code.equals("account_unavailable"))
+                    runOnUiThread(() -> {if(!isDestroyed()) status.setText("Sesión revocada. Se han retirado las descargas locales de esta cuenta.");});
+            } catch(Exception ignored) { /* Offline access remains usable until revocation is known. */ }
+        });
+    }
+
     @Override protected void onDestroy() {
         network.shutdownNow();
         super.onDestroy();

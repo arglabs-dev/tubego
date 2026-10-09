@@ -44,13 +44,16 @@ def get_principal(request: Request):
     if row is None:
         raise HTTPException(401, {"code":"invalid_session"})
     if row["status"] in ("blocked", "rejected"):
-        raise HTTPException(403, {"code":"account_unavailable"})
+        raise HTTPException(403, {"code":"account_unavailable", "wipe_local":True})
     if row["device_id"] is not None and row["device_owner"] != row["id"]:
         raise HTTPException(401, {"code":"invalid_session"})
     if row["session_revoked"] or row["device_revoked"]:
-        raise HTTPException(401, {"code":"session_revoked"})
+        raise HTTPException(401, {"code":"session_revoked", "wipe_local":True})
     if row["session_expires"] <= utcnow():
         raise HTTPException(401, {"code":"session_expired"})
+    if row["device_id"] is not None:
+        with request.app.state.db.transaction() as conn:
+            conn.execute("UPDATE devices SET last_seen_at=? WHERE id=? AND user_id=?",(utcnow(),row["device_id"],row["id"]))
     return dict(row)
 
 

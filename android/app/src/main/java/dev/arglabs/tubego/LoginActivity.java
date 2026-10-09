@@ -9,9 +9,10 @@ import java.util.concurrent.ExecutorService;
 
 public final class LoginActivity extends Activity {
     private final ExecutorService network=Executors.newSingleThreadExecutor();
-    private TextView status; private Button login,forgot,refresh,change;
+    private TextView status; private Button login,forgot,refresh,change,logout,devices;
     private EditText email,password,newPassword; private CheckBox revoke;
     private String origin;
+    private static final class AccountSwitchRequired extends Exception {}
     @Override public void onCreate(Bundle state) {
         super.onCreate(state); origin=getIntent().getStringExtra("server_url");
         LinearLayout layout=new LinearLayout(this); layout.setOrientation(LinearLayout.VERTICAL); layout.setPadding(32,64,32,32);
@@ -24,12 +25,16 @@ public final class LoginActivity extends Activity {
         newPassword=new EditText(this);newPassword.setHint("Nueva contraseña (12–128 caracteres)");newPassword.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);newPassword.setSingleLine(true);layout.addView(newPassword);
         revoke=new CheckBox(this);revoke.setText("Cerrar las demás sesiones al cambiar contraseña");revoke.setChecked(true);layout.addView(revoke);
         change=new Button(this);change.setText("Cambiar contraseña");layout.addView(change);
+        devices=new Button(this);devices.setText("Dispositivos vinculados");layout.addView(devices);
+        devices.setOnClickListener(v->startActivity(new android.content.Intent(this,DevicesActivity.class).putExtra("server_url",origin)));
+        logout=new Button(this);logout.setText("Cerrar sesión");layout.addView(logout);
+        logout.setOnClickListener(v->new android.app.AlertDialog.Builder(this).setMessage("Al cerrar sesión se borrarán las descargas de este teléfono. Los otros dispositivos conservarán sus archivos. ¿Continuar?").setNegativeButton("Cancelar",null).setPositiveButton("Cerrar sesión",(d,w)->submit("logout")).show());
         status=new TextView(this);layout.addView(status);
         ScrollView scroll=new ScrollView(this);scroll.addView(layout);setContentView(scroll);
         login.setOnClickListener(v->submit("login"));forgot.setOnClickListener(v->submit("forgot"));refresh.setOnClickListener(v->submit("status"));change.setOnClickListener(v->submit("change"));
         submit("status");
     }
-    private void enabled(boolean value) {login.setEnabled(value);forgot.setEnabled(value);refresh.setEnabled(value);change.setEnabled(value);}
+    private void enabled(boolean value) {login.setEnabled(value);forgot.setEnabled(value);refresh.setEnabled(value);change.setEnabled(value);logout.setEnabled(value);devices.setEnabled(value);}
     private static String accountMessage(String state) {
         switch(state) {
             case "approved": return "Cuenta aprobada. Puedes utilizar el servicio.";
@@ -45,10 +50,23 @@ public final class LoginActivity extends Activity {
             String message;
             try {
                 ApiClient api=new ApiClient(origin);SessionStore store=new SessionStore(this,origin);
-                if(operation.equals("login")) {
+                if(operation.equals("logout")) {
+                    SessionLifecycle.logout(this,origin);message="Sesión cerrada. Archivos locales borrados; el servidor recibirá el cierre cuando haya conexión.";
+                } else if(operation.equals("login")) {
+                    JSONObject active=store.read();
+                    if(active!=null && !active.optString("email","").equalsIgnoreCase(address.trim()))
+                        throw new AccountSwitchRequired();
                     JSONObject body=new JSONObject().put("email",address).put("password",secret).put("device_name",android.os.Build.MANUFACTURER+" "+android.os.Build.MODEL);
-                    JSONObject previous=store.read();
-                    if(previous!=null) body.put("device_id",previous.optString("device_id"));
+                    JSONObject previous=store.deviceIdentity(address);
+                    if(previous==null) previous=store.read();
+                    if(previous!=null) {
+                        body.put("device_id",previous.optString("device_id"));
+                        JSONObject pending=store.pendingLogout();
+                        if(pending!=null) {
+                            var sessions=pending.getJSONArray("sessions");
+                            for(int i=0;i<sessions.length();i++) if(sessions.getJSONObject(i).optString("device_id").equals(previous.optString("device_id"))) body.put("replace_device",true);
+                        }
+                    }
                     JSONObject session=api.request("POST","/auth/login",body,null);
                     store.save(session); message=accountMessage(session.getString("status"));
                 } else if(operation.equals("forgot")) {
@@ -65,6 +83,8 @@ public final class LoginActivity extends Activity {
                         message=accountMessage(account.getString("status"));
                     }
                 }
+            } catch(AccountSwitchRequired e) {
+                message="Cierra la sesión actual antes de cambiar de cuenta. Se te pedirá confirmar el borrado de sus descargas locales.";
             } catch(ApiClient.ApiException e) {
                 if(e.code.equals("session_revoked") || e.code.equals("account_unavailable")) {
                     try {new SessionStore(this,origin).clear();} catch(Exception ignored) { }

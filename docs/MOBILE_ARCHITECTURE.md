@@ -165,3 +165,59 @@ another server never forwards a prior token. Keystore/decryption failure refuses
 session use rather than storing cleartext. Account credentials are never persisted.
 MainActivity exposes account navigation; admin approvals read SessionStore.
 Logout/device cleanup is delivered by PLA-231, not simulated by this card.
+
+## Devices and logout (PLA-231)
+
+GET `/api/v1/account/devices` lists only the authenticated user's devices with
+name, platform, last_seen_at, created_at, revoked_at and current-device marker.
+POST `/account/devices/{id}/revoke` checks ownership, revokes every session for that
+device, removes it from active delivery eligibility, and records a durable
+`device.wipe` event and audit. Revocation is idempotent and preserves session/device
+rows so an offline client later receives `session_revoked` plus `wipe_local:true`.
+Blocked users receive `account_unavailable` and the same cleanup instruction.
+Every authorized device contact updates last_seen_at. Other devices are untouched.
+
+POST `/account/session/logout` accepts a bearer token exclusively to revoke the
+associated device. It intentionally accepts an expired/already-revoked token for
+this narrow operation, to complete delayed offline logout. It never allows those
+tokens to read data, revoke another device, or bypass ownership. Missing/deleted
+sessions return 401; clients can discard such a pending logout as already revoked.
+
+When logging in to an existing owned active device, session tokens rotate without
+resetting completed deliveries. A previously owned device being signed back in restores pending
+available resources from history; a genuinely new device receives future publications
+and does not automatically fetch the old library. Resources with any deliberate-deletion tombstone
+(`deliveries.deleted_at`) stay excluded. Logout revocation marks deliveries
+`device_revoked` but does NOT set deleted_at: it is not a user content deletion and
+must not prevent restoration after a later login. Future delivery/retention workers
+must use `devices.revoked_at IS NULL` for eligibility/confirmation sets.
+
+Android DevicesActivity shows devices and confirms revocation. Logout confirmation
+states its downloads are deleted only from that device. LocalLibraryStorage is the
+canonical storage seam for ALL future downloads:
+`filesDir/tubego-media/<SHA256hex HTTPS origin>/<user UUID>/<device UUID>/`.
+Files must remain in that directory (including partial files) so logout/revocation
+can remove only that device's content. Symlinks are unlinked, never traversed.
+Caches or exports elsewhere are not managed downloads and must not store private
+media. Ordinary library delete synchronization is separate and is not invoked here.
+
+SessionLifecycle deletes managed local content, encrypts a pending logout with the
+old token, clears the active session and schedules a persisted JobScheduler job
+requiring ANY network. Pending credentials use their own encrypted slot/AAD and
+are never reused for normal API requests. Retry backoff survives process/device
+restart; final server acknowledgement removes the pending credential. Remote
+revocation is observed centrally by ApiClient only if the rejected bearer matches
+the current origin-scoped session; unrelated/older-token errors cannot wipe a new
+session. Failed file cleanup stays in an encrypted durable cleanup queue. The app
+checks account status on foreground resume; authenticated background API calls also
+observe revocations. An offline device cannot learn a remote order until contacting
+the server. Android OS scheduling and force-stop behavior can delay background work.
+
+A credential-free device identity is retained separately in encrypted storage, scoped
+by server origin and account email (containing user_id/device_id), so logout can
+restore that installation on later sign-in without retaining active credentials.
+Multiple offline logouts on one origin are queued separately, not overwritten.
+If login finds an unacknowledged offline logout for that installation, it sends
+`replace_device:true` with its previous device ID. The backend atomically revokes
+that owned old device and creates a new one, restoring eligible history. Delayed
+logout of the old token therefore cannot revoke the newly established session.

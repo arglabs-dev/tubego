@@ -33,21 +33,39 @@ public final class SessionStore {
         }
         return (SecretKey)store.getKey(ALIAS,null);
     }
-    public void save(JSONObject session) throws Exception {
+    private void saveValue(String suffix, JSONObject session) throws Exception {
+        String slot=namespace+suffix;
         Cipher cipher=Cipher.getInstance("AES/GCM/NoPadding"); cipher.init(Cipher.ENCRYPT_MODE,key());
-        cipher.updateAAD(namespace.getBytes(StandardCharsets.UTF_8));
+        cipher.updateAAD(slot.getBytes(StandardCharsets.UTF_8));
         byte[] encrypted=cipher.doFinal(session.toString().getBytes(StandardCharsets.UTF_8));
-        if(!prefs.edit().putString(namespace+".iv",Base64.encodeToString(cipher.getIV(),Base64.NO_WRAP))
-                .putString(namespace+".ciphertext",Base64.encodeToString(encrypted,Base64.NO_WRAP)).commit()) throw new Exception("No se pudo guardar la sesión");
+        if(!prefs.edit().putString(slot+".iv",Base64.encodeToString(cipher.getIV(),Base64.NO_WRAP))
+                .putString(slot+".ciphertext",Base64.encodeToString(encrypted,Base64.NO_WRAP)).commit()) throw new Exception("No se pudo guardar la sesión");
     }
-    public JSONObject read() throws Exception {
-        String data=prefs.getString(namespace+".ciphertext",null);
+    private JSONObject readValue(String suffix) throws Exception {
+        String slot=namespace+suffix;
+        String data=prefs.getString(slot+".ciphertext",null);
         if(data==null) return null;
         Cipher cipher=Cipher.getInstance("AES/GCM/NoPadding");
-        cipher.init(Cipher.DECRYPT_MODE,key(),new GCMParameterSpec(128,Base64.decode(prefs.getString(namespace+".iv",""),Base64.NO_WRAP)));
-        cipher.updateAAD(namespace.getBytes(StandardCharsets.UTF_8));
+        cipher.init(Cipher.DECRYPT_MODE,key(),new GCMParameterSpec(128,Base64.decode(prefs.getString(slot+".iv",""),Base64.NO_WRAP)));
+        cipher.updateAAD(slot.getBytes(StandardCharsets.UTF_8));
         return new JSONObject(new String(cipher.doFinal(Base64.decode(data,Base64.NO_WRAP)),StandardCharsets.UTF_8));
     }
-    public String token() throws Exception { JSONObject session=read(); return session==null?null:session.getString("token"); }
-    public void clear() { prefs.edit().remove(namespace+".iv").remove(namespace+".ciphertext").commit(); }
+    private void clearValue(String suffix) { prefs.edit().remove(namespace+suffix+".iv").remove(namespace+suffix+".ciphertext").commit(); }
+    private static String identitySuffix(String email) throws Exception {
+        return ".identity."+Base64.encodeToString(MessageDigest.getInstance("SHA-256").digest(email.trim().toLowerCase(java.util.Locale.ROOT).getBytes(StandardCharsets.UTF_8)),Base64.NO_WRAP);
+    }
+    public void save(JSONObject session) throws Exception {
+        saveValue("",session);
+        if(session.has("email")) saveValue(identitySuffix(session.getString("email")),new JSONObject().put("user_id",session.getString("user_id")).put("device_id",session.getString("device_id")));
+    }
+    public JSONObject deviceIdentity(String email) throws Exception {return readValue(identitySuffix(email));}
+    public JSONObject read() throws Exception {return readValue("");}
+    public String token() throws Exception {JSONObject session=read();return session==null?null:session.getString("token");}
+    public void clear() {clearValue("");}
+    public void savePendingLogout(JSONObject session) throws Exception {saveValue(".logout",session);}
+    public JSONObject pendingLogout() throws Exception {return readValue(".logout");}
+    public void clearPendingLogout() {clearValue(".logout");}
+    public void saveCleanup(JSONObject session) throws Exception {saveValue(".cleanup",session);}
+    public JSONObject cleanup() throws Exception {return readValue(".cleanup");}
+    public void clearCleanup() {clearValue(".cleanup");}
 }
