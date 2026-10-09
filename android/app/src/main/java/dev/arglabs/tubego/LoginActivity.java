@@ -68,7 +68,7 @@ public final class LoginActivity extends Activity {
                         }
                     }
                     JSONObject session=api.request("POST","/auth/login",body,null);
-                    store.save(session); message=accountMessage(session.getString("status"));
+                    store.save(session); LinkOutboxDispatch.schedule(this,origin); message=accountMessage(session.getString("status"));
                 } else if(operation.equals("forgot")) {
                     message=api.request("POST","/auth/password/forgot",new JSONObject().put("email",address),null).getString("message");
                 } else if(operation.equals("change")) {

@@ -15,6 +15,7 @@ public final class MediaPreferencesActivity extends Activity {
     private TextView status; private Button save;
     private ApiClient api;
     private String token;
+    private LocalMediaPreferences local;
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
         LinearLayout layout = new LinearLayout(this); layout.setOrientation(LinearLayout.VERTICAL);
@@ -31,13 +32,17 @@ public final class MediaPreferencesActivity extends Activity {
         ScrollView scroll = new ScrollView(this); scroll.addView(layout); setContentView(scroll);
         try {
             api = new ApiClient(getIntent().getStringExtra("server_url"));
-            token = new SessionStore(this, api.getBaseUrl()).token();
+            JSONObject session=new SessionStore(this,api.getBaseUrl()).read();
+            if(session==null||!"approved".equals(session.optString("status")))throw new Exception();
+            token=session.getString("token");local=new LocalMediaPreferences(LinkOutboxDispatch.root(this,api.getBaseUrl(),session));
+            JSONObject cache=local.read();ask.setChecked(cache.optBoolean("ask_every_time",true));choice.setSelection(MediaSelection.index(cache.optString("selection","720")));rewind.setText(String.valueOf(cache.optInt("rewind_seconds",10)));
         }
-        catch (Exception e) { status.setText("Configura una URL de servidor válida."); return; }
+        catch (Exception e) { status.setText("Configura el servidor e inicia sesión con una cuenta aprobada."); return; }
         status.setText("Cargando preferencias…");
         network.execute(() -> {
             try {
                 JSONObject prefs = api.request("GET", "/account/preferences", null, token);
+                synchronized(SessionStore.class){if(!token.equals(new SessionStore(this,api.getBaseUrl()).token()))return;local.save(prefs);}
                 runOnUiThread(() -> { if (isDestroyed()) return;
                     ask.setChecked(prefs.optBoolean("ask_every_time", true));
                     choice.setSelection(MediaSelection.index(prefs.optString("selection", "720")));
@@ -59,7 +64,7 @@ public final class MediaPreferencesActivity extends Activity {
         } catch (Exception e) { status.setText("El retroceso debe ser un entero entre 0 y 120."); return; }
         save.setEnabled(false); status.setText("Guardando…");
         network.execute(() -> {
-            try { api.request("PUT", "/account/preferences", prefs, token); showStatus("Preferencias guardadas para todos tus dispositivos"); }
+            try { api.request("PUT", "/account/preferences", prefs, token); synchronized(SessionStore.class){if(!token.equals(new SessionStore(this,api.getBaseUrl()).token()))return;local.save(prefs);} showStatus("Preferencias guardadas para todos tus dispositivos"); }
             catch (Exception e) { showStatus("No se guardaron las preferencias. Reintenta cuando tengas conexión."); }
             runOnUiThread(() -> { if (!isDestroyed()) save.setEnabled(true); });
         });

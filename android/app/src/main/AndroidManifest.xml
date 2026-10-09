@@ -4,6 +4,15 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <application android:name=".TubegoApplication" android:label="Tubego" android:theme="@android:style/Theme.Material.Light.NoActionBar"
         android:allowBackup="false" android:usesCleartextTraffic="false" android:supportsRtl="true">
+        <service android:name=".LinkOutboxJobService" android:exported="true" android:permission="android.permission.BIND_JOB_SERVICE" />
+        <activity android:name=".LinkEntryActivity" android:exported="false" />
+        <activity android:name=".ShareReceiverActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
         <activity android:name=".AdminPriorityActivity" android:exported="false" />
         <service android:name=".LogoutJobService" android:exported="true" android:permission="android.permission.BIND_JOB_SERVICE" />
         <activity android:name=".DevicesActivity" android:exported="false" />
