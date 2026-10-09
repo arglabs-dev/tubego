@@ -1,0 +1,2078 @@
+{
+  "Wi-Fi disponible. Las descargas pueden continuar.": {
+    "es": "Wi-Fi disponible. Las descargas pueden continuar.",
+    "en": "Wi-Fi available. Downloads can continue."
+  },
+  "Las descargas esperan Wi-Fi salvo autorización individual.": {
+    "es": "Las descargas esperan Wi-Fi salvo autorización individual.",
+    "en": "Downloads wait for Wi-Fi unless individually authorized."
+  },
+  "Sin conexión validada. Las descargas quedan en espera.": {
+    "es": "Sin conexión validada. Las descargas quedan en espera.",
+    "en": "No validated connection. Downloads are waiting."
+  },
+  "Sesión aprobada requerida": {
+    "es": "Sesión aprobada requerida",
+    "en": "An approved session is required"
+  },
+  "Almacenamiento de este teléfono": {
+    "es": "Almacenamiento de este teléfono",
+    "en": "Storage on this phone"
+  },
+  "tamaño desconocido": {
+    "es": "tamaño desconocido",
+    "en": "unknown size"
+  },
+  " bytes": {
+    "es": " bytes",
+    "en": " bytes"
+  },
+  "\nDescarga pausada: libera espacio o ajusta el umbral.": {
+    "es": "\nDescarga pausada: libera espacio o ajusta el umbral.",
+    "en": "\nDownload paused: free up space or adjust the threshold."
+  },
+  "Datos móviles autorizados": {
+    "es": "Datos móviles autorizados",
+    "en": "Mobile data authorized"
+  },
+  "Permitir datos móviles": {
+    "es": "Permitir datos móviles",
+    "en": "Allow mobile data"
+  },
+  "Usar datos móviles": {
+    "es": "Usar datos móviles",
+    "en": "Use mobile data"
+  },
+  "¿Autorizar ": {
+    "es": "¿Autorizar ",
+    "en": "Authorize "
+  },
+  ") en este teléfono? El permiso dura hasta completar o cancelar esta descarga. No incluye otros archivos ni dispositivos.": {
+    "es": ") en este teléfono? El permiso dura hasta completar o cancelar esta descarga. No incluye otros archivos ni dispositivos.",
+    "en": ") on this phone? Permission lasts until this download completes or is cancelled. It excludes other files and devices."
+  },
+  "Cuenta cambió": {
+    "es": "Cuenta cambió",
+    "en": "Account changed"
+  },
+  "Archivo borrado": {
+    "es": "Archivo borrado",
+    "en": "File deleted"
+  },
+  "Autorización guardada para este archivo.": {
+    "es": "Autorización guardada para este archivo.",
+    "en": "Permission saved for this file."
+  },
+  "No se pudo guardar el permiso. Revisa tu sesión.": {
+    "es": "No se pudo guardar el permiso. Revisa tu sesión.",
+    "en": "Could not save permission. Check your session."
+  },
+  "Retirar permiso de datos": {
+    "es": "Retirar permiso de datos",
+    "en": "Revoke mobile data permission"
+  },
+  "Este archivo vuelve a esperar Wi-Fi.": {
+    "es": "Este archivo vuelve a esperar Wi-Fi.",
+    "en": "This file will wait for Wi-Fi again."
+  },
+  "No se pudo retirar el permiso.": {
+    "es": "No se pudo retirar el permiso.",
+    "en": "Could not revoke permission."
+  },
+  "Algunos archivos todavía no están listos.": {
+    "es": "Algunos archivos todavía no están listos.",
+    "en": "Some files are not ready yet."
+  },
+  "Más archivos": {
+    "es": "Más archivos",
+    "en": "More files"
+  },
+  "No se pudieron consultar descargas. Revisa tu conexión y tu sesión.": {
+    "es": "No se pudieron consultar descargas. Revisa tu conexión y tu sesión.",
+    "en": "Could not check downloads. Check your connection and session."
+  },
+  "Reintentar descarga": {
+    "es": "Reintentar descarga",
+    "en": "Retry download"
+  },
+  "Reintento solicitado. Se mantienen los permisos de red de este archivo.": {
+    "es": "Reintento solicitado. Se mantienen los permisos de red de este archivo.",
+    "en": "Retry requested. This file's network permissions are unchanged."
+  },
+  "No se pudo reintentar. Revisa tu sesión.": {
+    "es": "No se pudo reintentar. Revisa tu sesión.",
+    "en": "Could not retry. Check your session."
+  },
+  "No se pudieron consultar las descargas fallidas.": {
+    "es": "No se pudieron consultar las descargas fallidas.",
+    "en": "Could not check failed downloads."
+  },
+  "Consultando dispositivos…": {
+    "es": "Consultando dispositivos…",
+    "en": "Checking devices…"
+  },
+  "Dispositivos vinculados": {
+    "es": "Dispositivos vinculados",
+    "en": "Linked devices"
+  },
+  " · este teléfono": {
+    "es": " · este teléfono",
+    "en": " · this phone"
+  },
+  "\nÚltima conexión: ": {
+    "es": "\nÚltima conexión: ",
+    "en": "\nLast connection: "
+  },
+  "Sin registro": {
+    "es": "Sin registro",
+    "en": "Not recorded"
+  },
+  " · desvinculado": {
+    "es": " · desvinculado",
+    "en": " · unlinked"
+  },
+  "Desvincular / cerrar sesión": {
+    "es": "Desvincular / cerrar sesión",
+    "en": "Unlink / Sign out"
+  },
+  "Se cerrará la sesión y se borrarán los archivos de este dispositivo cuando contacte al servidor. No afecta a los demás. ¿Continuar?": {
+    "es": "Se cerrará la sesión y se borrarán los archivos de este dispositivo cuando contacte al servidor. No afecta a los demás. ¿Continuar?",
+    "en": "This device will be signed out and its files deleted when it contacts the server. Other devices are unaffected. Continue?"
+  },
+  "No se pudo consultar. Inicia sesión o revisa tu conexión.": {
+    "es": "No se pudo consultar. Inicia sesión o revisa tu conexión.",
+    "en": "Could not check devices. Sign in or check your connection."
+  },
+  "Dispositivo desvinculado. Archivos locales borrados.": {
+    "es": "Dispositivo desvinculado. Archivos locales borrados.",
+    "en": "Device unlinked. Local files deleted."
+  },
+  "No se pudo desvincular. Revisa la conexión e inténtalo nuevamente.": {
+    "es": "No se pudo desvincular. Revisa la conexión e inténtalo nuevamente.",
+    "en": "Could not unlink. Check your connection and try again."
+  },
+  "Agregar enlace · Tubego": {
+    "es": "Agregar enlace · Tubego",
+    "en": "Add link · Tubego"
+  },
+  "Pega un enlace HTTP o HTTPS": {
+    "es": "Pega un enlace HTTP o HTTPS",
+    "en": "Paste an HTTP or HTTPS link"
+  },
+  "Consultar título y duración (con conexión)": {
+    "es": "Consultar título y duración (con conexión)",
+    "en": "Check title and duration (requires connection)"
+  },
+  "Agregar a la cola": {
+    "es": "Agregar a la cola",
+    "en": "Add to queue"
+  },
+  "Actualizar pendientes e intentar envío": {
+    "es": "Actualizar pendientes e intentar envío",
+    "en": "Refresh pending links and try sending"
+  },
+  "Preferencias de calidad": {
+    "es": "Preferencias de calidad",
+    "en": "Quality preferences"
+  },
+  "Ver fichas existentes / Historial": {
+    "es": "Ver fichas existentes / Historial",
+    "en": "View existing items / History"
+  },
+  "Mi cuenta / Estado de aprobación": {
+    "es": "Mi cuenta / Estado de aprobación",
+    "en": "My account / Approval status"
+  },
+  "Sin sesión": {
+    "es": "Sin sesión",
+    "en": "Not signed in"
+  },
+  "Verifica tu correo antes de utilizar el servicio.": {
+    "es": "Verifica tu correo antes de utilizar el servicio.",
+    "en": "Verify your email before using the service."
+  },
+  "Tu cuenta espera aprobación del administrador.": {
+    "es": "Tu cuenta espera aprobación del administrador.",
+    "en": "Your account is waiting for administrator approval."
+  },
+  "Configura el servidor e inicia sesión con una cuenta aprobada antes de agregar enlaces.": {
+    "es": "Configura el servidor e inicia sesión con una cuenta aprobada antes de agregar enlaces.",
+    "en": "Configure the server and sign in with an approved account before adding links."
+  },
+  "Puedes agregar enlaces sin conexión; el envío usará cualquier red disponible.": {
+    "es": "Puedes agregar enlaces sin conexión; el envío usará cualquier red disponible.",
+    "en": "You can add links offline; they will be sent over any available network."
+  },
+  "Agregar este enlace con ": {
+    "es": "Agregar este enlace con ",
+    "en": "Add this link with "
+  },
+  "? Se enviará cuando haya conexión.": {
+    "es": "? Se enviará cuando haya conexión.",
+    "en": "? It will be sent when connected."
+  },
+  "Enlace guardado · pendiente de envío: ": {
+    "es": "Enlace guardado · pendiente de envío: ",
+    "en": "Link saved · waiting to send: "
+  },
+  "No se pudo guardar. Revisa sesión y almacenamiento.": {
+    "es": "No se pudo guardar. Revisa sesión y almacenamiento.",
+    "en": "Could not save. Check your session and storage."
+  },
+  "Enviado · consulta su ficha existente": {
+    "es": "Enviado · consulta su ficha existente",
+    "en": "Sent · view its existing item"
+  },
+  "Pendiente de envío": {
+    "es": "Pendiente de envío",
+    "en": "Waiting to send"
+  },
+  "Sin enlaces enviados desde este dispositivo": {
+    "es": "Sin enlaces enviados desde este dispositivo",
+    "en": "No links sent from this device"
+  },
+  "Ver ficha · ": {
+    "es": "Ver ficha · ",
+    "en": "View item · "
+  },
+  "Inicia sesión para ver los enlaces de esta cuenta.": {
+    "es": "Inicia sesión para ver los enlaces de esta cuenta.",
+    "en": "Sign in to view this account's links."
+  },
+  "No se pudo leer la cola local.": {
+    "es": "No se pudo leer la cola local.",
+    "en": "Could not read the local queue."
+  },
+  "Consultando metadatos…": {
+    "es": "Consultando metadatos…",
+    "en": "Checking metadata…"
+  },
+  "Sin título disponible": {
+    "es": "Sin título disponible",
+    "en": "No title available"
+  },
+  " · duración ": {
+    "es": " · duración ",
+    "en": " · duration "
+  },
+  " segundos": {
+    "es": " segundos",
+    "en": " seconds"
+  },
+  "No se pudieron consultar metadatos. Puedes guardar el enlace para validarlo cuando vuelva la conexión.": {
+    "es": "No se pudieron consultar metadatos. Puedes guardar el enlace para validarlo cuando vuelva la conexión.",
+    "en": "Could not check metadata. You can save the link for validation when connected again."
+  },
+  "Porcentaje mínimo libre (1–90)": {
+    "es": "Porcentaje mínimo libre (1–90)",
+    "en": "Minimum free percentage (1–90)"
+  },
+  "Guardar umbral de este teléfono": {
+    "es": "Guardar umbral de este teléfono",
+    "en": "Save this phone's threshold"
+  },
+  "Actualizar espacio disponible": {
+    "es": "Actualizar espacio disponible",
+    "en": "Refresh available space"
+  },
+  "Las descargas se pausan sin borrar archivos. Solo continúan cuando el archivo pendiente cabe manteniendo el porcentaje libre. Los mensajes y acciones pequeñas siguen funcionando.": {
+    "es": "Las descargas se pausan sin borrar archivos. Solo continúan cuando el archivo pendiente cabe manteniendo el porcentaje libre. Los mensajes y acciones pequeñas siguen funcionando.",
+    "en": "Downloads pause without deleting files. They continue only when the pending file fits while preserving the free-space percentage. Messages and small actions remain available."
+  },
+  "Gestionar cuenta / Liberar descargas al cerrar sesión": {
+    "es": "Gestionar cuenta / Liberar descargas al cerrar sesión",
+    "en": "Manage account / Free up downloads on sign out"
+  },
+  "Inicia sesión para configurar el almacenamiento de este dispositivo.": {
+    "es": "Inicia sesión para configurar el almacenamiento de este dispositivo.",
+    "en": "Sign in to configure storage on this device."
+  },
+  "Usa un porcentaje entero entre 1 y 90 y una sesión activa.": {
+    "es": "Usa un porcentaje entero entre 1 y 90 y una sesión activa.",
+    "en": "Use a whole percentage between 1 and 90 and an active session."
+  },
+  "Disponible: %.1f %% · %d MiB\nTubego en este teléfono: %d MiB\nEsta cuenta/dispositivo: %d MiB\nUmbral: %d %%": {
+    "es": "Disponible: %.1f %% · %d MiB\nTubego en este teléfono: %d MiB\nEsta cuenta/dispositivo: %d MiB\nUmbral: %d %%",
+    "en": "Available: %.1f %% · %d MiB\nTubego on this phone: %d MiB\nThis account/device: %d MiB\nThreshold: %d %%"
+  },
+  "\nDescargas pausadas. Libera espacio para continuar automáticamente.": {
+    "es": "\nDescargas pausadas. Libera espacio para continuar automáticamente.",
+    "en": "\nDownloads paused. Free up space to resume automatically."
+  },
+  "No se pudo consultar el almacenamiento.": {
+    "es": "No se pudo consultar el almacenamiento.",
+    "en": "Could not check storage."
+  },
+  "Preferencias de reproducción y descarga": {
+    "es": "Preferencias de reproducción y descarga",
+    "en": "Playback and download preferences"
+  },
+  "Preguntar calidad o audio para cada enlace": {
+    "es": "Preguntar calidad o audio para cada enlace",
+    "en": "Ask for quality or audio for each link"
+  },
+  "Retroceso al continuar (0 a 120 segundos; requiere reproductor compatible)": {
+    "es": "Retroceso al continuar (0 a 120 segundos; requiere reproductor compatible)",
+    "en": "Resume rewind (0 to 120 seconds; requires a compatible player)"
+  },
+  "Guardar preferencias": {
+    "es": "Guardar preferencias",
+    "en": "Save preferences"
+  },
+  "Configura el servidor e inicia sesión con una cuenta aprobada.": {
+    "es": "Configura el servidor e inicia sesión con una cuenta aprobada.",
+    "en": "Configure the server and sign in with an approved account."
+  },
+  "Cargando preferencias…": {
+    "es": "Cargando preferencias…",
+    "en": "Loading preferences…"
+  },
+  "Preferencias sincronizadas de tu cuenta": {
+    "es": "Preferencias sincronizadas de tu cuenta",
+    "en": "Account preferences synchronized"
+  },
+  "No se pudieron cargar. Revisa tu sesión y conexión.": {
+    "es": "No se pudieron cargar. Revisa tu sesión y conexión.",
+    "en": "Could not load. Check your session and connection."
+  },
+  "El retroceso debe ser un entero entre 0 y 120.": {
+    "es": "El retroceso debe ser un entero entre 0 y 120.",
+    "en": "Rewind must be a whole number between 0 and 120."
+  },
+  "Preferencias guardadas para todos tus dispositivos": {
+    "es": "Preferencias guardadas para todos tus dispositivos",
+    "en": "Preferences saved for all your devices"
+  },
+  "No se guardaron las preferencias. Reintenta cuando tengas conexión.": {
+    "es": "No se guardaron las preferencias. Reintenta cuando tengas conexión.",
+    "en": "Preferences were not saved. Try again when connected."
+  },
+  "Cargando prioridades…": {
+    "es": "Cargando prioridades…",
+    "en": "Loading priorities…"
+  },
+  "Prioridad persistente: 3 turnos frente a 1. No interrumpe descargas.": {
+    "es": "Prioridad persistente: 3 turnos frente a 1. No interrumpe descargas.",
+    "en": "Persistent priority: 3 turns to 1. Does not interrupt downloads."
+  },
+  "Guardar prioridad": {
+    "es": "Guardar prioridad",
+    "en": "Save priority"
+  },
+  "Prioridad guardada": {
+    "es": "Prioridad guardada",
+    "en": "Priority saved"
+  },
+  "No se pudo guardar. Se requiere una sesión administrativa activa.": {
+    "es": "No se pudo guardar. Se requiere una sesión administrativa activa.",
+    "en": "Could not save. An active administrator session is required."
+  },
+  "Siguiente página": {
+    "es": "Siguiente página",
+    "en": "Next page"
+  },
+  "Volver al inicio": {
+    "es": "Volver al inicio",
+    "en": "Back to start"
+  },
+  "No se pudieron consultar usuarios. Se requiere una sesión administrativa activa.": {
+    "es": "No se pudieron consultar usuarios. Se requiere una sesión administrativa activa.",
+    "en": "Could not check users. An active administrator session is required."
+  },
+  "Comparte un solo enlace como texto, no archivos ni lotes.": {
+    "es": "Comparte un solo enlace como texto, no archivos ni lotes.",
+    "en": "Share one link as text, not files or batches."
+  },
+  "No se pudo leer el enlace compartido.": {
+    "es": "No se pudo leer el enlace compartido.",
+    "en": "Could not read the shared link."
+  },
+  "Biblioteca · borrar con confirmación": {
+    "es": "Biblioteca · borrar con confirmación",
+    "en": "Library · Delete with confirmation"
+  },
+  "Actualizar biblioteca y enviar pendientes": {
+    "es": "Actualizar biblioteca y enviar pendientes",
+    "en": "Refresh library and send pending actions"
+  },
+  "Inicia sesión para gestionar tu biblioteca.": {
+    "es": "Inicia sesión para gestionar tu biblioteca.",
+    "en": "Sign in to manage your library."
+  },
+  "No se pudo leer la biblioteca de esta cuenta.": {
+    "es": "No se pudo leer la biblioteca de esta cuenta.",
+    "en": "Could not read this account's library."
+  },
+  "No hay recursos disponibles en la biblioteca.": {
+    "es": "No hay recursos disponibles en la biblioteca.",
+    "en": "No resources available in the library."
+  },
+  "Borrar ": {
+    "es": "Borrar ",
+    "en": "Delete "
+  },
+  "Se borrará en todos tus dispositivos. El historial se conserva. Los equipos sin conexión lo harán al reconectar.": {
+    "es": "Se borrará en todos tus dispositivos. El historial se conserva. Los equipos sin conexión lo harán al reconectar.",
+    "en": "It will be deleted on all your devices. History is preserved. Offline devices will do this when they reconnect."
+  },
+  "Solo dispositivos": {
+    "es": "Solo dispositivos",
+    "en": "Devices only"
+  },
+  "Dispositivos y servidor": {
+    "es": "Dispositivos y servidor",
+    "en": "Devices and server"
+  },
+  "Borrado local. La orden para los demás dispositivos se enviará con cualquier conexión.": {
+    "es": "Borrado local. La orden para los demás dispositivos se enviará con cualquier conexión.",
+    "en": "Deleted locally. The command for other devices will be sent over any connection."
+  },
+  "No se completó la limpieza local. Los borrados pendientes se reintentarán al conectar.": {
+    "es": "No se completó la limpieza local. Los borrados pendientes se reintentarán al conectar.",
+    "en": "Local cleanup did not finish. Pending deletions will retry when connected."
+  },
+  "Crear cuenta · Tubego": {
+    "es": "Crear cuenta · Tubego",
+    "en": "Create account · Tubego"
+  },
+  "Correo electrónico": {
+    "es": "Correo electrónico",
+    "en": "Email address"
+  },
+  "Contraseña (12–128 caracteres)": {
+    "es": "Contraseña (12–128 caracteres)",
+    "en": "Password (12–128 characters)"
+  },
+  "Reenviar verificación": {
+    "es": "Reenviar verificación",
+    "en": "Resend verification"
+  },
+  "Verifica tu correo desde el enlace enviado. Después un administrador debe aprobar tu cuenta.": {
+    "es": "Verifica tu correo desde el enlace enviado. Después un administrador debe aprobar tu cuenta.",
+    "en": "Verify your email through the link sent to you. An administrator must then approve your account."
+  },
+  "Usa entre 12 y 128 caracteres.": {
+    "es": "Usa entre 12 y 128 caracteres.",
+    "en": "Use between 12 and 128 characters."
+  },
+  "No se pudo enviar. Revisa el correo, la conexión y la configuración del servidor.": {
+    "es": "No se pudo enviar. Revisa el correo, la conexión y la configuración del servidor.",
+    "en": "Could not send. Check your email, connection and server configuration."
+  },
+  "Configura tu servidor para comenzar.": {
+    "es": "Configura tu servidor para comenzar.",
+    "en": "Configure your server to begin."
+  },
+  "Guardar y comprobar conexión": {
+    "es": "Guardar y comprobar conexión",
+    "en": "Save and check connection"
+  },
+  "Sin conexión comprobada": {
+    "es": "Sin conexión comprobada",
+    "en": "Connection not checked"
+  },
+  "Iniciar sesión / Mi cuenta": {
+    "es": "Iniciar sesión / Mi cuenta",
+    "en": "Sign in / My account"
+  },
+  "Crear cuenta": {
+    "es": "Crear cuenta",
+    "en": "Create account"
+  },
+  "Administrar solicitudes": {
+    "es": "Administrar solicitudes",
+    "en": "Manage requests"
+  },
+  "Administrar prioridades": {
+    "es": "Administrar prioridades",
+    "en": "Manage priorities"
+  },
+  "Administrar conservación del servidor": {
+    "es": "Administrar conservación del servidor",
+    "en": "Manage server retention"
+  },
+  "Configura una URL HTTPS de servidor válida.": {
+    "es": "Configura una URL HTTPS de servidor válida.",
+    "en": "Configure a valid HTTPS server URL."
+  },
+  "Agregar enlace / Pendientes de envío": {
+    "es": "Agregar enlace / Pendientes de envío",
+    "en": "Add link / Waiting to send"
+  },
+  "Permisos de datos por descarga": {
+    "es": "Permisos de datos por descarga",
+    "en": "Data permissions per download"
+  },
+  "Administrar usuarios": {
+    "es": "Administrar usuarios",
+    "en": "Manage users"
+  },
+  "Configura una URL HTTPS válida.": {
+    "es": "Configura una URL HTTPS válida.",
+    "en": "Configure a valid HTTPS URL."
+  },
+  "Historial / Volver a solicitar": {
+    "es": "Historial / Volver a solicitar",
+    "en": "History / Request again"
+  },
+  "Biblioteca / Borrar recursos": {
+    "es": "Biblioteca / Borrar recursos",
+    "en": "Library / Delete resources"
+  },
+  "Comprobando conexión…": {
+    "es": "Comprobando conexión…",
+    "en": "Checking connection…"
+  },
+  "Servidor no disponible": {
+    "es": "Servidor no disponible",
+    "en": "Server unavailable"
+  },
+  "Conectado · versión ": {
+    "es": "Conectado · versión ",
+    "en": "Connected · version "
+  },
+  "No se pudo conectar. Revisa la URL y tu conexión.": {
+    "es": "No se pudo conectar. Revisa la URL y tu conexión.",
+    "en": "Could not connect. Check the URL and your connection."
+  },
+  "Sesión revocada. Se han retirado las descargas locales de esta cuenta.": {
+    "es": "Sesión revocada. Se han retirado las descargas locales de esta cuenta.",
+    "en": "Session revoked. This account's local downloads have been removed."
+  },
+  "Cargando conservación del servidor…": {
+    "es": "Cargando conservación del servidor…",
+    "en": "Loading server retention…"
+  },
+  "Conservar evita la limpieza automática del servidor. No impide la limpieza manual ni el borrado por bloqueo. Los archivos del teléfono no cambian.": {
+    "es": "Conservar evita la limpieza automática del servidor. No impide la limpieza manual ni el borrado por bloqueo. Los archivos del teléfono no cambian.",
+    "en": "Retention prevents automatic server cleanup. It does not prevent manual cleanup or deletion when blocked. Phone files are unaffected."
+  },
+  "Conservar archivos en el servidor": {
+    "es": "Conservar archivos en el servidor",
+    "en": "Keep files on the server"
+  },
+  "Guardar conservación": {
+    "es": "Guardar conservación",
+    "en": "Save retention"
+  },
+  "Activar limpieza automática": {
+    "es": "Activar limpieza automática",
+    "en": "Enable automatic cleanup"
+  },
+  "Podrán borrarse las copias del servidor que ya cumplan las condiciones de limpieza. La biblioteca y las copias locales se conservan.": {
+    "es": "Podrán borrarse las copias del servidor que ya cumplan las condiciones de limpieza. La biblioteca y las copias locales se conservan.",
+    "en": "Server copies that already meet the cleanup conditions may be deleted. Your library and local copies are preserved."
+  },
+  "Se requiere una sesión administrativa activa para consultar conservación.": {
+    "es": "Se requiere una sesión administrativa activa para consultar conservación.",
+    "en": "An active administrator session is required to check retention."
+  },
+  "Plazos globales (horas). Aplican también a archivos existentes.": {
+    "es": "Plazos globales (horas). Aplican también a archivos existentes.",
+    "en": "Global limits (hours). Also apply to existing files."
+  },
+  "Máximo desde archivo listo (72)": {
+    "es": "Máximo desde archivo listo (72)",
+    "en": "Maximum since file ready (72)"
+  },
+  "Máximo desde primera entrega (4)": {
+    "es": "Máximo desde primera entrega (4)",
+    "en": "Maximum since first delivery (4)"
+  },
+  "Revisar impacto y guardar plazos": {
+    "es": "Revisar impacto y guardar plazos",
+    "en": "Review impact and save limits"
+  },
+  "No se pudieron consultar los plazos.": {
+    "es": "No se pudieron consultar los plazos.",
+    "en": "Could not check the limits."
+  },
+  "Los plazos deben ser horas enteras entre 1 y 8760.": {
+    "es": "Los plazos deben ser horas enteras entre 1 y 8760.",
+    "en": "Limits must be whole hours between 1 and 8760."
+  },
+  "Confirmar plazos": {
+    "es": "Confirmar plazos",
+    "en": "Confirm limits"
+  },
+  "Se aplicarán a todos los archivos existentes y nuevos, desde sus fechas originales. Copias del servidor que vencen ahora: ": {
+    "es": "Se aplicarán a todos los archivos existentes y nuevos, desde sus fechas originales. Copias del servidor que vencen ahora: ",
+    "en": "They will apply to all existing and new files, counting from their original dates. Server copies expiring now: "
+  },
+  ". Los archivos del teléfono no cambian.": {
+    "es": ". Los archivos del teléfono no cambian.",
+    "en": ". Phone files are unaffected."
+  },
+  "Plazos guardados. Copias retiradas: ": {
+    "es": "Plazos guardados. Copias retiradas: ",
+    "en": "Limits saved. Copies removed: "
+  },
+  "No se pudo aplicar. Revisa el impacto otra vez; pudo cambiar o caducar.": {
+    "es": "No se pudo aplicar. Revisa el impacto otra vez; pudo cambiar o caducar.",
+    "en": "Could not apply. Review the impact again; it may have changed or expired."
+  },
+  "No se pudo revisar el impacto. Revisa conexión y permisos.": {
+    "es": "No se pudo revisar el impacto. Revisa conexión y permisos.",
+    "en": "Could not review the impact. Check your connection and permissions."
+  },
+  "Guardado. Copias del servidor retiradas: ": {
+    "es": "Guardado. Copias del servidor retiradas: ",
+    "en": "Saved. Server copies removed: "
+  },
+  "No se pudo guardar. Revisa la conexión y los permisos administrativos.": {
+    "es": "No se pudo guardar. Revisa la conexión y los permisos administrativos.",
+    "en": "Could not save. Check your connection and administrator permissions."
+  },
+  "Cuenta · Tubego": {
+    "es": "Cuenta · Tubego",
+    "en": "Account · Tubego"
+  },
+  "Contraseña actual": {
+    "es": "Contraseña actual",
+    "en": "Current password"
+  },
+  "Iniciar sesión": {
+    "es": "Iniciar sesión",
+    "en": "Sign in"
+  },
+  "Recuperar contraseña por correo": {
+    "es": "Recuperar contraseña por correo",
+    "en": "Recover password by email"
+  },
+  "Consultar estado de mi cuenta": {
+    "es": "Consultar estado de mi cuenta",
+    "en": "Check my account status"
+  },
+  "Nueva contraseña (12–128 caracteres)": {
+    "es": "Nueva contraseña (12–128 caracteres)",
+    "en": "New password (12–128 characters)"
+  },
+  "Cerrar las demás sesiones al cambiar contraseña": {
+    "es": "Cerrar las demás sesiones al cambiar contraseña",
+    "en": "Sign out other sessions when changing password"
+  },
+  "Cambiar contraseña": {
+    "es": "Cambiar contraseña",
+    "en": "Change password"
+  },
+  "Cerrar sesión": {
+    "es": "Cerrar sesión",
+    "en": "Sign out"
+  },
+  "Al cerrar sesión se borrarán las descargas de este teléfono. Los otros dispositivos conservarán sus archivos. ¿Continuar?": {
+    "es": "Al cerrar sesión se borrarán las descargas de este teléfono. Los otros dispositivos conservarán sus archivos. ¿Continuar?",
+    "en": "Signing out deletes downloads on this phone. Other devices keep their files. Continue?"
+  },
+  "Cuenta aprobada. Puedes utilizar el servicio.": {
+    "es": "Cuenta aprobada. Puedes utilizar el servicio.",
+    "en": "Account approved. You can use the service."
+  },
+  "Verifica tu correo desde el enlace enviado. Puedes reenviarlo en Crear cuenta.": {
+    "es": "Verifica tu correo desde el enlace enviado. Puedes reenviarlo en Crear cuenta.",
+    "en": "Verify your email through the link sent to you. You can resend it from Create account."
+  },
+  "Correo verificado. Espera aprobación del administrador.": {
+    "es": "Correo verificado. Espera aprobación del administrador.",
+    "en": "Email verified. Wait for administrator approval."
+  },
+  "Cuenta no disponible.": {
+    "es": "Cuenta no disponible.",
+    "en": "Account unavailable."
+  },
+  "Sesión cerrada. Archivos locales borrados; el servidor recibirá el cierre cuando haya conexión.": {
+    "es": "Sesión cerrada. Archivos locales borrados; el servidor recibirá el cierre cuando haya conexión.",
+    "en": "Signed out. Local files deleted; sign out will be sent to the server when connected."
+  },
+  "No session": {
+    "es": "Sin sesión",
+    "en": "No session"
+  },
+  "Contraseña actualizada.": {
+    "es": "Contraseña actualizada.",
+    "en": "Password updated."
+  },
+  "Inicia sesión para consultar tu estado.": {
+    "es": "Inicia sesión para consultar tu estado.",
+    "en": "Sign in to check your status."
+  },
+  "Cierra la sesión actual antes de cambiar de cuenta. Se te pedirá confirmar el borrado de sus descargas locales.": {
+    "es": "Cierra la sesión actual antes de cambiar de cuenta. Se te pedirá confirmar el borrado de sus descargas locales.",
+    "en": "Sign out before switching accounts. You will be asked to confirm deletion of its local downloads."
+  },
+  "Tu sesión fue revocada o tu cuenta no está disponible.": {
+    "es": "Tu sesión fue revocada o tu cuenta no está disponible.",
+    "en": "Your session was revoked or your account is unavailable."
+  },
+  "Tu sesión venció. Inicia sesión nuevamente.": {
+    "es": "Tu sesión venció. Inicia sesión nuevamente.",
+    "en": "Your session expired. Sign in again."
+  },
+  "Demasiados intentos. Espera antes de volver a intentar.": {
+    "es": "Demasiados intentos. Espera antes de volver a intentar.",
+    "en": "Too many attempts. Wait before trying again."
+  },
+  "Correo o contraseña incorrectos, o sesión no válida.": {
+    "es": "Correo o contraseña incorrectos, o sesión no válida.",
+    "en": "Incorrect email or password, or invalid session."
+  },
+  "No se pudo completar la operación. Revisa los datos.": {
+    "es": "No se pudo completar la operación. Revisa los datos.",
+    "en": "Could not complete the operation. Check your details."
+  },
+  "No se pudo completar. Revisa los datos y la conexión.": {
+    "es": "No se pudo completar. Revisa los datos y la conexión.",
+    "en": "Could not complete. Check your details and connection."
+  },
+  "Se requiere una cuenta aprobada de administrador.": {
+    "es": "Se requiere una cuenta aprobada de administrador.",
+    "en": "An approved administrator account is required."
+  },
+  "Inicia sesión como administrador.": {
+    "es": "Inicia sesión como administrador.",
+    "en": "Sign in as an administrator."
+  },
+  "Consultando usuarios…": {
+    "es": "Consultando usuarios…",
+    "en": "Checking users…"
+  },
+  "Diagnósticos de descargas fallidas": {
+    "es": "Diagnósticos de descargas fallidas",
+    "en": "Failed download diagnostics"
+  },
+  "Administración de usuarios": {
+    "es": "Administración de usuarios",
+    "en": "User administration"
+  },
+  "Cuenta eliminada": {
+    "es": "Cuenta eliminada",
+    "en": "Account deleted"
+  },
+  "\nLimpieza del servidor pendiente": {
+    "es": "\nLimpieza del servidor pendiente",
+    "en": "\nServer cleanup pending"
+  },
+  "Bloquear usuario": {
+    "es": "Bloquear usuario",
+    "en": "Block user"
+  },
+  "Desbloquear usuario": {
+    "es": "Desbloquear usuario",
+    "en": "Unblock user"
+  },
+  "Eliminar cuenta y datos": {
+    "es": "Eliminar cuenta y datos",
+    "en": "Delete account and data"
+  },
+  "Reintentar limpieza": {
+    "es": "Reintentar limpieza",
+    "en": "Retry cleanup"
+  },
+  "Se requiere una sesión activa de administrador. Revisa tu cuenta y conexión.": {
+    "es": "Se requiere una sesión activa de administrador. Revisa tu cuenta y conexión.",
+    "en": "An active administrator session is required. Check your account and connection."
+  },
+  "Eliminar la cuenta, datos personales e historial y sus archivos del servidor. Sus dispositivos borrarán archivos al volver a contactar; las copias exportadas quedan fuera del control de Tubego. Esta acción no se puede deshacer.": {
+    "es": "Eliminar la cuenta, datos personales e historial y sus archivos del servidor. Sus dispositivos borrarán archivos al volver a contactar; las copias exportadas quedan fuera del control de Tubego. Esta acción no se puede deshacer.",
+    "en": "Delete the account, personal data, history and server files. Its devices will delete files when they contact the server again; exported copies are outside Tubego's control. This action cannot be undone."
+  },
+  "Bloquear acceso, cancelar descargas y borrar archivos del servidor. Sus dispositivos borrarán archivos al próximo contacto. Se conserva la cuenta y su historial.": {
+    "es": "Bloquear acceso, cancelar descargas y borrar archivos del servidor. Sus dispositivos borrarán archivos al próximo contacto. Se conserva la cuenta y su historial.",
+    "en": "Block access, cancel downloads and delete server files. Its devices will delete files on their next contact. The account and its history are preserved."
+  },
+  "Reactivar la cuenta requiere correo verificado para usar el servicio. Deberá iniciar sesión otra vez; archivos y sesiones anteriores no se restauran.": {
+    "es": "Reactivar la cuenta requiere correo verificado para usar el servicio. Deberá iniciar sesión otra vez; archivos y sesiones anteriores no se restauran.",
+    "en": "Reactivating the account requires a verified email to use the service. Sign in again; previous files and sessions are not restored."
+  },
+  "Reintentar la limpieza pendiente de archivos del servidor.": {
+    "es": "Reintentar la limpieza pendiente de archivos del servidor.",
+    "en": "Retry pending server file cleanup."
+  },
+  "Acceso revocado; limpieza pendiente, se reintentará automáticamente.": {
+    "es": "Acceso revocado; limpieza pendiente, se reintentará automáticamente.",
+    "en": "Access revoked; cleanup pending and will retry automatically."
+  },
+  "No se puede realizar: cuenta propia, último administrador, estado inválido o limpieza pendiente.": {
+    "es": "No se puede realizar: cuenta propia, último administrador, estado inválido o limpieza pendiente.",
+    "en": "Cannot proceed: your own account, last administrator, invalid status or pending cleanup."
+  },
+  "No se pudo ejecutar. Revisa permisos y conexión.": {
+    "es": "No se pudo ejecutar. Revisa permisos y conexión.",
+    "en": "Could not execute. Check your permissions and connection."
+  },
+  "No se pudo ejecutar. Revisa tu conexión e inténtalo otra vez.": {
+    "es": "No se pudo ejecutar. Revisa tu conexión e inténtalo otra vez.",
+    "en": "Could not execute. Check your connection and try again."
+  },
+  "Actualizar / Enviar pendientes": {
+    "es": "Actualizar / Enviar pendientes",
+    "en": "Refresh / Send pending actions"
+  },
+  "Inicia sesión con una cuenta aprobada para consultar tu biblioteca.": {
+    "es": "Inicia sesión con una cuenta aprobada para consultar tu biblioteca.",
+    "en": "Sign in with an approved account to view your library."
+  },
+  "No se pudo leer el historial de esta cuenta.": {
+    "es": "No se pudo leer el historial de esta cuenta.",
+    "en": "Could not read this account's history."
+  },
+  "Consulta disponibilidad al solicitar": {
+    "es": "Consulta disponibilidad al solicitar",
+    "en": "Check availability when requesting"
+  },
+  "La copia del servidor ya no está disponible": {
+    "es": "La copia del servidor ya no está disponible",
+    "en": "The server copy is no longer available"
+  },
+  "Volver a solicitar / Descargar": {
+    "es": "Volver a solicitar / Descargar",
+    "en": "Request again / Download"
+  },
+  "Solicitar ": {
+    "es": "Solicitar ",
+    "en": "Request "
+  },
+  "Se recuperará esta variante sin crear otra ficha. Tus dispositivos que ya tengan el archivo completo no lo descargarán otra vez. Si lo habías borrado, autorizas descargarlo de nuevo en este teléfono; tus otros dispositivos necesitarán su propia aprobación.": {
+    "es": "Se recuperará esta variante sin crear otra ficha. Tus dispositivos que ya tengan el archivo completo no lo descargarán otra vez. Si lo habías borrado, autorizas descargarlo de nuevo en este teléfono; tus otros dispositivos necesitarán su propia aprobación.",
+    "en": "This variant will be recovered without creating another item. Devices that already have the complete file will not download it again. If you deleted it, you authorize another download on this phone; other devices need their own approval."
+  },
+  "No hay fichas disponibles. Conecta para actualizar el historial.": {
+    "es": "No hay fichas disponibles. Conecta para actualizar el historial.",
+    "en": "No items available. Connect to refresh history."
+  },
+  "Solicitud guardada. Se enviará con cualquier conexión; el archivo respetará Wi-Fi o tu permiso de datos.": {
+    "es": "Solicitud guardada. Se enviará con cualquier conexión; el archivo respetará Wi-Fi o tu permiso de datos.",
+    "en": "Request saved. It will be sent over any connection; the file will respect Wi-Fi or your data permission."
+  },
+  "No se pudo guardar la solicitud. Revisa sesión y almacenamiento.": {
+    "es": "No se pudo guardar la solicitud. Revisa sesión y almacenamiento.",
+    "en": "Could not save the request. Check your session and storage."
+  },
+  "Cargando solicitudes verificadas…": {
+    "es": "Cargando solicitudes verificadas…",
+    "en": "Loading verified requests…"
+  },
+  "Sin solicitudes pendientes": {
+    "es": "Sin solicitudes pendientes",
+    "en": "No pending requests"
+  },
+  "Solicitudes verificadas pendientes": {
+    "es": "Solicitudes verificadas pendientes",
+    "en": "Pending verified requests"
+  },
+  "Aprobar ": {
+    "es": "Aprobar ",
+    "en": "Approve "
+  },
+  "Rechazar ": {
+    "es": "Rechazar ",
+    "en": "Reject "
+  },
+  "Acceso no disponible. Se requiere una sesión de administrador aprobada.": {
+    "es": "Acceso no disponible. Se requiere una sesión de administrador aprobada.",
+    "en": "Access unavailable. An approved administrator session is required."
+  },
+  "No se pudo cambiar la solicitud. Actualiza e inténtalo nuevamente.": {
+    "es": "No se pudo cambiar la solicitud. Actualiza e inténtalo nuevamente.",
+    "en": "Could not change the request. Refresh and try again."
+  },
+  "Consultando diagnósticos…": {
+    "es": "Consultando diagnósticos…",
+    "en": "Checking diagnostics…"
+  },
+  "Fallos definitivos. Los errores temporales se reintentan hasta tres veces.": {
+    "es": "Fallos definitivos. Los errores temporales se reintentan hasta tres veces.",
+    "en": "Permanent failures. Temporary errors are retried up to three times."
+  },
+  " · intentos: ": {
+    "es": " · intentos: ",
+    "en": " · attempts: "
+  },
+  "Más diagnósticos": {
+    "es": "Más diagnósticos",
+    "en": "More diagnostics"
+  },
+  "Se requiere una sesión activa de administrador para consultar diagnósticos.": {
+    "es": "Se requiere una sesión activa de administrador para consultar diagnósticos.",
+    "en": "An active administrator session is required to check diagnostics."
+  },
+  "Centro de avisos": {
+    "es": "Centro de avisos",
+    "en": "Alerts center"
+  },
+  "Este enlace no es compatible con las plataformas disponibles.": {
+    "es": "Este enlace no es compatible con las plataformas disponibles.",
+    "en": "This link is not supported by the available platforms."
+  },
+  "Revisa tu sesión y tus permisos.": {
+    "es": "Revisa tu sesión y tus permisos.",
+    "en": "Check your session and permissions."
+  },
+  "Correo sin verificar": {
+    "es": "Correo sin verificar",
+    "en": "Email not verified"
+  },
+  "Pendiente de aprobación": {
+    "es": "Pendiente de aprobación",
+    "en": "Waiting for approval"
+  },
+  "Preparando archivo": {
+    "es": "Preparando archivo",
+    "en": "Preparing file"
+  },
+  "Requiere aprobación para volver a descargar": {
+    "es": "Requiere aprobación para volver a descargar",
+    "en": "Approval required to download again"
+  },
+  "Espacio insuficiente": {
+    "es": "Espacio insuficiente",
+    "en": "Insufficient space"
+  },
+  "Estado no disponible": {
+    "es": "Estado no disponible",
+    "en": "Status unavailable"
+  },
+  "Calidad o formato": {
+    "es": "Calidad o formato",
+    "en": "Quality or format"
+  },
+  "Usar selección": {
+    "es": "Usar selección",
+    "en": "Use selection"
+  },
+  "Diagnóstico de esta cuenta": {
+    "es": "Diagnóstico de esta cuenta",
+    "en": "Account diagnostics"
+  },
+  "Tubego · ": {
+    "es": "Tubego · ",
+    "en": "Tubego · "
+  },
+  "Sin conexión validada": {
+    "es": "Sin conexión validada",
+    "en": "No validated connection"
+  },
+  "Conexión Wi-Fi": {
+    "es": "Conexión Wi-Fi",
+    "en": "Wi-Fi connection"
+  },
+  "Conexión de datos móviles": {
+    "es": "Conexión de datos móviles",
+    "en": "Mobile data connection"
+  },
+  "Otra conexión de red": {
+    "es": "Otra conexión de red",
+    "en": "Other network connection"
+  },
+  "Consultar versión y conexión del servidor": {
+    "es": "Consultar versión y conexión del servidor",
+    "en": "Check server version and connection"
+  },
+  "Ver mis avisos": {
+    "es": "Ver mis avisos",
+    "en": "View my alerts"
+  },
+  "Diagnóstico y mantenimiento administrativo": {
+    "es": "Diagnóstico y mantenimiento administrativo",
+    "en": "Administrator diagnostics and maintenance"
+  },
+  "Este diagnóstico no mide velocidad ni descarga archivos de prueba. Los avisos y las acciones administrativas se filtran por los permisos de tu cuenta.": {
+    "es": "Este diagnóstico no mide velocidad ni descarga archivos de prueba. Los avisos y las acciones administrativas se filtran por los permisos de tu cuenta.",
+    "en": "This check does not measure speed or download test files. Alerts and administrator actions are filtered by your account's permissions."
+  },
+  "Esta acción todavía no está disponible en esta versión.": {
+    "es": "Esta acción todavía no está disponible en esta versión.",
+    "en": "This action is not available in this version yet."
+  },
+  "Inicia sesión para ver los avisos de esta cuenta y dispositivo.": {
+    "es": "Inicia sesión para ver los avisos de esta cuenta y dispositivo.",
+    "en": "Sign in to view alerts for this account and device."
+  },
+  "Centro de avisos. No avisamos al terminar cada video. Las notificaciones son opcionales y los avisos quedan disponibles aquí.": {
+    "es": "Centro de avisos. No avisamos al terminar cada video. Las notificaciones son opcionales y los avisos quedan disponibles aquí.",
+    "en": "Alerts center. We do not notify you when each video finishes. Notifications are optional; alerts remain available here."
+  },
+  "Desactivar avisos del sistema": {
+    "es": "Desactivar avisos del sistema",
+    "en": "Disable system notifications"
+  },
+  "Activar avisos del sistema": {
+    "es": "Activar avisos del sistema",
+    "en": "Enable system notifications"
+  },
+  "Actualizar avisos": {
+    "es": "Actualizar avisos",
+    "en": "Refresh alerts"
+  },
+  "Consultando fallos del servidor…": {
+    "es": "Consultando fallos del servidor…",
+    "en": "Checking server failures…"
+  },
+  "Descargas de este teléfono / Reintentar": {
+    "es": "Descargas de este teléfono / Reintentar",
+    "en": "Downloads on this phone / Retry"
+  },
+  "Fallos definitivos del servidor. Cada reintento manual inicia un nuevo presupuesto de tres reintentos automáticos.": {
+    "es": "Fallos definitivos del servidor. Cada reintento manual inicia un nuevo presupuesto de tres reintentos automáticos.",
+    "en": "Permanent server failures. Each manual retry starts a new budget of three automatic retries."
+  },
+  "Reintentar en el servidor": {
+    "es": "Reintentar en el servidor",
+    "en": "Retry on server"
+  },
+  "No se pudo reintentar. Revisa la conexión y tu sesión.": {
+    "es": "No se pudo reintentar. Revisa la conexión y tu sesión.",
+    "en": "Could not retry. Check your connection and session."
+  },
+  "No se pudieron consultar errores del servidor. Las descargas locales siguen disponibles en el botón de este teléfono.": {
+    "es": "No se pudieron consultar errores del servidor. Las descargas locales siguen disponibles en el botón de este teléfono.",
+    "en": "Could not check server errors. Local downloads remain available through the button for this phone."
+  },
+  "Guardando…": {
+    "es": "Guardando…",
+    "en": "Saving…"
+  },
+  "Idioma de tu cuenta": {
+    "es": "Idioma de tu cuenta",
+    "en": "Account language"
+  },
+  "Español": {
+    "es": "Español",
+    "en": "Español"
+  },
+  "Guardar idioma": {
+    "es": "Guardar idioma",
+    "en": "Save language"
+  },
+  "Enviar cambio pendiente": {
+    "es": "Enviar cambio pendiente",
+    "en": "Send pending change"
+  },
+  "El idioma se guarda para tu cuenta aunque no haya conexión. Se sincroniza con tus otros dispositivos cuando vuelve la red, sin usar datos para descargar videos.": {
+    "es": "El idioma se guarda para tu cuenta aunque no haya conexión. Se sincroniza con tus otros dispositivos cuando vuelve la red, sin usar datos para descargar videos.",
+    "en": "Your account language is saved even when offline. It synchronizes with your other devices when connected, without using data to download videos."
+  },
+  "Idioma guardado en este teléfono; pendiente de sincronizar.": {
+    "es": "Idioma guardado en este teléfono; pendiente de sincronizar.",
+    "en": "Language saved on this phone; synchronization pending."
+  },
+  "Inicia sesión con una cuenta aprobada para guardar tu idioma.": {
+    "es": "Inicia sesión con una cuenta aprobada para guardar tu idioma.",
+    "en": "Sign in with an approved account to save your language."
+  },
+  "No se pudo guardar el idioma. Revisa tu sesión y almacenamiento.": {
+    "es": "No se pudo guardar el idioma. Revisa tu sesión y almacenamiento.",
+    "en": "Could not save language. Check your session and storage."
+  },
+  "Cambio pendiente preparado para enviar cuando haya conexión.": {
+    "es": "Cambio pendiente preparado para enviar cuando haya conexión.",
+    "en": "Pending change prepared to send when connected."
+  },
+  "No se pudo preparar el cambio. Tu idioma sigue guardado localmente.": {
+    "es": "No se pudo preparar el cambio. Tu idioma sigue guardado localmente.",
+    "en": "Could not prepare the change. Your language is still saved locally."
+  },
+  "Borrar…": {
+    "es": "Borrar…",
+    "en": "Delete…"
+  },
+  "Enviando…": {
+    "es": "Enviando…",
+    "en": "Sending…"
+  },
+  "Limpiar archivos del servidor": {
+    "es": "Limpiar archivos del servidor",
+    "en": "Clean up server files"
+  },
+  "Video 480p": {
+    "es": "Video 480p",
+    "en": "480p video"
+  },
+  "Video 720p": {
+    "es": "Video 720p",
+    "en": "720p video"
+  },
+  "Video 1080p": {
+    "es": "Video 1080p",
+    "en": "1080p video"
+  },
+  "Máxima disponible": {
+    "es": "Máxima disponible",
+    "en": "Highest available"
+  },
+  "Solo audio (MP3)": {
+    "es": "Solo audio (MP3)",
+    "en": "Audio only (MP3)"
+  },
+  "Calidad no válida": {
+    "es": "Calidad no válida",
+    "en": "Invalid quality"
+  },
+  "Elige calidad o audio antes de enviar": {
+    "es": "Elige calidad o audio antes de enviar",
+    "en": "Choose quality or audio before sending"
+  },
+  "Consultando…": {
+    "es": "Consultando…",
+    "en": "Checking…"
+  },
+  "Limpieza del servidor · conserva teléfono e historial": {
+    "es": "Limpieza del servidor · conserva teléfono e historial",
+    "en": "Server cleanup · Preserve phone files and history"
+  },
+  "Limpiar mis archivos del servidor": {
+    "es": "Limpiar mis archivos del servidor",
+    "en": "Clean up my server files"
+  },
+  "Limpiar todos los archivos móviles del servidor (administración)": {
+    "es": "Limpiar todos los archivos móviles del servidor (administración)",
+    "en": "Clean up all mobile-channel server files (administrator)"
+  },
+  "Actualizar estimaciones / Enviar pendientes": {
+    "es": "Actualizar estimaciones / Enviar pendientes",
+    "en": "Refresh estimates / Send pending actions"
+  },
+  "Inicia sesión con una cuenta aprobada.": {
+    "es": "Inicia sesión con una cuenta aprobada.",
+    "en": "Sign in with an approved account."
+  },
+  "solo tus archivos del servidor": {
+    "es": "solo tus archivos del servidor",
+    "en": "only your server files"
+  },
+  "los archivos móviles de TODOS los usuarios del servidor": {
+    "es": "los archivos móviles de TODOS los usuarios del servidor",
+    "en": "mobile-channel server files for ALL users"
+  },
+  "Cantidad y tamaño no disponibles sin conexión.": {
+    "es": "Cantidad y tamaño no disponibles sin conexión.",
+    "en": "File count and size unavailable offline."
+  },
+  "Estimación guardada: ": {
+    "es": "Estimación guardada: ",
+    "en": "Saved estimate: "
+  },
+  " archivos conocidos · ": {
+    "es": " archivos conocidos · ",
+    "en": " known files · "
+  },
+  " bytes · ": {
+    "es": " bytes · ",
+    "en": " bytes · "
+  },
+  " tareas en curso · ": {
+    "es": " tareas en curso · ",
+    "en": " active tasks · "
+  },
+  " archivos sin tamaño conocido.": {
+    "es": " archivos sin tamaño conocido.",
+    "en": " files with unknown size."
+  },
+  "Confirmar limpieza del servidor": {
+    "es": "Confirmar limpieza del servidor",
+    "en": "Confirm server cleanup"
+  },
+  "Se eliminarán ": {
+    "es": "Se eliminarán ",
+    "en": "Will delete "
+  },
+  " al ejecutar la orden. ": {
+    "es": " al ejecutar la orden. ",
+    "en": " when executing the command. "
+  },
+  " Los parciales también se limpian y las tareas se cancelan. Tus copias del teléfono y el historial se conservarán. El bot de Telegram mantiene su almacenamiento independiente.": {
+    "es": " Los parciales también se limpian y las tareas se cancelan. Tus copias del teléfono y el historial se conservarán. El bot de Telegram mantiene su almacenamiento independiente.",
+    "en": " Partial files are also cleaned up and tasks cancelled. Your phone copies and history are preserved. The Telegram bot keeps separate storage."
+  },
+  "Limpiar servidor": {
+    "es": "Limpiar servidor",
+    "en": "Clean up server"
+  },
+  "Limpieza guardada. Se enviará con cualquier conexión y se comprobarán los permisos al ejecutarse.": {
+    "es": "Limpieza guardada. Se enviará con cualquier conexión y se comprobarán los permisos al ejecutarse.",
+    "en": "Cleanup saved. It will be sent over any connection; permissions will be checked when executed."
+  },
+  "No se pudo guardar la limpieza. Revisa tu sesión y almacenamiento.": {
+    "es": "No se pudo guardar la limpieza. Revisa tu sesión y almacenamiento.",
+    "en": "Could not save cleanup. Check your session and storage."
+  },
+  "Todos los usuarios": {
+    "es": "Todos los usuarios",
+    "en": "All users"
+  },
+  "Solo mi servidor": {
+    "es": "Solo mi servidor",
+    "en": "Only my server files"
+  },
+  "Reintentar con los permisos actuales": {
+    "es": "Reintentar con los permisos actuales",
+    "en": "Retry with current permissions"
+  },
+  "No se pudo reintentar.": {
+    "es": "No se pudo reintentar.",
+    "en": "Could not retry."
+  },
+  "No se pudo cargar la información de esta cuenta.": {
+    "es": "No se pudo cargar la información de esta cuenta.",
+    "en": "Could not load this account's information."
+  },
+  "Ayuda de Tubego": {
+    "es": "Ayuda de Tubego",
+    "en": "Tubego help"
+  },
+  "Agrega un enlace pegándolo o compartiéndolo desde otra app. Elige calidad o solo audio. El servidor prepara el archivo y tus dispositivos lo descargan automáticamente por Wi-Fi; cada usuario tiene su biblioteca privada.": {
+    "es": "Agrega un enlace pegándolo o compartiéndolo desde otra app. Elige calidad o solo audio. El servidor prepara el archivo y tus dispositivos lo descargan automáticamente por Wi-Fi; cada usuario tiene su biblioteca privada.",
+    "en": "Add a link by pasting it or sharing it from another app. Choose quality or audio only. The server prepares the file and your devices download it automatically over Wi-Fi; each user has a private library."
+  },
+  "Si se pierde Wi-Fi, la descarga se pausa y continúa desde donde quedó al regresar. Puedes autorizar datos móviles para un único archivo en este teléfono; no autoriza otros videos ni dispositivos. Los enlaces y acciones pequeñas pueden usar cualquier conexión.": {
+    "es": "Si se pierde Wi-Fi, la descarga se pausa y continúa desde donde quedó al regresar. Puedes autorizar datos móviles para un único archivo en este teléfono; no autoriza otros videos ni dispositivos. Los enlaces y acciones pequeñas pueden usar cualquier conexión.",
+    "en": "If Wi-Fi is lost, downloads pause and resume from the same point when it returns. You can authorize mobile data for one file on this phone; this does not authorize other videos or devices. Links and small actions can use any connection."
+  },
+  "Los archivos descargados permanecen en el teléfono hasta que los borres. Si falta espacio, la app pausa las descargas y te avisa, sin borrar contenido automáticamente. Android puede demorar el trabajo en segundo plano; si fuerzas el cierre de Tubego, abre la app para reanudarlo.": {
+    "es": "Los archivos descargados permanecen en el teléfono hasta que los borres. Si falta espacio, la app pausa las descargas y te avisa, sin borrar contenido automáticamente. Android puede demorar el trabajo en segundo plano; si fuerzas el cierre de Tubego, abre la app para reanudarlo.",
+    "en": "Downloaded files stay on your phone until you delete them. If space is low, the app pauses downloads and alerts you without automatically deleting content. Android may delay background work; if you force-stop Tubego, open the app to resume it."
+  },
+  "Puedes reproducir sin conexión con VLC u otro reproductor instalado. En VLC configura el modo de segundo plano o PiP y autoriza la ventana flotante. Para escuchar con la pantalla bloqueada, usa la opción de reproducir como audio o el modo de audio en segundo plano. Las funciones y los gestos dependen de tu reproductor; Tubego no reproduce ni descarga otra copia al abrir un archivo local.": {
+    "es": "Puedes reproducir sin conexión con VLC u otro reproductor instalado. En VLC configura el modo de segundo plano o PiP y autoriza la ventana flotante. Para escuchar con la pantalla bloqueada, usa la opción de reproducir como audio o el modo de audio en segundo plano. Las funciones y los gestos dependen de tu reproductor; Tubego no reproduce ni descarga otra copia al abrir un archivo local.",
+    "en": "You can play offline using VLC or another installed player. In VLC, configure background or PiP mode and allow its floating window. To listen with the screen locked, use play as audio or background audio mode. Features and gestures depend on your player; Tubego neither plays nor downloads another copy when you open a local file."
+  },
+  "El historial conserva el enlace, la ficha y el último abierto aunque ya no exista el archivo. Buscar, filtrar, cancelar, reintentar y poner un video como siguiente se hacen desde Biblioteca. La prioridad nunca interrumpe la descarga actual. Si un archivo fue borrado a propósito, se pedirá aprobación antes de recuperarlo.": {
+    "es": "El historial conserva el enlace, la ficha y el último abierto aunque ya no exista el archivo. Buscar, filtrar, cancelar, reintentar y poner un video como siguiente se hacen desde Biblioteca. La prioridad nunca interrumpe la descarga actual. Si un archivo fue borrado a propósito, se pedirá aprobación antes de recuperarlo.",
+    "en": "History keeps the link, item and last-opened time even when the file is gone. Search, filter, cancel, retry and move a video to the next position in Library. Priority never interrupts the current download. A file deliberately deleted requires approval before recovery."
+  },
+  "Guardar el minuto exacto donde te quedaste depende de la investigación de compatibilidad con VLC. No está garantizado. Si se consigue, el retroceso al continuar será el de tus preferencias: diez segundos inicialmente, configurable por usuario.": {
+    "es": "Guardar el minuto exacto donde te quedaste depende de la investigación de compatibilidad con VLC. No está garantizado. Si se consigue, el retroceso al continuar será el de tus preferencias: diez segundos inicialmente, configurable por usuario.",
+    "en": "Saving the exact playback position depends on the VLC compatibility investigation. It is not guaranteed. If supported, resuming rewinds by your preference: initially ten seconds, configurable per user."
+  },
+  "Al borrar puedes elegir tus dispositivos o tus dispositivos y el servidor. El borrado se sincroniza; equipos desconectados lo aplican al reconectar. Limpiar el servidor no borra tus copias locales ni el historial. Si una orden queda pendiente se envía al recuperar conexión.": {
+    "es": "Al borrar puedes elegir tus dispositivos o tus dispositivos y el servidor. El borrado se sincroniza; equipos desconectados lo aplican al reconectar. Limpiar el servidor no borra tus copias locales ni el historial. Si una orden queda pendiente se envía al recuperar conexión.",
+    "en": "When deleting, choose your devices or your devices and the server. Deletion is synchronized; offline devices apply it when they reconnect. Server cleanup does not delete local copies or history. Pending commands are sent when connected again."
+  },
+  "Al cerrar sesión se borran las descargas de ese teléfono con confirmación. Puedes cerrar sesiones o desvincular dispositivos desde Mi cuenta. Bloquear o eliminar una cuenta revoca el acceso y ordena borrar sus archivos al próximo contacto; las copias exportadas a otras apps quedan fuera del control de Tubego.": {
+    "es": "Al cerrar sesión se borran las descargas de ese teléfono con confirmación. Puedes cerrar sesiones o desvincular dispositivos desde Mi cuenta. Bloquear o eliminar una cuenta revoca el acceso y ordena borrar sus archivos al próximo contacto; las copias exportadas a otras apps quedan fuera del control de Tubego.",
+    "en": "Signing out deletes that phone's downloads after confirmation. You can close sessions or unlink devices in My account. Blocking or deleting an account revokes access and orders file deletion on the next contact; copies exported to other apps are outside Tubego's control."
+  },
+  "Un administrador aprueba cuentas después de verificar el correo. Solo administradores cambian prioridades de usuarios, conservación, plazos, limpieza global y mantenimiento. Si no se conservan archivos en el servidor, se borran cuando todos los dispositivos confirman la descarga o al vencer el plazo: inicialmente cuatro horas desde la primera entrega y como máximo tres días desde que quedó listo. Los administradores pueden cambiar esos plazos para todos los archivos existentes.": {
+    "es": "Un administrador aprueba cuentas después de verificar el correo. Solo administradores cambian prioridades de usuarios, conservación, plazos, limpieza global y mantenimiento. Si no se conservan archivos en el servidor, se borran cuando todos los dispositivos confirman la descarga o al vencer el plazo: inicialmente cuatro horas desde la primera entrega y como máximo tres días desde que quedó listo. Los administradores pueden cambiar esos plazos para todos los archivos existentes.",
+    "en": "An administrator approves accounts after email verification. Only administrators change user priorities, retention, limits, global cleanup and maintenance. Unless server retention is enabled, files are deleted when all devices confirm delivery or the limit expires: initially four hours after the first delivery and at most three days after the file is ready. Administrators can change these limits for all existing files."
+  },
+  "La velocidad del servidor se mide desde Administración; no descarga una prueba grande en tu teléfono. Diagnóstico muestra la conexión y tus avisos; no comparte contraseñas, tokens ni registros privados de otras cuentas. El bot de Telegram sigue funcionando con una lista independiente.": {
+    "es": "La velocidad del servidor se mide desde Administración; no descarga una prueba grande en tu teléfono. Diagnóstico muestra la conexión y tus avisos; no comparte contraseñas, tokens ni registros privados de otras cuentas. El bot de Telegram sigue funcionando con una lista independiente.",
+    "en": "Server speed is measured in Administration; it does not download a large test to your phone. Diagnostics shows your connection and alerts; it does not share passwords, tokens or other accounts' private logs. The Telegram bot still works with a separate list."
+  },
+  "Avisos administrativos": {
+    "es": "Avisos administrativos",
+    "en": "Administrator alerts"
+  },
+  "Biblioteca local / Reproducir": {
+    "es": "Biblioteca local / Reproducir",
+    "en": "Local library / Play"
+  },
+  "Biblioteca del teléfono": {
+    "es": "Biblioteca del teléfono",
+    "en": "Phone library"
+  },
+  "Actualizar lista local": {
+    "es": "Actualizar lista local",
+    "en": "Refresh local list"
+  },
+  "Servidor inválido": {
+    "es": "Servidor inválido",
+    "en": "Invalid server"
+  },
+  "Leyendo archivos del teléfono…": {
+    "es": "Leyendo archivos del teléfono…",
+    "en": "Reading phone files…"
+  },
+  "No hay archivos descargados en este teléfono.": {
+    "es": "No hay archivos descargados en este teléfono.",
+    "en": "No downloaded files on this phone."
+  },
+  "Reproducción local. No requiere conexión.": {
+    "es": "Reproducción local. No requiere conexión.",
+    "en": "Local playback. No connection required."
+  },
+  "Reproducir · ": {
+    "es": "Reproducir · ",
+    "en": "Play · "
+  },
+  "Archivo local ausente": {
+    "es": "Archivo local ausente",
+    "en": "Local file missing"
+  },
+  "No disponible localmente · ": {
+    "es": "No disponible localmente · ",
+    "en": "Not available locally · "
+  },
+  "Verificando archivo local…": {
+    "es": "Verificando archivo local…",
+    "en": "Verifying local file…"
+  },
+  "No hay un reproductor compatible. Instala VLC u otro reproductor que admita archivos locales y vuelve a intentarlo.": {
+    "es": "No hay un reproductor compatible. Instala VLC u otro reproductor que admita archivos locales y vuelve a intentarlo.",
+    "en": "No compatible player. Install VLC or another player that supports local files and try again."
+  },
+  "Archivo conservado en el teléfono.": {
+    "es": "Archivo conservado en el teléfono.",
+    "en": "File kept on this phone."
+  },
+  "Reproducir archivo local": {
+    "es": "Reproducir archivo local",
+    "en": "Play local file"
+  },
+  "PiP y audio con pantalla bloqueada dependen del reproductor elegido.": {
+    "es": "PiP y audio con pantalla bloqueada dependen del reproductor elegido.",
+    "en": "PiP and audio with a locked screen depend on your chosen player."
+  },
+  "El reproductor ya no está disponible.": {
+    "es": "El reproductor ya no está disponible.",
+    "en": "The player is no longer available."
+  },
+  "No se pudo abrir el archivo local: ": {
+    "es": "No se pudo abrir el archivo local: ",
+    "en": "Could not open local file: "
+  },
+  "Biblioteca / Historial": {
+    "es": "Biblioteca / Historial",
+    "en": "Library / History"
+  },
+  "Biblioteca e historial": {
+    "es": "Biblioteca e historial",
+    "en": "Library and history"
+  },
+  "Buscar por título": {
+    "es": "Buscar por título",
+    "en": "Search by title"
+  },
+  "Descargados en este teléfono": {
+    "es": "Descargados en este teléfono",
+    "en": "Downloaded on this phone"
+  },
+  "Con error": {
+    "es": "Con error",
+    "en": "With errors"
+  },
+  "Borrados / No disponibles": {
+    "es": "Borrados / No disponibles",
+    "en": "Deleted / Unavailable"
+  },
+  "Buscar / Actualizar": {
+    "es": "Buscar / Actualizar",
+    "en": "Search / Refresh"
+  },
+  "Cargar página siguiente": {
+    "es": "Cargar página siguiente",
+    "en": "Load next page"
+  },
+  "Leyendo historial…": {
+    "es": "Leyendo historial…",
+    "en": "Reading history…"
+  },
+  "Sesión no disponible.": {
+    "es": "Sesión no disponible.",
+    "en": "Session unavailable."
+  },
+  "Historial guardado en el teléfono. Actualizando si hay conexión…": {
+    "es": "Historial guardado en el teléfono. Actualizando si hay conexión…",
+    "en": "History saved on this phone. Refreshing if connected…"
+  },
+  "Historial privado sincronizado. Cache sin conexión: hasta 2000 fichas consultadas; el historial completo permanece en el servidor.": {
+    "es": "Historial privado sincronizado. Cache sin conexión: hasta 2000 fichas consultadas; el historial completo permanece en el servidor.",
+    "en": "Private history synchronized. Offline cache: up to 2000 viewed items; full history remains on the server."
+  },
+  "La sesión dejó de estar disponible.": {
+    "es": "La sesión dejó de estar disponible.",
+    "en": "The session is no longer available."
+  },
+  "Sin conexión al servidor. Mostrando fichas guardadas y archivos de este teléfono; los controles de cola requieren conexión.": {
+    "es": "Sin conexión al servidor. Mostrando fichas guardadas y archivos de este teléfono; los controles de cola requieren conexión.",
+    "en": "No server connection. Showing saved items and phone files; queue controls require a connection."
+  },
+  "Listo en servidor": {
+    "es": "Listo en servidor",
+    "en": "Ready on server"
+  },
+  "Sin título": {
+    "es": "Sin título",
+    "en": "Untitled"
+  },
+  "Descargado en este teléfono": {
+    "es": "Descargado en este teléfono",
+    "en": "Downloaded on this phone"
+  },
+  "Descargando en teléfono": {
+    "es": "Descargando en teléfono",
+    "en": "Downloading on phone"
+  },
+  "No disponible localmente": {
+    "es": "No disponible localmente",
+    "en": "Not available locally"
+  },
+  "\nServidor: ": {
+    "es": "\nServidor: ",
+    "en": "\nServer: "
+  },
+  "\nTeléfono: ": {
+    "es": "\nTeléfono: ",
+    "en": "\nPhone: "
+  },
+  "\nÚltimo abierto: ": {
+    "es": "\nÚltimo abierto: ",
+    "en": "\nLast opened: "
+  },
+  "Poner siguiente en la cola": {
+    "es": "Poner siguiente en la cola",
+    "en": "Make next in queue"
+  },
+  "Cancelar descarga del servidor": {
+    "es": "Cancelar descarga del servidor",
+    "en": "Cancel server download"
+  },
+  "Reintentar descarga del servidor": {
+    "es": "Reintentar descarga del servidor",
+    "en": "Retry server download"
+  },
+  "Reintentar descarga del teléfono…": {
+    "es": "Reintentar descarga del teléfono…",
+    "en": "Retry phone download…"
+  },
+  "Borrar archivos…": {
+    "es": "Borrar archivos…",
+    "en": "Delete files…"
+  },
+  "Enviando acción…": {
+    "es": "Enviando acción…",
+    "en": "Sending action…"
+  },
+  "Acción confirmada: ": {
+    "es": "Acción confirmada: ",
+    "en": "Action confirmed: "
+  },
+  "será el siguiente, sin interrumpir la descarga actual": {
+    "es": "será el siguiente, sin interrumpir la descarga actual",
+    "en": "will be next without interrupting the current download"
+  },
+  "No se confirmó la acción. Requiere conexión; vuelve a intentarlo. No se agregó otra descarga.": {
+    "es": "No se confirmó la acción. Requiere conexión; vuelve a intentarlo. No se agregó otra descarga.",
+    "en": "Action was not confirmed. Requires connection; try again. No new download was added."
+  },
+  "La sesión cambió": {
+    "es": "La sesión cambió",
+    "en": "Session changed"
+  },
+  "No hay un reproductor compatible. Instala VLC u otro reproductor de archivos locales.": {
+    "es": "No hay un reproductor compatible. Instala VLC u otro reproductor de archivos locales.",
+    "en": "No compatible player. Install VLC or another local-file player."
+  },
+  "PiP y audio con pantalla bloqueada dependen del reproductor.": {
+    "es": "PiP y audio con pantalla bloqueada dependen del reproductor.",
+    "en": "PiP and audio with a locked screen depend on the player."
+  },
+  "Verificando permisos administrativos…": {
+    "es": "Verificando permisos administrativos…",
+    "en": "Verifying administrator permissions…"
+  },
+  "No se pudo medir el almacenamiento del servidor. Las descargas quedan pausadas.": {
+    "es": "No se pudo medir el almacenamiento del servidor. Las descargas quedan pausadas.",
+    "en": "Could not measure server storage. Downloads are paused."
+  },
+  "Servidor: %.1f%% ocupado · %s libres de %s\nDescargas: %s · umbral 90%% ocupado\nConsultado: %s": {
+    "es": "Servidor: %.1f%% ocupado · %s libres de %s\nDescargas: %s · umbral 90%% ocupado\nConsultado: %s",
+    "en": "Server: %.1f%% used · %s free of %s\nDownloads: %s · threshold 90%% used\nChecked: %s"
+  },
+  "No se pudo consultar el almacenamiento. Revisa conexión y permisos; no se ejecutó ninguna limpieza.": {
+    "es": "No se pudo consultar el almacenamiento. Revisa conexión y permisos; no se ejecutó ninguna limpieza.",
+    "en": "Could not check storage. Check your connection and permissions; no cleanup was executed."
+  },
+  "No se pudo validar una sesión administrativa activa. Revisa tu cuenta y conexión.": {
+    "es": "No se pudo validar una sesión administrativa activa. Revisa tu cuenta y conexión.",
+    "en": "Could not validate an active administrator session. Check your account and connection."
+  },
+  "%.1f GiB": {
+    "es": "%.1f GiB",
+    "en": "%.1f GiB"
+  },
+  "Acceso administrativo no disponible.": {
+    "es": "Acceso administrativo no disponible.",
+    "en": "Administrator access unavailable."
+  },
+  "Administración · permisos verificados por el servidor": {
+    "es": "Administración · permisos verificados por el servidor",
+    "en": "Administration · Permissions verified by server"
+  },
+  "Consultando almacenamiento real del servidor…": {
+    "es": "Consultando almacenamiento real del servidor…",
+    "en": "Checking actual server storage…"
+  },
+  "Actualizar permisos y almacenamiento": {
+    "es": "Actualizar permisos y almacenamiento",
+    "en": "Refresh permissions and storage"
+  },
+  "Solicitudes verificadas · Aprobar / Rechazar": {
+    "es": "Solicitudes verificadas · Aprobar / Rechazar",
+    "en": "Verified requests · Approve / Reject"
+  },
+  "Usuarios · Bloquear / Eliminar / Estado y rol": {
+    "es": "Usuarios · Bloquear / Eliminar / Estado y rol",
+    "en": "Users · Block / Delete / Status and role"
+  },
+  "Prioridades de usuarios · Persistentes 3:1": {
+    "es": "Prioridades de usuarios · Persistentes 3:1",
+    "en": "User priorities · Persistent 3:1"
+  },
+  "Conservación por usuario y plazos globales": {
+    "es": "Conservación por usuario y plazos globales",
+    "en": "User retention and global limits"
+  },
+  "Errores de descarga del servidor": {
+    "es": "Errores de descarga del servidor",
+    "en": "Server download errors"
+  },
+  "Limpiar archivos del servidor…": {
+    "es": "Limpiar archivos del servidor…",
+    "en": "Clean up server files…"
+  },
+  "Mantenimiento del servicio…": {
+    "es": "Mantenimiento del servicio…",
+    "en": "Service maintenance…"
+  },
+  "La limpieza y los cambios de conservación aplican al servidor. Bloquear o eliminar usuarios revoca su acceso y ordena borrar sus copias locales al próximo contacto. Cada acción destructiva pide confirmación en su pantalla. No se permite administrar sin conexión.": {
+    "es": "La limpieza y los cambios de conservación aplican al servidor. Bloquear o eliminar usuarios revoca su acceso y ordena borrar sus copias locales al próximo contacto. Cada acción destructiva pide confirmación en su pantalla. No se permite administrar sin conexión.",
+    "en": "Cleanup and retention changes apply to the server. Blocking or deleting users revokes access and orders deletion of their local copies on the next contact. Every destructive action asks for confirmation on its screen. Administration is unavailable offline."
+  },
+  " · no disponible en esta versión": {
+    "es": " · no disponible en esta versión",
+    "en": " · unavailable in this version"
+  },
+  "Esta función todavía no está disponible en esta versión.": {
+    "es": "Esta función todavía no está disponible en esta versión.",
+    "en": "This feature is not available in this version yet."
+  },
+  "Administración": {
+    "es": "Administración",
+    "en": "Administration"
+  },
+  " · correo verificado": {
+    "es": " · correo verificado",
+    "en": " · email verified"
+  },
+  " · correo sin verificar": {
+    "es": " · correo sin verificar",
+    "en": " · email not verified"
+  },
+  "Se requiere una cuenta de administrador aprobada.": {
+    "es": "Se requiere una cuenta de administrador aprobada.",
+    "en": "An approved administrator account is required."
+  },
+  "No se pudo abrir la administración.": {
+    "es": "No se pudo abrir la administración.",
+    "en": "Could not open administration."
+  },
+  "Mantenimiento del servidor\n": {
+    "es": "Mantenimiento del servidor\n",
+    "en": "Server maintenance\n"
+  },
+  "Conecta para consultar las versiones.": {
+    "es": "Conecta para consultar las versiones.",
+    "en": "Connect to check versions."
+  },
+  "Tubego: ": {
+    "es": "Tubego: ",
+    "en": "Tubego: "
+  },
+  "\nyt-dlp: ": {
+    "es": "\nyt-dlp: ",
+    "en": "\nyt-dlp: "
+  },
+  "\nRevisión: ": {
+    "es": "\nRevisión: ",
+    "en": "\nRevision: "
+  },
+  "Actualizar estado": {
+    "es": "Actualizar estado",
+    "en": "Refresh status"
+  },
+  "Consultar versiones disponibles": {
+    "es": "Consultar versiones disponibles",
+    "en": "Check available versions"
+  },
+  "Medir velocidad del servidor": {
+    "es": "Medir velocidad del servidor",
+    "en": "Measure server speed"
+  },
+  "La medición descarga 5 MB en el servidor. El teléfono recibe solo el resultado.": {
+    "es": "La medición descarga 5 MB en el servidor. El teléfono recibe solo el resultado.",
+    "en": "The test downloads 5 MB on the server. The phone receives only the result."
+  },
+  "Actualizar y reiniciar requieren un supervisor habilitado por el operador del despliegue.": {
+    "es": "Actualizar y reiniciar requieren un supervisor habilitado por el operador del despliegue.",
+    "en": "Updates and restart require a supervisor enabled by the deployment operator."
+  },
+  "Actualizar backend": {
+    "es": "Actualizar backend",
+    "en": "Update backend"
+  },
+  "Actualizar yt-dlp": {
+    "es": "Actualizar yt-dlp",
+    "en": "Update yt-dlp"
+  },
+  "Reiniciar servicio": {
+    "es": "Reiniciar servicio",
+    "en": "Restart service"
+  },
+  "Se esperará a que terminen las descargas del servidor. ¿Reiniciar el servicio?": {
+    "es": "Se esperará a que terminen las descargas del servidor. ¿Reiniciar el servicio?",
+    "en": "Server downloads will be allowed to finish. Restart the service?"
+  },
+  "Disponibles: ": {
+    "es": "Disponibles: ",
+    "en": "Available: "
+  },
+  "Última solicitud: ": {
+    "es": "Última solicitud: ",
+    "en": "Latest request: "
+  },
+  "No hay versiones aprobadas por el operador.": {
+    "es": "No hay versiones aprobadas por el operador.",
+    "en": "No operator-approved versions available."
+  },
+  "Versión aprobada": {
+    "es": "Versión aprobada",
+    "en": "Approved version"
+  },
+  "Actualizar a ": {
+    "es": "Actualizar a ",
+    "en": "Update to "
+  },
+  ". Se esperará a las descargas activas y se comprobará el servicio al terminar.": {
+    "es": ". Se esperará a las descargas activas y se comprobará el servicio al terminar.",
+    "en": ". Active downloads will be allowed to finish, and the service will be checked afterwards."
+  },
+  "Solicitud guardada. Se enviará cuando haya conexión.": {
+    "es": "Solicitud guardada. Se enviará cuando haya conexión.",
+    "en": "Request saved. It will be sent when connected."
+  },
+  "No se pudo guardar: verifica tu sesión o espera a que se envíe la solicitud pendiente.": {
+    "es": "No se pudo guardar: verifica tu sesión o espera a que se envíe la solicitud pendiente.",
+    "en": "Could not save: check your session or wait for the pending request to be sent."
+  },
+  "La sesión cambió. Abre nuevamente la administración.": {
+    "es": "La sesión cambió. Abre nuevamente la administración.",
+    "en": "Session changed. Open administration again."
+  },
+  "Sin conexión o servicio reiniciándose. La solicitud conserva su identificador; consulta su estado al recuperar conexión.": {
+    "es": "Sin conexión o servicio reiniciándose. La solicitud conserva su identificador; consulta su estado al recuperar conexión.",
+    "en": "No connection or service restarting. The request keeps its identifier; check its status when connected again."
+  },
+  "Mantenimiento del servidor": {
+    "es": "Mantenimiento del servidor",
+    "en": "Server maintenance"
+  },
+  "Archivo": {
+    "es": "Archivo",
+    "en": "File"
+  },
+  "Cancelar": {
+    "es": "Cancelar",
+    "en": "Cancel"
+  },
+  "Autorizar": {
+    "es": "Autorizar",
+    "en": "Authorize"
+  },
+  "Desvincular": {
+    "es": "Desvincular",
+    "en": "Unlink"
+  },
+  "Revisar": {
+    "es": "Revisar",
+    "en": "Review"
+  },
+  "Agregar": {
+    "es": "Agregar",
+    "en": "Add"
+  },
+  "Error": {
+    "es": "Error",
+    "en": "Error"
+  },
+  "Normal": {
+    "es": "Normal",
+    "en": "Normal"
+  },
+  "Prioritario": {
+    "es": "Prioritario",
+    "en": "Priority"
+  },
+  "Cerrar": {
+    "es": "Cerrar",
+    "en": "Close"
+  },
+  "Registrarme": {
+    "es": "Registrarme",
+    "en": "Register"
+  },
+  "Guardar": {
+    "es": "Guardar",
+    "en": "Save"
+  },
+  "Aplicar": {
+    "es": "Aplicar",
+    "en": "Apply"
+  },
+  "Confirmar": {
+    "es": "Confirmar",
+    "en": "Confirm"
+  },
+  "Solicitar": {
+    "es": "Solicitar",
+    "en": "Request"
+  },
+  "Aprobar": {
+    "es": "Aprobar",
+    "en": "Approve"
+  },
+  "Rechazar": {
+    "es": "Rechazar",
+    "en": "Reject"
+  },
+  "Idioma": {
+    "es": "Idioma",
+    "en": "Language"
+  },
+  "Aprobado": {
+    "es": "Aprobado",
+    "en": "Approved"
+  },
+  "Bloqueado": {
+    "es": "Bloqueado",
+    "en": "Blocked"
+  },
+  "Rechazado": {
+    "es": "Rechazado",
+    "en": "Rejected"
+  },
+  "Borrado": {
+    "es": "Borrado",
+    "en": "Deleted"
+  },
+  "Administrador": {
+    "es": "Administrador",
+    "en": "Administrator"
+  },
+  "Usuario": {
+    "es": "Usuario",
+    "en": "User"
+  },
+  "Pendiente": {
+    "es": "Pendiente",
+    "en": "Pending"
+  },
+  "Descargando": {
+    "es": "Descargando",
+    "en": "Downloading"
+  },
+  "Pausado": {
+    "es": "Pausado",
+    "en": "Paused"
+  },
+  "Completado": {
+    "es": "Completado",
+    "en": "Completed"
+  },
+  "Cancelado": {
+    "es": "Cancelado",
+    "en": "Cancelled"
+  },
+  "Listo": {
+    "es": "Listo",
+    "en": "Ready"
+  },
+  "Analizando": {
+    "es": "Analizando",
+    "en": "Analyzing"
+  },
+  "Todos": {
+    "es": "Todos",
+    "en": "All"
+  },
+  "Buscar": {
+    "es": "Buscar",
+    "en": "Search"
+  },
+  "Biblioteca": {
+    "es": "Biblioteca",
+    "en": "Library"
+  },
+  "Reproducir": {
+    "es": "Reproducir",
+    "en": "Play"
+  },
+  "Administración del servidor": {
+    "es": "Administración del servidor",
+    "en": "Server administration"
+  },
+  "Avisos que requieren acción": {
+    "es": "Avisos que requieren acción",
+    "en": "Alerts requiring action"
+  },
+  "Descarga fallida": {
+    "es": "Descarga fallida",
+    "en": "Download failed"
+  },
+  "La descarga falló definitivamente. Revisa el motivo y reintenta cuando corresponda.": {
+    "es": "La descarga falló definitivamente. Revisa el motivo y reintenta cuando corresponda.",
+    "en": "The download failed permanently. Review the reason and retry when appropriate."
+  },
+  "La transferencia falló definitivamente. Abre Descargas para revisar el motivo y reintentar.": {
+    "es": "La transferencia falló definitivamente. Abre Descargas para revisar el motivo y reintentar.",
+    "en": "The transfer failed permanently. Open Downloads to review the reason and retry."
+  },
+  "Almacenamiento del servidor": {
+    "es": "Almacenamiento del servidor",
+    "en": "Server storage"
+  },
+  "Las descargas del servidor están pausadas por almacenamiento.": {
+    "es": "Las descargas del servidor están pausadas por almacenamiento.",
+    "en": "Server downloads are paused because of storage."
+  },
+  "Solicitud de acceso": {
+    "es": "Solicitud de acceso",
+    "en": "Access request"
+  },
+  "Hay una cuenta verificada pendiente de aprobación.": {
+    "es": "Hay una cuenta verificada pendiente de aprobación.",
+    "en": "A verified account is waiting for approval."
+  },
+  "Hay un cambio de estado de una operación de mantenimiento.": {
+    "es": "Hay un cambio de estado de una operación de mantenimiento.",
+    "en": "A maintenance operation's status has changed."
+  },
+  "Poco espacio en el teléfono": {
+    "es": "Poco espacio en el teléfono",
+    "en": "Low phone storage"
+  },
+  "Las descargas esperan espacio suficiente. Tus archivos se conservan.": {
+    "es": "Las descargas esperan espacio suficiente. Tus archivos se conservan.",
+    "en": "Downloads are waiting for sufficient space. Your files are preserved."
+  },
+  "No se pudo descargar. Revisa el enlace y reintenta.": {
+    "es": "No se pudo descargar. Revisa el enlace y reintenta.",
+    "en": "Could not download. Check the link and retry."
+  },
+  "El archivo del servidor ya no está disponible.": {
+    "es": "El archivo del servidor ya no está disponible.",
+    "en": "The server file is no longer available."
+  },
+  "Falló la verificación del archivo. Reintenta la descarga.": {
+    "es": "Falló la verificación del archivo. Reintenta la descarga.",
+    "en": "File verification failed. Retry the download."
+  },
+  "La conexión falló. Reintenta cuando haya red.": {
+    "es": "La conexión falló. Reintenta cuando haya red.",
+    "en": "Connection failed. Retry when connected."
+  },
+  "pausadas": {
+    "es": "pausadas",
+    "en": "paused"
+  },
+  "permitidas": {
+    "es": "permitidas",
+    "en": "allowed"
+  },
+  "Aceptar": {
+    "es": "Aceptar",
+    "en": "OK"
+  },
+  "Cancelando": {
+    "es": "Cancelando",
+    "en": "Cancelling"
+  },
+  "Si la cuenta necesita verificación, recibirás un correo. Después requiere aprobación administrativa.": {
+    "es": "Si la cuenta necesita verificación, recibirás un correo. Después requiere aprobación administrativa.",
+    "en": "If the account needs verification, you will receive an email. Administrator approval is required afterwards."
+  },
+  "Si la cuenta permite recuperación, recibirás un correo.": {
+    "es": "Si la cuenta permite recuperación, recibirás un correo.",
+    "en": "If the account supports recovery, you will receive an email."
+  },
+  "Descargas en curso": {
+    "es": "Descargas en curso",
+    "en": "Downloads in progress"
+  },
+  "Tubego · Descargas en curso": {
+    "es": "Tubego · Descargas en curso",
+    "en": "Tubego · Downloads in progress"
+  },
+  "Las transferencias respetan tus permisos de red.": {
+    "es": "Las transferencias respetan tus permisos de red.",
+    "en": "Transfers respect your network permissions."
+  },
+  "Versiones disponibles: ": {
+    "es": "Versiones disponibles: ",
+    "en": "Available versions: "
+  },
+  "Consulta de versiones": {
+    "es": "Consulta de versiones",
+    "en": "Version check"
+  },
+  "Velocidad del servidor": {
+    "es": "Velocidad del servidor",
+    "en": "Server speed"
+  },
+  "Actualización de Tubego": {
+    "es": "Actualización de Tubego",
+    "en": "Tubego update"
+  },
+  "Actualización de yt-dlp": {
+    "es": "Actualización de yt-dlp",
+    "en": "yt-dlp update"
+  },
+  "Reinicio del servicio": {
+    "es": "Reinicio del servicio",
+    "en": "Service restart"
+  },
+  "Esperando descargas activas": {
+    "es": "Esperando descargas activas",
+    "en": "Waiting for active downloads"
+  },
+  "En curso": {
+    "es": "En curso",
+    "en": "In progress"
+  },
+  "Falló": {
+    "es": "Falló",
+    "en": "Failed"
+  },
+  "Estado pendiente": {
+    "es": "Estado pendiente",
+    "en": "Status pending"
+  },
+  "El despliegue no tiene mantenimiento habilitado.": {
+    "es": "El despliegue no tiene mantenimiento habilitado.",
+    "en": "Maintenance is not enabled for this deployment."
+  },
+  "La sesión de administrador ya no está disponible.": {
+    "es": "La sesión de administrador ya no está disponible.",
+    "en": "The administrator session is no longer available."
+  },
+  "No se pudo verificar el servicio. El operador debe revisar el despliegue.": {
+    "es": "No se pudo verificar el servicio. El operador debe revisar el despliegue.",
+    "en": "Could not verify the service. The operator must check the deployment."
+  },
+  "El operador recuperó el servicio; la operación anterior quedó interrumpida.": {
+    "es": "El operador recuperó el servicio; la operación anterior quedó interrumpida.",
+    "en": "The operator restored the service; the previous operation was interrupted."
+  },
+  "No se pudo completar la operación. Revisa los permisos o la configuración del servidor.": {
+    "es": "No se pudo completar la operación. Revisa los permisos o la configuración del servidor.",
+    "en": "Could not complete the operation. Check permissions or server configuration."
+  },
+  "Descarga del servidor: ": {
+    "es": "Descarga del servidor: ",
+    "en": "Server download: "
+  },
+  " Mbps (5 MB)": {
+    "es": " Mbps (5 MB)",
+    "en": " Mbps (5 MB)"
+  },
+  "yt-dlp: ": {
+    "es": "yt-dlp: ",
+    "en": "yt-dlp: "
+  },
+  "\nRevisión Tubego: ": {
+    "es": "\nRevisión Tubego: ",
+    "en": "\nTubego revision: "
+  },
+  "Preferencias locales disponibles; sincronizando…": {
+    "es": "Preferencias locales disponibles; sincronizando…",
+    "en": "Local preferences available; synchronizing…"
+  },
+  "Usando preferencias locales. Puedes guardar cambios sin conexión.": {
+    "es": "Usando preferencias locales. Puedes guardar cambios sin conexión.",
+    "en": "Using local preferences. You can save changes offline."
+  },
+  "Guardadas en el teléfono. Sincronización pendiente.": {
+    "es": "Guardadas en el teléfono. Sincronización pendiente.",
+    "en": "Saved on this phone. Synchronization pending."
+  },
+  "No se pudieron guardar las preferencias locales.": {
+    "es": "No se pudieron guardar las preferencias locales.",
+    "en": "Could not save local preferences."
+  },
+  "Inicia sesión para consultar acciones pendientes.": {
+    "es": "Inicia sesión para consultar acciones pendientes.",
+    "en": "Sign in to view pending actions."
+  },
+  "Acciones pendientes y errores": {
+    "es": "Acciones pendientes y errores",
+    "en": "Pending actions and errors"
+  },
+  "Pendiente de sincronización": {
+    "es": "Pendiente de sincronización",
+    "en": "Synchronization pending"
+  },
+  "Volver a solicitar esta acción": {
+    "es": "Volver a solicitar esta acción",
+    "en": "Request this action again"
+  },
+  "No se pudo guardar el reintento.": {
+    "es": "No se pudo guardar el reintento.",
+    "en": "Could not save the retry."
+  },
+  "Sin acciones pendientes ni errores.": {
+    "es": "Sin acciones pendientes ni errores.",
+    "en": "No pending actions or errors."
+  },
+  "Sincronizar ahora": {
+    "es": "Sincronizar ahora",
+    "en": "Synchronize now"
+  },
+  "Sin conexión al servidor. Mostrando fichas guardadas y archivos de este teléfono; las acciones quedarán pendientes hasta recuperar conexión.": {
+    "es": "Sin conexión al servidor. Mostrando fichas guardadas y archivos de este teléfono; las acciones quedarán pendientes hasta recuperar conexión.",
+    "en": "No server connection. Showing saved items and phone files; actions remain pending until connected again."
+  },
+  "Guardando acción…": {
+    "es": "Guardando acción…",
+    "en": "Saving action…"
+  },
+  "Acción guardada. Se enviará con cualquier conexión; consulta Acciones pendientes y errores.": {
+    "es": "Acción guardada. Se enviará con cualquier conexión; consulta Acciones pendientes y errores.",
+    "en": "Action saved. It will be sent over any connection; check Pending actions and errors."
+  },
+  "No se pudo guardar la acción. Revisa la sesión y el espacio del teléfono.": {
+    "es": "No se pudo guardar la acción. Revisa la sesión y el espacio del teléfono.",
+    "en": "Could not save the action. Check your session and phone space."
+  },
+  "Mantenimiento": {
+    "es": "Mantenimiento",
+    "en": "Maintenance"
+  },
+  "Volver a solicitar archivo": {
+    "es": "Volver a solicitar archivo",
+    "en": "Request file again"
+  },
+  "Borrar archivos": {
+    "es": "Borrar archivos",
+    "en": "Delete files"
+  },
+  "Priorizar archivo": {
+    "es": "Priorizar archivo",
+    "en": "Prioritize file"
+  },
+  "Preferencias": {
+    "es": "Preferencias",
+    "en": "Preferences"
+  },
+  "Acción pendiente": {
+    "es": "Acción pendiente",
+    "en": "Pending action"
+  },
+  "Acción rechazada. Revisa los permisos y el estado del recurso antes de volver a solicitarla.": {
+    "es": "Acción rechazada. Revisa los permisos y el estado del recurso antes de volver a solicitarla.",
+    "en": "Action rejected. Check permissions and resource status before requesting it again."
+  },
+  "La solicitud no es válida. Revisa sus datos antes de repetirla.": {
+    "es": "La solicitud no es válida. Revisa sus datos antes de repetirla.",
+    "en": "The request is invalid. Check its details before trying again."
+  }
+}
