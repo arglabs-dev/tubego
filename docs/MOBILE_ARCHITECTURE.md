@@ -83,3 +83,46 @@ private preferences and checks health off the UI thread, with network timeouts,
 redirect refusal and bounded response size. Backup and cleartext networking are
 explicitly disabled. No users, tokens, downloads or permissions other than INTERNET
 exist in this increment. `ApiClient` is the transport seam for future feature work.
+
+## Registration and approval (PLA-228)
+
+Configure `TUBEGO_PUBLIC_URL` as the public HTTPS origin, `TUBEGO_SMTP_HOST`,
+`TUBEGO_SMTP_PORT` (587), `TUBEGO_SMTP_SENDER`, and optionally
+`TUBEGO_SMTP_USERNAME` / `TUBEGO_SMTP_PASSWORD`. STARTTLS is enabled by default;
+`TUBEGO_SMTP_TLS=false` is only appropriate for a trusted local mail relay.
+Secrets belong in deployment secret storage, not committed compose files.
+Registration fails with 503 if SMTP cannot accept the message; no phantom account
+or verification token is committed. SMTP success is acceptance by the relay, not
+a guarantee of inbox delivery. A relay error after remote acceptance can produce
+an unusable email; resend safely replaces the token.
+
+- POST `/api/v1/auth/register`: email and password (12–128 characters), generic
+  202 response for new/existing email. Email trimmed and case-normalized; passwords
+  use salted scrypt (N=16384, r=8, p=1). Email uniqueness is database enforced.
+- POST `/api/v1/auth/verification/resend`: email, generic 202. At most one
+  verification email per account per minute; each resend invalidates older tokens.
+- Verification email uses `/api/v1/auth/verify#token=...`: fragments avoid tokens
+  in server/proxy logs. The HTTPS page removes the fragment and requires a click
+  before POSTing to the same endpoint. SHA-256 token hashes only are persisted;
+  links expire after one hour and are single-use. Do not enable request-body logging.
+- GET `/api/v1/account/status`: bearer session; permits pending verification or
+  pending approval accounts, blocks rejected/blocked accounts. It is account-only,
+  not an entitlement to resource APIs.
+- GET `/api/v1/admin/registrations`: approved administrators only; lists verified
+  pending accounts. POST `/api/v1/admin/registrations/{id}/decision` with
+  `{"approve": true|false}` approves/rejects and appends an audit record.
+- Future protected routers must depend on `require_approved` or `require_admin`
+  from `auth.py`, never just `get_principal`. Public system health remains public.
+
+Bootstrap the initial administrator locally using
+`PYTHONPATH=backend python -m tubego_server.bootstrap_admin admin@example.com`.
+Password is read by hidden prompt or `TUBEGO_BOOTSTRAP_PASSWORD`; never pass it as
+an argument. Bootstrap is refused once any administrator exists. This local
+operator action establishes the first trusted identity and records its audit.
+
+Android provides registration/resend and pending approvals screens. Admin actions
+require a valid approved session from PLA-229 (no session minting is exposed here).
+Its integration seam is `tubego_account` preferences key `session_token`; session
+storage and login/status refresh are PLA-229 responsibilities. Verification itself
+opens in the HTTPS browser; it never passes account credentials to a browser URL.
+Migration 2 adds verification tokens without modifying the original schema.

@@ -1,11 +1,14 @@
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 from tubego_server import __version__
 from tubego_server.config import Settings
 from tubego_server.db import Database
-from tubego_server.routers import system
 from src.storage import validate_channel_paths
 import os
+from tubego_server.routers import system, registration
+from tubego_server.mail import SmtpMailer
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -21,9 +24,18 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app = FastAPI(title="Tubego Mobile API", version=__version__,
                   lifespan=lifespan, docs_url="/api/v1/docs", redoc_url=None,
                   openapi_url="/api/v1/openapi.json")
+    @app.exception_handler(RequestValidationError)
+    async def invalid_input(request: Request, exc: RequestValidationError):
+        # Validation errors must not echo passwords/tokens or submitted credentials.
+        return JSONResponse(status_code=422, content={"detail": [
+            {"loc": error["loc"], "msg": error["msg"], "type": error["type"]}
+            for error in exc.errors()]})
+
     app.state.settings = settings
     app.state.db = database
+    app.state.mailer = SmtpMailer(settings)
     app.include_router(system.router, prefix="/api/v1")
+    app.include_router(registration.router, prefix="/api/v1")
     return app
 
 
