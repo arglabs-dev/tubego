@@ -15,9 +15,16 @@ class AnalyzeRequest(BaseModel):
 
 
 @router.post("/media/analyze")
-def analyze(body: AnalyzeRequest, principal=Depends(approved_user)):
+def analyze(body: AnalyzeRequest,request:Request, principal=Depends(approved_user)):
     try:
-        return analyze_media(body.url)
+        info=analyze_media(body.url)
+        from tubego_server.media import normalize_url
+        from tubego_server.resource_identity import remember
+        from tubego_server.tasks import live_scope
+        normalized=normalize_url(body.url)
+        with request.app.state.db.transaction() as conn:
+            scope=live_scope(conn,principal);remember(conn,scope.user_id,normalized,info)
+        return info
     except MediaError as error:
         status = {"invalid_url": 422, "unsupported": 422, "unavailable": 404,
                   "authentication_required": 422, "source_restricted": 422,

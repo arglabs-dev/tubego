@@ -115,9 +115,12 @@ def test_every_extractor_request_guarded(monkeypatch):
 def test_endpoint_contract_and_fail_closed(tmp_path, monkeypatch):
     app = create_app(Settings(tmp_path))
     with TestClient(app) as client:
-        # auth feature not yet merged on this isolated foundation branch
         assert client.post('/api/v1/media/analyze', json={'url':'https://video.example'}).status_code in (401,503)
-        app.dependency_overrides[approved_user] = lambda: {'id': 'approved-user'}
+        from test_private_library import owner
+        user=owner(app)
+        client.headers.update(user['headers'])
+        original_normalize=normalize_url
+        monkeypatch.setattr('tubego_server.media.normalize_url',lambda url:original_normalize(url,public_dns))
         monkeypatch.setattr('tubego_server.routers.media.analyze_media', lambda url: {'title':None, 'duration_seconds':None, 'url':url})
         assert client.post('/api/v1/media/analyze', json={'url':'https://video.example'}).json()['title'] is None
         def fail(url): raise MediaError('unsupported')

@@ -9,6 +9,7 @@ from tubego_server.ownership import LibraryScope
 from tubego_server.preferences import read_preferences, resolve_selection, resource_fields
 from tubego_server.media import normalize_url
 from tubego_server.scheduler import put_setting
+from tubego_server.resource_identity import known,key as identity_key
 
 
 def live_scope(conn, principal):
@@ -34,16 +35,26 @@ def submit(database, principal, url, selection=None, request_id=None, resolver=N
     canonical=normalize_url(url, resolver) if resolver else normalize_url(url)
     selection=resolve_selection(read_preferences(database,principal['id']),selection)
     fields=resource_fields(selection)
-    source_key=hashlib.sha256((canonical+'\n'+fields['media_format']+'\n'+fields['quality']).encode()).hexdigest()
     with database.transaction() as conn:
         scope=live_scope(conn,principal)
-        existing=conn.execute('''SELECT r.id FROM resources r WHERE user_id=? AND source_key=? ORDER BY created_at LIMIT 1''',(scope.user_id,source_key)).fetchone()
+        source_identity=known(conn,scope.user_id,canonical)
+        source_key=identity_key(source_identity,fields)
+        legacy_key=hashlib.sha256((canonical+'\n'+fields['media_format']+'\n'+fields['quality']).encode()).hexdigest()
+        existing=conn.execute('''SELECT r.id FROM resources r LEFT JOIN settings i ON i.scope='resource' AND i.owner_id=r.id AND i.key='source_identity' WHERE user_id=? AND media_format=? AND quality=? AND (source_key IN (?,?) OR i.value_json=?) ORDER BY created_at LIMIT 1''',(scope.user_id,fields['media_format'],fields['quality'],source_key,legacy_key,json.dumps(source_identity))).fetchone()
+        if existing is None:
+            # Resources created before portal identities were stored retain their
+            # history. Recognize their old validated URLs instead of duplicating.
+            for candidate in conn.execute('SELECT id,source_url FROM resources WHERE user_id=? AND media_format=? AND quality=? ORDER BY created_at',(scope.user_id,fields['media_format'],fields['quality'])):
+                if known(conn,scope.user_id,candidate['source_url'])==source_identity:
+                    existing={'id':candidate['id']};put_setting(conn,'resource',candidate['id'],'source_identity',source_identity);break
         if request_id:
             key='submission:'+str(request_id)
             previous=conn.execute("SELECT value_json FROM settings WHERE scope='user' AND owner_id=? AND key=?",(scope.user_id,key)).fetchone()
             if previous:
                 data=json.loads(previous[0])
-                if data['source_key']!=source_key: raise HTTPException(409,'Request ID already used for another resource')
+                previous_resource=conn.execute('SELECT * FROM resources WHERE id=? AND user_id=?',(data['resource_id'],scope.user_id)).fetchone()
+                matches=previous_resource and previous_resource['media_format']==fields['media_format'] and previous_resource['quality']==fields['quality'] and known(conn,scope.user_id,previous_resource['source_url'])==source_identity
+                if data['source_key'] not in (source_key,legacy_key) and not matches:raise HTTPException(409,'Request ID already used for another resource')
                 existing={'id':data['resource_id']}
         if existing:
             task=conn.execute('SELECT * FROM tasks WHERE resource_id=? AND user_id=? ORDER BY created_at DESC LIMIT 1',(existing['id'],scope.user_id)).fetchone()
@@ -54,6 +65,7 @@ def submit(database, principal, url, selection=None, request_id=None, resolver=N
         conn.execute('''INSERT INTO resources(id,user_id,source_url,source_key,media_format,quality,created_at,updated_at)
             VALUES(?,?,?,?,?,?,?,?)''',(rid,scope.user_id,canonical,source_key,fields['media_format'],fields['quality'],timestamp,timestamp))
         conn.execute('INSERT INTO tasks(id,user_id,resource_id,created_at,updated_at) VALUES(?,?,?,?,?)',(tid,scope.user_id,rid,timestamp,timestamp))
+        put_setting(conn,'resource',rid,'source_identity',source_identity)
         if request_id:
             put_setting(conn,'user',scope.user_id,key,{'source_key':source_key,'resource_id':rid})
         task=conn.execute('SELECT * FROM tasks WHERE id=?',(tid,)).fetchone()

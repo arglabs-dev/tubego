@@ -247,6 +247,8 @@ class Worker:
                 title=info.get('title'); duration=info.get('duration')
                 conn.execute('UPDATE resources SET title=?,duration_seconds=?,updated_at=? WHERE id=?',
                     (title[:512] if isinstance(title,str) else None,duration if isinstance(duration,(int,float)) and not isinstance(duration,bool) and math.isfinite(duration) and duration>=0 else None,utcnow(),rid))
+                from tubego_server.resource_identity import remember
+                remember(conn,task['user_id'],resource['source_url'],info,rid)
                 put_setting(conn,'resource',rid,'quality_notice',quality_notice(selection,info.get('height')))
             self._phase(task,'downloading')
             # Process this already extracted result instead of repeating source analysis.
