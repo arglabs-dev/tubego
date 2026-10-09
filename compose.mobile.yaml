@@ -24,6 +24,14 @@ services:
     depends_on:
       - egress
     restart: unless-stopped
+  retention:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    command: ["python", "-m", "tubego_server.retention_service"]
+    volumes:
+      - mobile-data:/data
+    restart: unless-stopped
   egress:
     build:
       context: .

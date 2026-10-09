@@ -1,9 +1,11 @@
+from datetime import timedelta
+import uuid
 from fastapi import APIRouter,Depends,HTTPException,Request,Query
-from pydantic import BaseModel,ConfigDict,StrictBool
+from pydantic import BaseModel,ConfigDict,StrictBool,Field
 from tubego_server.auth import require_admin,utcnow
-from tubego_server.delivery import write_setting
-from tubego_server.delivery import device_scope
+from tubego_server.delivery import write_setting,read_setting,device_scope
 from tubego_server.retention import preserves_server_files,sweep_confirmed
+from tubego_server.retention_policy import policy,clock,timestamp,expired_candidates,sweep_expired,MAX_HOURS
 
 router=APIRouter(tags=['administrative retention'])
 
@@ -40,3 +42,49 @@ def update(user_id:str,body:RetentionChoice,request:Request,principal=Depends(re
     # cannot be undone by this older request's sweep.
     removed=0 if body.preserve_server_files else sweep_confirmed(request.app.state.db,request.app.state.settings.data_dir/'media',user_id)
     return {'user_id':user_id,'preserve_server_files':body.preserve_server_files,'removed_server_copies':removed}
+
+
+
+class DeadlineChoice(BaseModel):
+    model_config=ConfigDict(extra='forbid')
+    absolute_hours:int=Field(strict=True,ge=1,le=MAX_HOURS)
+    delivery_hours:int=Field(strict=True,ge=1,le=MAX_HOURS)
+
+class DeadlineUpdate(DeadlineChoice):
+    preview_token:str=Field(min_length=32,max_length=32,pattern=r'^[0-9a-f]{32}$')
+    confirm_immediate_deletion:StrictBool=False
+
+
+@router.get('/admin/retention/deadlines')
+def get_deadlines(request:Request,principal=Depends(require_admin)):
+    with request.app.state.db.transaction() as conn:
+        current_admin(conn,principal)
+        return dict(policy(conn),server_time=clock().isoformat())
+
+
+@router.post('/admin/retention/deadlines/preview')
+def preview_deadlines(body:DeadlineChoice,request:Request,principal=Depends(require_admin)):
+    with request.app.state.db.transaction() as conn:
+        current_admin(conn,principal)
+        now=clock();config=body.model_dump();ids=sorted(expired_candidates(conn,config,now));token=uuid.uuid4().hex
+        write_setting(conn,'user',principal['id'],'retention_preview',{'token':token,'config':config,'ids':ids,'expires_at':(now+timedelta(minutes=5)).isoformat()})
+        return dict(config,immediate_deletions=len(ids),preview_token=token,server_time=now.isoformat())
+
+
+@router.put('/admin/retention/deadlines')
+def update_deadlines(body:DeadlineUpdate,request:Request,principal=Depends(require_admin)):
+    with request.app.state.db.transaction() as conn:
+        current_admin(conn,principal)
+        now=clock();config={'absolute_hours':body.absolute_hours,'delivery_hours':body.delivery_hours}
+        preview=read_setting(conn,'user',principal['id'],'retention_preview')
+        if (not preview or preview.get('token')!=body.preview_token or preview.get('config')!=config
+            or not timestamp(preview.get('expires_at')) or timestamp(preview['expires_at'])<=now):
+            raise HTTPException(409,'Preview the impact again before saving')
+        ids=sorted(expired_candidates(conn,config,now))
+        if ids!=preview.get('ids'):raise HTTPException(409,'Retention impact changed; preview again')
+        if ids and not body.confirm_immediate_deletion:raise HTTPException(409,'Immediate deletion must be confirmed')
+        write_setting(conn,'global','','retention_deadlines',config)
+        write_setting(conn,'user',principal['id'],'retention_preview',None)
+        conn.execute("INSERT INTO audit(actor_user_id,action,detail_json,created_at) VALUES(?,'retention.deadlines_changed',?,?)",(principal['id'],body.model_dump_json(),now.isoformat()))
+    removed=sweep_expired(request.app.state.db,request.app.state.settings.data_dir/'media')
+    return dict(config,removed_server_copies=removed)
