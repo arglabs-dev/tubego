@@ -8,5 +8,6 @@ public final class TubegoApplication extends Application {
         LinkOutboxDispatch.schedule(this);
         DeletionOutboxDispatch.schedule(this);
         RecoveryOutboxDispatch.schedule(this);
+        ServerCleanupOutboxDispatch.schedule(this);
     }
 }

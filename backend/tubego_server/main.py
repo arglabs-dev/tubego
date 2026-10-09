@@ -7,7 +7,7 @@ from tubego_server.config import Settings
 from tubego_server.db import Database
 from src.storage import validate_channel_paths
 import os
-from tubego_server.routers import system, registration, admin_priority, library, login, media, preferences, devices, device_delivery, tasks, retention, resource_deletion, resource_recovery
+from tubego_server.routers import system, registration, admin_priority, library, login, media, preferences, devices, device_delivery, tasks, retention, resource_deletion, resource_recovery, server_cleanup
 from tubego_server.mail import SmtpMailer
 from tubego_server.account_cleanup import CleanupRunner
 from tubego_server.routers import admin_users
@@ -34,7 +34,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.middleware("http")
     async def private_auth_responses(request: Request, call_next):
         response = await call_next(request)
-        if request.url.path.startswith(("/api/v1/auth/", "/api/v1/account/", "/api/v1/admin/")):
+        if request.url.path.startswith(("/api/v1/auth/", "/api/v1/account/", "/api/v1/admin/", "/api/v1/server-cleanup")):
             response.headers["Cache-Control"] = "no-store"
         return response
 
@@ -62,6 +62,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(retention.router,prefix="/api/v1")
     app.include_router(resource_deletion.router, prefix="/api/v1")
     app.include_router(resource_recovery.router, prefix="/api/v1")
+    app.include_router(server_cleanup.router, prefix="/api/v1")
     return app
 
 

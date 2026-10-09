@@ -83,6 +83,8 @@ public final class MainActivity extends Activity {
         users.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();startActivity(new android.content.Intent(this,AdminUsersActivity.class).putExtra("server_url",origin));}catch(Exception e){status.setText("Configura una URL HTTPS válida.");}});
         Button recovery=new Button(this);recovery.setText("Historial / Volver a solicitar");layout.addView(recovery);
         recovery.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();startActivity(new android.content.Intent(this,ResubmitActivity.class).putExtra("server_url",origin));}catch(Exception e){status.setText("Configura una URL HTTPS válida.");}});
+        Button serverCleanup=new Button(this);serverCleanup.setText("Limpiar archivos del servidor");layout.addView(serverCleanup);
+        serverCleanup.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();startActivity(new android.content.Intent(this,ServerCleanupActivity.class).putExtra("server_url",origin));}catch(Exception e){status.setText("Configura una URL HTTPS válida.");}});
         Button deletion=new Button(this);deletion.setText("Biblioteca / Borrar recursos");layout.addView(deletion);
         deletion.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();startActivity(new android.content.Intent(this,ResourceDeletionActivity.class).putExtra("server_url",origin));}catch(Exception e){status.setText("Configura una URL HTTPS válida.");}});
         android.widget.ScrollView scroll=new android.widget.ScrollView(this);scroll.addView(layout);setContentView(scroll);
