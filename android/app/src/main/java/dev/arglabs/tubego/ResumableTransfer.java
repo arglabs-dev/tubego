@@ -13,17 +13,24 @@ public final class ResumableTransfer {
         int status(); String header(String name); InputStream body() throws IOException; void close();
     }
     public interface Connector {Response open(long offset,String etag) throws Exception;}
+    public interface StorageGuard {boolean allows(long remaining);default void noSpace(){};}
+    private static final StorageGuard NO_STORAGE_LIMIT=remaining->true;
+    public static final class StoragePause extends IOException {public StoragePause(){super("Almacenamiento insuficiente");}}
     public enum Result {COMPLETE,PAUSED}
     private static final Pattern RANGE=Pattern.compile("bytes ([0-9]+)-([0-9]+)/([0-9]+)");
     public static Result run(TransferRecord r,Connector connector,BooleanSupplier permitted) throws Exception {
         return run(r,connector,permitted,new Object(),()->true);
     }
     public static Result run(TransferRecord r,Connector connector,BooleanSupplier permitted,Object storageLock,BooleanSupplier alive) throws Exception {
+        return run(r,connector,permitted,storageLock,alive,NO_STORAGE_LIMIT);
+    }
+    public static Result run(TransferRecord r,Connector connector,BooleanSupplier permitted,Object storageLock,BooleanSupplier alive,StorageGuard storage) throws Exception {
         if(!permitted.getAsBoolean()) {r.state="paused";save(r,storageLock,alive);return Result.PAUSED;}
         if(r.media().isFile() && verifies(r.media(),r.size,r.sha256)) {synchronized(storageLock){if(!alive.getAsBoolean())return Result.PAUSED;r.state="complete";r.save();return Result.COMPLETE;}}
         if(r.offset()>r.size) truncate(r.part(),storageLock,alive);
         if(r.offset()==r.size && r.part().isFile()) return finish(r,storageLock,alive);
-        r.state="downloading";save(r,storageLock,alive);
+        if(!storage.allows(Math.max(0,r.size-r.offset())))throw pauseStorage(r,storageLock,alive);
+        r.pauseReason="";r.state="downloading";save(r,storageLock,alive);
         long offset=r.offset();String etag="\""+r.sha256+"\"";
         try(Response response=connector.open(offset,etag)) {
             int status=response.status();long start=offset;
@@ -37,6 +44,7 @@ public final class ResumableTransfer {
             } else throw new TransferRetry.Failure("http_"+status,status==429||status>=500&&status<=599);
             if(!etag.equals(response.header("ETag")) || !r.sha256.equals(response.header("X-Content-SHA256"))) throw new TransferRetry.Failure("identity_changed",false);
             if(Long.parseLong(value(response.header("Content-Length")))!=r.size-start) throw new TransferRetry.Failure("size_mismatch",false);
+            if(!storage.allows(Math.max(0,r.size-start)))throw pauseStorage(r,storageLock,alive);
             RandomAccessFile opened;
             synchronized(storageLock) {if(!alive.getAsBoolean()) return Result.PAUSED;opened=new RandomAccessFile(r.part(),"rw");}
             try(RandomAccessFile output=opened;InputStream input=response.body()) {
@@ -45,10 +53,12 @@ public final class ResumableTransfer {
                     if(!permitted.getAsBoolean() || Thread.currentThread().isInterrupted()) {
                         output.getFD().sync();r.state="paused";save(r,storageLock,alive);return Result.PAUSED;
                     }
+                    if(!storage.allows(Math.max(0,r.size-written)))throw pauseStorage(r,storageLock,alive);
                     int count=input.read(buffer,0,(int)Math.min(buffer.length,r.size-written));
                     if(count<0) throw new EOFException("Transferencia incompleta");
                     // Recheck after a blocking read before writing its bytes.
                     if(!permitted.getAsBoolean()) {output.getFD().sync();r.state="paused";save(r,storageLock,alive);return Result.PAUSED;}
+                    if(!storage.allows(Math.max(0,r.size-written)))throw pauseStorage(r,storageLock,alive);
                     synchronized(storageLock) {
                         if(!alive.getAsBoolean()) return Result.PAUSED;
                         output.write(buffer,0,count);output.getFD().sync();written+=count;
@@ -58,12 +68,22 @@ public final class ResumableTransfer {
                 output.getFD().sync();
             }
         } catch(Exception e) {
+            if(e instanceof StoragePause)throw e;
+            if(isNoSpace(e)){storage.noSpace();throw pauseStorage(r,storageLock,alive);}
             r.state=permitted.getAsBoolean()?"pending":"paused";r.message="Transferencia interrumpida; se conserva el parcial.";save(r,storageLock,alive);
             if(!permitted.getAsBoolean() || Thread.currentThread().isInterrupted()) return Result.PAUSED;
             throw e;
         }
         if(!permitted.getAsBoolean()) {r.state="paused";save(r,storageLock,alive);return Result.PAUSED;}
         return finish(r,storageLock,alive);
+    }
+    private static StoragePause pauseStorage(TransferRecord r,Object lock,BooleanSupplier alive)throws IOException{
+        r.state="paused";r.pauseReason="device_storage";r.message="Libera espacio o ajusta el umbral para continuar. Se conserva el parcial.";save(r,lock,alive);return new StoragePause();
+    }
+    public static boolean isNoSpace(Exception error){
+        for(Throwable cause=error;cause!=null;cause=cause.getCause()){
+            String text=String.valueOf(cause.getMessage());if(text.contains("ENOSPC")||text.contains("No space left"))return true;
+        }return false;
     }
     private static String value(String text) {return text==null?"":text;}
     private static void save(TransferRecord r,Object lock,BooleanSupplier alive) throws IOException {

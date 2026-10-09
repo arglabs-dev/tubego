@@ -25,6 +25,7 @@ public final class TransferJobService extends JobService {
                     jobFinished(params,needsAny && !wasWifi && outcome!=TransferDriver.Outcome.RETRY);
                     if(outcome==TransferDriver.Outcome.RETRY)new android.os.Handler(getMainLooper()).postDelayed(()->TransferJobs.wakeAt(this,origin,false,control.retryAt),250);
                     if(needsAny && wasWifi && outcome!=TransferDriver.Outcome.RETRY)TransferJobs.wake(this,origin,false);
+                    if(outcome==TransferDriver.Outcome.WAIT_SPACE)new android.os.Handler(getMainLooper()).postDelayed(()->TransferJobs.wakeAt(this,origin,false,System.currentTimeMillis()+60000),250);
                     if(outcome==TransferDriver.Outcome.WAIT_WIFI) TransferJobs.wake(this,origin,true);
                 }
             }
