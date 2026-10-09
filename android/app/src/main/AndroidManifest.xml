@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
-    <application android:label="Tubego" android:theme="@android:style/Theme.Material.Light.NoActionBar"
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <application android:name=".TubegoApplication" android:label="Tubego" android:theme="@android:style/Theme.Material.Light.NoActionBar"
         android:allowBackup="false" android:usesCleartextTraffic="false" android:supportsRtl="true">
         <activity android:name=".AdminPriorityActivity" android:exported="false" />
+        <service android:name=".LogoutJobService" android:exported="true" android:permission="android.permission.BIND_JOB_SERVICE" />
+        <activity android:name=".DevicesActivity" android:exported="false" />
         <activity android:name=".LoginActivity" android:exported="false" />
         <activity android:name=".MediaPreferencesActivity" android:exported="false" />
         <activity android:name=".RegistrationActivity" android:exported="false" />

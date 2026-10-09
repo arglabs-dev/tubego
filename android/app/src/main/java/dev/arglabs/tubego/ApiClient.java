@@ -13,6 +13,9 @@ public final class ApiClient {
         public final int status; public final String code;
         public ApiException(int status,String code) {super("HTTP "+status);this.status=status;this.code=code;}
     }
+    public interface SessionObserver {void onRejected(String origin,String token,String code) throws Exception;}
+    private static volatile SessionObserver observer;
+    public static void setSessionObserver(SessionObserver callback) {observer=callback;}
     private final String baseUrl;
 
     public ApiClient(String url) {
@@ -58,6 +61,8 @@ public final class ApiClient {
                         if(detail!=null) code=detail.optString("code");
                     }
                 } catch(Exception ignored) { }
+                SessionObserver callback=observer;
+                if(callback!=null) callback.onRejected(baseUrl,token,code);
                 throw new ApiException(status,code);
             }
             try (var stream = connection.getInputStream()) {

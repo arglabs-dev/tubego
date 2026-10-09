@@ -16,6 +16,7 @@ class Login(EmailInput):
     password: str = Field(min_length=1, max_length=128)
     device_name: str = Field(min_length=1, max_length=100)
     device_id: str | None = Field(default=None, min_length=1, max_length=100)
+    replace_device: bool = False
     # A login starts a new device session. A currently authenticated device may
     # rotate its session through a future session-management card.
 
@@ -42,16 +43,27 @@ def login(body: Login, request: Request):
             raise HTTPException(403,{'code':'account_unavailable'})
         now=datetime.now(timezone.utc); stamp=now.isoformat(); device=str(uuid.uuid4())
         token=secrets.token_urlsafe(32); expires=(now+timedelta(days=30)).isoformat()
-        previous = conn.execute("SELECT * FROM devices WHERE id=? AND user_id=? AND revoked_at IS NULL", (body.device_id,user['id'])).fetchone() if body.device_id else None
-        if previous:
+        previous = conn.execute("SELECT * FROM devices WHERE id=? AND user_id=?", (body.device_id,user['id'])).fetchone() if body.device_id else None
+        if previous and body.replace_device:
+            from tubego_server.routers.devices import revoke_device
+            revoke_device(conn,user['id'],previous['id'],user['id'])
+            previous=conn.execute("SELECT * FROM devices WHERE id=?",(previous['id'],)).fetchone()
+        if previous and previous['revoked_at'] is None:
             device=previous['id']
             conn.execute("UPDATE devices SET name=?,last_seen_at=? WHERE id=?", (body.device_name,stamp,device))
             conn.execute("UPDATE sessions SET revoked_at=? WHERE device_id=? AND revoked_at IS NULL",(stamp,device))
         else:
             conn.execute("INSERT INTO devices(id,user_id,name,platform,last_seen_at,created_at) VALUES (?,?,?,'android',?,?)",(device,user['id'],body.device_name,stamp,stamp))
+        # Only a known owned device being signed back in restores older available history.
+        # A genuinely new device receives future publications, not the full old library.
+        if previous:
+            conn.execute("""INSERT OR IGNORE INTO deliveries(resource_id,device_id,status,updated_at)
+                SELECT r.id,?,'pending',? FROM resources r WHERE r.user_id=? AND r.ready_at IS NOT NULL
+                AND r.server_deleted_at IS NULL AND r.server_path IS NOT NULL
+                AND NOT EXISTS (SELECT 1 FROM deliveries previous WHERE previous.resource_id=r.id AND previous.deleted_at IS NOT NULL)""",(device,stamp,user['id']))
         conn.execute('INSERT INTO sessions VALUES (?,?,?,?,?,NULL,?)',(str(uuid.uuid4()),user['id'],device,token_hash(token),expires,stamp))
         conn.execute("INSERT INTO audit(actor_user_id,action,target_id,created_at) VALUES (?,'session.created',?,?)",(user['id'],device,stamp))
-    return {'user_id':user['id'],'token':token,'expires_at':expires,'device_id':device,'status':user['status'],'role':user['role']}
+    return {'email':user['email'],'user_id':user['id'],'token':token,'expires_at':expires,'device_id':device,'status':user['status'],'role':user['role']}
 
 @router.post('/auth/password/forgot',status_code=202)
 def forgot(body: EmailInput,request: Request):
