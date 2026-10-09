@@ -40,6 +40,12 @@ public final class MainActivity extends Activity {
         status = new TextView(this);
         status.setText("Sin conexión comprobada");
         layout.addView(status);
+        Button account = new Button(this); account.setText("Iniciar sesión / Mi cuenta"); layout.addView(account);
+        account.setOnClickListener(v -> {
+            try { String origin = new ApiClient(url.getText().toString()).getBaseUrl();
+                startActivity(new android.content.Intent(this, LoginActivity.class).putExtra("server_url",origin));
+            } catch (IllegalArgumentException e) { status.setText(e.getMessage()); }
+        });
         Button registration = new Button(this); registration.setText("Crear cuenta"); layout.addView(registration);
         registration.setOnClickListener(v -> {
             try { String origin = new ApiClient(url.getText().toString()).getBaseUrl();

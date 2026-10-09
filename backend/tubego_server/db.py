@@ -3,7 +3,7 @@ from contextlib import contextmanager, closing
 from pathlib import Path
 import sqlite3
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 SCHEMA = [
     """CREATE TABLE users (
         id TEXT PRIMARY KEY, email TEXT NOT NULL UNIQUE COLLATE NOCASE,
@@ -80,6 +80,18 @@ MIGRATION_2 = [
 ]
 
 
+MIGRATION_3 = [
+    """CREATE TABLE password_reset_tokens (
+        token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        expires_at TEXT NOT NULL, used_at TEXT, created_at TEXT NOT NULL
+    )""",
+    """CREATE TABLE auth_limits (
+        scope TEXT NOT NULL, key_hash TEXT NOT NULL, window_start TEXT NOT NULL,
+        attempts INTEGER NOT NULL, PRIMARY KEY(scope,key_hash)
+    )""",
+]
+
+
 class Database:
     def __init__(self, path: Path):
         self.path = path
@@ -103,6 +115,10 @@ class Database:
                 version = 1
             if version == 1:
                 for statement in MIGRATION_2:
+                    connection.execute(statement)
+                version = 2
+            if version == 2:
+                for statement in MIGRATION_3:
                     connection.execute(statement)
             connection.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")
         with closing(self.connect()) as connection:

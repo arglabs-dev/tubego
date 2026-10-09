@@ -16,7 +16,7 @@ public final class AdminRegistrationsActivity extends Activity {
         status = new TextView(this); layout.addView(status);
         ScrollView scroll = new ScrollView(this); scroll.addView(layout); setContentView(scroll); load();
     }
-    private String token() { return getSharedPreferences("tubego_account",MODE_PRIVATE).getString("session_token",null); }
+    private String token() throws Exception { return new SessionStore(this,getIntent().getStringExtra("server_url")).token(); }
     private ApiClient api() { return new ApiClient(getIntent().getStringExtra("server_url")); }
     private void load() {
         layout.removeAllViews(); layout.addView(status); status.setText("Cargando solicitudes verificadas…");
