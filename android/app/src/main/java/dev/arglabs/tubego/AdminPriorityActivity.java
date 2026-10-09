@@ -23,10 +23,11 @@ public final class AdminPriorityActivity extends Activity {
         ScrollView scroll = new ScrollView(this);
         scroll.addView(layout);
         setContentView(scroll);
+        if(!AdminAccess.allowed(this,getIntent().getStringExtra("server_url"))){status.setText("Se requiere una cuenta aprobada de administrador.");return;}
         load();
     }
     private ApiClient api() { return new ApiClient(getIntent().getStringExtra("server_url")); }
-    private String token() throws Exception { return new SessionStore(this, api().getBaseUrl()).token(); }
+    private String token() throws Exception { return AdminAccess.remoteToken(this,api().getBaseUrl()); }
     private void load() {
         status.setText("Cargando prioridades…");
         network.execute(() -> {
