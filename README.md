@@ -72,3 +72,8 @@ Para compilar la versión APK:
 flet build apk -v
 ```
 _(Consulta la documentación oficial de Flet para requisitos de Android SDK)_
+## Independent Telegram and mobile channels
+
+Telegram continues to work alongside the Android MVP with separate files and queues.
+See [storage configuration and deployment](docs/INDEPENDENT_CHANNELS.md) before
+running both services.

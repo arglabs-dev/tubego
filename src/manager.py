@@ -3,12 +3,15 @@ import threading
 import os
 import shutil
 from src.core import Downloader
+from src.storage import bot_download_directory, owned_file
 
 class DownloadManager:
-    def __init__(self):
+    def __init__(self, download_dir=None):
         # Configurar directorios
-        self.base_dir = "downloads"
+        self.base_dir = bot_download_directory(download_dir)
         self.uploaded_dir = os.path.join(self.base_dir, "uploaded")
+        if os.path.islink(self.uploaded_dir):
+            raise ValueError("Telegram uploaded directory must not be a symlink")
         
         if not os.path.exists(self.base_dir): os.makedirs(self.base_dir)
         if not os.path.exists(self.uploaded_dir): os.makedirs(self.uploaded_dir)
@@ -37,7 +40,7 @@ class DownloadManager:
     def create_task_from_file(self, filename):
         """Crea una tarea ficticia a partir de un archivo existente en disco"""
         file_path = os.path.join(self.base_dir, filename)
-        if not os.path.exists(file_path):
+        if not owned_file(self.base_dir, file_path) or not os.path.isfile(file_path):
             return None
         
         task_id = str(uuid.uuid4())[:4]
@@ -63,6 +66,8 @@ class DownloadManager:
 
             try:
                 src = task['file_path']
+                if not owned_file(self.base_dir, src):
+                    return False
                 filename = os.path.basename(src)
                 dst = os.path.join(self.uploaded_dir, filename)
                 
@@ -79,7 +84,8 @@ class DownloadManager:
         """Devuelve lista de archivos en 'downloads' (excluyendo 'uploaded')"""
         try:
             files = [f for f in os.listdir(self.base_dir) 
-                     if os.path.isfile(os.path.join(self.base_dir, f))]
+                     if os.path.isfile(os.path.join(self.base_dir, f))
+                     and owned_file(self.base_dir, os.path.join(self.base_dir, f))]
             return sorted(files)
         except:
             return []
@@ -88,6 +94,8 @@ class DownloadManager:
         """Borra todos los archivos de la carpeta uploaded"""
         count = 0
         try:
+            if os.path.islink(self.uploaded_dir):
+                return False, "Telegram uploaded directory must not be a symlink"
             for f in os.listdir(self.uploaded_dir):
                 file_path = os.path.join(self.uploaded_dir, f)
                 if os.path.isfile(file_path):
@@ -121,6 +129,8 @@ class DownloadManager:
             # Borrar solo si existe y NO ha sido movido a uploaded (o si queremos borrar todo)
             # Por seguridad, si está en uploaded no lo borramos con este comando simple, o sí?
             # Asumiremos que delete borra el archivo donde sea que esté apuntando file_path
+            if task['file_path'] and not owned_file(self.base_dir, task['file_path']):
+                return False
             if task['file_path'] and os.path.exists(task['file_path']):
                 try:
                     os.remove(task['file_path'])
