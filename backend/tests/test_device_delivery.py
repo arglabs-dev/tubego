@@ -64,6 +64,9 @@ def test_auth_owner_device_ranges_and_checksum_metadata(service):
 
 def test_confirmation_only_matching_complete_size_digest_idempotent_no_alert(service):
     app,client=service;alice=owner(app);key,published=ready(app,alice)
+    with app.state.db.transaction() as conn:
+        from tubego_server.delivery import write_setting
+        write_setting(conn,'user',alice['id'],'preserve_server_files',True)
     url=f'/api/v1/resources/{key}/deliveries/confirm'
     for body in ({'size_bytes':9,'sha256':published['sha256']},{'size_bytes':10,'sha256':'0'*64}):
         assert client.post(url,json=body,headers=alice['headers']).status_code==409
@@ -97,6 +100,9 @@ def test_open_transfer_checks_revocation_between_chunks(service,change):
 
 def test_changed_file_requires_new_checksum_and_local_tombstone_needs_approval(service):
     app,client=service;alice=owner(app);key,published=ready(app,alice)
+    with app.state.db.transaction() as conn:
+        from tubego_server.delivery import write_setting
+        write_setting(conn,'user',alice['id'],'preserve_server_files',True)
     url=f'/api/v1/resources/{key}/deliveries/confirm';body={'size_bytes':10,'sha256':published['sha256']}
     assert client.post(url,json=body,headers=alice['headers']).status_code==200
     # Simulate atomic worker replacement after a new generation of this resource.
@@ -162,6 +168,9 @@ def test_publish_rechecks_owner_and_rejects_missing_file(service):
 
 def test_concurrent_confirmation_is_atomic_and_server_deletion_blocks_confirmation(service):
     app,client=service;alice=owner(app);key,published=ready(app,alice)
+    with app.state.db.transaction() as conn:
+        from tubego_server.delivery import write_setting
+        write_setting(conn,'user',alice['id'],'preserve_server_files',True)
     url=f'/api/v1/resources/{key}/deliveries/confirm';body={'size_bytes':10,'sha256':published['sha256']}
     with ThreadPoolExecutor(2) as pool:
         statuses=list(pool.map(lambda _:client.post(url,json=body,headers=alice['headers']).status_code,range(2)))

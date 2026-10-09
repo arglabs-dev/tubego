@@ -70,17 +70,33 @@ class Confirmation(BaseModel):
 def confirm(resource_id: str,body: Confirmation,request: Request,principal=Depends(require_approved)):
     with request.app.state.db.transaction() as conn:
         scope,did=device_scope(conn,principal)
-        resource,digest=available(scope,resource_id)
+        resource=scope.resource(resource_id)
+        digest=read_setting(conn,'resource',resource_id,'media_sha256')
         delivery=scope.delivery(resource_id,did)
         if delivery['deleted_at'] or delivery['status']=='approval_required':
             raise HTTPException(409,'New download approval required')
+        if resource['server_deleted_at'] or not resource['server_path']:
+            # An acknowledged completion remains retryable after automatic cleanup.
+            # This capability cannot confirm a new transfer or manually deleted copy.
+            if (read_setting(conn,'resource',resource_id,'retention_removed') is True
+                and delivery['confirmed_at'] and delivery['status']=='complete'
+                and body.size_bytes==resource['size_bytes']==delivery['downloaded_bytes']
+                and body.sha256==digest==read_setting(conn,'delivery',did+':'+resource_id,'confirmed_sha256')):
+                return {'resource_id':resource_id,'device_id':did,'status':'complete','server_copy_removed':True}
+            raise HTTPException(404,'Media unavailable')
+        if not resource['ready_at'] or not digest:raise HTTPException(409,'Media not finalized')
         if body.size_bytes!=resource['size_bytes'] or body.sha256!=digest:
             raise HTTPException(409,'Incomplete or mismatched media')
         timestamp=utcnow()
         conn.execute("UPDATE deliveries SET status='complete',downloaded_bytes=?,confirmed_at=COALESCE(confirmed_at,?),updated_at=? WHERE resource_id=? AND device_id=?",(body.size_bytes,timestamp,timestamp,resource_id,did))
         write_setting(conn,'delivery',did+':'+resource_id,'confirmed_sha256',digest)
         conn.execute('UPDATE resources SET first_delivered_at=COALESCE(first_delivered_at,?),updated_at=? WHERE id=?',(timestamp,timestamp,resource_id))
-    return {'resource_id':resource_id,'device_id':did,'status':'complete'}
+    from tubego_server.retention import delete_if_eligible
+    removed=delete_if_eligible(request.app.state.db,request.app.state.settings.data_dir/'media',resource_id)
+    if not removed:
+        with request.app.state.db.transaction() as conn:
+            removed=read_setting(conn,'resource',resource_id,'retention_removed') is True
+    return {'resource_id':resource_id,'device_id':did,'status':'complete','server_copy_removed':removed}
 
 
 class DeliveryRequest(BaseModel):
