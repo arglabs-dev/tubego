@@ -7,6 +7,8 @@
     <queries><intent><action android:name="android.intent.action.VIEW"/><data android:mimeType="video/*"/></intent><intent><action android:name="android.intent.action.VIEW"/><data android:mimeType="audio/*"/></intent><package android:name="org.videolan.vlc"/></queries>
     <application android:name=".TubegoApplication" android:label="Tubego" android:theme="@android:style/Theme.Material.Light.NoActionBar"
         android:allowBackup="false" android:usesCleartextTraffic="false" android:supportsRtl="true">
+        <activity android:name=".CommandsActivity" android:exported="false" />
+        <service android:name=".CommandJobService" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="false" />
         <service android:name=".LinkOutboxJobService" android:exported="true" android:permission="android.permission.BIND_JOB_SERVICE" />
         <activity android:name=".MaintenanceActivity" android:exported="false" />
         <service android:name=".MaintenanceJobService" android:exported="true" android:permission="android.permission.BIND_JOB_SERVICE" />

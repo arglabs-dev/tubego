@@ -21,6 +21,7 @@ public final class CommandQueue {
     /** Original UUID preserves a legacy effect receipt whose reply was lost. */
     public Entry importIntent(String id,String kind,String payload)throws IOException{
         UUID.fromString(id);
+        if(!Arrays.asList("submit","recover","delete","server_cleanup","preferences","resource_priority","task_cancel","task_retry","task_priority","noop").contains(kind)||payload==null||payload.length()>16384)throw new IOException("Invalid command intention");
         synchronized(LOCK){
             Entry existing=find(id);if(existing!=null)return existing;
             long sequence=0;for(Entry entry:entries())sequence=Math.max(sequence,entry.sequence);
@@ -31,8 +32,9 @@ public final class CommandQueue {
     public List<Entry> entries()throws IOException{
         synchronized(LOCK){
             List<Entry> result=new ArrayList<>();File[] files=directory.listFiles((dir,name)->name.endsWith(".properties"));
-            if(files!=null)for(File file:files){Properties p=new Properties();try(InputStream in=new FileInputStream(file)){p.load(in);}
-                try{result.add(new Entry(p.getProperty("id"),Long.parseLong(p.getProperty("sequence")),p.getProperty("kind"),p.getProperty("payload"),p.getProperty("state"),p.getProperty("error",""),p.getProperty("result","")));}
+            if(files!=null)for(File file:files){if(java.nio.file.Files.isSymbolicLink(file.toPath())||file.length()>65536)throw new IOException("Invalid command record");Properties p=new Properties();try(InputStream in=new FileInputStream(file)){p.load(in);}
+                try{String id=UUID.fromString(p.getProperty("id")).toString();if(!file.getName().equals(id+".properties"))throw new IOException("Invalid command identity");
+                result.add(new Entry(p.getProperty("id"),Long.parseLong(p.getProperty("sequence")),p.getProperty("kind"),p.getProperty("payload"),p.getProperty("state"),p.getProperty("error",""),p.getProperty("result","")));}
                 catch(RuntimeException invalid){throw new IOException("Invalid command record",invalid);}}
             result.sort(Comparator.comparingLong(entry->entry.sequence));return result;
         }
@@ -53,6 +55,6 @@ public final class CommandQueue {
         p.setProperty("error",value.error);p.setProperty("result",value.result);
         File destination=new File(directory,value.id+".properties"),temporary=new File(directory,value.id+".tmp");
         try(FileOutputStream out=new FileOutputStream(temporary)){p.store(out,null);out.getFD().sync();}
-        if(!temporary.renameTo(destination))throw new IOException("Cannot commit command");
+        java.nio.file.Files.move(temporary.toPath(),destination.toPath(),java.nio.file.StandardCopyOption.ATOMIC_MOVE,java.nio.file.StandardCopyOption.REPLACE_EXISTING);
     }
 }

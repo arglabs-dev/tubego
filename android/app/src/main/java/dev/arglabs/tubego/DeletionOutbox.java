@@ -67,6 +67,9 @@ public final class DeletionOutbox {
         return done;
     }
     public void retry(String id) throws Exception {
-        synchronized(DeletionOutbox.class){for(Entry entry:entries())if(entry.id.equals(id))write(new Entry(entry.id,entry.resource,entry.scope,"queued","",""));}
+        synchronized(DeletionOutbox.class){for(Entry entry:entries())if(entry.id.equals(id)){
+            if(CommandBridge.production(directory)){if(!entry.state.equals("error"))throw new IOException("La acción no requiere reintento");add(entry.resource,entry.scope);return;}
+            write(new Entry(entry.id,entry.resource,entry.scope,"queued","",""));
+        }}
     }
 }

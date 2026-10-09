@@ -51,3 +51,30 @@ def test_expired_session_does_not_advance_or_mutate_preferences(service):
     assert send(client,user,1).status_code==401
     with closing(app.state.db.connect()) as conn:
         assert not conn.execute("SELECT 1 FROM settings WHERE scope='device' AND owner_id=? AND key='command_sequence'",(user['device'],)).fetchone()
+
+
+def test_cached_old_recovery_cannot_undo_newer_delete(service):
+    from test_resource_deletion import ready
+    app,client=service;user=owner(app);rid,_,_=ready(app,user)
+    recovery=str(uuid.uuid4())
+    first=send(client,user,1,'recover',{'resource_id':rid,'approve_redownload':True},recovery)
+    assert first.status_code==200 and first.json()['status']=='complete'
+    deletion=send(client,user,2,'delete',{'resource_id':rid,'scope':'devices'})
+    assert deletion.status_code==200 and deletion.json()['status']=='complete'
+    assert send(client,user,1,'recover',{'resource_id':rid,'approve_redownload':True},recovery).json()==first.json()
+    with closing(app.state.db.connect()) as conn:
+        rows=conn.execute('SELECT status,deleted_at FROM deliveries WHERE resource_id=?',(rid,)).fetchall()
+        assert rows and all(row['status']=='deleted' and row['deleted_at'] for row in rows)
+
+
+def test_task_priority_receipt_avoids_duplicate_increment_after_lost_reply(service):
+    from tubego_server.tasks import action,submit
+    from test_resource_recovery import resolver,principal
+    app,_=service;user=owner(app)
+    task=submit(app.state.db,principal(user),'https://example.org/video','720',resolver=resolver)
+    identifier=str(uuid.uuid4())
+    first=action(app.state.db,principal(user),task['task_id'],'priority',identifier)
+    second=action(app.state.db,principal(user),task['task_id'],'priority',str(uuid.uuid4()))
+    assert second['priority']>first['priority']
+    assert action(app.state.db,principal(user),task['task_id'],'priority',identifier)==first
+    with closing(app.state.db.connect()) as conn:assert conn.execute('SELECT priority FROM tasks WHERE id=?',(task['task_id'],)).fetchone()[0]==second['priority']

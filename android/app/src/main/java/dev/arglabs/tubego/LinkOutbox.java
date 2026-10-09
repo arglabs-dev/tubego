@@ -66,6 +66,9 @@ public final class LinkOutbox {
         return done;
     }
     public void retry(String id) throws Exception {
-        synchronized(LinkOutbox.class){for(Entry entry:entries())if(entry.id.equals(id))write(new Entry(entry.id,entry.url,entry.selection,"queued","",""));}
+        synchronized(LinkOutbox.class){for(Entry entry:entries())if(entry.id.equals(id)){
+            if(CommandBridge.production(directory)){if(!entry.state.equals("error"))throw new IOException("La acción no requiere reintento");add(entry.url,entry.selection);return;}
+            write(new Entry(entry.id,entry.url,entry.selection,"queued","",""));
+        }}
     }
 }
