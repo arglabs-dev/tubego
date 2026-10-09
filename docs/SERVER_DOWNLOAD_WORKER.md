@@ -19,8 +19,8 @@ requeued. Explicit historical requests belong to PLA-243.
 
 GET `/api/v1/tasks` or `/api/v1/tasks/{id}` exposes private queue state, progress,
 attempts, sanitized error and phase, plus any lower-quality/unknown-height notice.
-POST `/api/v1/tasks/{id}/priority` puts a queued task ahead of normal tasks, with
-earlier prioritizations winning ties. POST `.../cancel` cancels a queued task or
+POST `/api/v1/tasks/{id}/priority` makes the selected queued task next within its
+user's queue, without interrupting an active download. POST `.../cancel` cancels a queued task or
 requests cooperative cancellation of running work. The return indicates
 `cancelling` until acknowledged by the worker. POST `.../retry` requeues the same
 failed/cancelled task, preserving partial downloads. Repeated retry does not create

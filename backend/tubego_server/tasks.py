@@ -46,6 +46,8 @@ def submit(database, principal, url, selection=None, request_id=None, resolver=N
                 existing={'id':data['resource_id']}
         if existing:
             task=conn.execute('SELECT * FROM tasks WHERE resource_id=? AND user_id=? ORDER BY created_at DESC LIMIT 1',(existing['id'],scope.user_id)).fetchone()
+            if request_id:
+                put_setting(conn,'user',scope.user_id,key,{'source_key':source_key,'resource_id':existing['id']})
             return {'resource_id':existing['id'],'task':task_value(conn,task) if task else None,'existing':True,'task_id':task['id'] if task else None,'status':task['status'] if task else 'history'}
         rid,tid=str(uuid.uuid4()),str(uuid.uuid4()); timestamp=utcnow()
         conn.execute('''INSERT INTO resources(id,user_id,source_url,source_key,media_format,quality,created_at,updated_at)
@@ -78,11 +80,9 @@ def action(database, principal, task_id, kind):
             # Repeated retry while queued/running returns the same task.
         elif kind=='priority':
             if task['status']!='queued': raise HTTPException(409,'Only queued tasks can be prioritized')
-            if task['priority']==0:
-                previous=conn.execute("SELECT COALESCE(MIN(priority),0) FROM tasks WHERE user_id=? AND status='queued' AND priority>0",(scope.user_id,)).fetchone()[0]
-                # Scheduler orders priority DESC. Earlier prioritization is higher.
-                value=2147483647 if previous==0 else max(1,previous-1)
-                conn.execute('UPDATE tasks SET priority=?,updated_at=? WHERE id=?',(value,utcnow(),task_id))
+            previous=conn.execute("SELECT COALESCE(MAX(priority),0) FROM tasks WHERE user_id=? AND status='queued'",(scope.user_id,)).fetchone()[0]
+            # The explicitly selected video becomes next within this user's queue.
+            conn.execute('UPDATE tasks SET priority=?,updated_at=? WHERE id=?',(previous+1,utcnow(),task_id))
         else: raise ValueError('Invalid task action')
         current=conn.execute('SELECT * FROM tasks WHERE id=?',(task_id,)).fetchone()
         payload=task_value(conn,current)

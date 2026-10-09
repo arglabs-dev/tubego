@@ -36,6 +36,9 @@ def test_idempotent_tasks_private_actions_priority_and_retry(service,monkeypatch
     result=client.post('/api/v1/resources',headers=headers,json=request).json();tid=result['task']['id']
     assert client.post('/api/v1/resources',headers=headers,json=request).json()['task']['id']==tid
     assert client.post('/api/v1/resources',headers=headers,json={**request,'url':'https://video.example/other'}).status_code==409
+    duplicate_request={**request,'request_id':str(uuid.uuid4())}
+    assert client.post('/api/v1/resources',headers=headers,json=duplicate_request).json()['resource_id']==result['resource_id']
+    assert client.post('/api/v1/resources',headers=headers,json={**duplicate_request,'url':'https://video.example/other'}).status_code==409
     assert client.get('/api/v1/tasks/'+tid,headers=foreign).status_code==404
     for kind in ('cancel','retry','priority'):
         assert client.post('/api/v1/tasks/'+tid+'/'+kind,headers=foreign).status_code==404
@@ -46,6 +49,8 @@ def test_idempotent_tasks_private_actions_priority_and_retry(service,monkeypatch
     third=client.post('/api/v1/resources',headers=headers,json={'url':'https://video.example/three','selection':'480'}).json()['task']['id']
     client.post('/api/v1/tasks/'+third+'/priority',headers=headers)
     client.post('/api/v1/tasks/'+second+'/priority',headers=headers)
+    assert Scheduler(app.state.db).preview()['id']==second
+    client.post('/api/v1/tasks/'+third+'/priority',headers=headers)
     assert Scheduler(app.state.db).preview()['id']==third
     assert client.get('/api/v1/tasks',headers=headers).json()['items']
     assert not client.get('/api/v1/tasks',headers=foreign).json()['items']
