@@ -31,6 +31,8 @@
         <activity android:name=".LoginActivity" android:exported="false" />
         <activity android:name=".MediaPreferencesActivity" android:exported="false" />
         <activity android:name=".DeviceStorageActivity" android:exported="false" />
+        <activity android:name=".DownloadFailuresActivity" android:exported="false" />
+        <activity android:name=".AlertsActivity" android:exported="false" />
         <activity android:name=".NetworkPolicyActivity" android:exported="false" />
         <activity android:name=".RegistrationActivity" android:exported="false" />
         <activity android:name=".AdminRegistrationsActivity" android:exported="false" />

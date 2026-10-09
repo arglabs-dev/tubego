@@ -41,7 +41,7 @@ public final class NetworkPolicyActivity extends Activity {
                 JSONObject account=session;
                 runOnUiThread(()->{
                     if(isDestroyed()) return;
-                    if(cursor.isEmpty()) {layout.removeAllViews();layout.addView(status);Button storage=new Button(this);storage.setText("Almacenamiento de este teléfono");layout.addView(storage);storage.setOnClickListener(v->startActivity(new android.content.Intent(this,DeviceStorageActivity.class).putExtra("server_url",origin)));addFailedTransfers(account);}
+                    if(cursor.isEmpty()) {layout.removeAllViews();layout.addView(status);Button alerts=new Button(this);alerts.setText("Centro de avisos");layout.addView(alerts);alerts.setOnClickListener(v->startActivity(new android.content.Intent(this,AlertsActivity.class).putExtra("server_url",origin)));Button storage=new Button(this);storage.setText("Almacenamiento de este teléfono");layout.addView(storage);storage.setOnClickListener(v->startActivity(new android.content.Intent(this,DeviceStorageActivity.class).putExtra("server_url",origin)));addFailedTransfers(account);}
                     var rows=result.optJSONArray("deliveries");
                     for(int i=0;rows!=null && i<rows.length();i++) {
                         JSONObject row=rows.optJSONObject(i);

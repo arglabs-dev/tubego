@@ -95,7 +95,10 @@ def verify(request: Request, body: Verification):
         if row is None or row["used_at"] or row["expires_at"] <= now:
             raise HTTPException(400, "Invalid or expired verification link")
         conn.execute("UPDATE verification_tokens SET used_at=? WHERE token_hash=?", (now, row["token_hash"]))
-        conn.execute("UPDATE users SET status='pending_approval',email_verified_at=?,updated_at=? WHERE id=? AND status='pending_verification'", (now,now,row["user_id"]))
+        changed=conn.execute("UPDATE users SET status='pending_approval',email_verified_at=?,updated_at=? WHERE id=? AND status='pending_verification'", (now,now,row["user_id"]))
+        if changed.rowcount:
+            from tubego_server.alerts import notify_admins
+            notify_admins(conn,'registration_pending',{'user_id':row['user_id']},'registration:'+row['user_id'])
     return {"status":"pending_approval"}
 
 @router.get("/account/status")
