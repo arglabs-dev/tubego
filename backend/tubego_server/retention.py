@@ -3,6 +3,7 @@ import json
 import os
 from pathlib import Path
 import stat
+import uuid
 from tubego_server.auth import utcnow
 from tubego_server.delivery import read_setting,write_setting
 
@@ -84,7 +85,10 @@ def delete_if_eligible(database,media_root,resource_id,*,expired=None):
             relative=path.relative_to(Path(media_root).absolute()) if path.is_absolute() else path
             # Worker files are namespaced by owner. Flat legacy files remain valid,
             # but a corrupted cross-user nested reference must never be removed.
-            if len(relative.parts)>1 and relative.parts[0]!=row['user_id']:return False
+            namespaces={row['user_id']}
+            try:namespaces.add(str(uuid.UUID(row['user_id'])))
+            except ValueError:pass
+            if len(relative.parts)>1 and relative.parts[0] not in namespaces:return False
             unlink_server_copy(media_root,row['server_path'])
         except (OSError,ValueError):return False
         timestamp=utcnow()

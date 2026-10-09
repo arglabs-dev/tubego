@@ -131,3 +131,15 @@ def test_corrupt_foreign_namespace_reference_cannot_delete_other_user_file(servi
     response=confirm(client,user,key,pub)
     assert response.status_code==200 and not response.json()['server_copy_removed']
     assert victim.exists()
+
+
+def test_normalized_worker_owner_namespace_is_cleaned(service):
+    import uuid
+    app,client=service;user=owner(app);key,pub=ready(app,user)
+    root=app.state.settings.data_dir/'media'
+    path=root/str(uuid.UUID(user['id']))/str(uuid.UUID(key))/'media.mp4'
+    path.parent.mkdir(parents=True);path.write_bytes(b'0123456789')
+    with app.state.db.transaction() as conn:
+        conn.execute('UPDATE resources SET server_path=? WHERE id=?',(str(path),key))
+    assert confirm(client,user,key,pub).json()['server_copy_removed']
+    assert not path.exists()
