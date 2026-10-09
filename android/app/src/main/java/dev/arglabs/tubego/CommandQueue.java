@@ -40,6 +40,7 @@ public final class CommandQueue {
         }
     }
     public Entry find(String id)throws IOException{for(Entry entry:entries())if(entry.id.equals(id))return entry;return null;}
+    public long latestSequence(String kind)throws IOException{long sequence=0;for(Entry entry:entries())if(entry.kind.equals(kind))sequence=Math.max(sequence,entry.sequence);return sequence;}
     public boolean pendingKind(String kind)throws IOException{for(Entry entry:entries())if(entry.kind.equals(kind)&&entry.state.equals("queued"))return true;return false;}
     public void finish(Entry entry,String state,String error,String result)throws IOException{
         synchronized(LOCK){Entry current=find(entry.id);if(current!=null&&current.state.equals("queued"))write(current.state(state,error,result));}
