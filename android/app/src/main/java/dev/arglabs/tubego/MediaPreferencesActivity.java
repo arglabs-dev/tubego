@@ -16,6 +16,8 @@ public final class MediaPreferencesActivity extends Activity {
     private ApiClient api;
     private String token;
     private LocalMediaPreferences local;
+    private CommandQueue commands;
+    private long editVersion=0;
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
         LinearLayout layout = new LinearLayout(this); layout.setOrientation(LinearLayout.VERTICAL);
@@ -35,21 +37,24 @@ public final class MediaPreferencesActivity extends Activity {
             JSONObject session=new SessionStore(this,api.getBaseUrl()).read();
             if(session==null||!"approved".equals(session.optString("status")))throw new Exception();
             token=session.getString("token");local=new LocalMediaPreferences(LinkOutboxDispatch.root(this,api.getBaseUrl(),session));
+            commands=new CommandQueue(LinkOutboxDispatch.root(this,api.getBaseUrl(),session));
             JSONObject cache=local.read();ask.setChecked(cache.optBoolean("ask_every_time",true));choice.setSelection(MediaSelection.index(cache.optString("selection","720")));rewind.setText(String.valueOf(cache.optInt("rewind_seconds",10)));
         }
         catch (Exception e) { status.setText("Configura el servidor e inicia sesión con una cuenta aprobada."); return; }
-        status.setText("Cargando preferencias…");
+        save.setEnabled(true);
+        status.setText("Preferencias locales disponibles; sincronizando…");
+        final long requestedVersion=editVersion;
         network.execute(() -> {
             try {
                 JSONObject prefs = api.request("GET", "/account/preferences", null, token);
-                synchronized(SessionStore.class){if(!token.equals(new SessionStore(this,api.getBaseUrl()).token()))return;local.save(prefs);}
-                runOnUiThread(() -> { if (isDestroyed()) return;
+                synchronized(SessionStore.class){if(!token.equals(new SessionStore(this,api.getBaseUrl()).token())||commands.pendingKind("preferences")||editVersion!=requestedVersion)return;local.save(prefs);}
+                runOnUiThread(() -> { if (isDestroyed()||editVersion!=requestedVersion) return;
                     ask.setChecked(prefs.optBoolean("ask_every_time", true));
                     choice.setSelection(MediaSelection.index(prefs.optString("selection", "720")));
                     rewind.setText(String.valueOf(prefs.optInt("rewind_seconds", 10)));
                     status.setText("Preferencias sincronizadas de tu cuenta"); save.setEnabled(true);
                 });
-            } catch (Exception e) { showStatus("No se pudieron cargar. Revisa tu sesión y conexión."); }
+            } catch (Exception e) { showStatus("Usando preferencias locales. Puedes guardar cambios sin conexión."); }
         });
         save.setOnClickListener(v -> savePreferences());
     }
@@ -62,12 +67,12 @@ public final class MediaPreferencesActivity extends Activity {
                 .put("selection", MediaSelection.VALUES[choice.getSelectedItemPosition()])
                 .put("rewind_seconds", seconds);
         } catch (Exception e) { status.setText("El retroceso debe ser un entero entre 0 y 120."); return; }
-        save.setEnabled(false); status.setText("Guardando…");
-        network.execute(() -> {
-            try { api.request("PUT", "/account/preferences", prefs, token); synchronized(SessionStore.class){if(!token.equals(new SessionStore(this,api.getBaseUrl()).token()))return;local.save(prefs);} showStatus("Preferencias guardadas para todos tus dispositivos"); }
-            catch (Exception e) { showStatus("No se guardaron las preferencias. Reintenta cuando tengas conexión."); }
-            runOnUiThread(() -> { if (!isDestroyed()) save.setEnabled(true); });
-        });
+        try {
+            synchronized(SessionStore.class){if(!token.equals(new SessionStore(this,api.getBaseUrl()).token()))return;
+                commands.add("preferences",prefs.toString());local.save(prefs);editVersion++;}
+            CommandDispatch.schedule(this,api.getBaseUrl());status.setText("Guardadas en el teléfono. Sincronización pendiente.");
+            network.execute(()->{CommandDispatch.flush(this,api.getBaseUrl());});
+        }catch(Exception e){status.setText("No se pudieron guardar las preferencias locales.");}
     }
     private void showStatus(String text) { runOnUiThread(() -> { if (!isDestroyed()) status.setText(text); }); }
     @Override protected void onDestroy() { network.shutdownNow(); super.onDestroy(); }

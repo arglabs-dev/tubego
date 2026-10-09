@@ -9,6 +9,8 @@ from tubego_server.delivery import device_scope,read_setting,write_setting
 from tubego_server.resource_cleanup import schedule,process
 from tubego_server.routers.retention import current_admin
 
+from tubego_server.resource_revision import bump
+
 router=APIRouter(tags=['server cleanup'])
 Scope=Literal['own','global']
 
@@ -63,7 +65,7 @@ def clean(body:Cleanup,request:Request,principal=Depends(require_approved)):
         rows=resources(conn,user,body.scope);summary=preview_data(conn,rows)
         lease=read_setting(conn,'global','','scheduler_lease')
         for resource in rows:
-            rid=resource['id'];owner=resource['user_id']
+            rid=resource['id'];owner=resource['user_id'];revision=bump(conn,rid)
             tasks=conn.execute('SELECT id FROM tasks WHERE resource_id=? AND user_id=?',(rid,owner)).fetchall()
             wait=lease.get('task_id') if lease and any(row['id']==lease.get('task_id') for row in tasks) else None
             schedule(conn,root,owner,rid,resource['server_path'],wait)
@@ -71,7 +73,7 @@ def clean(body:Cleanup,request:Request,principal=Depends(require_approved)):
             for task in tasks:write_setting(conn,'task',task['id'],'cancel_requested',True)
             conn.execute('UPDATE resources SET server_path=NULL,server_deleted_at=COALESCE(server_deleted_at,?),updated_at=? WHERE id=?',(now,now,rid))
             # No local tombstone, device deletion or mobile wipe is emitted.
-            conn.execute("INSERT INTO events(user_id,kind,payload_json,created_at) VALUES(?,'server_copy_removed',?,?)",(owner,json.dumps({'resource_id':rid,'reason':'explicit_cleanup','silent':True}),now))
+            conn.execute("INSERT INTO events(user_id,kind,payload_json,created_at) VALUES(?,'server_copy_removed',?,?)",(owner,json.dumps({'resource_id':rid,'reason':'explicit_cleanup','revision':revision,'silent':True}),now))
         result={'status':'accepted','scope':body.scope,'request_id':str(body.request_id),**summary,'scheduled_resources':len(rows),'cleanup_pending':len(rows)}
         conn.execute("INSERT INTO commands(id,user_id,device_id,kind,payload_json,status,result_json,created_at,updated_at) VALUES(?,?,?,'server.cleanup',?,'complete',?,?,?)",(str(body.request_id),user,did,json.dumps(payload),json.dumps(result),now,now))
         conn.execute("INSERT INTO audit(actor_user_id,action,target_id,detail_json,created_at) VALUES(?,'server.cleaned',?,?,?)",(user,user if body.scope=='own' else 'mobile-library',json.dumps({'scope':body.scope,**summary}),now))

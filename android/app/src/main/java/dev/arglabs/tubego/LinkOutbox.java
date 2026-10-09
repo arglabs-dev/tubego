@@ -26,6 +26,7 @@ public final class LinkOutbox {
         if(!directory.exists()&&!directory.mkdirs()) throw new IOException("No se pudo guardar el enlace");
         Properties record=new Properties();record.setProperty("id",entry.id);record.setProperty("url",entry.url);record.setProperty("selection",entry.selection);
         record.setProperty("state",entry.state);record.setProperty("error",entry.error);record.setProperty("resource_id",entry.resourceId);
+        if(entry.state.equals("queued")){CommandBridge.add(directory,entry.id,"submit",record);}
         File temporary=new File(directory,entry.id+".tmp"),target=new File(directory,entry.id+".properties");
         try(FileOutputStream output=new FileOutputStream(temporary)) {record.store(output,null);output.getFD().sync();}
         Files.move(temporary.toPath(),target.toPath(),StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);
@@ -65,6 +66,9 @@ public final class LinkOutbox {
         return done;
     }
     public void retry(String id) throws Exception {
-        synchronized(LinkOutbox.class){for(Entry entry:entries())if(entry.id.equals(id))write(new Entry(entry.id,entry.url,entry.selection,"queued","",""));}
+        synchronized(LinkOutbox.class){for(Entry entry:entries())if(entry.id.equals(id)){
+            if(CommandBridge.production(directory)){if(!entry.state.equals("error"))throw new IOException("La acción no requiere reintento");add(entry.url,entry.selection);return;}
+            write(new Entry(entry.id,entry.url,entry.selection,"queued","",""));
+        }}
     }
 }

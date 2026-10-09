@@ -9,6 +9,7 @@ from tubego_server.delivery import device_scope,read_setting,write_setting,trans
 from tubego_server.private_media import open_private_media,byte_range
 from tubego_server.routers.library import public_resource
 from tubego_server.history import priority
+from tubego_server.resource_revision import current as revision
 
 router=APIRouter(tags=['device delivery'])
 
@@ -141,7 +142,7 @@ def sync(request:Request,principal=Depends(require_approved),
             item=public_resource(row)
             item.update(delivery_status=row['delivery_status'],downloaded_bytes=row['downloaded_bytes'],
                         local_deleted_at=row['local_deleted_at'],sha256=read_setting(conn,'resource',row['id'],'media_sha256'),
-                        priority=priority(conn,row['id']),server_available=bool(row['ready_at'] and not row['server_deleted_at'] and row['server_path']))
+                        revision=revision(conn,row['id']),priority=priority(conn,row['id']),server_available=bool(row['ready_at'] and not row['server_deleted_at'] and row['server_path']))
             items.append(item)
     data={'device_id':did,'deliveries':items,
           'next_delivery_cursor':items[-1]['id'] if len(deliveries)>limit else None,

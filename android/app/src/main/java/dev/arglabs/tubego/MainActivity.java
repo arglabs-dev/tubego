@@ -59,6 +59,8 @@ public final class MainActivity extends Activity {
             getSharedPreferences("server_connection",MODE_PRIVATE).edit().putString("server_url",origin).apply();
             startActivity(new android.content.Intent(this,LinkEntryActivity.class).putExtra("server_url",origin));
         }catch(Exception e){status.setText("Configura una URL HTTPS de servidor válida.");}});
+        Button commands=new Button(this);commands.setText("Acciones pendientes y errores");layout.addView(commands);
+        commands.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();startActivity(new android.content.Intent(this,CommandsActivity.class).putExtra("server_url",origin));}catch(Exception e){status.setText("Configura una URL HTTPS válida.");}});
         Button mediaPrefs=new Button(this);mediaPrefs.setText("Preferencias de reproducción y descarga");layout.addView(mediaPrefs);
         mediaPrefs.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();startActivity(new android.content.Intent(this,MediaPreferencesActivity.class).putExtra("server_url",origin));}catch(Exception e){status.setText("Configura una URL HTTPS de servidor válida.");}});
         Button dataPolicy = new Button(this); dataPolicy.setText("Permisos de datos por descarga"); layout.addView(dataPolicy);

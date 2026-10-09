@@ -27,6 +27,7 @@ public final class ServerCleanupOutbox {
         if(!directory.exists()&&!directory.mkdirs()) throw new IOException("No se pudo guardar la limpieza");
         Properties record=new Properties();record.setProperty("id",entry.id);record.setProperty("scope",entry.scope);
         record.setProperty("state",entry.state);record.setProperty("error",entry.error);
+        if(entry.state.equals("queued"))CommandBridge.add(directory,entry.id,"server_cleanup",record);
         File temporary=new File(directory,entry.id+".tmp"),target=new File(directory,entry.id+".properties");
         try(FileOutputStream output=new FileOutputStream(temporary)) {record.store(output,null);output.getFD().sync();}
         Files.move(temporary.toPath(),target.toPath(),StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);
@@ -66,6 +67,9 @@ public final class ServerCleanupOutbox {
         return done;
     }
     public void retry(String id) throws Exception {
-        synchronized(ServerCleanupOutbox.class){for(Entry entry:entries())if(entry.id.equals(id))write(new Entry(entry.id,entry.scope,"queued",""));}
+        synchronized(ServerCleanupOutbox.class){for(Entry entry:entries())if(entry.id.equals(id)){
+            if(CommandBridge.production(directory)){if(!entry.state.equals("error"))throw new IOException("La acción no requiere reintento");add(entry.scope);return;}
+            write(new Entry(entry.id,entry.scope,"queued",""));
+        }}
     }
 }

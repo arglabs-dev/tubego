@@ -27,6 +27,7 @@ public final class RecoveryOutbox {
         if(!directory.exists()&&!directory.mkdirs()) throw new IOException("No se pudo guardar la solicitud");
         Properties record=new Properties();record.setProperty("id",entry.id);record.setProperty("resource",entry.resource);record.setProperty("scope",entry.scope);
         record.setProperty("state",entry.state);record.setProperty("error",entry.error);record.setProperty("resource_id",entry.resourceId);
+        if(entry.state.equals("queued")){CommandBridge.add(directory,entry.id,"recover",record);}
         File temporary=new File(directory,entry.id+".tmp"),target=new File(directory,entry.id+".properties");
         try(FileOutputStream output=new FileOutputStream(temporary)) {record.store(output,null);output.getFD().sync();}
         Files.move(temporary.toPath(),target.toPath(),StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);
@@ -66,6 +67,9 @@ public final class RecoveryOutbox {
         return done;
     }
     public void retry(String id) throws Exception {
-        synchronized(RecoveryOutbox.class){for(Entry entry:entries())if(entry.id.equals(id))write(new Entry(entry.id,entry.resource,entry.scope,"queued","",""));}
+        synchronized(RecoveryOutbox.class){for(Entry entry:entries())if(entry.id.equals(id)){
+            if(CommandBridge.production(directory)){if(!entry.state.equals("error"))throw new IOException("La acción no requiere reintento");add(entry.resource,entry.scope);return;}
+            write(new Entry(entry.id,entry.resource,entry.scope,"queued","",""));
+        }}
     }
 }

@@ -9,6 +9,8 @@ from tubego_server.delivery import device_scope,read_setting,write_setting
 from tubego_server.tasks import task_value
 from tubego_server.resource_cleanup import pending
 
+from tubego_server.resource_revision import bump
+
 router=APIRouter(tags=['resource recovery'])
 class Recovery(BaseModel):
     request_id:UUID
@@ -30,6 +32,7 @@ def recover(resource_id:str,body:Recovery,request:Request,principal=Depends(requ
         tombstone=own['deleted_at'] if own else read_setting(conn,'resource',resource_id,'deliberately_deleted')
         if (tombstone or (own and own['status']=='approval_required')) and not body.approve_redownload:
             raise HTTPException(409,{'code':'approval_required','message':'Confirm downloading a deliberately deleted resource'})
+        revision=bump(conn,resource_id)
         available=bool(resource['ready_at'] and not resource['server_deleted_at'] and resource['server_path'])
         devices=conn.execute('SELECT id FROM devices WHERE user_id=? AND revoked_at IS NULL',(scope.user_id,)).fetchall()
         for device in devices:
@@ -46,7 +49,7 @@ def recover(resource_id:str,body:Recovery,request:Request,principal=Depends(requ
                 VALUES(?,?,?,?,?,?) ON CONFLICT(resource_id,device_id) DO UPDATE SET
                 status=excluded.status,downloaded_bytes=excluded.downloaded_bytes,
                 deleted_at=excluded.deleted_at,confirmed_at=NULL,updated_at=excluded.updated_at""",(resource_id,target,status,transferred,deleted,now))
-            conn.execute("INSERT INTO events(user_id,device_id,kind,payload_json,created_at) VALUES(?,?,'resource_requested',?,?)",(scope.user_id,target,json.dumps({'resource_id':resource_id,'delivery_status':status,'silent':True}),now))
+            conn.execute("INSERT INTO events(user_id,device_id,kind,payload_json,created_at) VALUES(?,?,'resource_requested',?,?)",(scope.user_id,target,json.dumps({'resource_id':resource_id,'delivery_status':status,'revision':revision,'silent':True}),now))
         task=conn.execute("SELECT * FROM tasks WHERE resource_id=? AND user_id=? AND status IN ('queued','running','paused') ORDER BY created_at DESC LIMIT 1",(resource_id,scope.user_id)).fetchone()
         if not available and task is None:
             tid=str(uuid.uuid4())
@@ -54,7 +57,7 @@ def recover(resource_id:str,body:Recovery,request:Request,principal=Depends(requ
             write_setting(conn,'task',tid,'phase','pending')
             task=conn.execute('SELECT * FROM tasks WHERE id=?',(tid,)).fetchone()
         own=conn.execute('SELECT status FROM deliveries WHERE resource_id=? AND device_id=?',(resource_id,did)).fetchone()
-        result={'resource_id':resource_id,'server_available':available,'task_id':task['id'] if task else None,
+        result={'revision':revision,'resource_id':resource_id,'server_available':available,'task_id':task['id'] if task else None,
                 'task':task_value(conn,task) if task else None,'delivery_status':own['status'],
                 'status':'available' if available else 'queued','approved_redownload':body.approve_redownload}
         conn.execute("INSERT INTO commands(id,user_id,device_id,kind,payload_json,status,result_json,created_at,updated_at) VALUES(?,?,?,'resource.request_again',?,'complete',?,?,?)",(str(body.request_id),scope.user_id,did,json.dumps(payload),json.dumps(result),now,now))
