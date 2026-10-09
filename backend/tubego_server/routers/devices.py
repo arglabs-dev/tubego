@@ -29,6 +29,8 @@ def devices(request:Request,principal=Depends(get_principal)):
 def revoke(device_id:str,request:Request,principal=Depends(get_principal)):
     with request.app.state.db.transaction() as conn:
         revoke_device(conn,principal['id'],device_id,principal['id'])
+    from tubego_server.retention import sweep_confirmed
+    sweep_confirmed(request.app.state.db,request.app.state.settings.data_dir/'media',principal['id'])
     return {'status':'revoked','wipe_local':device_id==principal['device_id']}
 
 @router.post('/account/session/logout')
@@ -49,4 +51,6 @@ def logout(request:Request):
         if replacement:
             return {'status':'logged_out'}
         revoke_device(conn,principal['user_id'],principal['device_id'],principal['user_id'])
+    from tubego_server.retention import sweep_confirmed
+    sweep_confirmed(request.app.state.db,request.app.state.settings.data_dir/'media',principal['user_id'])
     return {'status':'logged_out'}

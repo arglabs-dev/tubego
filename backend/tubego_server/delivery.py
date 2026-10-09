@@ -83,6 +83,9 @@ def publish_ready(database, media_root, resource_id, server_path, *, preconditio
         conn.execute('''UPDATE resources SET server_path=?,size_bytes=?,ready_at=?,first_delivered_at=?,
             server_deleted_at=NULL,updated_at=? WHERE id=?''',(str(server_path),size,ready_at,first,timestamp,resource_id))
         devices=conn.execute('SELECT id FROM devices WHERE user_id=? AND revoked_at IS NULL ORDER BY id',(owner['id'],)).fetchall()
+        if not same or not resource['ready_at'] or resource['server_deleted_at']:
+            write_setting(conn,'resource',resource_id,'retention_removed',False)
+            write_setting(conn,'resource',resource_id,'publication_recipients',[device['id'] for device in devices])
         recipients=[]
         for device in devices:
             did=device['id']

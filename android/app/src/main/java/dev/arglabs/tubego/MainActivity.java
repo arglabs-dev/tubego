@@ -64,6 +64,8 @@ public final class MainActivity extends Activity {
                 startActivity(new android.content.Intent(this, AdminPriorityActivity.class).putExtra("server_url",origin));
             } catch (IllegalArgumentException e) { status.setText(e.getMessage()); }
         });
+        Button retention=new Button(this);retention.setText("Administrar conservación del servidor");layout.addView(retention);
+        retention.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();startActivity(new android.content.Intent(this,AdminRetentionActivity.class).putExtra("server_url",origin));}catch(Exception e){status.setText("Configura una URL HTTPS de servidor válida.");}});
         Button addLink=new Button(this);addLink.setText("Agregar enlace / Pendientes de envío");layout.addView(addLink);
         addLink.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();
             getSharedPreferences("server_connection",MODE_PRIVATE).edit().putString("server_url",origin).apply();
