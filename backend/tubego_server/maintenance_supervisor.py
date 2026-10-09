@@ -10,7 +10,7 @@ import time
 from tubego_server.auth import utcnow
 from tubego_server.db import Database
 from tubego_server.delivery import read_setting,write_setting
-from tubego_server.maintenance import admin,capabilities,jobs,save,WRITE_ACTIONS,SHA,VERSION,MaintenanceError
+from tubego_server.maintenance import admin,capabilities,jobs,save,WRITE_ACTIONS,SHA,VERSION,MaintenanceError,announce
 from fastapi import HTTPException
 
 OFFICIAL='https://github.com/arglabs-dev/tubego.git'
@@ -98,7 +98,7 @@ class Supervisor:
             current['result']=result;self.finish(conn,current,'failed' if error else 'succeeded',error)
         return True
     def finish(self,conn,job,status,error):
-        job.update(status=status,phase='finished',progress=1,error_code=error);save(conn,job)
+        job.update(status=status,phase='finished',progress=1,error_code=error);save(conn,job);announce(conn,job)
         if not (status=='failed' and error in ('supervisor_command_failed','deployment_verification_failed','operation_failed')) and read_setting(conn,'global','','maintenance_gate')==job['id']:
             conn.execute("DELETE FROM settings WHERE scope='global' AND owner_id='' AND key='maintenance_gate'")
         conn.execute("INSERT INTO audit(actor_user_id,action,target_id,detail_json,created_at) VALUES(?,'maintenance.finished',?,?,?)",(job['user_id'],job['id'],json.dumps({'action':job['action'],'status':status,'error_code':error}),utcnow()))

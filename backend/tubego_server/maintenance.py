@@ -11,6 +11,7 @@ import uuid
 import requests
 from fastapi import HTTPException
 from tubego_server import __version__
+from tubego_server.alerts import notify_admins
 from tubego_server.auth import utcnow
 from tubego_server.delivery import read_setting,write_setting,device_scope
 
@@ -43,6 +44,9 @@ def capabilities(conn):
             'yt_dlp_versions':record.get('yt_dlp_versions',[]) if enabled else []}
 
 def public(job):return {key:job.get(key) for key in ('id','action','status','phase','progress','result','error_code','created_at','updated_at')}
+
+def announce(conn,job):
+    notify_admins(conn,'admin_maintenance',{'operation':job['action'],'status':job['status'],'error_code':job.get('error_code')},'maintenance:'+job['id']+':'+job['status'])
 
 def save(conn,job):
     job['updated_at']=utcnow();write_setting(conn,'maintenance',job['id'],'job',job)
@@ -98,7 +102,7 @@ class ReadRunner:
                 if job['status']!='queued':continue
                 try:admin(conn,{'id':job['user_id'],'session_id':job['session_id']})
                 except HTTPException:
-                    job.update(status='failed',phase='finished',error_code='administrator_session_unavailable');save(conn,job)
+                    job.update(status='failed',phase='finished',error_code='administrator_session_unavailable');save(conn,job);announce(conn,job)
                     conn.execute("INSERT INTO audit(actor_user_id,action,target_id,detail_json,created_at) VALUES(?,'maintenance.finished',?,?,?)",(job['user_id'],job['id'],json.dumps({'action':job['action'],'status':'failed','error_code':job['error_code']}),utcnow()))
                     continue
                 job.update(status='running',phase='checking' if job['action']=='check_versions' else 'measuring_server',progress=0.1,claim_token=uuid.uuid4().hex,lease_until=(datetime.now(timezone.utc)+timedelta(seconds=120)).isoformat());save(conn,job);selected=job;break
@@ -110,7 +114,7 @@ class ReadRunner:
         with self.db.transaction() as conn:
             current=read_setting(conn,'maintenance',selected['id'],'job')
             if not current or current.get('claim_token')!=selected['claim_token']:return False
-            save(conn,selected)
+            save(conn,selected);announce(conn,selected)
             if selected['action']=='check_versions' and selected['status']=='succeeded':write_setting(conn,'global','','maintenance_versions',selected['result'])
             conn.execute("INSERT INTO audit(actor_user_id,action,target_id,detail_json,created_at) VALUES(?,'maintenance.finished',?,?,?)",(selected['user_id'],selected['id'],json.dumps({'action':selected['action'],'status':selected['status'],'error_code':selected['error_code']}),utcnow()))
         return True
