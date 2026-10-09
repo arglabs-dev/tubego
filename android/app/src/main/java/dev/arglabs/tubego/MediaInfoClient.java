@@ -15,7 +15,7 @@ public final class MediaInfoClient {
     public MediaInfoClient(Transport transport) { this.transport = transport; }
 
     public Info analyze(String url, String token) throws Exception {
-        JSONObject response = transport.request("POST", "/api/v1/media/analyze",
+        JSONObject response = transport.request("POST", "/media/analyze",
                 new JSONObject().put("url", url), token);
         return Info.fromJson(response);
     }
