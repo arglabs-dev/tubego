@@ -1,6 +1,7 @@
 """User-owned, persisted mobile media preferences; no schema migration required."""
 from contextlib import closing
 from typing import Literal
+import math
 from pydantic import BaseModel, ConfigDict, Field, StrictBool
 from tubego_server.auth import utcnow
 
@@ -63,7 +64,7 @@ def quality_notice(selection, actual_height):
     if selection in ('audio','best'):
         return None
     resolve_selection(MediaPreferences(), selection)
-    if actual_height is None:
+    if not isinstance(actual_height,(int,float)) or isinstance(actual_height,bool) or not math.isfinite(actual_height):
         return 'quality_unknown'
     if actual_height < int(selection):
         return 'lower_quality_available'
@@ -74,6 +75,10 @@ def verified_output_path(info, media_dir):
     """Use actual yt-dlp postprocessor filepath, never infer a requested extension."""
     from pathlib import Path
     value = info.get('filepath')
+    # YoutubeDL returns the postprocessed per-download info nested in its result.
+    downloads = info.get('requested_downloads')
+    if value is None and isinstance(downloads, list) and len(downloads) == 1:
+        value = downloads[0].get('filepath')
     if not isinstance(value,str):
         raise ValueError('Postprocessed output path missing')
     root = Path(media_dir).resolve()

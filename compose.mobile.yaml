@@ -12,6 +12,18 @@ services:
     volumes:
       - mobile-data:/data
     restart: unless-stopped
+  worker:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    command: ["python", "-m", "tubego_server.worker"]
+    environment:
+      TUBEGO_MEDIA_EGRESS_PROXY: http://egress:8081
+    volumes:
+      - mobile-data:/data
+    depends_on:
+      - egress
+    restart: unless-stopped
   egress:
     build:
       context: .

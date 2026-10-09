@@ -58,7 +58,7 @@ def media_digest(root, path):
     return digest.hexdigest(),info.st_size
 
 
-def publish_ready(database, media_root, resource_id, server_path):
+def publish_ready(database, media_root, resource_id, server_path, *, precondition=None):
     """Trusted worker hook after atomic media finalization, before task completion.
 
     The file must not be modified after publication. Re-publishing the same file
@@ -69,6 +69,7 @@ def publish_ready(database, media_root, resource_id, server_path):
     with database.transaction() as conn:
         resource=conn.execute('SELECT * FROM resources WHERE id=?',(resource_id,)).fetchone()
         if resource is None:raise HTTPException(404,'Not found')
+        if precondition is not None:precondition(conn,resource)
         owner=conn.execute('SELECT * FROM users WHERE id=?',(resource['user_id'],)).fetchone()
         if owner['status']!='approved' or not owner['email_verified_at']:
             raise HTTPException(403,'Owner unavailable')
