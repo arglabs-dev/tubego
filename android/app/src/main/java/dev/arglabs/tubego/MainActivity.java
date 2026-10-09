@@ -76,6 +76,8 @@ public final class MainActivity extends Activity {
         url.addTextChangedListener(new android.text.TextWatcher(){public void beforeTextChanged(CharSequence s,int start,int count,int after){}public void onTextChanged(CharSequence s,int start,int before,int count){updateAdminVisibility();}public void afterTextChanged(android.text.Editable e){}});
         Button deletion=new Button(this);deletion.setText("Biblioteca / Borrar recursos");layout.addView(deletion);
         deletion.setOnClickListener(v->{try{String origin=new ApiClient(url.getText().toString()).getBaseUrl();startActivity(new android.content.Intent(this,ResourceDeletionActivity.class).putExtra("server_url",origin));}catch(Exception e){status.setText("Configura una URL HTTPS válida.");}});
+        Button library = new Button(this); library.setText("Biblioteca local / Reproducir"); layout.addView(library);
+        library.setOnClickListener(v -> {try {String origin=new ApiClient(url.getText().toString()).getBaseUrl();startActivity(new android.content.Intent(this,LocalLibraryActivity.class).putExtra("server_url",origin));}catch(Exception e){status.setText(e.getMessage());}});
         android.widget.ScrollView scroll=new android.widget.ScrollView(this);scroll.addView(layout);setContentView(scroll);
         connect.setOnClickListener(v -> {
             final ApiClient client;
