@@ -51,6 +51,8 @@ public final class MobileSourceInstrumentedTest extends InstrumentationTestCase 
      if("submitted".equals(e.state))resource=e.resourceId;
     }
     if(!resource.isEmpty()){
+     JSONObject current=api.request("GET","/resources/"+resource,null,session.getString("token"));JSONObject task=current.optJSONObject("latest_task");
+     if(task!=null&&("failed".equals(task.optString("status"))||"cancelled".equals(task.optString("status"))))fail("Real public-source task terminated: "+task.optString("status")+" code="+task.optString("error_code"));
      JSONObject snapshot=api.request("GET","/device/sync",null,session.getString("token"));
      var deliveries=snapshot.getJSONArray("deliveries");
      for(int i=0;i<deliveries.length();i++){JSONObject item=deliveries.getJSONObject(i);if(resource.equals(item.getString("id"))&&"complete".equals(item.optString("delivery_status")))complete=true;}
