@@ -231,6 +231,7 @@
   <string name="ui_6d95af6781dc" formatted="false">"Solicitudes verificadas pendientes"</string>
   <string name="ui_6dc20e50cb60" formatted="false">"Configura una URL HTTPS de servidor válida."</string>
   <string name="ui_6fc6cdb778fa" formatted="false">"\nDescargas pausadas. Libera espacio para continuar automáticamente."</string>
+  <string name="ui_703303e017c4" formatted="false">"Reintento guardado. Consulta Acciones pendientes y errores para ver la sincronización."</string>
   <string name="ui_70576fc5488e" formatted="false">"Reenviar verificación"</string>
   <string name="ui_715621903c70" formatted="false">"Actualizar pendientes e intentar envío"</string>
   <string name="ui_717bedea36fc" formatted="false">"Confirmar"</string>
@@ -386,6 +387,7 @@
   <string name="ui_b985d76a6ff3" formatted="false">"Cargando solicitudes verificadas…"</string>
   <string name="ui_ba37f704ecc3" formatted="false">"Al cerrar sesión se borran las descargas de ese teléfono con confirmación. Puedes cerrar sesiones o desvincular dispositivos desde Mi cuenta. Bloquear o eliminar una cuenta revoca el acceso y ordena borrar sus archivos al próximo contacto; las copias exportadas a otras apps quedan fuera del control de Tubego."</string>
   <string name="ui_bb234d4d9d7a" formatted="false">"Consultando dispositivos…"</string>
+  <string name="ui_bb6e430ce0a7" formatted="false">"Pendientes"</string>
   <string name="ui_bb9dbb406dcb" formatted="false">"Cancelar"</string>
   <string name="ui_bbfeaa790697" formatted="false">" · no disponible en esta versión"</string>
   <string name="ui_bc127c13afe1" formatted="false">"La transferencia falló definitivamente. Abre Descargas para revisar el motivo y reintentar."</string>

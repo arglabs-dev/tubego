@@ -231,6 +231,7 @@
   <string name="ui_6d95af6781dc" formatted="false">"Pending verified requests"</string>
   <string name="ui_6dc20e50cb60" formatted="false">"Configure a valid HTTPS server URL."</string>
   <string name="ui_6fc6cdb778fa" formatted="false">"\nDownloads paused. Free up space to resume automatically."</string>
+  <string name="ui_703303e017c4" formatted="false">"Retry saved. Check Pending actions and errors for synchronization."</string>
   <string name="ui_70576fc5488e" formatted="false">"Resend verification"</string>
   <string name="ui_715621903c70" formatted="false">"Refresh pending links and try sending"</string>
   <string name="ui_717bedea36fc" formatted="false">"Confirm"</string>
@@ -386,6 +387,7 @@
   <string name="ui_b985d76a6ff3" formatted="false">"Loading verified requests…"</string>
   <string name="ui_ba37f704ecc3" formatted="false">"Signing out deletes that phone\'s downloads after confirmation. You can close sessions or unlink devices in My account. Blocking or deleting an account revokes access and orders file deletion on the next contact; copies exported to other apps are outside Tubego\'s control."</string>
   <string name="ui_bb234d4d9d7a" formatted="false">"Checking devices…"</string>
+  <string name="ui_bb6e430ce0a7" formatted="false">"Pending"</string>
   <string name="ui_bb9dbb406dcb" formatted="false">"Cancel"</string>
   <string name="ui_bbfeaa790697" formatted="false">" · unavailable in this version"</string>
   <string name="ui_bc127c13afe1" formatted="false">"The transfer failed permanently. Open Downloads to review the reason and retry."</string>

@@ -2074,5 +2074,13 @@
   "La solicitud no es válida. Revisa sus datos antes de repetirla.": {
     "es": "La solicitud no es válida. Revisa sus datos antes de repetirla.",
     "en": "The request is invalid. Check its details before trying again."
+  },
+  "Pendientes": {
+    "es": "Pendientes",
+    "en": "Pending"
+  },
+  "Reintento guardado. Consulta Acciones pendientes y errores para ver la sincronización.": {
+    "es": "Reintento guardado. Consulta Acciones pendientes y errores para ver la sincronización.",
+    "en": "Retry saved. Check Pending actions and errors for synchronization."
   }
 }
