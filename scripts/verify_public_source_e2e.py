@@ -3,6 +3,8 @@ Run with PYTHONPATH=<repo>/backend:<repo> <toolchain>/python this_file.py.
 """
 import os
 import argparse
+import re
+import shutil
 import sys
 import json
 import uuid
@@ -25,18 +27,29 @@ from tubego_server.egress_proxy import ProxyServer,ProxyHandler,destination
 from tubego_server.delivery import read_setting
 
 SOURCES={'w3c':'https://media.w3.org/2010/05/sintel/trailer.mp4',
-         'blender':'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4'}
+         'blender':'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+         'youtube':'https://www.youtube.com/watch?v=BaW_jenozKc'}
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--source',choices=tuple(SOURCES),default='w3c',help='Choose a fixed, independently verified public fixture; no arbitrary URL accepted')
+parser.add_argument('--revision',help='Exact 40-character tested source/build SHA when no Git checkout is present')
 args=parser.parse_args()
+if args.revision and not re.fullmatch(r'[0-9a-f]{40}',args.revision):parser.error('--revision requires an exact lowercase 40-character SHA')
 BASE=Path('/tmp/tubego-source-e2e')
 BASE.mkdir(mode=0o700,parents=True,exist_ok=True)
 if BASE.is_symlink() or BASE.stat().st_uid!=os.getuid():raise RuntimeError('Private output root must be owned by the current operator, without symlinks')
 BASE.chmod(0o700)
 SOURCE=SOURCES[args.source]
 run=BASE/('run-'+str(uuid.uuid4()));run.mkdir(mode=0o700)
-revision=subprocess.run(['git','rev-parse','HEAD'],cwd=Path(__file__).resolve().parents[1],capture_output=True,text=True,check=True).stdout.strip()
-report={'revision':revision,'source':SOURCE,'data_dir':str(run),'started':utcnow(),'stages':[]}
+revision=args.revision or os.environ.get('TUBEGO_BUILD_REVISION','')
+revision_source='explicit_argument' if args.revision else 'container_build_environment'
+if not re.fullmatch(r'[0-9a-f]{40}',revision):
+    revision=None;revision_source='unavailable'
+    if shutil.which('git'):
+        try:
+            observed=subprocess.run(['git','rev-parse','HEAD'],cwd=Path(__file__).resolve().parents[1],capture_output=True,text=True,check=True).stdout.strip()
+            if re.fullmatch(r'[0-9a-f]{40}',observed):revision=observed;revision_source='source_checkout'
+        except (subprocess.SubprocessError,OSError):pass
+report={'revision':revision,'revision_source':revision_source,'source':SOURCE,'data_dir':str(run),'started':utcnow(),'stages':[]}
 def stage(name,**data):
     report['stages'].append({'stage':name,**data});print(json.dumps(report['stages'][-1]),flush=True)
     (run/'report.json').write_text(json.dumps(report,indent=2))
@@ -51,6 +64,12 @@ def owner(app):
 proxy=None;thread=None
 try:
     target=urlsplit(SOURCE)
+    from importlib.metadata import version,PackageNotFoundError
+    dependencies={}
+    for name in ('yt-dlp','yt-dlp-ejs','deno'):
+        try:dependencies[name]=version(name)
+        except PackageNotFoundError:dependencies[name]=None
+    stage('installed_downloader_dependencies',packages=dependencies)
     addresses=destination(target.hostname,target.port or 443)[1]
     stage('source_dns_validated',addresses=sorted({a[4][0] for a in addresses}))
     proxy=ProxyServer(('127.0.0.1',0),ProxyHandler)
@@ -62,8 +81,9 @@ try:
         assert denied_proxy.status_code==403
         stage('restricted_proxy_private_destination_denied',status=denied_proxy.status_code)
         verified=net.head(SOURCE,proxies={'https':os.environ['TUBEGO_MEDIA_EGRESS_PROXY']},timeout=20,allow_redirects=False)
-        assert verified.status_code==200 and verified.headers.get('Content-Type','').startswith('video/mp4'),(verified.status_code,verified.headers.get('Content-Type'))
-        stage('public_source_verified_via_restricted_proxy',status=verified.status_code,bytes=int(verified.headers['Content-Length']),content_type=verified.headers['Content-Type'])
+        expected_type='text/html' if args.source=='youtube' else 'video/mp4'
+        assert verified.status_code==200 and verified.headers.get('Content-Type','').startswith(expected_type),(verified.status_code,verified.headers.get('Content-Type'))
+        stage('public_source_verified_via_restricted_proxy',status=verified.status_code,bytes=int(verified.headers.get('Content-Length') or 0),content_type=verified.headers['Content-Type'])
     app=create_app(Settings(run))
     with TestClient(app) as client:
         alice=owner(app);bob=owner(app)
@@ -73,6 +93,11 @@ try:
         metadata=client.post('/api/v1/media/analyze',headers=alice['headers'],json={'url':SOURCE})
         assert metadata.status_code==200,metadata.text
         stage('real_metadata',metadata=metadata.json())
+        if args.source=='youtube':
+            assert metadata.json()['source_id']=='BaW_jenozKc'
+            assert metadata.json()['extractor']=='Youtube'
+            duration=metadata.json()['duration_seconds']
+            assert isinstance(duration,(int,float)) and 0<duration<=30,'Fixture must remain a short test video'
         for selection in ('best','audio'):
             submitted=client.post('/api/v1/resources',headers=alice['headers'],json={'url':SOURCE,'selection':selection,'request_id':str(uuid.uuid4())})
             assert submitted.status_code==200,submitted.text

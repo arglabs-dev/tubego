@@ -7,8 +7,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg \
     && useradd --create-home --uid 10001 tubego
 WORKDIR /app
 COPY backend/requirements.txt ./requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt \
-    && pip install --no-cache-dir --index-url https://pypi.org/simple "yt-dlp==$YTDLP_VERSION"
+RUN pip install --no-cache-dir --only-binary=deno -r requirements.txt \
+    && pip install --no-cache-dir --index-url https://pypi.org/simple "yt-dlp[default]==$YTDLP_VERSION" \
+    && deno --version \
+    && python -c "import yt_dlp_ejs"
 COPY backend/tubego_server ./tubego_server
 COPY src/storage.py ./src/storage.py
 COPY src/disk_guard.py ./src/disk_guard.py

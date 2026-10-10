@@ -1,4 +1,6 @@
 fastapi==0.115.12
 uvicorn[standard]==0.34.2
-yt-dlp==2026.8.19
+yt-dlp[default]==2026.8.19
+# Official yt-dlp pinned Deno runtime; EJS==0.8.0 comes from this yt-dlp default extra.
+deno==2.9.5
 requests==2.32.5
