@@ -1,0 +1,52 @@
+{
+  "verified_at_utc": "2026-10-09T23:43:53.484356+00:00",
+  "tested_revision": "51946ec",
+  "source": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+  "extractor": "Generic",
+  "metadata_duration_seconds": null,
+  "real_worker": true,
+  "real_ffmpeg_audio_conversion": true,
+  "range_status": 206,
+  "anonymous_status": 401,
+  "foreign_user_status": 404,
+  "confirmation_delivery_status": "complete",
+  "outputs": [
+    {
+      "selection": "best",
+      "bytes": 4372373,
+      "sha256": "b670602fa00934ca27c4351bb0efe7ea7a07fae57284e44226025eeed7c51254",
+      "duration_seconds": 52.208333,
+      "codecs": [
+        "h264",
+        "aac"
+      ],
+      "range_status": 206
+    },
+    {
+      "selection": "audio",
+      "bytes": 1247954,
+      "sha256": "07394b739c0c75540d2fd154fbfbfd3bbe2cc1b37846624e14ed74f7cd6eed63",
+      "duration_seconds": 51.96,
+      "codecs": [
+        "mp3"
+      ],
+      "range_status": 206
+    }
+  ],
+  "previous_attempt": {
+    "started_utc": "2026-10-09T23:42:49.935037+00:00",
+    "result": "FAIL",
+    "stage": "media/analyze",
+    "api_status": 422,
+    "code": "source_restricted",
+    "subsequent_same_source_result": "PASS",
+    "restrictions_weakened": false
+  },
+  "scope_limits": [
+    "Only public direct HTTP MP4 with yt-dlp Generic extractor was verified; not a YouTube/Vimeo extractor integration claim.",
+    "Metadata did not provide duration; ffprobe verified downloaded durations.",
+    "Accounts were seeded approved test fixtures in temporary SQLite; this is not an SMTP/onboarding test.",
+    "API was real ASGI TestClient with bearer authorization; production HTTPS/reverse proxy and mobile were not part of this run.",
+    "No downloader/resolver/worker/ffmpeg mocks or private-destination exemptions."
+  ]
+}
