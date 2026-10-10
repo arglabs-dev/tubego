@@ -1,0 +1,29 @@
+# Real public-source APK end-to-end verification
+
+This is an opt-in instrumented test, not an ordinary offline CI test. Without `-e publicSource true` it returns without running external networking; that return is not evidence of a successful public-source test. Every run requires a fresh fixture directory and database; even a previous fixture database is rejected. It needs an API35 emulator with validated WiFi, Internet access to the fixed public Blender Sintel trailer, ffmpeg/ffprobe, and the backend requirements. It does not use a fake extractor, resolver, Worker, command transport or transfer HTTP connection.
+
+From this checkout, prepare a **new disposable directory** (never a production data directory):
+
+```
+PYTHONPATH=backend:. /home/areyes/.local/share/tubego-toolchain/python-env/bin/python scripts/mobile_source_fixture.py --directory /tmp/tubego-mobile-source-fixture-UNIQUE-RUN-ID --port 9443
+```
+
+The fixture listens only on loopback, creates an approved test-only account and runs a real restricted public-egress proxy plus Worker thread. It accepts only the fixed Blender URL for URL submissions; internal metadata/download redirects still pass normal production SSRF restrictions. The fixture certificate has IP SANs 10.0.2.2 and 127.0.0.1 and expires after two days. Copy its public `cert.pem` to `android/app/src/androidTest/res/raw/fixture_cert.pem` and rebuild the test APK. Only instrumentation installs its test trust factory; production trust and normal hostname verification remain unchanged. A pre-existing fixture certificate may be copied to the new directory along with its private key solely to reuse an already-built test APK; never distribute that key.
+
+Build/install app and instrumentation APK, then execute:
+
+```
+adb -s emulator-5554 shell am instrument -w -e publicSource true -e class dev.arglabs.tubego.MobileSourceInstrumentedTest dev.arglabs.tubego.test/android.test.InstrumentationTestRunner
+```
+
+The test authenticates against the actual API using the already-approved fixture account and installs that response with the production SessionStore. It does not test LoginActivity or MainActivity onboarding. It launches LinkEntryActivity, puts the public URL into its real EditText, presses its Add-to-queue button, and uses accessibility clicks for the quality and submission confirmation dialogs. The production UI persists the command; an actual JobScheduler command job flushes it. Instrumentation forces those real jobs with `cmd jobscheduler run -f`; this proves their execution, not spontaneous OS scheduling or a latency guarantee. The test never posts `/resources` itself. The fixture Worker analyzes/downloads/transcodes/publishes the real public video, then the production network-bound WiFi transfer job downloads and confirms it. Assertions require durable submitted outbox state, completed backend task, completed device delivery, a full-size local media file with SHA256 matching the manifest, and absence of a partial file. Log tag `TubegoMobileSourceE2E` records resource ID/size/SHA for a successful run.
+
+Fixture login bypasses registration/approval **only in disposable seed data**; this test makes no SMTP claim. SMTP verification/password reset need separate deployment tests. The source may become unavailable or restrict this host: that is an explicit test failure, not a reason to silently replace the extractor. This test does not cover all yt-dlp portals, physical device power management, Google login, iPhone or exact VLC position callbacks. It retains the final local fixture file for operator inspection; discard the fixture account/app data when done.
+
+## Executed evidence
+
+On 2026-10-10 the opt-in test passed in 10.276 seconds on API35 using exact revision `e3bdea371efbb0587d827432dc720f86224065bb` (selector fix parent `a896aa5`). The default `720` selection was retained. It produced resource `9b364ac8-4cc1-4dfc-9eae-3abe31a06db6`, 4,372,373 bytes, SHA256 `b670602fa00934ca27c4351bb0efe7ea7a07fae57284e44226025eeed7c51254`, a completed server task and a complete device delivery/local manifest. The source extractor did not report height, so the persisted notice is honestly `quality_unknown`. The sanitized versioned evidence is [mobile-source-e2e-2026-10-10.json](evidence/mobile-source-e2e-2026-10-10.json).
+
+The first real run exposed a genuine bounded-selector defect: unknown-height direct MP4 formats were excluded and the worker returned `format_unavailable`. The selector was corrected and the fixture rerun with a new database and the original default720 selection; the test was not changed to best to bypass the defect. The exact tested revision above remains the evidence identity even when these test commits are subsequently rebased or integrated.
+
+The final integrated backend suite also passed 301 tests in 40.90s. A separate repeat of TransferInstrumentedTest on the integrated e3bdea APK passed in 17.393s, using the 16 MiB deterministic TLS fixture: positive partial offset, Range resume as a real job with screen asleep, SHA/size verification and server confirmation, then revocation wiping managed local files. The deterministic transfer fixture is separate from the real public-source fixture above; neither result changes the explicit authentication/scheduling limits.
