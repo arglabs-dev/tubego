@@ -44,3 +44,20 @@ preferences. `QualityPicker.show(activity, selection, callback)` is reusable wit
 network by the add/share flow; `MediaSelection.resolve()` mirrors enqueue validation.
 The preferences screen is registered but its menu entry is coordinated with PLA-233;
 it does not alter MainActivity concurrently.
+
+## Mobile quality notices and source errors (acceptance review)
+
+The library renders `latest_task.quality_notice` in the resource card, including
+cached offline history. `lower_quality_available` says the source provided a lower
+quality; it does not invent the actual pixel height. `quality_unknown` explicitly
+states the displayed quality is a requested preference, not a verified resolution.
+The requested variant remains unchanged in history. No completion notification is
+created for a quality warning.
+
+Stable backend failure codes map to ES/EN explanations for unsupported sources,
+private/authenticated content, removed resources, source restrictions, unavailable
+formats, transient failures and conversion errors. Metadata consultation shows that
+reason and still permits saving the link for later validation; missing optional
+metadata never blocks a valid submission. Raw extractor errors, paths and tokens
+are never appended to those messages. Unknown future codes use a safe generic
+message. API ownership is unchanged.

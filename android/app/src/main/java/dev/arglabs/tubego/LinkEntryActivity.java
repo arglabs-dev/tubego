@@ -76,7 +76,7 @@ public final class LinkEntryActivity extends LocalizedActivity {
 
  private void analyze(){final String url;try{url=SharedUrl.parse(input.getText().toString());}catch(Exception e){status.setText(Texts.error(this,e));return;}analyze.setEnabled(false);status.setText(Texts.text(LinkEntryActivity.this,"Consultando metadatos…"));network.execute(()->{
   try{MediaInfoClient.Info info=new MediaInfoClient(new ApiClient(origin)::request).analyze(url,session.getString("token"));show((info.title==null?Texts.text(LinkEntryActivity.this,"Sin título disponible"):info.title)+(info.durationSeconds==null?"":Texts.text(LinkEntryActivity.this," · duración ")+Math.round(info.durationSeconds)+Texts.text(LinkEntryActivity.this," segundos")));}
-  catch(Exception e){show(Texts.text(LinkEntryActivity.this,"No se pudieron consultar metadatos. Puedes guardar el enlace para validarlo cuando vuelva la conexión."));}
+  catch(Exception e){show(Texts.error(this,e)+"\n"+Texts.text(LinkEntryActivity.this,"No se pudieron consultar metadatos. Puedes guardar el enlace para validarlo cuando vuelva la conexión."));}
   runOnUiThread(()->{if(!isDestroyed())analyze.setEnabled(true);});
  });}
  private void show(String text){runOnUiThread(()->{if(!isDestroyed())status.setText(text);});}

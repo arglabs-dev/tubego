@@ -2090,5 +2090,45 @@
   "No se pudieron consultar descargas. Los avisos y el almacenamiento local siguen disponibles.": {
     "es": "No se pudieron consultar descargas. Los avisos y el almacenamiento local siguen disponibles.",
     "en": "Could not retrieve downloads. Alerts and local storage remain available."
+  },
+  "Usa un único enlace HTTP o HTTPS público válido.": {
+    "es": "Usa un único enlace HTTP o HTTPS público válido.",
+    "en": "Use one valid public HTTP or HTTPS link."
+  },
+  "La plataforma o colección de este enlace no es compatible.": {
+    "es": "La plataforma o colección de este enlace no es compatible.",
+    "en": "The platform or collection for this link is not supported."
+  },
+  "El contenido es privado o requiere iniciar sesión en la plataforma. Tubego no admite credenciales ni cookies de esa fuente.": {
+    "es": "El contenido es privado o requiere iniciar sesión en la plataforma. Tubego no admite credenciales ni cookies de esa fuente.",
+    "en": "The content is private or requires signing in to the platform. Tubego does not support credentials or cookies for that source."
+  },
+  "El contenido fue eliminado o ya no está disponible en la plataforma.": {
+    "es": "El contenido fue eliminado o ya no está disponible en la plataforma.",
+    "en": "The content was deleted or is no longer available on the platform."
+  },
+  "La plataforma restringe el acceso a este contenido. Puede depender del país, edad o permisos de la fuente.": {
+    "es": "La plataforma restringe el acceso a este contenido. Puede depender del país, edad o permisos de la fuente.",
+    "en": "The platform restricts access to this content. This may depend on country, age or source permissions."
+  },
+  "No está disponible el formato o la calidad elegida. Solicita otra calidad o solo audio.": {
+    "es": "No está disponible el formato o la calidad elegida. Solicita otra calidad o solo audio.",
+    "en": "The selected format or quality is unavailable. Request another quality or audio only."
+  },
+  "La conexión o la fuente falló temporalmente. Reintenta más tarde.": {
+    "es": "La conexión o la fuente falló temporalmente. Reintenta más tarde.",
+    "en": "The connection or source failed temporarily. Try again later."
+  },
+  "No se pudo convertir el archivo. Solicita otra calidad o formato.": {
+    "es": "No se pudo convertir el archivo. Solicita otra calidad o formato.",
+    "en": "Could not convert the file. Request another quality or format."
+  },
+  "La fuente ofreció una calidad inferior a la solicitada. El archivo usa la calidad disponible.": {
+    "es": "La fuente ofreció una calidad inferior a la solicitada. El archivo usa la calidad disponible.",
+    "en": "The source offered a quality lower than requested. The file uses the available quality."
+  },
+  "La fuente no informó la resolución. La calidad mostrada es la solicitada; no se ha confirmado la resolución del archivo.": {
+    "es": "La fuente no informó la resolución. La calidad mostrada es la solicitada; no se ha confirmado la resolución del archivo.",
+    "en": "The source did not report its resolution. The displayed quality is the requested preference; the file resolution has not been confirmed."
   }
 }

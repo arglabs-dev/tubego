@@ -65,6 +65,7 @@ public final class LocalLibraryActivity extends LocalizedActivity {
    if(++matches>visibleLimit)continue;
    TextView label=new TextView(this);String state=downloaded?Texts.text(LocalLibraryActivity.this,"Descargado en este teléfono"):record!=null?(localState.equals("downloading")?Texts.text(LocalLibraryActivity.this,"Descargando en teléfono"):phase(localState)):task!=null?phase(task.optString("phase",taskState)):Texts.text(LocalLibraryActivity.this,"No disponible localmente");
    String details=title+"\n"+state+" · "+Texts.quality(this,"audio".equals(row.optString("media_format"))?"audio":row.optString("quality","best"))+"\n"+row.optString("source_url","")+"\n"+row.optString("created_at","");
+   if(task!=null){String qualityNotice=Texts.qualityNotice(this,task.optString("quality_notice"));if(!qualityNotice.isEmpty())details+="\n"+qualityNotice;}
    if(task!=null)details+=Texts.text(LocalLibraryActivity.this,"\nServidor: ")+phase(task.optString("phase",taskState))+" · "+Math.round(task.optDouble("progress",0)*100)+"%";
    if(record!=null && !downloaded)details+=Texts.text(LocalLibraryActivity.this,"\nTeléfono: ")+record.offset()+" / "+record.size+Texts.text(LocalLibraryActivity.this," bytes");
    if(record!=null&&!record.failureCode.isEmpty())details+="\n"+Texts.failure(this,record.failureCode);
