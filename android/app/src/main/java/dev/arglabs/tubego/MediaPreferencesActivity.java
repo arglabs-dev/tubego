@@ -46,9 +46,12 @@ public final class MediaPreferencesActivity extends LocalizedActivity {
         final long requestedVersion=editVersion;
         network.execute(() -> {
             try {
+                final long requestedSequence;
+                synchronized(SessionStore.class){requestedSequence=commands.latestSequence("preferences");}
                 JSONObject prefs = api.request("GET", "/account/preferences", null, token);
-                synchronized(SessionStore.class){if(!token.equals(new SessionStore(this,api.getBaseUrl()).token())||commands.pendingKind("preferences")||editVersion!=requestedVersion)return;local.save(prefs);}
+                synchronized(SessionStore.class){if(!token.equals(new SessionStore(this,api.getBaseUrl()).token())||editVersion!=requestedVersion)return;if(!local.saveServerSnapshotIfCurrent(commands,requestedSequence,prefs))return;}
                 runOnUiThread(() -> { if (isDestroyed()||editVersion!=requestedVersion) return;
+                    try{if(commands.latestSequence("preferences")!=requestedSequence)return;}catch(Exception unavailable){return;}
                     ask.setChecked(prefs.optBoolean("ask_every_time", true));
                     choice.setSelection(MediaSelection.index(prefs.optString("selection", "720")));
                     rewind.setText(String.valueOf(prefs.optInt("rewind_seconds", 10)));

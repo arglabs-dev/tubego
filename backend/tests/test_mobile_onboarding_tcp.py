@@ -22,7 +22,7 @@ class SMTP(socketserver.StreamRequestHandler):
     def handle(self):
         self.wfile.write(b'220 Tubego fixture relay\r\n')
         while line:=self.rfile.readline(8192):
-            command=line.decode('ascii',errors='replace').strip()
+            command=line.decode('ascii',errors='replace').strip().upper()
             if command.startswith(('EHLO','HELO')):self.wfile.write(b'250 fixture\r\n')
             elif command.startswith(('MAIL FROM:','RCPT TO:','RSET','NOOP')):self.wfile.write(b'250 OK\r\n')
             elif command=='DATA':
