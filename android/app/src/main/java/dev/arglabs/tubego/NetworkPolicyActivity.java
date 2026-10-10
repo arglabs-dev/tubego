@@ -30,18 +30,19 @@ public final class NetworkPolicyActivity extends LocalizedActivity {
                 ?Texts.text(NetworkPolicyActivity.this,"Wi-Fi disponible. Las descargas pueden continuar.")
                 :DownloadPolicy.allowsControl(network)?Texts.text(NetworkPolicyActivity.this,"Las descargas esperan Wi-Fi salvo autorización individual."):Texts.text(NetworkPolicyActivity.this,"Sin conexión validada. Las descargas quedan en espera."));
         });
+        try {session=new SessionStore(this,origin).read();if(session!=null&&"approved".equals(session.optString("status")))addLocalControls(session);}catch(Exception ignored){}
         load("");
     }
     private void load(String cursor) {
         executor.execute(()->{
             try {
-                session=new SessionStore(this,origin).read();
-                if(session==null || !"approved".equals(session.optString("status"))) throw new Exception(Texts.text(NetworkPolicyActivity.this,"Sesión aprobada requerida"));
-                JSONObject result=new ApiClient(origin).request("GET","/device/sync?delivery_cursor="+java.net.URLEncoder.encode(cursor,"UTF-8"),null,session.getString("token"));
+                if(session==null || !"approved".equals(session.optString("status")) || !sameSession(session)) throw new Exception(Texts.text(this,"Sesión aprobada requerida"));
                 JSONObject account=session;
+                JSONObject result=new ApiClient(origin).request("GET","/device/sync?delivery_cursor="+java.net.URLEncoder.encode(cursor,"UTF-8"),null,account.getString("token"));
                 runOnUiThread(()->{
                     if(isDestroyed()) return;
-                    if(cursor.isEmpty()) {layout.removeAllViews();layout.addView(status);Button alerts=new Button(this);alerts.setText(Texts.text(NetworkPolicyActivity.this,"Centro de avisos"));layout.addView(alerts);alerts.setOnClickListener(v->startActivity(new android.content.Intent(this,AlertsActivity.class).putExtra("server_url",origin)));Button storage=new Button(this);storage.setText(Texts.text(NetworkPolicyActivity.this,"Almacenamiento de este teléfono"));layout.addView(storage);storage.setOnClickListener(v->startActivity(new android.content.Intent(this,DeviceStorageActivity.class).putExtra("server_url",origin)));addFailedTransfers(account);}
+                    if(!sameSession(account)){clearStaleControls();return;}
+                    if(cursor.isEmpty()) {layout.removeAllViews();layout.addView(status);addLocalControls(account);}
                     var rows=result.optJSONArray("deliveries");
                     for(int i=0;rows!=null && i<rows.length();i++) {
                         JSONObject row=rows.optJSONObject(i);
@@ -88,18 +89,30 @@ public final class NetworkPolicyActivity extends LocalizedActivity {
                         try {permissions.revokeAccount(origin,session.getString("user_id"),session.getString("device_id"));}catch(Exception ignored){}
                     }
                 }
-                runOnUiThread(()->{if(!isDestroyed()) status.setText(Texts.text(NetworkPolicyActivity.this,"No se pudieron consultar descargas. Revisa tu conexión y tu sesión."));});
+                runOnUiThread(()->{if(!isDestroyed()){if(session==null||!sameSession(session))clearStaleControls();else status.setText(Texts.text(this,"No se pudieron consultar descargas. Los avisos y el almacenamiento local siguen disponibles."));}});
             }
         });
+    }
+    private boolean sameSession(JSONObject account){try {JSONObject current=new SessionStore(this,origin).read();return current!=null&&account.optString("token").equals(current.optString("token"));}catch(Exception e){return false;}}
+    private void clearStaleControls(){layout.removeAllViews();layout.addView(status);status.setText(Texts.text(this,"La sesión cambió. Abre nuevamente esta pantalla desde tu cuenta."));}
+    private void addLocalControls(JSONObject account){
+        Button alerts=new Button(this);alerts.setText(Texts.text(this,"Centro de avisos"));alerts.setTag("local-alerts");layout.addView(alerts);
+        alerts.setOnClickListener(v->{if(!sameSession(account)){clearStaleControls();return;}startActivity(new android.content.Intent(this,AlertsActivity.class).putExtra("server_url",origin));});
+        Button storage=new Button(this);storage.setText(Texts.text(this,"Almacenamiento de este teléfono"));storage.setTag("local-storage");layout.addView(storage);
+        storage.setOnClickListener(v->{if(!sameSession(account)){clearStaleControls();return;}startActivity(new android.content.Intent(this,DeviceStorageActivity.class).putExtra("server_url",origin));});
+        addFailedTransfers(account);
     }
     private void addFailedTransfers(JSONObject account){
         try{
             java.io.File root=LocalLibraryStorage.root(this,origin,account.getString("user_id"),account.getString("device_id"));
             java.io.File[] files=root.listFiles((dir,name)->name.endsWith(".properties"));
             if(files==null)return;
-            for(java.io.File file:files){TransferRecord record=TransferRecord.read(file);if(!"failed".equals(record.state))continue;
+            for(java.io.File file:files){
+                if(java.nio.file.Files.isSymbolicLink(file.toPath()))continue;
+                try{java.util.UUID.fromString(file.getName().replace(".properties",""));}catch(IllegalArgumentException nonResource){continue;}
+                final TransferRecord record;try{record=TransferRecord.read(file);}catch(Exception corruptResource){continue;}if(!"failed".equals(record.state))continue;
                 TextView title=new TextView(this);title.setText(record.title+" · "+Texts.failure(this,record.failureCode));layout.addView(title);
-                Button retry=new Button(this);retry.setText(Texts.text(NetworkPolicyActivity.this,"Reintentar descarga"));layout.addView(retry);
+                Button retry=new Button(this);retry.setText(Texts.text(this,"Reintentar descarga"));layout.addView(retry);
                 retry.setOnClickListener(v->{try{synchronized(SessionStore.class){JSONObject current=new SessionStore(this,origin).read();
                     if(current==null||!current.optString("user_id").equals(account.optString("user_id"))||!current.optString("device_id").equals(account.optString("device_id")))throw new Exception();
                     if(new java.io.File(root,record.id+".deleted").exists())throw new Exception();
@@ -108,5 +121,6 @@ public final class NetworkPolicyActivity extends LocalizedActivity {
             }
         }catch(Exception e){status.setText(Texts.text(NetworkPolicyActivity.this,"No se pudieron consultar las descargas fallidas."));}
     }
+    @Override protected void onResume(){super.onResume();if(session!=null&&!sameSession(session))clearStaleControls();}
     @Override protected void onDestroy() {if(monitor!=null) monitor.close();executor.shutdownNow();super.onDestroy();}
 }

@@ -14,6 +14,11 @@ public final class LocalMediaPreferences {
         return new JSONObject().put("ask_every_time",Boolean.parseBoolean(prefs.getProperty("ask_every_time","true")))
             .put("selection",prefs.getProperty("selection","720")).put("rewind_seconds",Integer.parseInt(prefs.getProperty("rewind_seconds","10")));
     }
+    /** Caller holds SessionStore.class so an account switch cannot recreate files. */
+    public boolean saveServerSnapshotIfCurrent(CommandQueue queue,long expectedSequence,JSONObject values)throws Exception {
+        if(queue.pendingKind("preferences")||queue.latestSequence("preferences")!=expectedSequence)return false;
+        save(values);return true;
+    }
     public synchronized void save(JSONObject values) throws Exception {
         MediaSelection.index(values.getString("selection"));
         if(!file.getParentFile().exists()&&!file.getParentFile().mkdirs())throw new IOException("No se pudo guardar preferencias");

@@ -293,6 +293,7 @@
   <string name="ui_88d637185838" formatted="false">"Revoke mobile data permission"</string>
   <string name="ui_88e7f990d154" formatted="false">"only your server files"</string>
   <string name="ui_897da9aa01a5" formatted="false">"Could not apply. Review the impact again; it may have changed or expired."</string>
+  <string name="ui_8a8b5e4882d7" formatted="false">"Could not retrieve downloads. Alerts and local storage remain available."</string>
   <string name="ui_8ae4448980dd" formatted="false">"\nyt-dlp: "</string>
   <string name="ui_8bc7e1c73e88" formatted="false">"unknown size"</string>
   <string name="ui_8bf5287d29b2" formatted="false">"Could not verify the service. The operator must check the deployment."</string>
@@ -315,6 +316,7 @@
   <string name="ui_957b113c4f1e" formatted="false">"Server copies that already meet the cleanup conditions may be deleted. Your library and local copies are preserved."</string>
   <string name="ui_957c7f68bfed" formatted="false">"Access unavailable. An approved administrator session is required."</string>
   <string name="ui_9589177e5aec" formatted="false">"No server connection. Showing saved items and phone files; actions remain pending until connected again."</string>
+  <string name="ui_96064e3a8cd3" formatted="false">"The session changed. Reopen this screen from your account."</string>
   <string name="ui_964beff6e87a" formatted="false">"will be next without interrupting the current download"</string>
   <string name="ui_96c2072d889f" formatted="false">"Could not check users. An active administrator session is required."</string>
   <string name="ui_96d4d8b671d8" formatted="false">" · this phone"</string>

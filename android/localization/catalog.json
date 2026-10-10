@@ -2082,5 +2082,13 @@
   "Reintento guardado. Consulta Acciones pendientes y errores para ver la sincronización.": {
     "es": "Reintento guardado. Consulta Acciones pendientes y errores para ver la sincronización.",
     "en": "Retry saved. Check Pending actions and errors for synchronization."
+  },
+  "La sesión cambió. Abre nuevamente esta pantalla desde tu cuenta.": {
+    "es": "La sesión cambió. Abre nuevamente esta pantalla desde tu cuenta.",
+    "en": "The session changed. Reopen this screen from your account."
+  },
+  "No se pudieron consultar descargas. Los avisos y el almacenamiento local siguen disponibles.": {
+    "es": "No se pudieron consultar descargas. Los avisos y el almacenamiento local siguen disponibles.",
+    "en": "Could not retrieve downloads. Alerts and local storage remain available."
   }
 }

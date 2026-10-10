@@ -293,6 +293,7 @@
   <string name="ui_88d637185838" formatted="false">"Retirar permiso de datos"</string>
   <string name="ui_88e7f990d154" formatted="false">"solo tus archivos del servidor"</string>
   <string name="ui_897da9aa01a5" formatted="false">"No se pudo aplicar. Revisa el impacto otra vez; pudo cambiar o caducar."</string>
+  <string name="ui_8a8b5e4882d7" formatted="false">"No se pudieron consultar descargas. Los avisos y el almacenamiento local siguen disponibles."</string>
   <string name="ui_8ae4448980dd" formatted="false">"\nyt-dlp: "</string>
   <string name="ui_8bc7e1c73e88" formatted="false">"tamaño desconocido"</string>
   <string name="ui_8bf5287d29b2" formatted="false">"No se pudo verificar el servicio. El operador debe revisar el despliegue."</string>
@@ -315,6 +316,7 @@
   <string name="ui_957b113c4f1e" formatted="false">"Podrán borrarse las copias del servidor que ya cumplan las condiciones de limpieza. La biblioteca y las copias locales se conservan."</string>
   <string name="ui_957c7f68bfed" formatted="false">"Acceso no disponible. Se requiere una sesión de administrador aprobada."</string>
   <string name="ui_9589177e5aec" formatted="false">"Sin conexión al servidor. Mostrando fichas guardadas y archivos de este teléfono; las acciones quedarán pendientes hasta recuperar conexión."</string>
+  <string name="ui_96064e3a8cd3" formatted="false">"La sesión cambió. Abre nuevamente esta pantalla desde tu cuenta."</string>
   <string name="ui_964beff6e87a" formatted="false">"será el siguiente, sin interrumpir la descarga actual"</string>
   <string name="ui_96c2072d889f" formatted="false">"No se pudieron consultar usuarios. Se requiere una sesión administrativa activa."</string>
   <string name="ui_96d4d8b671d8" formatted="false">" · este teléfono"</string>
