@@ -36,8 +36,7 @@ public final class NetworkPolicyActivity extends LocalizedActivity {
     private void load(String cursor) {
         executor.execute(()->{
             try {
-                session=new SessionStore(this,origin).read();
-                if(session==null || !"approved".equals(session.optString("status"))) throw new Exception(Texts.text(this,"Sesión aprobada requerida"));
+                if(session==null || !"approved".equals(session.optString("status")) || !sameSession(session)) throw new Exception(Texts.text(this,"Sesión aprobada requerida"));
                 JSONObject account=session;
                 JSONObject result=new ApiClient(origin).request("GET","/device/sync?delivery_cursor="+java.net.URLEncoder.encode(cursor,"UTF-8"),null,account.getString("token"));
                 runOnUiThread(()->{
