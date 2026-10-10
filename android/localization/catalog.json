@@ -2130,5 +2130,145 @@
   "La fuente no informó la resolución. La calidad mostrada es la solicitada; no se ha confirmado la resolución del archivo.": {
     "es": "La fuente no informó la resolución. La calidad mostrada es la solicitada; no se ha confirmado la resolución del archivo.",
     "en": "The source did not report its resolution. The displayed quality is the requested preference; the file resolution has not been confirmed."
+  },
+  "Volver": {
+    "es": "Volver",
+    "en": "Back"
+  },
+  "Inicio": {
+    "es": "Inicio",
+    "en": "Home"
+  },
+  "Ajustes": {
+    "es": "Ajustes",
+    "en": "Settings"
+  },
+  "TU TIEMPO. TU CONTENIDO.": {
+    "es": "TU TIEMPO. TU CONTENIDO.",
+    "en": "YOUR TIME. YOUR CONTENT."
+  },
+  "Aprende a\ntu ritmo.": {
+    "es": "Aprende a\ntu ritmo.",
+    "en": "Learn at\nyour pace."
+  },
+  "Guarda una vez.\nEscucha donde quieras.": {
+    "es": "Guarda una vez.\nEscucha donde quieras.",
+    "en": "Save once.\nListen anywhere."
+  },
+  "PARA LLEVAR": {
+    "es": "PARA LLEVAR",
+    "en": "TO GO"
+  },
+  "Agregar enlace": {
+    "es": "Agregar enlace",
+    "en": "Add a link"
+  },
+  "TU ESPACIO": {
+    "es": "TU ESPACIO",
+    "en": "YOUR SPACE"
+  },
+  "Mi biblioteca": {
+    "es": "Mi biblioteca",
+    "en": "My library"
+  },
+  "Historial": {
+    "es": "Historial",
+    "en": "History"
+  },
+  "Pendientes y errores": {
+    "es": "Pendientes y errores",
+    "en": "Pending actions and errors"
+  },
+  "Una descarga. Muchas reproducciones.": {
+    "es": "Una descarga. Muchas reproducciones.",
+    "en": "One download. Endless replays."
+  },
+  "Tus archivos permanecen en el teléfono hasta que tú los borres.": {
+    "es": "Tus archivos permanecen en el teléfono hasta que tú los borres.",
+    "en": "Your files stay on your phone until you delete them."
+  },
+  "Configurar mi servidor": {
+    "es": "Configurar mi servidor",
+    "en": "Set up my server"
+  },
+  "Tu cuenta, tus dispositivos y tu forma de descargar.": {
+    "es": "Tu cuenta, tus dispositivos y tu forma de descargar.",
+    "en": "Your account, your devices and how you download."
+  },
+  "CONEXIÓN": {
+    "es": "CONEXIÓN",
+    "en": "CONNECTION"
+  },
+  "Servidor de Tubego": {
+    "es": "Servidor de Tubego",
+    "en": "Tubego server"
+  },
+  "Conectar servidor": {
+    "es": "Conectar servidor",
+    "en": "Connect server"
+  },
+  "CUENTA": {
+    "es": "CUENTA",
+    "en": "ACCOUNT"
+  },
+  "REPRODUCCIÓN Y DESCARGAS": {
+    "es": "REPRODUCCIÓN Y DESCARGAS",
+    "en": "PLAYBACK AND DOWNLOADS"
+  },
+  "PREFERENCIAS Y AYUDA": {
+    "es": "PREFERENCIAS Y AYUDA",
+    "en": "PREFERENCES AND HELP"
+  },
+  "Tu contenido, siempre contigo.": {
+    "es": "Tu contenido, siempre contigo.",
+    "en": "Your content, always with you."
+  },
+  "Más opciones": {
+    "es": "Más opciones",
+    "en": "More options"
+  },
+  "Detalles": {
+    "es": "Detalles",
+    "en": "Details"
+  },
+  "Tu biblioteca empieza aquí": {
+    "es": "Tu biblioteca empieza aquí",
+    "en": "Your library starts here"
+  },
+  "Sin resultados": {
+    "es": "Sin resultados",
+    "en": "No results"
+  },
+  "Agrega un enlace y lleva tus ideas favoritas contigo.": {
+    "es": "Agrega un enlace y lleva tus ideas favoritas contigo.",
+    "en": "Add a link and take your favorite ideas with you."
+  },
+  "Prueba otra búsqueda o filtro.": {
+    "es": "Prueba otra búsqueda o filtro.",
+    "en": "Try a different search or filter."
+  },
+  "De un enlace a tu biblioteca. Así de simple.": {
+    "es": "De un enlace a tu biblioteca. Así de simple.",
+    "en": "From a link to your library. Just like that."
+  },
+  "ENLACE": {
+    "es": "ENLACE",
+    "en": "LINK"
+  },
+  "TU COLA": {
+    "es": "TU COLA",
+    "en": "YOUR QUEUE"
+  },
+  "Actualizar": {
+    "es": "Actualizar",
+    "en": "Refresh"
+  },
+  "Sin archivo disponible": {
+    "es": "Sin archivo disponible",
+    "en": "No file available"
+  },
+  "Descargas por Wi-Fi. Reproducción sin conexión.": {
+    "es": "Descargas por Wi-Fi. Reproducción sin conexión.",
+    "en": "Download on Wi-Fi. Play offline."
   }
 }

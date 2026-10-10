@@ -1,0 +1,4 @@
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@color/tubego_brand"/>
+    <foreground android:drawable="@drawable/ic_tubego_foreground"/>
+</adaptive-icon>
