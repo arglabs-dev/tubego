@@ -12,6 +12,7 @@ import java.util.concurrent.Executors;
 
 public final class MainActivity extends LocalizedActivity {
     private final ExecutorService network = Executors.newSingleThreadExecutor();
+    private DashboardView dashboard;
     private TextView status;
     private Button connect;
     private Button adminCenter;
@@ -86,7 +87,10 @@ public final class MainActivity extends LocalizedActivity {
         language.setOnClickListener(v->{try{startActivity(new android.content.Intent(this,LanguageActivity.class).putExtra("server_url",new ApiClient(url.getText().toString()).getBaseUrl()));}catch(Exception e){status.setText(Texts.error(this,e));}});
         Button diagnostics=new Button(this);diagnostics.setText(Texts.text(this,"Diagnóstico de esta cuenta"));layout.addView(diagnostics);
         diagnostics.setOnClickListener(v->{try{startActivity(new android.content.Intent(this,DiagnosticsActivity.class).putExtra("server_url",new ApiClient(url.getText().toString()).getBaseUrl()));}catch(Exception e){status.setText(Texts.error(this,e));}});
-        android.widget.ScrollView scroll=new android.widget.ScrollView(this);scroll.addView(layout);setContentView(scroll);
+        layout.removeAllViews();
+        dashboard=new DashboardView(this,url,connect,status,account,registration,addLink,library,recovery,commands,mediaPrefs,dataPolicy,diagnostics,serverCleanup,deletion,language,help,adminCenter);
+        if(getIntent().getBooleanExtra("open_settings",false)||(state!=null&&state.getBoolean("settings_visible",false)))dashboard.showSettings(true);
+        setContentView(dashboard);
         connect.setOnClickListener(v -> {
             final ApiClient client;
             try { client = new ApiClient(url.getText().toString()); }
@@ -137,6 +141,8 @@ public final class MainActivity extends LocalizedActivity {
         if(adminCenter==null||serverUrl==null||isDestroyed())return;adminCenter.setVisibility(android.view.View.GONE);final String selected=serverUrl.getText().toString();
         network.execute(()->{boolean allowed=AdminAccess.allowed(this,selected);runOnUiThread(()->{if(!isDestroyed()&&selected.equals(serverUrl.getText().toString()))adminCenter.setVisibility(allowed?android.view.View.VISIBLE:android.view.View.GONE);});});
     }
+
+    @Override protected void onSaveInstanceState(Bundle state){super.onSaveInstanceState(state);if(dashboard!=null)state.putBoolean("settings_visible",dashboard.settingsVisible());}
 
     @Override protected void onDestroy() {
         network.shutdownNow();

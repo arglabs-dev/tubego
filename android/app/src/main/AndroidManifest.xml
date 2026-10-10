@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <queries><intent><action android:name="android.intent.action.VIEW"/><data android:mimeType="video/*"/></intent><intent><action android:name="android.intent.action.VIEW"/><data android:mimeType="audio/*"/></intent><package android:name="org.videolan.vlc"/></queries>
-    <application android:name=".TubegoApplication" android:label="Tubego" android:theme="@android:style/Theme.Material.Light.NoActionBar"
+    <application android:name=".TubegoApplication" android:label="Tubego" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" android:theme="@style/TubegoTheme"
         android:allowBackup="false" android:usesCleartextTraffic="false" android:supportsRtl="true">
         <activity android:name=".LanguageActivity" android:exported="false" />
         <activity android:name=".HelpActivity" android:exported="false" />
