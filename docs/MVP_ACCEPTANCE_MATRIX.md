@@ -1,6 +1,6 @@
 # Tubego: matriz de aceptación del MVP
 
-Auditoría de tarjetas PLA-227–257 y criterios de Linear, código hasta QA 397cd2b y runtime d508536, con cadena de PR 31/32/34/35, más corrección de calidad propia 1b1e68b integrada mediante PR36 en main 9fa3a24. Fecha: 2026-10-10. No se cambiaron estados en Linear. Los estados de esta matriz son técnicos; una tarjeta marcada Done en Linear no sustituye validación operativa.
+Auditoría de tarjetas PLA-227–257 y criterios de Linear, código hasta QA 397cd2b y runtime d508536, con cadena de PR 31/32/34/35, más corrección de calidad propia 1b1e68b integrada mediante PR36 en main 9fa3a24. Fecha: 2026-10-10. Estados técnicos de aceptación: Linear se actualiza con esta evidencia. Una tarjeta marcada Done en Linear no sustituye validación operativa del despliegue concreto.
 
 ## Resultado y límites de evidencia
 
