@@ -32,6 +32,7 @@
   <string name="ui_0bac15ed4b88" formatted="false">"Server unavailable"</string>
   <string name="ui_0c42537c22eb" formatted="false">"Resume rewind (0 to 120 seconds; requires a compatible player)"</string>
   <string name="ui_0ce5c840a9e8" formatted="false">"Manage priorities"</string>
+  <string name="ui_0d9bd1a93be1" formatted="false">"The source offered a quality lower than requested. The file uses the available quality."</string>
   <string name="ui_0dcb79939701" formatted="false">"More files"</string>
   <string name="ui_0ec3e39b694a" formatted="false">"The session is no longer available."</string>
   <string name="ui_0ed7a99dd0f2" formatted="false">"Server download errors"</string>
@@ -109,6 +110,7 @@
   <string name="ui_327de2f0e527" formatted="false">"Unblock user"</string>
   <string name="ui_34257eeb6cc3" formatted="false">"Devices only"</string>
   <string name="ui_34461838e92c" formatted="false">"Approval required to download again"</string>
+  <string name="ui_34b3b23143de" formatted="false">"Use one valid public HTTP or HTTPS link."</string>
   <string name="ui_34b4838dea19" formatted="false">"Other network connection"</string>
   <string name="ui_34bdc3d8a526" formatted="false">"PiP and audio with a locked screen depend on the player."</string>
   <string name="ui_34f0198378a8" formatted="false">" · attempts: "</string>
@@ -168,12 +170,14 @@
   <string name="ui_517d49a81a82" formatted="false">"Pending change prepared to send when connected."</string>
   <string name="ui_518bd027de9f" formatted="false">"Check server version and connection"</string>
   <string name="ui_5230bdb160b1" formatted="false">"Could not connect. Check the URL and your connection."</string>
+  <string name="ui_529993135894" formatted="false">"The platform or collection for this link is not supported."</string>
   <string name="ui_52fadddb772f" formatted="false">"Review"</string>
   <string name="ui_54141ef60532" formatted="false">"Action confirmed: "</string>
   <string name="ui_545d8b072605" formatted="false">"Could not revoke permission."</string>
   <string name="ui_546c9ca81b41" formatted="false">"Could not complete the operation. Check permissions or server configuration."</string>
   <string name="ui_547da5ceea3c" formatted="false">"Retry cleanup"</string>
   <string name="ui_54a0e8c17ebb" formatted="false">"Error"</string>
+  <string name="ui_55459b662cd6" formatted="false">"The source did not report its resolution. The displayed quality is the requested preference; the file resolution has not been confirmed."</string>
   <string name="ui_55e1f816f8cc" formatted="false">"Sign in with an approved account to view your library."</string>
   <string name="ui_55e51b6a21eb" formatted="false">" Mbps (5 MB)"</string>
   <string name="ui_566dec43bd2d" formatted="false">"Server storage"</string>
@@ -254,6 +258,7 @@
   <string name="ui_75f1f75e3337" formatted="false">"In progress"</string>
   <string name="ui_76785560b49b" formatted="false">"Sign out other sessions when changing password"</string>
   <string name="ui_76aa492fc502" formatted="false">"Refresh local list"</string>
+  <string name="ui_7722fa7aedfd" formatted="false">"The selected format or quality is unavailable. Request another quality or audio only."</string>
   <string name="ui_777f2818da9c" formatted="false">"Could not read this account\'s history."</string>
   <string name="ui_7877b9bf7865" formatted="false">"Administration · Permissions verified by server"</string>
   <string name="ui_79500c895156" formatted="false">"Checking users…"</string>
@@ -393,6 +398,7 @@
   <string name="ui_bb9dbb406dcb" formatted="false">"Cancel"</string>
   <string name="ui_bbfeaa790697" formatted="false">" · unavailable in this version"</string>
   <string name="ui_bc127c13afe1" formatted="false">"The transfer failed permanently. Open Downloads to review the reason and retry."</string>
+  <string name="ui_bc329eef9eb8" formatted="false">"The content was deleted or is no longer available on the platform."</string>
   <string name="ui_bc5581f6f2ba" formatted="false">"Add"</string>
   <string name="ui_bc6e81e874f3" formatted="false">"Permission saved for this file."</string>
   <string name="ui_bcd5daeda883" formatted="false">"Add this link with "</string>
@@ -465,6 +471,7 @@
   <string name="ui_e0f19dbb9a8a" formatted="false">"Sign in to view alerts for this account and device."</string>
   <string name="ui_e1920f44a0bf" formatted="false">"Available: "</string>
   <string name="ui_e1941804d3d5" formatted="false">"Prioritize file"</string>
+  <string name="ui_e1bb0135aba0" formatted="false">"The platform restricts access to this content. This may depend on country, age or source permissions."</string>
   <string name="ui_e1e45356a605" formatted="false">"mobile-channel server files for ALL users"</string>
   <string name="ui_e2fcf063ee06" formatted="false">"Version check"</string>
   <string name="ui_e4d952794695" formatted="false">"Sign in to configure storage on this device."</string>
@@ -476,6 +483,7 @@
   <string name="ui_e77a153cf4fd" formatted="false">"Permanent failures. Temporary errors are retried up to three times."</string>
   <string name="ui_e7de98cc83ca" formatted="false">"Session unavailable."</string>
   <string name="ui_e83382cd81cc" formatted="false">"Could not complete the operation. Check your details."</string>
+  <string name="ui_eb20b66df02c" formatted="false">"Could not convert the file. Request another quality or format."</string>
   <string name="ui_ebcc204e4967" formatted="false">"Refresh alerts"</string>
   <string name="ui_ec46749a1af4" formatted="false">" bytes"</string>
   <string name="ui_ec64dc30a483" formatted="false">"Email address"</string>
@@ -507,6 +515,7 @@
   <string name="ui_f72249109119" formatted="false">"Checking actual server storage…"</string>
   <string name="ui_f7803a0c103e" formatted="false">"An active administrator session is required. Check your account and connection."</string>
   <string name="ui_f816b77d6bf4" formatted="false">"You can play offline using VLC or another installed player. In VLC, configure background or PiP mode and allow its floating window. To listen with the screen locked, use play as audio or background audio mode. Features and gestures depend on your player; Tubego neither plays nor downloads another copy when you open a local file."</string>
+  <string name="ui_f828ac86f74a" formatted="false">"The content is private or requires signing in to the platform. Tubego does not support credentials or cookies for that source."</string>
   <string name="ui_f9573fdc8c1b" formatted="false">"No operator-approved versions available."</string>
   <string name="ui_f96fff9234cc" formatted="false">"Configure the server and sign in with an approved account."</string>
   <string name="ui_f9b9325cc5e5" formatted="false">"Device unlinked. Local files deleted."</string>
@@ -518,6 +527,7 @@
   <string name="ui_fb60e45ad48c" formatted="false">"Verify your email before using the service."</string>
   <string name="ui_fb9e3cf46f20" formatted="false">"Downloads pause without deleting files. They continue only when the pending file fits while preserving the free-space percentage. Messages and small actions remain available."</string>
   <string name="ui_fc3399db4f6e" formatted="false">"Cancel server download"</string>
+  <string name="ui_fc732603b65f" formatted="false">"The connection or source failed temporarily. Try again later."</string>
   <string name="ui_fd0a6b16fb1b" formatted="false">"Session revoked. This account\'s local downloads have been removed."</string>
   <string name="ui_fd3b826bbb52" formatted="false">"Linked devices"</string>
   <string name="ui_fe152e54ad4f" formatted="false">"Using local preferences. You can save changes offline."</string>

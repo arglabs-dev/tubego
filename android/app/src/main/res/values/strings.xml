@@ -32,6 +32,7 @@
   <string name="ui_0bac15ed4b88" formatted="false">"Servidor no disponible"</string>
   <string name="ui_0c42537c22eb" formatted="false">"Retroceso al continuar (0 a 120 segundos; requiere reproductor compatible)"</string>
   <string name="ui_0ce5c840a9e8" formatted="false">"Administrar prioridades"</string>
+  <string name="ui_0d9bd1a93be1" formatted="false">"La fuente ofreció una calidad inferior a la solicitada. El archivo usa la calidad disponible."</string>
   <string name="ui_0dcb79939701" formatted="false">"Más archivos"</string>
   <string name="ui_0ec3e39b694a" formatted="false">"La sesión dejó de estar disponible."</string>
   <string name="ui_0ed7a99dd0f2" formatted="false">"Errores de descarga del servidor"</string>
@@ -109,6 +110,7 @@
   <string name="ui_327de2f0e527" formatted="false">"Desbloquear usuario"</string>
   <string name="ui_34257eeb6cc3" formatted="false">"Solo dispositivos"</string>
   <string name="ui_34461838e92c" formatted="false">"Requiere aprobación para volver a descargar"</string>
+  <string name="ui_34b3b23143de" formatted="false">"Usa un único enlace HTTP o HTTPS público válido."</string>
   <string name="ui_34b4838dea19" formatted="false">"Otra conexión de red"</string>
   <string name="ui_34bdc3d8a526" formatted="false">"PiP y audio con pantalla bloqueada dependen del reproductor."</string>
   <string name="ui_34f0198378a8" formatted="false">" · intentos: "</string>
@@ -168,12 +170,14 @@
   <string name="ui_517d49a81a82" formatted="false">"Cambio pendiente preparado para enviar cuando haya conexión."</string>
   <string name="ui_518bd027de9f" formatted="false">"Consultar versión y conexión del servidor"</string>
   <string name="ui_5230bdb160b1" formatted="false">"No se pudo conectar. Revisa la URL y tu conexión."</string>
+  <string name="ui_529993135894" formatted="false">"La plataforma o colección de este enlace no es compatible."</string>
   <string name="ui_52fadddb772f" formatted="false">"Revisar"</string>
   <string name="ui_54141ef60532" formatted="false">"Acción confirmada: "</string>
   <string name="ui_545d8b072605" formatted="false">"No se pudo retirar el permiso."</string>
   <string name="ui_546c9ca81b41" formatted="false">"No se pudo completar la operación. Revisa los permisos o la configuración del servidor."</string>
   <string name="ui_547da5ceea3c" formatted="false">"Reintentar limpieza"</string>
   <string name="ui_54a0e8c17ebb" formatted="false">"Error"</string>
+  <string name="ui_55459b662cd6" formatted="false">"La fuente no informó la resolución. La calidad mostrada es la solicitada; no se ha confirmado la resolución del archivo."</string>
   <string name="ui_55e1f816f8cc" formatted="false">"Inicia sesión con una cuenta aprobada para consultar tu biblioteca."</string>
   <string name="ui_55e51b6a21eb" formatted="false">" Mbps (5 MB)"</string>
   <string name="ui_566dec43bd2d" formatted="false">"Almacenamiento del servidor"</string>
@@ -254,6 +258,7 @@
   <string name="ui_75f1f75e3337" formatted="false">"En curso"</string>
   <string name="ui_76785560b49b" formatted="false">"Cerrar las demás sesiones al cambiar contraseña"</string>
   <string name="ui_76aa492fc502" formatted="false">"Actualizar lista local"</string>
+  <string name="ui_7722fa7aedfd" formatted="false">"No está disponible el formato o la calidad elegida. Solicita otra calidad o solo audio."</string>
   <string name="ui_777f2818da9c" formatted="false">"No se pudo leer el historial de esta cuenta."</string>
   <string name="ui_7877b9bf7865" formatted="false">"Administración · permisos verificados por el servidor"</string>
   <string name="ui_79500c895156" formatted="false">"Consultando usuarios…"</string>
@@ -393,6 +398,7 @@
   <string name="ui_bb9dbb406dcb" formatted="false">"Cancelar"</string>
   <string name="ui_bbfeaa790697" formatted="false">" · no disponible en esta versión"</string>
   <string name="ui_bc127c13afe1" formatted="false">"La transferencia falló definitivamente. Abre Descargas para revisar el motivo y reintentar."</string>
+  <string name="ui_bc329eef9eb8" formatted="false">"El contenido fue eliminado o ya no está disponible en la plataforma."</string>
   <string name="ui_bc5581f6f2ba" formatted="false">"Agregar"</string>
   <string name="ui_bc6e81e874f3" formatted="false">"Autorización guardada para este archivo."</string>
   <string name="ui_bcd5daeda883" formatted="false">"Agregar este enlace con "</string>
@@ -465,6 +471,7 @@
   <string name="ui_e0f19dbb9a8a" formatted="false">"Inicia sesión para ver los avisos de esta cuenta y dispositivo."</string>
   <string name="ui_e1920f44a0bf" formatted="false">"Disponibles: "</string>
   <string name="ui_e1941804d3d5" formatted="false">"Priorizar archivo"</string>
+  <string name="ui_e1bb0135aba0" formatted="false">"La plataforma restringe el acceso a este contenido. Puede depender del país, edad o permisos de la fuente."</string>
   <string name="ui_e1e45356a605" formatted="false">"los archivos móviles de TODOS los usuarios del servidor"</string>
   <string name="ui_e2fcf063ee06" formatted="false">"Consulta de versiones"</string>
   <string name="ui_e4d952794695" formatted="false">"Inicia sesión para configurar el almacenamiento de este dispositivo."</string>
@@ -476,6 +483,7 @@
   <string name="ui_e77a153cf4fd" formatted="false">"Fallos definitivos. Los errores temporales se reintentan hasta tres veces."</string>
   <string name="ui_e7de98cc83ca" formatted="false">"Sesión no disponible."</string>
   <string name="ui_e83382cd81cc" formatted="false">"No se pudo completar la operación. Revisa los datos."</string>
+  <string name="ui_eb20b66df02c" formatted="false">"No se pudo convertir el archivo. Solicita otra calidad o formato."</string>
   <string name="ui_ebcc204e4967" formatted="false">"Actualizar avisos"</string>
   <string name="ui_ec46749a1af4" formatted="false">" bytes"</string>
   <string name="ui_ec64dc30a483" formatted="false">"Correo electrónico"</string>
@@ -507,6 +515,7 @@
   <string name="ui_f72249109119" formatted="false">"Consultando almacenamiento real del servidor…"</string>
   <string name="ui_f7803a0c103e" formatted="false">"Se requiere una sesión activa de administrador. Revisa tu cuenta y conexión."</string>
   <string name="ui_f816b77d6bf4" formatted="false">"Puedes reproducir sin conexión con VLC u otro reproductor instalado. En VLC configura el modo de segundo plano o PiP y autoriza la ventana flotante. Para escuchar con la pantalla bloqueada, usa la opción de reproducir como audio o el modo de audio en segundo plano. Las funciones y los gestos dependen de tu reproductor; Tubego no reproduce ni descarga otra copia al abrir un archivo local."</string>
+  <string name="ui_f828ac86f74a" formatted="false">"El contenido es privado o requiere iniciar sesión en la plataforma. Tubego no admite credenciales ni cookies de esa fuente."</string>
   <string name="ui_f9573fdc8c1b" formatted="false">"No hay versiones aprobadas por el operador."</string>
   <string name="ui_f96fff9234cc" formatted="false">"Configura el servidor e inicia sesión con una cuenta aprobada."</string>
   <string name="ui_f9b9325cc5e5" formatted="false">"Dispositivo desvinculado. Archivos locales borrados."</string>
@@ -518,6 +527,7 @@
   <string name="ui_fb60e45ad48c" formatted="false">"Verifica tu correo antes de utilizar el servicio."</string>
   <string name="ui_fb9e3cf46f20" formatted="false">"Las descargas se pausan sin borrar archivos. Solo continúan cuando el archivo pendiente cabe manteniendo el porcentaje libre. Los mensajes y acciones pequeñas siguen funcionando."</string>
   <string name="ui_fc3399db4f6e" formatted="false">"Cancelar descarga del servidor"</string>
+  <string name="ui_fc732603b65f" formatted="false">"La conexión o la fuente falló temporalmente. Reintenta más tarde."</string>
   <string name="ui_fd0a6b16fb1b" formatted="false">"Sesión revocada. Se han retirado las descargas locales de esta cuenta."</string>
   <string name="ui_fd3b826bbb52" formatted="false">"Dispositivos vinculados"</string>
   <string name="ui_fe152e54ad4f" formatted="false">"Usando preferencias locales. Puedes guardar cambios sin conexión."</string>
