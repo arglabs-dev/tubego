@@ -18,7 +18,7 @@ public final class SessionLifecycle {
     }
     public static void logout(Context context,String origin) throws Exception {
         synchronized(SessionStore.class){
-        SessionStore store=new SessionStore(context,origin);JSONObject session=store.read();if(session==null)return;
+        SessionStore store=new SessionStore(context,origin);JSONObject session=store.read();if(session==null){store.clear();return;}
         TransferJobs.stop(context,origin);
         synchronized(SessionStore.class) {AlertNotifications.clear(context,origin,session.getString("user_id"),session.getString("device_id"));LocalLibraryStorage.wipe(context,origin,session.getString("user_id"),session.getString("device_id"));}
         JSONObject pending=store.pendingLogout();

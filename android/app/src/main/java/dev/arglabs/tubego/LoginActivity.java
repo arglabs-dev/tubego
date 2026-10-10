@@ -47,13 +47,14 @@ public final class LoginActivity extends LocalizedActivity {
         String address=email.getText().toString(), secret=password.getText().toString(), replacement=newPassword.getText().toString();boolean revokeOthers=revoke.isChecked();
         enabled(false);status.setText(Texts.text(LoginActivity.this,"Consultando…"));
         network.execute(()->{
-            String message;
+            String message; String requestToken=null;
             try {
                 ApiClient api=new ApiClient(origin);SessionStore store=new SessionStore(this,origin);
                 if(operation.equals("logout")) {
                     SessionLifecycle.logout(this,origin);message=Texts.text(LoginActivity.this,"Sesión cerrada. Archivos locales borrados; el servidor recibirá el cierre cuando haya conexión.");
                 } else if(operation.equals("login")) {
-                    JSONObject active=store.read();
+                    long expectedGeneration; JSONObject active;
+                    synchronized(SessionStore.class){active=store.read();expectedGeneration=store.generation();}
                     if(active!=null && !active.optString("email","").equalsIgnoreCase(address.trim()))
                         throw new AccountSwitchRequired();
                     JSONObject body=new JSONObject().put("email",address).put("password",secret).put("device_name",android.os.Build.MANUFACTURER+" "+android.os.Build.MODEL);
@@ -68,18 +69,25 @@ public final class LoginActivity extends LocalizedActivity {
                         }
                     }
                     JSONObject session=api.request("POST","/auth/login",body,null);
-                    store.save(session); LinkOutboxDispatch.schedule(this,origin); if("approved".equals(session.optString("status")))TransferJobs.register(this,origin); message=accountMessage(session.getString("status"));
+                    synchronized(SessionStore.class){
+                        if(isDestroyed() || !store.saveIfGeneration(session,expectedGeneration))throw new Exception("Sesión cambió");
+                        LinkOutboxDispatch.schedule(this,origin);if("approved".equals(session.optString("status")))TransferJobs.register(this,origin);
+                    }
+                    message=accountMessage(session.getString("status"));
                 } else if(operation.equals("forgot")) {
                     api.request("POST","/auth/password/forgot",new JSONObject().put("email",address),null);message=Texts.text(this,"Si la cuenta permite recuperación, recibirás un correo.");
                 } else if(operation.equals("change")) {
-                    if(store.token()==null) throw new Exception(Texts.text(LoginActivity.this,"No session"));
-                    api.request("POST","/account/password",new JSONObject().put("current_password",secret).put("password",replacement).put("revoke_other_sessions",revokeOthers),store.token());
-                    message=Texts.text(LoginActivity.this,"Contraseña actualizada.");
+                    requestToken=store.token();
+                    if(requestToken==null) throw new Exception(Texts.text(this,"No session"));
+                    api.request("POST","/account/password",new JSONObject().put("current_password",secret).put("password",replacement).put("revoke_other_sessions",revokeOthers),requestToken);
+                    message=Texts.text(this,"Contraseña actualizada.");
                 } else {
-                    if(store.token()==null) message=Texts.text(LoginActivity.this,"Inicia sesión para consultar tu estado.");
+                    long expectedGeneration;
+                    synchronized(SessionStore.class){requestToken=store.token();expectedGeneration=store.generation();}
+                    if(requestToken==null) message=Texts.text(this,"Inicia sesión para consultar tu estado.");
                     else {
-                        JSONObject account=api.request("GET","/account/status",null,store.token());
-                        JSONObject session=store.read();session.put("status",account.getString("status")).put("role",account.getString("role"));store.save(session);
+                        JSONObject account=api.request("GET","/account/status",null,requestToken);
+                        if(isDestroyed() || !store.updateAccountIfCurrent(requestToken,expectedGeneration,account))throw new Exception("Sesión cambió");
                         message=accountMessage(account.getString("status"));
                     }
                 }
@@ -87,13 +95,13 @@ public final class LoginActivity extends LocalizedActivity {
                 message=Texts.text(LoginActivity.this,"Cierra la sesión actual antes de cambiar de cuenta. Se te pedirá confirmar el borrado de sus descargas locales.");
             } catch(ApiClient.ApiException e) {
                 if(e.code.equals("session_revoked") || e.code.equals("account_unavailable")) {
-                    try {new SessionStore(this,origin).clear();} catch(Exception ignored) { }
-                    message=Texts.text(LoginActivity.this,"Tu sesión fue revocada o tu cuenta no está disponible.");
-                } else if(e.code.equals("session_expired")) message=Texts.text(LoginActivity.this,"Tu sesión venció. Inicia sesión nuevamente.");
-                else if(e.status==429) message=Texts.text(LoginActivity.this,"Demasiados intentos. Espera antes de volver a intentar.");
-                else if(e.status==401) message=Texts.text(LoginActivity.this,"Correo o contraseña incorrectos, o sesión no válida.");
-                else message=Texts.text(LoginActivity.this,"No se pudo completar la operación. Revisa los datos.");
-            } catch(Exception e) {message=Texts.text(LoginActivity.this,"No se pudo completar. Revisa los datos y la conexión.");}
+                    try {SessionLifecycle.remotelyRevoked(this,origin,requestToken,e.code);} catch(Exception ignored) { }
+                    message=Texts.text(this,"Tu sesión fue revocada o tu cuenta no está disponible.");
+                } else if(e.code.equals("session_expired")) message=Texts.text(this,"Tu sesión venció. Inicia sesión nuevamente.");
+                else if(e.status==429) message=Texts.text(this,"Demasiados intentos. Espera antes de volver a intentar.");
+                else if(e.status==401) message=Texts.text(this,"Correo o contraseña incorrectos, o sesión no válida.");
+                else message=Texts.text(this,"No se pudo completar la operación. Revisa los datos.");
+            } catch(Exception e) {message=Texts.text(this,"No se pudo completar. Revisa los datos y la conexión.");}
             final String result=message;
             runOnUiThread(()->{if(!isDestroyed()){status.setText(result);enabled(true);password.setText("");newPassword.setText("");}});
         });

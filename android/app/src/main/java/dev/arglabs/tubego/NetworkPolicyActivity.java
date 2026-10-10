@@ -122,5 +122,6 @@ public final class NetworkPolicyActivity extends LocalizedActivity {
             }
         }catch(Exception e){status.setText(Texts.text(NetworkPolicyActivity.this,"No se pudieron consultar las descargas fallidas."));}
     }
+    @Override protected void onResume(){super.onResume();if(session!=null&&!sameSession(session))clearStaleControls();}
     @Override protected void onDestroy() {if(monitor!=null) monitor.close();executor.shutdownNow();super.onDestroy();}
 }

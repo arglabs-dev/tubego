@@ -37,13 +37,16 @@ public final class SessionStore {
         }
         return (SecretKey)store.getKey(ALIAS,null);
     }
-    private void saveValue(String suffix, JSONObject session) throws Exception {
+    private void saveValue(String suffix, JSONObject session) throws Exception { saveValue(suffix,session,false); }
+    private void saveValue(String suffix, JSONObject session, boolean advanceGeneration) throws Exception {
         String slot=namespace+suffix;
         Cipher cipher=Cipher.getInstance("AES/GCM/NoPadding"); cipher.init(Cipher.ENCRYPT_MODE,key());
         cipher.updateAAD(slot.getBytes(StandardCharsets.UTF_8));
         byte[] encrypted=cipher.doFinal(session.toString().getBytes(StandardCharsets.UTF_8));
-        if(!prefs.edit().putString(slot+".iv",Base64.encodeToString(cipher.getIV(),Base64.NO_WRAP))
-                .putString(slot+".ciphertext",Base64.encodeToString(encrypted,Base64.NO_WRAP)).commit()) throw new Exception("No se pudo guardar la sesión");
+        SharedPreferences.Editor edit=prefs.edit().putString(slot+".iv",Base64.encodeToString(cipher.getIV(),Base64.NO_WRAP))
+                .putString(slot+".ciphertext",Base64.encodeToString(encrypted,Base64.NO_WRAP));
+        if(advanceGeneration)edit.putLong(namespace+".generation",generation()+1);
+        if(!edit.commit()) throw new Exception("No se pudo guardar la sesión");
     }
     private JSONObject readValue(String suffix) throws Exception {
         String slot=namespace+suffix;
@@ -59,15 +62,33 @@ public final class SessionStore {
         return ".identity."+Base64.encodeToString(MessageDigest.getInstance("SHA-256").digest(email.trim().toLowerCase(java.util.Locale.ROOT).getBytes(StandardCharsets.UTF_8)),Base64.NO_WRAP);
     }
     public void save(JSONObject session) throws Exception {
-        saveValue("",session);
+        synchronized(SessionStore.class){
+        JSONObject previous=read();
+        boolean changed=previous==null || !previous.optString("token").equals(session.optString("token"))
+            || !previous.optString("user_id").equals(session.optString("user_id")) || !previous.optString("device_id").equals(session.optString("device_id"));
+        saveValue("",session,changed);
         if(session.has("email")) saveValue(identitySuffix(session.getString("email")),new JSONObject().put("user_id",session.getString("user_id")).put("device_id",session.getString("device_id")));
+        }
     }
+    /** Durable origin epoch: even an already-empty logout invalidates in-flight login. */
+    public long generation(){synchronized(SessionStore.class){return prefs.getLong(namespace+".generation",0);}}
+    public boolean saveIfGeneration(JSONObject session,long expected) throws Exception {synchronized(SessionStore.class){
+        if(generation()!=expected)return false;save(session);return true;
+    }}
+    public boolean updateAccountIfCurrent(String token,long expected,JSONObject account) throws Exception {synchronized(SessionStore.class){
+        JSONObject session=read();
+        if(session==null || generation()!=expected || !session.optString("token").equals(token))return false;
+        session.put("status",account.getString("status")).put("role",account.getString("role"));save(session);return true;
+    }}
     public JSONObject deviceIdentity(String email) throws Exception {return readValue(identitySuffix(email));}
-    public JSONObject read() throws Exception {return readValue("");}
+    public JSONObject read() throws Exception {synchronized(SessionStore.class){return readValue("");}}
     public String token() throws Exception {JSONObject session=read();return session==null?null:session.getString("token");}
     public void clear() {
+        synchronized(SessionStore.class){
         AndroidDownloadPermissions.create(context).revokeOrigin(origin);
-        clearValue("");
+        if(!prefs.edit().remove(namespace+".iv").remove(namespace+".ciphertext").putLong(namespace+".generation",generation()+1).commit())
+            throw new IllegalStateException("No se pudo borrar la sesión");
+        }
     }
     public void savePendingLogout(JSONObject session) throws Exception {saveValue(".logout",session);}
     public JSONObject pendingLogout() throws Exception {return readValue(".logout");}
