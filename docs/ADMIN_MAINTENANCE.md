@@ -6,7 +6,7 @@ The API checks the current approved administrator, device ownership and session 
 
 ## Mutations are disabled by default
 
-The immutable container deployment does not receive Docker access. Update/restart calls fail with `capability_unavailable` unless the API has `TUBEGO_MAINTENANCE_MUTATIONS=true` and an external supervisor has a fresh heartbeat. A supervisor approves a specific clean **pre-staged official Git revision**, and explicit yt-dlp versions. The mobile user cannot supply a repository, command, branch, shell expression or arbitrary package. Updating the backend means building/recreating from that operator-staged revision; staging another revision remains an operator deployment step. On startup the explicitly enabled supervisor verifies its exact SHA by fetching that object from the fixed official HTTPS GitHub repository with TLS verification and redirects disabled; it does not checkout or accept a client-provided ref. No host maintenance was executed while developing or testing this feature.
+The immutable container deployment does not receive Docker access. Update/restart calls fail with `capability_unavailable` unless the API has `TUBEGO_MAINTENANCE_MUTATIONS=true` and an external supervisor has a fresh heartbeat. A supervisor approves a specific clean **pre-staged official Git revision**, and explicit yt-dlp versions. The mobile user cannot supply a repository, command, branch, shell expression or arbitrary package. Updating the backend means building/recreating from that operator-staged revision; staging another revision remains an operator deployment step. On startup the explicitly enabled supervisor verifies its exact SHA by fetching that object from the fixed official HTTPS GitHub repository with TLS verification and redirects disabled; it does not checkout or accept a client-provided ref. No production host maintenance was executed. The isolated local Docker rehearsal described below exercised real operations on disposable services.
 
 An operator who chooses to enable this capability must:
 
@@ -31,4 +31,22 @@ An interrupted supervisor never blindly replays a `running` write job. Deploymen
 
 ## Validation
 
-Automated tests use fake networking and a fake Compose driver; they do not fetch code, install packages, build production images or restart any real service. Tests cover access controls, disabled capabilities, selected-version validation, UUID replay, rate limits, sanitized failure results, worker draining, role changes while queued, interrupted write fencing, bounded downloads, claim-lease recovery and fixed argv construction. Android build/lint/unit validation confirms the activity and background command service compile. A real deployment update/restart rehearsal remains an operator opt-in integration check; no deployment success is claimed from these unit tests.
+Automated tests use fake networking and a fake Compose driver; they do not fetch code, install packages, build production images or restart any real service. Tests cover access controls, disabled capabilities, selected-version validation, UUID replay, rate limits, sanitized failure results, worker draining, role changes while queued, interrupted write fencing, bounded downloads, claim-lease recovery and fixed argv construction. Android build/lint/unit validation confirms the activity and background command service compile. The real isolated Docker rehearsal below supplements these unit tests; production deployment is still an operator opt-in action.
+
+
+## Reproducible isolated Docker rehearsal
+
+On 2026-10-10, the real supervisor passed `restart`, `update_ytdlp` and `update_backend` against clean official revision `d508536b950825b83c227b60097bf79e7e5f2659` and yt-dlp `2026.8.19`. Updates rebuilt the same reviewed revision/version rather than introducing an unreviewed upstream change. Every operation verified API health, observed SHA/package version, UUID replay returning the existing job, one completion audit entry, persisted administrator identity, and a cleared scheduler gate. [Sanitized evidence](evidence/supervisor-e2e-2026-10-10.json) retains the actual tested revision and observed results.
+
+`scripts/verify_supervisor_e2e.py` reproduces that opt-in integration check. It requires a Docker-capable operator, the normal Python backend dependencies, internet access for the supervisor's official-object fetch/image builds, a clean official staged checkout, and a free loopback port 8000. Run it using code from a reviewed checkout:
+
+```sh
+PYTHONPATH=backend:. /path/to/python-env/bin/python -u scripts/verify_supervisor_e2e.py \
+  --repo /operator/clean-official-checkout --version 2026.8.19
+```
+
+The fixed project is `tubego-mvp-review`; the script refuses existing containers, networks or volumes with that project's label and refuses an occupied port rather than replacing other services. It uses a fresh private `/tmp/tubego-supervisor-e2e-<uuid>` parent (0700), never production data or bot storage. The bind child and SQLite files are writable by both the host and the container's UID 10001; other host users cannot traverse the private parent. An approved fixture administrator and hashed session are seeded only into that isolated database. The raw bearer token remains in memory and is omitted from stdout/reports. This is not a registration/login test.
+
+The runner builds and starts API/worker/retention/egress, submits confirmed jobs to the real HTTP API, and executes the real host supervisor/Compose driver. It preserves its private database/report and tears down only the newly created project's containers/network; it does not prune images, remove unrelated projects or delete production files. Inspect any failed rehearsal before rerunning; the script intentionally refuses leftover project artifacts. The supplied checkout must remain unchanged for the whole run.
+
+This rehearsal proves the configured local supervisor path, real container recreation/builds and durable job completion. It does not exercise a different upstream version, migrate production data, interrupt an active video download or prove recovery from a killed supervisor. Existing unit tests cover worker draining, interrupted-write fencing and authorization changes separately. No operations were repeated while versioning this evidence.

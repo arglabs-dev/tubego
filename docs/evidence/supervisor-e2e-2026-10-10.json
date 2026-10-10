@@ -1,0 +1,66 @@
+{
+  "project": "tubego-mvp-review",
+  "stages": [
+    {
+      "stage": "isolated_services_healthy",
+      "revision": "d508536b950825b83c227b60097bf79e7e5f2659",
+      "yt_dlp": "2026.8.19"
+    },
+    {
+      "stage": "real_supervisor_operation",
+      "action": "restart",
+      "status": "succeeded",
+      "result": {
+        "installed": {
+          "tubego": "0.1.0",
+          "backend_revision": "d508536b950825b83c227b60097bf79e7e5f2659",
+          "yt_dlp": "2026.8.19"
+        },
+        "service_healthy": true
+      },
+      "uuid_replay_same_job": true,
+      "gate_cleared": true,
+      "audit_finished_once": true
+    },
+    {
+      "stage": "real_supervisor_operation",
+      "action": "update_ytdlp",
+      "status": "succeeded",
+      "result": {
+        "installed": {
+          "tubego": "0.1.0",
+          "backend_revision": "d508536b950825b83c227b60097bf79e7e5f2659",
+          "yt_dlp": "2026.8.19"
+        },
+        "service_healthy": true
+      },
+      "uuid_replay_same_job": true,
+      "gate_cleared": true,
+      "audit_finished_once": true
+    },
+    {
+      "stage": "real_supervisor_operation",
+      "action": "update_backend",
+      "status": "succeeded",
+      "result": {
+        "installed": {
+          "tubego": "0.1.0",
+          "backend_revision": "d508536b950825b83c227b60097bf79e7e5f2659",
+          "yt_dlp": "2026.8.19"
+        },
+        "service_healthy": true
+      },
+      "uuid_replay_same_job": true,
+      "gate_cleared": true,
+      "audit_finished_once": true
+    },
+    {
+      "stage": "finished",
+      "result": "PASS"
+    }
+  ],
+  "revision": "d508536b950825b83c227b60097bf79e7e5f2659",
+  "result": "PASS",
+  "recorded_date": "2026-10-10",
+  "scope": "Local isolated Docker Compose project and temporary bind database. Real supervisor restart and rebuilds used the same already-reviewed revision and package version; no new upstream version, production deployment or active-download interruption was exercised."
+}
