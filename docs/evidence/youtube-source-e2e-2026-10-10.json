@@ -1,0 +1,78 @@
+{
+  "revision": "9a755b89d320ab2a55b9bf19cd4ea68d28ded902",
+  "revision_source": "explicit_argument",
+  "source": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+  "started": "2026-10-10T08:11:43.149648+00:00",
+  "result": "PASS",
+  "stages": [
+    {
+      "stage": "installed_downloader_dependencies",
+      "packages": {
+        "yt-dlp": "2026.8.19",
+        "yt-dlp-ejs": "0.8.0",
+        "deno": "2.9.5"
+      }
+    },
+    {
+      "stage": "restricted_proxy_private_destination_denied",
+      "status": 403
+    },
+    {
+      "stage": "public_source_verified_via_restricted_proxy",
+      "status": 200,
+      "bytes": 0,
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "stage": "ssrf_private_url_denied",
+      "status": 422
+    },
+    {
+      "stage": "real_metadata",
+      "metadata": {
+        "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+        "source_id": "jNQXAC9IVRw",
+        "extractor": "Youtube",
+        "title": "Me at the zoo",
+        "duration_seconds": 19
+      }
+    },
+    {
+      "stage": "real_download_conversion_publish_range_confirm",
+      "selection": "best",
+      "bytes": 475957,
+      "sha256": "fb4e71d225c9955edf7710f76bc03ab433ee50ec684ea1e6e8d4b840a57d6005",
+      "duration_seconds": 19.021,
+      "codecs": [
+        "av1",
+        "opus"
+      ],
+      "range_status": 206,
+      "elapsed_seconds": 2.85
+    },
+    {
+      "stage": "real_download_conversion_publish_range_confirm",
+      "selection": "audio",
+      "bytes": 457388,
+      "sha256": "8793a5d754c6c53c39195ae562401c37b3eed69077dde82320e4154af5f87adb",
+      "duration_seconds": 19.032,
+      "codecs": [
+        "mp3"
+      ],
+      "range_status": 206,
+      "elapsed_seconds": 2.67
+    },
+    {
+      "stage": "finished",
+      "result": "PASS"
+    }
+  ],
+  "additional_assertions": [
+    "Anonymous media request rejected with 401",
+    "Foreign approved user media request rejected with 404",
+    "Authenticated HEAD size and SHA matched actual local media",
+    "Two 206 byte ranges matched actual media first 2048 bytes",
+    "Delivery checksum confirmation persisted complete in device sync"
+  ],
+  "scope": "Real local production-image dependency stack and restricted proxy, ASGI authenticated API and exclusive worker; no cookies, credentials, TLS bypass or mocked extractor. Does not certify Android playback or every YouTube video."
+}
