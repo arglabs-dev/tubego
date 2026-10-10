@@ -28,7 +28,9 @@ from tubego_server.delivery import read_setting
 
 SOURCES={'w3c':'https://media.w3.org/2010/05/sintel/trailer.mp4',
          'blender':'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-         'youtube':'https://www.youtube.com/watch?v=BaW_jenozKc'}
+         'youtube':'https://www.youtube.com/watch?v=BaW_jenozKc',
+         'youtube_zoo':'https://www.youtube.com/watch?v=jNQXAC9IVRw'}
+YOUTUBE_IDS={'youtube':'BaW_jenozKc','youtube_zoo':'jNQXAC9IVRw'}
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--source',choices=tuple(SOURCES),default='w3c',help='Choose a fixed, independently verified public fixture; no arbitrary URL accepted')
 parser.add_argument('--revision',help='Exact 40-character tested source/build SHA when no Git checkout is present')
@@ -81,7 +83,7 @@ try:
         assert denied_proxy.status_code==403
         stage('restricted_proxy_private_destination_denied',status=denied_proxy.status_code)
         verified=net.head(SOURCE,proxies={'https':os.environ['TUBEGO_MEDIA_EGRESS_PROXY']},timeout=20,allow_redirects=False)
-        expected_type='text/html' if args.source=='youtube' else 'video/mp4'
+        expected_type='text/html' if args.source in YOUTUBE_IDS else 'video/mp4'
         assert verified.status_code==200 and verified.headers.get('Content-Type','').startswith(expected_type),(verified.status_code,verified.headers.get('Content-Type'))
         stage('public_source_verified_via_restricted_proxy',status=verified.status_code,bytes=int(verified.headers.get('Content-Length') or 0),content_type=verified.headers['Content-Type'])
     app=create_app(Settings(run))
@@ -93,8 +95,8 @@ try:
         metadata=client.post('/api/v1/media/analyze',headers=alice['headers'],json={'url':SOURCE})
         assert metadata.status_code==200,metadata.text
         stage('real_metadata',metadata=metadata.json())
-        if args.source=='youtube':
-            assert metadata.json()['source_id']=='BaW_jenozKc'
+        if args.source in YOUTUBE_IDS:
+            assert metadata.json()['source_id']==YOUTUBE_IDS[args.source]
             assert metadata.json()['extractor']=='Youtube'
             duration=metadata.json()['duration_seconds']
             assert isinstance(duration,(int,float)) and 0<duration<=30,'Fixture must remain a short test video'
@@ -116,7 +118,7 @@ try:
             assert path.is_file() and path.stat().st_size==size
             assert hashlib.sha256(path.read_bytes()).hexdigest()==digest
             probe=json.loads(subprocess.run(['ffprobe','-v','error','-show_format','-show_streams','-of','json',str(path)],check=True,capture_output=True,text=True).stdout)
-            duration=float(probe['format']['duration']);assert 0<duration<180
+            duration=float(probe['format']['duration']);assert 0<duration<(30 if args.source in YOUTUBE_IDS else 180)
             codecs=[s['codec_name'] for s in probe['streams']]
             if selection=='audio':assert codecs==['mp3'] and path.suffix=='.mp3'
             else:assert any(s['codec_type']=='video' for s in probe['streams'])
