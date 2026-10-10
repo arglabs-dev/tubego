@@ -54,7 +54,10 @@ def download_options(selection):
     if selection == 'audio':
         return {'format':'bestaudio/best', 'postprocessors':[
             {'key':'FFmpegExtractAudio','preferredcodec':'mp3','preferredquality':'192'}]}
-    cap = '' if selection == 'best' else f'[height<={selection}]'
+    # Direct media often omits height. yt-dlp's '?' keeps unknown values while
+    # still excluding every known height above the requested cap; no unbounded
+    # best fallback and no fabricated resolution. See upstream Filtering Formats.
+    cap = '' if selection == 'best' else f'[height<=?{selection}]'
     return {'format':f'bestvideo{cap}+bestaudio/best{cap}', 'merge_output_format':'mp4',
             'postprocessors':[{'key':'FFmpegVideoRemuxer','preferedformat':'mp4'}]}
 

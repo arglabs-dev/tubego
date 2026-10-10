@@ -51,7 +51,7 @@ def test_selection_before_enqueue():
 @pytest.mark.parametrize('selection', ['480','720','1080'])
 def test_video_never_upscales(selection):
     options=download_options(selection)
-    assert options['format']==f'bestvideo[height<={selection}]+bestaudio/best[height<={selection}]'
+    assert options['format']==f'bestvideo[height<=?{selection}]+bestaudio/best[height<=?{selection}]'
     assert options['merge_output_format']=='mp4'
     assert 'scale' not in repr(options)
     assert quality_notice(selection,360)=='lower_quality_available'
@@ -96,13 +96,74 @@ def test_real_ffmpeg_audio_postprocessing(tmp_path):
     assert str(source) in to_delete
 
 
-def test_real_ytdlp_selector_uses_available_lower_video():
+@pytest.mark.parametrize('selection', ['480','720','1080'])
+def test_real_ytdlp_selector_uses_available_lower_video(selection):
     from yt_dlp import YoutubeDL
     info={'id':'lecture','title':'Lecture','extractor':'test','webpage_url':'https://video.example/v',
         'formats':[
             {'format_id':'low','url':'https://video.example/low.mp4','ext':'mp4','height':360,'width':640,'vcodec':'h264','acodec':'aac'},
-            {'format_id':'high','url':'https://video.example/high.mp4','ext':'mp4','height':1080,'width':1920,'vcodec':'h264','acodec':'aac'}]}
-    with YoutubeDL({**download_options('480'),'quiet':True}) as engine:
+            {'format_id':'high','url':'https://video.example/high.mp4','ext':'mp4','height':int(selection)+360,'width':2560,'vcodec':'h264','acodec':'aac'}]}
+    with YoutubeDL({**download_options(selection),'quiet':True}) as engine:
         selected=engine.process_ie_result(info,download=False)
     assert selected['height']==360 and selected['format_id']=='low'
-    assert quality_notice('480',selected['height'])=='lower_quality_available'
+    assert quality_notice(selection,selected['height'])=='lower_quality_available'
+
+
+@pytest.mark.parametrize('selection', ['480','720','1080'])
+@pytest.mark.parametrize('separate_audio', [False,True])
+def test_real_selector_accepts_unknown_height_without_exceeding_known_cap(selection,separate_audio):
+    from yt_dlp import YoutubeDL
+    cap=int(selection)
+    unknown={'format_id':'direct','url':'https://video.example/direct.mp4','ext':'mp4',
+             'vcodec':'h264','acodec':'none' if separate_audio else 'aac'}
+    high={'format_id':'above','url':'https://video.example/above.mp4','ext':'mp4',
+          'height':cap+360,'width':2560,'vcodec':'h264','acodec':unknown['acodec']}
+    formats=[unknown,high]
+    if separate_audio:
+        formats.append({'format_id':'audio','url':'https://video.example/audio.m4a',
+                        'ext':'m4a','vcodec':'none','acodec':'aac'})
+    info={'id':'direct','title':'Direct resource','extractor':'test',
+          'webpage_url':'https://video.example/direct','formats':formats}
+    with YoutubeDL({**download_options(selection),'quiet':True,'no_warnings':True}) as engine:
+        selected=engine.process_ie_result(info,download=False)
+    chosen=selected.get('requested_formats',[selected])
+    assert [f['format_id'] for f in chosen]==(['direct','audio'] if separate_audio else ['direct'])
+    assert selected.get('height') is None
+    assert quality_notice(selection,selected.get('height'))=='quality_unknown'
+
+
+@pytest.mark.parametrize('selection', ['480','720','1080'])
+@pytest.mark.parametrize('separate_audio', [False,True])
+def test_real_selector_never_falls_back_to_known_above_cap(selection,separate_audio):
+    from yt_dlp import YoutubeDL
+    from yt_dlp.utils import ExtractorError
+    cap=int(selection)
+    high={'format_id':'above','url':'https://video.example/above.mp4','ext':'mp4',
+          'height':cap+360,'width':2560,'vcodec':'h264','acodec':'none' if separate_audio else 'aac'}
+    formats=[high]
+    if separate_audio:
+        formats.append({'format_id':'audio','url':'https://video.example/audio.m4a',
+                        'ext':'m4a','vcodec':'none','acodec':'aac'})
+    info={'id':'large','title':'Only above cap','extractor':'test',
+          'webpage_url':'https://video.example/large','formats':formats}
+    with YoutubeDL({**download_options(selection),'quiet':True,'no_warnings':True}) as engine:
+        with pytest.raises(ExtractorError,match='Requested format is not available'):
+            engine.process_ie_result(info,download=False)
+
+
+@pytest.mark.parametrize('selection', ['480','720','1080'])
+@pytest.mark.parametrize('format_list', [False,True])
+def test_real_selector_accepts_direct_resource_without_format_metadata(selection,format_list):
+    from yt_dlp import YoutubeDL
+    # Generic direct-URL extraction can provide neither formats nor dimensions.
+    # Use that real selector input shape, with no codec or height invented.
+    direct={'format_id':'mp4','url':'https://video.example/direct.mp4','ext':'mp4',
+            'height':None,'width':None,'vcodec':None,'acodec':None}
+    info={'id':'direct','title':'Direct MP4','extractor':'Generic'}
+    if format_list:info['formats']=[direct]
+    else:info.update(direct)
+    with YoutubeDL({**download_options(selection),'quiet':True,'no_warnings':True}) as engine:
+        selected=engine.process_ie_result(info,download=False)
+    assert selected['url']==direct['url']
+    assert selected.get('height') is None
+    assert quality_notice(selection,selected.get('height'))=='quality_unknown'

@@ -36,3 +36,10 @@ An earlier unrestricted attempt verified the same source's HEAD response but met
 The real yt-dlp extractor here was `Generic` for a direct public MP4. It returned a title but no duration; only downloaded files' durations were established by ffprobe. A separate invocation against the Blender mirror also completed both real transfers, conversion, digest checks, ranges and confirmations (private run `run-a52948f1-076f-4c2c-819e-a709a22cb2d8`). A later W3C attempt again returned `source_restricted`; the runner keeps that failure rather than switching silently.
 
 This run verifies the server pipeline and authorization, not YouTube/Vimeo extraction, SMTP registration, background Android transfer, a production reverse proxy or Android playback. Those have separate verification paths. CI does not automatically fetch this external fixture; run this explicit integration check when validating external downloading or egress changes.
+
+
+### Direct-source resolution metadata
+
+The real Generic extractor for the fixed Blender MP4 returned no height, width, duration or codec metadata. The mobile default 720 selection previously rejected it with `format_unavailable` because the strict height filter excluded unknown values. Capped selections now use yt-dlp's documented `[height<=?720]` form (and the corresponding 480/1080 limits): unknown height remains eligible, every known above-cap height is still excluded, and no unbounded fallback or upscaling is introduced. See [upstream Filtering Formats](https://github.com/yt-dlp/yt-dlp#filtering-formats).
+
+An unknown height is reported as `quality_unknown`, never inferred from the file name or the user's requested quality. No exact resolution or upper-bound guarantee can be claimed for an unknown source. Offline selector regressions execute the real `YoutubeDL.process_ie_result()` on direct Generic metadata with null dimensions/codecs, separate video/audio, known lower resolution, and known above-cap-only formats. These selector tests do not substitute for the Android/real-download retest.
