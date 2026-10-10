@@ -26,8 +26,8 @@ def prepare(directory):
     directory.chmod(0o700)
     settings = Settings(directory / 'data')
     marker = directory / '.tubego-mobile-source-fixture'
-    if settings.database_path.exists() and not marker.is_file():
-        raise RuntimeError('Refusing an existing database not created by this disposable fixture')
+    if settings.database_path.exists():
+        raise RuntimeError('Each run requires a fresh directory/database; refusing any existing database')
     marker.write_text('Disposable public-source instrumentation fixture\n')
     marker.chmod(0o600)
     database = Database(settings.database_path)
