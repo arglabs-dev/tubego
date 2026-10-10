@@ -35,10 +35,10 @@ public final class AlertNotifications {
             NotificationManager manager=context.getSystemService(NotificationManager.class);
             if(Build.VERSION.SDK_INT>=33 && context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)!=PackageManager.PERMISSION_GRANTED || !manager.areNotificationsEnabled())return;
             boolean admin=AlertPolicy.administrative(entry.optString("kind"));String channel=admin?"tubego_admin":"tubego_action_required";
-            manager.createNotificationChannel(new NotificationChannel(channel,admin?"Administración del servidor":"Avisos que requieren acción",NotificationManager.IMPORTANCE_DEFAULT));
+            manager.createNotificationChannel(new NotificationChannel(channel,admin?Texts.forOrigin(context,origin,"Administración del servidor"):Texts.forOrigin(context,origin,"Avisos que requieren acción"),NotificationManager.IMPORTANCE_DEFAULT));
             Intent intent=new Intent(context,AlertsActivity.class).putExtra("server_url",origin);
             PendingIntent open=PendingIntent.getActivity(context,(key+entry.optString("identity")).hashCode(),intent,PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
-            try{manager.notify(key,entry.optString("identity").hashCode(),new Notification.Builder(context,channel).setSmallIcon(android.R.drawable.stat_notify_error).setContentTitle(entry.optString("title")).setContentText(entry.optString("message")).setContentIntent(open).setAutoCancel(true).setVisibility(Notification.VISIBILITY_PRIVATE).build());}
+            try{manager.notify(key,entry.optString("identity").hashCode(),new Notification.Builder(context,channel).setSmallIcon(android.R.drawable.stat_notify_error).setContentTitle(Texts.forOrigin(context,origin,entry.optString("title"))).setContentText(Texts.forOrigin(context,origin,entry.optString("message"))).setContentIntent(open).setAutoCancel(true).setVisibility(Notification.VISIBILITY_PRIVATE).build());}
             catch(SecurityException ignored){/* The inbox remains available without OS permission. */}
         }
     }

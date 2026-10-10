@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /** Explicit file-specific mobile-data consent; transfer worker consumes the grant. */
-public final class NetworkPolicyActivity extends Activity {
+public final class NetworkPolicyActivity extends LocalizedActivity {
     private final ExecutorService executor=Executors.newSingleThreadExecutor();
     private String origin;
     private LinearLayout layout;
@@ -27,8 +27,8 @@ public final class NetworkPolicyActivity extends Activity {
         ScrollView scroll=new ScrollView(this);scroll.addView(layout);setContentView(scroll);
         monitor=new NetworkMonitor(this,network->{
             if(!isDestroyed()) status.setText(DownloadPolicy.mediaDecision(network,false)==DownloadPolicy.Decision.ALLOW_WIFI
-                ?"Wi-Fi disponible. Las descargas pueden continuar."
-                :DownloadPolicy.allowsControl(network)?"Las descargas esperan Wi-Fi salvo autorización individual.":"Sin conexión validada. Las descargas quedan en espera.");
+                ?Texts.text(NetworkPolicyActivity.this,"Wi-Fi disponible. Las descargas pueden continuar.")
+                :DownloadPolicy.allowsControl(network)?Texts.text(NetworkPolicyActivity.this,"Las descargas esperan Wi-Fi salvo autorización individual."):Texts.text(NetworkPolicyActivity.this,"Sin conexión validada. Las descargas quedan en espera."));
         });
         load("");
     }
@@ -36,12 +36,12 @@ public final class NetworkPolicyActivity extends Activity {
         executor.execute(()->{
             try {
                 session=new SessionStore(this,origin).read();
-                if(session==null || !"approved".equals(session.optString("status"))) throw new Exception("Sesión aprobada requerida");
+                if(session==null || !"approved".equals(session.optString("status"))) throw new Exception(Texts.text(NetworkPolicyActivity.this,"Sesión aprobada requerida"));
                 JSONObject result=new ApiClient(origin).request("GET","/device/sync?delivery_cursor="+java.net.URLEncoder.encode(cursor,"UTF-8"),null,session.getString("token"));
                 JSONObject account=session;
                 runOnUiThread(()->{
                     if(isDestroyed()) return;
-                    if(cursor.isEmpty()) {layout.removeAllViews();layout.addView(status);Button alerts=new Button(this);alerts.setText("Centro de avisos");layout.addView(alerts);alerts.setOnClickListener(v->startActivity(new android.content.Intent(this,AlertsActivity.class).putExtra("server_url",origin)));Button storage=new Button(this);storage.setText("Almacenamiento de este teléfono");layout.addView(storage);storage.setOnClickListener(v->startActivity(new android.content.Intent(this,DeviceStorageActivity.class).putExtra("server_url",origin)));addFailedTransfers(account);}
+                    if(cursor.isEmpty()) {layout.removeAllViews();layout.addView(status);Button alerts=new Button(this);alerts.setText(Texts.text(NetworkPolicyActivity.this,"Centro de avisos"));layout.addView(alerts);alerts.setOnClickListener(v->startActivity(new android.content.Intent(this,AlertsActivity.class).putExtra("server_url",origin)));Button storage=new Button(this);storage.setText(Texts.text(NetworkPolicyActivity.this,"Almacenamiento de este teléfono"));layout.addView(storage);storage.setOnClickListener(v->startActivity(new android.content.Intent(this,DeviceStorageActivity.class).putExtra("server_url",origin)));addFailedTransfers(account);}
                     var rows=result.optJSONArray("deliveries");
                     for(int i=0;rows!=null && i<rows.length();i++) {
                         JSONObject row=rows.optJSONObject(i);
@@ -50,34 +50,34 @@ public final class NetworkPolicyActivity extends Activity {
                             if("complete".equals(row.optString("delivery_status"))) {permissions.revoke(key);continue;}
                             if(!row.optBoolean("server_available") || !"pending".equals(row.optString("delivery_status"))) continue;
                             TextView description=new TextView(this);
-                            String title=row.optString("title","Archivo");
-                            String size=row.isNull("size_bytes")?"tamaño desconocido":row.optLong("size_bytes")+" bytes";
+                            String title=row.optString("title",Texts.text(NetworkPolicyActivity.this,"Archivo"));
+                            String size=row.isNull("size_bytes")?Texts.text(NetworkPolicyActivity.this,"tamaño desconocido"):row.optLong("size_bytes")+Texts.text(NetworkPolicyActivity.this," bytes");
                             String localMessage="";
                             java.io.File localRoot=LocalLibraryStorage.root(this,origin,key.userId,key.deviceId);
                             java.io.File manifest=new java.io.File(localRoot,key.resourceId+".properties");
-                            if(manifest.isFile()){TransferRecord local=TransferRecord.read(manifest);if("device_storage".equals(local.pauseReason))localMessage="\nDescarga pausada: libera espacio o ajusta el umbral.";}
+                            if(manifest.isFile()){TransferRecord local=TransferRecord.read(manifest);if("device_storage".equals(local.pauseReason))localMessage=Texts.text(NetworkPolicyActivity.this,"\nDescarga pausada: libera espacio o ajusta el umbral.");}
                             description.setText(title+" · "+size+localMessage);layout.addView(description);
-                            Button allow=new Button(this);allow.setText(permissions.authorized(key)?"Datos móviles autorizados":"Permitir datos móviles");layout.addView(allow);
-                            allow.setOnClickListener(v->new AlertDialog.Builder(this).setTitle("Usar datos móviles")
-                                .setMessage("¿Autorizar "+title+" ("+size+") en este teléfono? El permiso dura hasta completar o cancelar esta descarga. No incluye otros archivos ni dispositivos.")
-                                .setNegativeButton("Cancelar",null).setPositiveButton("Autorizar",(d,w)->{
+                            Button allow=new Button(this);allow.setText(permissions.authorized(key)?Texts.text(NetworkPolicyActivity.this,"Datos móviles autorizados"):Texts.text(NetworkPolicyActivity.this,"Permitir datos móviles"));layout.addView(allow);
+                            allow.setOnClickListener(v->new AlertDialog.Builder(this).setTitle(Texts.text(NetworkPolicyActivity.this,"Usar datos móviles"))
+                                .setMessage(Texts.text(NetworkPolicyActivity.this,"¿Autorizar ")+title+" ("+size+Texts.text(NetworkPolicyActivity.this,") en este teléfono? El permiso dura hasta completar o cancelar esta descarga. No incluye otros archivos ni dispositivos."))
+                                .setNegativeButton(Texts.text(NetworkPolicyActivity.this,"Cancelar"),null).setPositiveButton(Texts.text(NetworkPolicyActivity.this,"Autorizar"),(d,w)->{
                                     try {
                                         synchronized(SessionStore.class) {
                                             JSONObject current=new SessionStore(this,origin).read();
-                                            if(current==null || !key.userId.equals(current.optString("user_id")) || !key.deviceId.equals(current.optString("device_id"))) throw new Exception("Cuenta cambió");
+                                            if(current==null || !key.userId.equals(current.optString("user_id")) || !key.deviceId.equals(current.optString("device_id"))) throw new Exception(Texts.text(NetworkPolicyActivity.this,"Cuenta cambió"));
                                             java.io.File root=LocalLibraryStorage.root(this,origin,key.userId,key.deviceId);
-                                            if(new java.io.File(root,key.resourceId+".deleted").exists())throw new Exception("Archivo borrado");
+                                            if(new java.io.File(root,key.resourceId+".deleted").exists())throw new Exception(Texts.text(NetworkPolicyActivity.this,"Archivo borrado"));
                                             permissions.authorize(key);
                                         }
-                                        TransferJobs.wake(this,origin,false);allow.setText("Datos móviles autorizados");status.setText("Autorización guardada para este archivo.");
-                                    } catch(Exception e) {status.setText("No se pudo guardar el permiso. Revisa tu sesión.");}
+                                        TransferJobs.wake(this,origin,false);allow.setText(Texts.text(NetworkPolicyActivity.this,"Datos móviles autorizados"));status.setText(Texts.text(NetworkPolicyActivity.this,"Autorización guardada para este archivo."));
+                                    } catch(Exception e) {status.setText(Texts.text(NetworkPolicyActivity.this,"No se pudo guardar el permiso. Revisa tu sesión."));}
                                 }).show());
-                            Button remove=new Button(this);remove.setText("Retirar permiso de datos");layout.addView(remove);
-                            remove.setOnClickListener(v->{try {permissions.revoke(key);TransferRuntime.permissionRemoved(origin,key);allow.setText("Permitir datos móviles");status.setText("Este archivo vuelve a esperar Wi-Fi.");}catch(Exception e){status.setText("No se pudo retirar el permiso.");}});
-                        } catch(Exception ignored) {status.setText("Algunos archivos todavía no están listos.");}
+                            Button remove=new Button(this);remove.setText(Texts.text(NetworkPolicyActivity.this,"Retirar permiso de datos"));layout.addView(remove);
+                            remove.setOnClickListener(v->{try {permissions.revoke(key);TransferRuntime.permissionRemoved(origin,key);allow.setText(Texts.text(NetworkPolicyActivity.this,"Permitir datos móviles"));status.setText(Texts.text(NetworkPolicyActivity.this,"Este archivo vuelve a esperar Wi-Fi."));}catch(Exception e){status.setText(Texts.text(NetworkPolicyActivity.this,"No se pudo retirar el permiso."));}});
+                        } catch(Exception ignored) {status.setText(Texts.text(NetworkPolicyActivity.this,"Algunos archivos todavía no están listos."));}
                     }
                     if(!result.isNull("next_delivery_cursor")) {
-                        Button next=new Button(this);next.setText("Más archivos");layout.addView(next);
+                        Button next=new Button(this);next.setText(Texts.text(NetworkPolicyActivity.this,"Más archivos"));layout.addView(next);
                         next.setOnClickListener(v->{next.setEnabled(false);load(result.optString("next_delivery_cursor"));});
                     }
                 });
@@ -88,7 +88,7 @@ public final class NetworkPolicyActivity extends Activity {
                         try {permissions.revokeAccount(origin,session.getString("user_id"),session.getString("device_id"));}catch(Exception ignored){}
                     }
                 }
-                runOnUiThread(()->{if(!isDestroyed()) status.setText("No se pudieron consultar descargas. Revisa tu conexión y tu sesión.");});
+                runOnUiThread(()->{if(!isDestroyed()) status.setText(Texts.text(NetworkPolicyActivity.this,"No se pudieron consultar descargas. Revisa tu conexión y tu sesión."));});
             }
         });
     }
@@ -98,15 +98,15 @@ public final class NetworkPolicyActivity extends Activity {
             java.io.File[] files=root.listFiles((dir,name)->name.endsWith(".properties"));
             if(files==null)return;
             for(java.io.File file:files){TransferRecord record=TransferRecord.read(file);if(!"failed".equals(record.state))continue;
-                TextView title=new TextView(this);title.setText(record.title+" · "+record.message);layout.addView(title);
-                Button retry=new Button(this);retry.setText("Reintentar descarga");layout.addView(retry);
+                TextView title=new TextView(this);title.setText(record.title+" · "+Texts.failure(this,record.failureCode));layout.addView(title);
+                Button retry=new Button(this);retry.setText(Texts.text(NetworkPolicyActivity.this,"Reintentar descarga"));layout.addView(retry);
                 retry.setOnClickListener(v->{try{synchronized(SessionStore.class){JSONObject current=new SessionStore(this,origin).read();
                     if(current==null||!current.optString("user_id").equals(account.optString("user_id"))||!current.optString("device_id").equals(account.optString("device_id")))throw new Exception();
                     if(new java.io.File(root,record.id+".deleted").exists())throw new Exception();
                     TransferRecord latest=TransferRecord.read(file);if("failed".equals(latest.state))TransferRetry.reset(latest);
-                }TransferJobs.wake(this,origin,false);retry.setEnabled(false);status.setText("Reintento solicitado. Se mantienen los permisos de red de este archivo.");}catch(Exception e){status.setText("No se pudo reintentar. Revisa tu sesión.");}});
+                }TransferJobs.wake(this,origin,false);retry.setEnabled(false);status.setText(Texts.text(NetworkPolicyActivity.this,"Reintento solicitado. Se mantienen los permisos de red de este archivo."));}catch(Exception e){status.setText(Texts.text(NetworkPolicyActivity.this,"No se pudo reintentar. Revisa tu sesión."));}});
             }
-        }catch(Exception e){status.setText("No se pudieron consultar las descargas fallidas.");}
+        }catch(Exception e){status.setText(Texts.text(NetworkPolicyActivity.this,"No se pudieron consultar las descargas fallidas."));}
     }
     @Override protected void onDestroy() {if(monitor!=null) monitor.close();executor.shutdownNow();super.onDestroy();}
 }

@@ -1,0 +1,523 @@
+<resources>
+  <string name="ui_002224ad5819" formatted="false">"History keeps the link, item and last-opened time even when the file is gone. Search, filter, cancel, retry and move a video to the next position in Library. Priority never interrupts the current download. A file deliberately deleted requires approval before recovery."</string>
+  <string name="ui_0044938b78a7" formatted="false">"Too many attempts. Wait before trying again."</string>
+  <string name="ui_00a578cf0918" formatted="false">" when executing the command. "</string>
+  <string name="ui_012cd2dcb6df" formatted="false">"Could not execute. Check your permissions and connection."</string>
+  <string name="ui_01a652a19fd7" formatted="false">"\nServer cleanup pending"</string>
+  <string name="ui_020d2b924c4f" formatted="false">"Ask for quality or audio for each link"</string>
+  <string name="ui_02511d8c7ef1" formatted="false">"Use between 12 and 128 characters."</string>
+  <string name="ui_038413907b57" formatted="false">"Could not save the request. Check your session and storage."</string>
+  <string name="ui_03c66a4b9f67" formatted="false">"Saved estimate: "</string>
+  <string name="ui_03d1fc9b69ef" formatted="false">"Clean up server files"</string>
+  <string name="ui_03ef7472fe43" formatted="false">"Confirm limits"</string>
+  <string name="ui_04cc1b3860ba" formatted="false">"Download failed"</string>
+  <string name="ui_04fc3218b549" formatted="false">"Keep files on the server"</string>
+  <string name="ui_050ccf0b0fff" formatted="false">"Change password"</string>
+  <string name="ui_054a14ca82b3" formatted="false">"Account preferences synchronized"</string>
+  <string name="ui_06211b0cc7c2" formatted="false">"Could not change the request. Refresh and try again."</string>
+  <string name="ui_06351349fc24" formatted="false">"Link saved · waiting to send: "</string>
+  <string name="ui_06827e73a06b" formatted="false">"Restart service"</string>
+  <string name="ui_06fb496f5f8e" formatted="false">"Loading server retention…"</string>
+  <string name="ui_075595345ce1" formatted="false">"Saved on this phone. Synchronization pending."</string>
+  <string name="ui_07786e8e649b" formatted="false">"Refresh permissions and storage"</string>
+  <string name="ui_077a89aefbd8" formatted="false">"Status pending"</string>
+  <string name="ui_0868f2b2e79e" formatted="false">"If the account needs verification, you will receive an email. Administrator approval is required afterwards."</string>
+  <string name="ui_088096ccadca" formatted="false">"Server downloads are paused because of storage."</string>
+  <string name="ui_093727b79899" formatted="false">"Alerts center. We do not notify you when each video finishes. Notifications are optional; alerts remain available here."</string>
+  <string name="ui_093b6f7a3655" formatted="false">"Failed download diagnostics"</string>
+  <string name="ui_0a164fa4c787" formatted="false">"Your session expired. Sign in again."</string>
+  <string name="ui_0a8bf48f81f4" formatted="false">"Checking connection…"</string>
+  <string name="ui_0a955b58a956" formatted="false">"Tubego help"</string>
+  <string name="ui_0b4920d31bbf" formatted="false">"No pending actions or errors."</string>
+  <string name="ui_0bac15ed4b88" formatted="false">"Server unavailable"</string>
+  <string name="ui_0c42537c22eb" formatted="false">"Resume rewind (0 to 120 seconds; requires a compatible player)"</string>
+  <string name="ui_0ce5c840a9e8" formatted="false">"Manage priorities"</string>
+  <string name="ui_0dcb79939701" formatted="false">"More files"</string>
+  <string name="ui_0ec3e39b694a" formatted="false">"The session is no longer available."</string>
+  <string name="ui_0ed7a99dd0f2" formatted="false">"Server download errors"</string>
+  <string name="ui_0eddeefafe7c" formatted="false">"Delete…"</string>
+  <string name="ui_0f3fd5feb989" formatted="false">"Clean up all mobile-channel server files (administrator)"</string>
+  <string name="ui_100f97e96823" formatted="false">"When deleting, choose your devices or your devices and the server. Deletion is synchronized; offline devices apply it when they reconnect. Server cleanup does not delete local copies or history. Pending commands are sent when connected again."</string>
+  <string name="ui_10a00fdf1a44" formatted="false">"Approve"</string>
+  <string name="ui_10c2306f6107" formatted="false">"Configure the server and sign in with an approved account before adding links."</string>
+  <string name="ui_11711274b81b" formatted="false">"Could not save. Check your session and storage."</string>
+  <string name="ui_11f66f14a9d2" formatted="false">"Measure server speed"</string>
+  <string name="ui_1294e4c5e645" formatted="false">"Add link · Tubego"</string>
+  <string name="ui_12f2ece7a216" formatted="false">"Phone library"</string>
+  <string name="ui_131b57bc128e" formatted="false">"Sending action…"</string>
+  <string name="ui_13a90b45b657" formatted="false">"Users · Block / Delete / Status and role"</string>
+  <string name="ui_13e51a210f45" formatted="false">"Save"</string>
+  <string name="ui_14a433147337" formatted="false">"Current password"</string>
+  <string name="ui_1560029ff96c" formatted="false">"Could not open administration."</string>
+  <string name="ui_16612438e2c9" formatted="false">"Available versions: "</string>
+  <string name="ui_16e41d6059e6" formatted="false">"All users"</string>
+  <string name="ui_1756a6049f3b" formatted="false">") on this phone? Permission lasts until this download completes or is cancelled. It excludes other files and devices."</string>
+  <string name="ui_184f9f08775f" formatted="false">"Failed"</string>
+  <string name="ui_1a1b3e6ecc51" formatted="false">"Administration"</string>
+  <string name="ui_1bc2b0b9f05b" formatted="false">"Search / Refresh"</string>
+  <string name="ui_1c484dc4f940" formatted="false">"Signed out. Local files deleted; sign out will be sent to the server when connected."</string>
+  <string name="ui_1c6f868fe01b" formatted="false">"Retry server download"</string>
+  <string name="ui_1cae794a88b6" formatted="false">"Administrator access unavailable."</string>
+  <string name="ui_1d108ffd905c" formatted="false">"Pending actions and errors"</string>
+  <string name="ui_1d7f73b68aa2" formatted="false">"Share one link as text, not files or batches."</string>
+  <string name="ui_1d97e3bfc5d1" formatted="false">"No server connection. Showing saved items and phone files; queue controls require a connection."</string>
+  <string name="ui_1db0d1d3324b" formatted="false">"Could not check failed downloads."</string>
+  <string name="ui_1dea727b3d3d" formatted="false">"No compatible player. Install VLC or another player that supports local files and try again."</string>
+  <string name="ui_1eed2f26542f" formatted="false">"Your session was revoked or your account is unavailable."</string>
+  <string name="ui_1fe81142feda" formatted="false">"Retry pending server file cleanup."</string>
+  <string name="ui_200759023330" formatted="false">"Email not verified"</string>
+  <string name="ui_202eca9b8fdb" formatted="false">"Local preferences available; synchronizing…"</string>
+  <string name="ui_20cf2f40090a" formatted="false">" · unlinked"</string>
+  <string name="ui_21cc6a13f5ef" formatted="false">"Request again / Download"</string>
+  <string name="ui_238ef367d784" formatted="false">"Cleanup saved. It will be sent over any connection; permissions will be checked when executed."</string>
+  <string name="ui_239483ece71b" formatted="false">"Could not check metadata. You can save the link for validation when connected again."</string>
+  <string name="ui_240149c01617" formatted="false">"No validated connection. Downloads are waiting."</string>
+  <string name="ui_24773d036dd1" formatted="false">"Create account · Tubego"</string>
+  <string name="ui_24b566f3a6ed" formatted="false">"Account · Tubego"</string>
+  <string name="ui_25b9cd4a07d6" formatted="false">"Could not check devices. Sign in or check your connection."</string>
+  <string name="ui_25f2e43a67f3" formatted="false">"Request "</string>
+  <string name="ui_2649b3c4d02c" formatted="false">"\nLast connection: "</string>
+  <string name="ui_27f99f49ba94" formatted="false">"Configure a valid HTTPS URL."</string>
+  <string name="ui_28a3c50ea273" formatted="false">"Server administration"</string>
+  <string name="ui_296ae8e9d0dc" formatted="false">"Status unavailable"</string>
+  <string name="ui_29d08067c35b" formatted="false">"Save retention"</string>
+  <string name="ui_2a0515602d31" formatted="false">"Reject"</string>
+  <string name="ui_2a78b5bb393d" formatted="false">"Not signed in"</string>
+  <string name="ui_2aa5e104f96a" formatted="false">"Preferences saved for all your devices"</string>
+  <string name="ui_2b8760135ab3" formatted="false">"Email verified. Wait for administrator approval."</string>
+  <string name="ui_2be8a0779c11" formatted="false">"Update yt-dlp"</string>
+  <string name="ui_2bf59388e86f" formatted="false">"Connect to check versions."</string>
+  <string name="ui_2c73742347a8" formatted="false">"Could not save local preferences."</string>
+  <string name="ui_2c7bf2015570" formatted="false">"\nPhone: "</string>
+  <string name="ui_2c8777180757" formatted="false">"Session changed"</string>
+  <string name="ui_2d6a7690f4cc" formatted="false">"Could not unlink. Check your connection and try again."</string>
+  <string name="ui_2dedc7352a26" formatted="false">"Not available locally · "</string>
+  <string name="ui_2e216d673936" formatted="false">"Your account is waiting for administrator approval."</string>
+  <string name="ui_2e538697cba0" formatted="false">"Use mobile data"</string>
+  <string name="ui_2e5c1f25628f" formatted="false">"Account language"</string>
+  <string name="ui_2ef68536d8e2" formatted="false">"Pending"</string>
+  <string name="ui_2f834eea785a" formatted="false">"Maintenance is not enabled for this deployment."</string>
+  <string name="ui_302fece78dd9" formatted="false">"Action was not confirmed. Requires connection; try again. No new download was added."</string>
+  <string name="ui_3039e3883e36" formatted="false">"Add link / Waiting to send"</string>
+  <string name="ui_30579ff50992" formatted="false">"This device will be signed out and its files deleted when it contacts the server. Other devices are unaffected. Continue?"</string>
+  <string name="ui_307caa1c8c08" formatted="false">"Priority"</string>
+  <string name="ui_30d1a8cd45b2" formatted="false">"Untitled"</string>
+  <string name="ui_30deb644aaf0" formatted="false">"Could not retry."</string>
+  <string name="ui_3146cc06fd01" formatted="false">"? It will be sent when connected."</string>
+  <string name="ui_315ae4fd1299" formatted="false">"1080p video"</string>
+  <string name="ui_31b66744452a" formatted="false">"Request saved. It will be sent over any connection; the file will respect Wi-Fi or your data permission."</string>
+  <string name="ui_327de2f0e527" formatted="false">"Unblock user"</string>
+  <string name="ui_34257eeb6cc3" formatted="false">"Devices only"</string>
+  <string name="ui_34461838e92c" formatted="false">"Approval required to download again"</string>
+  <string name="ui_34b4838dea19" formatted="false">"Other network connection"</string>
+  <string name="ui_34bdc3d8a526" formatted="false">"PiP and audio with a locked screen depend on the player."</string>
+  <string name="ui_34f0198378a8" formatted="false">" · attempts: "</string>
+  <string name="ui_35cfb018e97a" formatted="false">"New password (12–128 characters)"</string>
+  <string name="ui_363c09f2dcab" formatted="false">"My account / Approval status"</string>
+  <string name="ui_364873c8dad8" formatted="false">"Account unavailable."</string>
+  <string name="ui_3657d4e16896" formatted="false">"\nDownload paused: free up space or adjust the threshold."</string>
+  <string name="ui_36cb150a1552" formatted="false">"Server: %.1f%% used · %s free of %s\nDownloads: %s · threshold 90%% used\nChecked: %s"</string>
+  <string name="ui_3716e3e6e837" formatted="false">"Retry phone download…"</string>
+  <string name="ui_37a0b3b8ba5b" formatted="false">"Manage users"</string>
+  <string name="ui_38659e866edc" formatted="false">"Account approved. You can use the service."</string>
+  <string name="ui_3906c387259f" formatted="false">"Back to start"</string>
+  <string name="ui_391ba411400b" formatted="false">"View my alerts"</string>
+  <string name="ui_394845033d6b" formatted="false">"Maximum since first delivery (4)"</string>
+  <string name="ui_39e48edb72f3" formatted="false">"Sign in with an approved account to save your language."</string>
+  <string name="ui_3a04898a6b8b" formatted="false">"Apply"</string>
+  <string name="ui_3a38a63aecf6" formatted="false">"Register"</string>
+  <string name="ui_3ae1ccdcb110" formatted="false">"Could not save the retry."</string>
+  <string name="ui_3c8dc4dc7a83" formatted="false">"Saving…"</string>
+  <string name="ui_3ce4f56ba107" formatted="false">"Update to "</string>
+  <string name="ui_3cf29531b243" formatted="false">"Load next page"</string>
+  <string name="ui_3d186993504b" formatted="false">"Reactivating the account requires a verified email to use the service. Sign in again; previous files and sessions are not restored."</string>
+  <string name="ui_3d71b67f7e28" formatted="false">"Some files are not ready yet."</string>
+  <string name="ui_3de9b37a1d69" formatted="false">"Could not validate an active administrator session. Check your account and connection."</string>
+  <string name="ui_3e09874d5e80" formatted="false">"Retry download"</string>
+  <string name="ui_3e67b10ad5c6" formatted="false">"This link is not supported by the available platforms."</string>
+  <string name="ui_3ef94586edae" formatted="false">"Preparing file"</string>
+  <string name="ui_40248c4bea11" formatted="false">"File count and size unavailable offline."</string>
+  <string name="ui_40aa4b3bca05" formatted="false">"Deleted"</string>
+  <string name="ui_410c11528bc2" formatted="false">"Password (12–128 characters)"</string>
+  <string name="ui_4134a72bd31e" formatted="false">"Latest request: "</string>
+  <string name="ui_41d8694e4363" formatted="false">"Request file again"</string>
+  <string name="ui_42186204bb7d" formatted="false">"File verification failed. Retry the download."</string>
+  <string name="ui_422eb9f12e66" formatted="false">"Authorize "</string>
+  <string name="ui_43591db40234" formatted="false">"Refresh available space"</string>
+  <string name="ui_43600d8e671f" formatted="false">"Unlink / Sign out"</string>
+  <string name="ui_437314bcf036" formatted="false">"No compatible player. Install VLC or another local-file player."</string>
+  <string name="ui_43df60f6bb1b" formatted="false">"No resources available in the library."</string>
+  <string name="ui_43f558bba584" formatted="false">"Account changed"</string>
+  <string name="ui_4575f2990ad6" formatted="false">"Wi-Fi available. Downloads can continue."</string>
+  <string name="ui_467017e0979c" formatted="false">"Downloading on phone"</string>
+  <string name="ui_473c8eb8174a" formatted="false">"Downloaded on this phone"</string>
+  <string name="ui_47467a163f37" formatted="false">"Tubego update"</string>
+  <string name="ui_474a73d1dfab" formatted="false">"Priority saved"</string>
+  <string name="ui_481b278aece1" formatted="false">"Administrator diagnostics and maintenance"</string>
+  <string name="ui_49b85ee08c7a" formatted="false">". Phone files are unaffected."</string>
+  <string name="ui_4a361079bdc6" formatted="false">"Local playback. No connection required."</string>
+  <string name="ui_4b0cbc39f277" formatted="false">"Could not save language. Check your session and storage."</string>
+  <string name="ui_4c7b2043ec72" formatted="false">"Access revoked; cleanup pending and will retry automatically."</string>
+  <string name="ui_4c89c2f1231d" formatted="false">"Password updated."</string>
+  <string name="ui_4d0404f79552" formatted="false">"Could not save. Check your connection and administrator permissions."</string>
+  <string name="ui_4d56d067a56b" formatted="false">"Request this action again"</string>
+  <string name="ui_4d82d2ca0bb4" formatted="false">"Sign out before switching accounts. You will be asked to confirm deletion of its local downloads."</string>
+  <string name="ui_4e0a6bb7a45e" formatted="false">"\nRevision: "</string>
+  <string name="ui_4fb43264c4e4" formatted="false">"Transfers respect your network permissions."</string>
+  <string name="ui_4fda28d8d35a" formatted="false">"Connection not checked"</string>
+  <string name="ui_517d49a81a82" formatted="false">"Pending change prepared to send when connected."</string>
+  <string name="ui_518bd027de9f" formatted="false">"Check server version and connection"</string>
+  <string name="ui_5230bdb160b1" formatted="false">"Could not connect. Check the URL and your connection."</string>
+  <string name="ui_52fadddb772f" formatted="false">"Review"</string>
+  <string name="ui_54141ef60532" formatted="false">"Action confirmed: "</string>
+  <string name="ui_545d8b072605" formatted="false">"Could not revoke permission."</string>
+  <string name="ui_546c9ca81b41" formatted="false">"Could not complete the operation. Check permissions or server configuration."</string>
+  <string name="ui_547da5ceea3c" formatted="false">"Retry cleanup"</string>
+  <string name="ui_54a0e8c17ebb" formatted="false">"Error"</string>
+  <string name="ui_55e1f816f8cc" formatted="false">"Sign in with an approved account to view your library."</string>
+  <string name="ui_55e51b6a21eb" formatted="false">" Mbps (5 MB)"</string>
+  <string name="ui_566dec43bd2d" formatted="false">"Server storage"</string>
+  <string name="ui_5678a7dd3fa7" formatted="false">"Preferences"</string>
+  <string name="ui_57bebd93b756" formatted="false">"Could not check storage. Check your connection and permissions; no cleanup was executed."</string>
+  <string name="ui_58d797b839c2" formatted="false">"Private history synchronized. Offline cache: up to 2000 viewed items; full history remains on the server."</string>
+  <string name="ui_5abddc5a2870" formatted="false">"Recover password by email"</string>
+  <string name="ui_5aea7247ac13" formatted="false">"Loading priorities…"</string>
+  <string name="ui_5aebb635041c" formatted="false">"If the account supports recovery, you will receive an email."</string>
+  <string name="ui_5b02dc3615d5" formatted="false">"PiP and audio with a locked screen depend on your chosen player."</string>
+  <string name="ui_5b365e552723" formatted="false">"Check title and duration (requires connection)"</string>
+  <string name="ui_5b4830cf8024" formatted="false">"The server copy is no longer available"</string>
+  <string name="ui_5c21c8009e97" formatted="false">"This variant will be recovered without creating another item. Devices that already have the complete file will not download it again. If you deleted it, you authorize another download on this phone; other devices need their own approval."</string>
+  <string name="ui_5c3c3725e0d9" formatted="false">"Pending action"</string>
+  <string name="ui_5c5ba72d6027" formatted="false">"Library / Delete resources"</string>
+  <string name="ui_5c97ed84d1d6" formatted="false">"Insufficient space"</string>
+  <string name="ui_5cdc024b10cb" formatted="false">"Rewind must be a whole number between 0 and 120."</string>
+  <string name="ui_5ce3002c5dea" formatted="false">"An approved administrator account is required."</string>
+  <string name="ui_5d3ac549b59b" formatted="false">"Enable system notifications"</string>
+  <string name="ui_5d5da3bb67c3" formatted="false">"Refresh library and send pending actions"</string>
+  <string name="ui_5d72e120e50c" formatted="false">"File kept on this phone."</string>
+  <string name="ui_5dc9393b9e67" formatted="false">"Could not save cleanup. Check your session and storage."</string>
+  <string name="ui_5ef553ae6231" formatted="false">"It will be deleted on all your devices. History is preserved. Offline devices will do this when they reconnect."</string>
+  <string name="ui_5f55edf90089" formatted="false">"Search"</string>
+  <string name="ui_5fbb2b221025" formatted="false">"Retention prevents automatic server cleanup. It does not prevent manual cleanup or deletion when blocked. Phone files are unaffected."</string>
+  <string name="ui_61509b107815" formatted="false">"Reading history…"</string>
+  <string name="ui_618ae78ddbb2" formatted="false">"\nServer: "</string>
+  <string name="ui_6277a2e36986" formatted="false">"Data permissions per download"</string>
+  <string name="ui_62abce5b594c" formatted="false">"Local cleanup did not finish. Pending deletions will retry when connected."</string>
+  <string name="ui_62c60eb640e4" formatted="false">"No items available. Connect to refresh history."</string>
+  <string name="ui_63125fac1a48" formatted="false">"Send pending change"</string>
+  <string name="ui_63614ffde2d3" formatted="false">"User"</string>
+  <string name="ui_63c161b0b216" formatted="false">"Server downloads will be allowed to finish. Restart the service?"</string>
+  <string name="ui_640d6761c178" formatted="false">"OK"</string>
+  <string name="ui_64d46e935ec5" formatted="false">"Action rejected. Check permissions and resource status before requesting it again."</string>
+  <string name="ui_64f06c9698cd" formatted="false">"No session"</string>
+  <string name="ui_655909c1a216" formatted="false">"Synchronize now"</string>
+  <string name="ui_65e19de117f9" formatted="false">" active tasks · "</string>
+  <string name="ui_6623ec383668" formatted="false">"Wi-Fi connection"</string>
+  <string name="ui_66667c616661" formatted="false">"Unlink"</string>
+  <string name="ui_66d1bd052122" formatted="false">"Server maintenance\n"</string>
+  <string name="ui_671707f24355" formatted="false">"Retry requested. This file\'s network permissions are unchanged."</string>
+  <string name="ui_671d0c4b81b4" formatted="false">"Sign in to manage your library."</string>
+  <string name="ui_67fad187f252" formatted="false">"History saved on this phone. Refreshing if connected…"</string>
+  <string name="ui_680ae16d429a" formatted="false">"Cancelling"</string>
+  <string name="ui_686c584a6de3" formatted="false">" · email not verified"</string>
+  <string name="ui_68def20ffbb3" formatted="false">"Could not retry. Check your session."</string>
+  <string name="ui_69492fe4f319" formatted="false">"No downloaded files on this phone."</string>
+  <string name="ui_6aecc2fba492" formatted="false">" Partial files are also cleaned up and tasks cancelled. Your phone copies and history are preserved. The Telegram bot keeps separate storage."</string>
+  <string name="ui_6afdc5a2914c" formatted="false">"The test downloads 5 MB on the server. The phone receives only the result."</string>
+  <string name="ui_6b0b3ebf5dcd" formatted="false">"%.1f GiB"</string>
+  <string name="ui_6b6a5f3f2584" formatted="false">"No title available"</string>
+  <string name="ui_6c5f8a46c1b8" formatted="false">"Verify your email through the link sent to you. You can resend it from Create account."</string>
+  <string name="ui_6d6db0a3dac1" formatted="false">"Review impact and save limits"</string>
+  <string name="ui_6d95af6781dc" formatted="false">"Pending verified requests"</string>
+  <string name="ui_6dc20e50cb60" formatted="false">"Configure a valid HTTPS server URL."</string>
+  <string name="ui_6fc6cdb778fa" formatted="false">"\nDownloads paused. Free up space to resume automatically."</string>
+  <string name="ui_703303e017c4" formatted="false">"Retry saved. Check Pending actions and errors for synchronization."</string>
+  <string name="ui_70576fc5488e" formatted="false">"Resend verification"</string>
+  <string name="ui_715621903c70" formatted="false">"Refresh pending links and try sending"</string>
+  <string name="ui_717bedea36fc" formatted="false">"Confirm"</string>
+  <string name="ui_71811177c10a" formatted="false">"Search by title"</string>
+  <string name="ui_7191f0e063b1" formatted="false">"No pending requests"</string>
+  <string name="ui_71c8c8a47e72" formatted="false">"No connection or service restarting. The request keeps its identifier; check its status when connected again."</string>
+  <string name="ui_71daf27f0a66" formatted="false">"Administrator alerts"</string>
+  <string name="ui_71ed92a675af" formatted="false">"Rejected"</string>
+  <string name="ui_720462a0c59d" formatted="false">"They will apply to all existing and new files, counting from their original dates. Server copies expiring now: "</string>
+  <string name="ui_72226f0c20a8" formatted="false">"Local library / Play"</string>
+  <string name="ui_72608992f48f" formatted="false">"An active administrator session is required to check diagnostics."</string>
+  <string name="ui_73327ef00c45" formatted="false">"Account diagnostics"</string>
+  <string name="ui_73d2b4f59152" formatted="false">"480p video"</string>
+  <string name="ui_7426e15876c1" formatted="false">"Enable automatic cleanup"</string>
+  <string name="ui_74abe2683078" formatted="false">" seconds"</string>
+  <string name="ui_74c764f14f21" formatted="false">"Reading phone files…"</string>
+  <string name="ui_75c4bfe48d33" formatted="false">"Checking…"</string>
+  <string name="ui_75d6b4579e1d" formatted="false">"File"</string>
+  <string name="ui_75e091f65862" formatted="false">"Checking server failures…"</string>
+  <string name="ui_75f1f75e3337" formatted="false">"In progress"</string>
+  <string name="ui_76785560b49b" formatted="false">"Sign out other sessions when changing password"</string>
+  <string name="ui_76aa492fc502" formatted="false">"Refresh local list"</string>
+  <string name="ui_777f2818da9c" formatted="false">"Could not read this account\'s history."</string>
+  <string name="ui_7877b9bf7865" formatted="false">"Administration · Permissions verified by server"</string>
+  <string name="ui_79500c895156" formatted="false">"Checking users…"</string>
+  <string name="ui_7a7ba665016a" formatted="false">"Could not load this account\'s information."</string>
+  <string name="ui_7ae183d2d1b6" formatted="false">"Account deleted"</string>
+  <string name="ui_7ae9d418353b" formatted="false">"Language"</string>
+  <string name="ui_7aff930f747e" formatted="false">"Sign in to view this account\'s links."</string>
+  <string name="ui_7b24d71e14cf" formatted="false">"Loading preferences…"</string>
+  <string name="ui_7bf133b8243f" formatted="false">"Global limits (hours). Also apply to existing files."</string>
+  <string name="ui_7c1ac5649b71" formatted="false">"Server speed"</string>
+  <string name="ui_7c49e9d6c45f" formatted="false">"Connected · version "</string>
+  <string name="ui_7daed6a5bef0" formatted="false">"Delete "</string>
+  <string name="ui_7deb1b0a8b07" formatted="false">"This file will wait for Wi-Fi again."</string>
+  <string name="ui_7e156a174ce0" formatted="false">"No validated connection"</string>
+  <string name="ui_7e54995da514" formatted="false">"Deleted locally. The command for other devices will be sent over any connection."</string>
+  <string name="ui_7ea7c797739a" formatted="false">"Library and history"</string>
+  <string name="ui_7f7ed5289742" formatted="false">"Retry on server"</string>
+  <string name="ui_802fce120088" formatted="false">"Saving action…"</string>
+  <string name="ui_8070dcdfbc0a" formatted="false">"Cannot proceed: your own account, last administrator, invalid status or pending cleanup."</string>
+  <string name="ui_809826447fd3" formatted="false">"Configure your server to begin."</string>
+  <string name="ui_81158b713ec5" formatted="false">"Update backend"</string>
+  <string name="ui_817832ee24a9" formatted="false">"Signing out deletes downloads on this phone. Other devices keep their files. Continue?"</string>
+  <string name="ui_82628594bc10" formatted="false">"An approved administrator account is required."</string>
+  <string name="ui_82ef7e8cf31c" formatted="false">"Refresh / Send pending actions"</string>
+  <string name="ui_836a074f5d36" formatted="false">"Preferences were not saved. Try again when connected."</string>
+  <string name="ui_8382b5c7211a" formatted="false">"The administrator session is no longer available."</string>
+  <string name="ui_85239d437a0c" formatted="false">"Approve "</string>
+  <string name="ui_8548607eee01" formatted="false">"Maintenance"</string>
+  <string name="ui_856641d2b3ee" formatted="false">"Completed"</string>
+  <string name="ui_86097c8308bf" formatted="false">"Analyzing"</string>
+  <string name="ui_8688663707ac" formatted="false">"User retention and global limits"</string>
+  <string name="ui_876c3b1477cc" formatted="false">"Save priority"</string>
+  <string name="ui_87975751a514" formatted="false">"Could not save permission. Check your session."</string>
+  <string name="ui_88196f4ef841" formatted="false">"Invalid server"</string>
+  <string name="ui_888381c696f4" formatted="false">"Tubego · Downloads in progress"</string>
+  <string name="ui_88b80b4e325d" formatted="false">"Check my account status"</string>
+  <string name="ui_88d637185838" formatted="false">"Revoke mobile data permission"</string>
+  <string name="ui_88e7f990d154" formatted="false">"only your server files"</string>
+  <string name="ui_897da9aa01a5" formatted="false">"Could not apply. Review the impact again; it may have changed or expired."</string>
+  <string name="ui_8ae4448980dd" formatted="false">"\nyt-dlp: "</string>
+  <string name="ui_8bc7e1c73e88" formatted="false">"unknown size"</string>
+  <string name="ui_8bf5287d29b2" formatted="false">"Could not verify the service. The operator must check the deployment."</string>
+  <string name="ui_8c2d20ac2880" formatted="false">"Could not send. Check your email, connection and server configuration."</string>
+  <string name="ui_8cc3d01e128c" formatted="false">"Confirm server cleanup"</string>
+  <string name="ui_8d518bb65ea3" formatted="false">"Sign in"</string>
+  <string name="ui_8d6450afc1ca" formatted="false">"Could not check server errors. Local downloads remain available through the button for this phone."</string>
+  <string name="ui_8e128d2c3895" formatted="false">"Allow mobile data"</string>
+  <string name="ui_8e43e752a4b5" formatted="false">"Clean up my server files"</string>
+  <string name="ui_8f7b07b97d0d" formatted="false">"Delete account and data"</string>
+  <string name="ui_900839acbb33" formatted="false">"Maximum since file ready (72)"</string>
+  <string name="ui_9130bf9f9912" formatted="false">"Downloads on this phone / Retry"</string>
+  <string name="ui_9145babda24f" formatted="false">"The server file is no longer available."</string>
+  <string name="ui_925dd50ace07" formatted="false">"Downloads in progress"</string>
+  <string name="ui_93630c1ada50" formatted="false">"Could not retry. Check your connection and session."</string>
+  <string name="ui_93a4626d38a8" formatted="false">"With errors"</string>
+  <string name="ui_9415ac2416c5" formatted="false">"Sending…"</string>
+  <string name="ui_946f09de378d" formatted="false">"Verifying administrator permissions…"</string>
+  <string name="ui_94b382b61b9d" formatted="false">"Español"</string>
+  <string name="ui_957b113c4f1e" formatted="false">"Server copies that already meet the cleanup conditions may be deleted. Your library and local copies are preserved."</string>
+  <string name="ui_957c7f68bfed" formatted="false">"Access unavailable. An approved administrator session is required."</string>
+  <string name="ui_9589177e5aec" formatted="false">"No server connection. Showing saved items and phone files; actions remain pending until connected again."</string>
+  <string name="ui_964beff6e87a" formatted="false">"will be next without interrupting the current download"</string>
+  <string name="ui_96c2072d889f" formatted="false">"Could not check users. An active administrator session is required."</string>
+  <string name="ui_96d4d8b671d8" formatted="false">" · this phone"</string>
+  <string name="ui_973188ec7e78" formatted="false">"Use selection"</string>
+  <string name="ui_97815ed5e47b" formatted="false">"File deleted"</string>
+  <string name="ui_988d2d33efad" formatted="false">"Verify your email through the link sent to you. An administrator must then approve your account."</string>
+  <string name="ui_989e7980a238" formatted="false">"Save preferences"</string>
+  <string name="ui_98c4710a9591" formatted="false">" files with unknown size."</string>
+  <string name="ui_993ddaf81e66" formatted="false">"Play · "</string>
+  <string name="ui_9956b84c4a85" formatted="false">"This check does not measure speed or download test files. Alerts and administrator actions are filtered by your account\'s permissions."</string>
+  <string name="ui_9a27bef848fc" formatted="false">"Library · Delete with confirmation"</string>
+  <string name="ui_9a46365466f3" formatted="false">"Could not check downloads. Check your connection and session."</string>
+  <string name="ui_9c9d5d402011" formatted="false">"User priorities · Persistent 3:1"</string>
+  <string name="ui_9ca47006d57c" formatted="false">"Refresh estimates / Send pending actions"</string>
+  <string name="ui_9d02bc38987a" formatted="false">"Server cleanup · Preserve phone files and history"</string>
+  <string name="ui_9dfa8ae00b52" formatted="false">"Checking diagnostics…"</string>
+  <string name="ui_a03196d358e9" formatted="false">"Sent · view its existing item"</string>
+  <string name="ui_a0abee7ea979" formatted="false">"Manage server retention"</string>
+  <string name="ui_a1278712793f" formatted="false">"Request"</string>
+  <string name="ui_a172296206a4" formatted="false">"Downloads wait for Wi-Fi unless individually authorized."</string>
+  <string name="ui_a2180d2c924d" formatted="false">"Could not save. An active administrator session is required."</string>
+  <string name="ui_a260e6d66ee8" formatted="false">"Only my server files"</string>
+  <string name="ui_a34fd9940dfa" formatted="false">"Minimum free percentage (1–90)"</string>
+  <string name="ui_a38017c9161a" formatted="false">"Verifying local file…"</string>
+  <string name="ui_a441b554ac64" formatted="false">"Sign in with an approved account."</string>
+  <string name="ui_a59b68af0bfa" formatted="false">"Action saved. It will be sent over any connection; check Pending actions and errors."</string>
+  <string name="ui_a5b7a29c83b0" formatted="false">"Could not check storage."</string>
+  <string name="ui_a5d0ca0e3a24" formatted="false">"Limits must be whole hours between 1 and 8760."</string>
+  <string name="ui_a6a78a21af7b" formatted="false">"Server maintenance"</string>
+  <string name="ui_a7248eeb45eb" formatted="false">"Normal"</string>
+  <string name="ui_a79d0a02f641" formatted="false">"Permanent server failures. Each manual retry starts a new budget of three automatic retries."</string>
+  <string name="ui_a81abbb63231" formatted="false">"Invalid quality"</string>
+  <string name="ui_a905c2c33f1c" formatted="false">"Access request"</string>
+  <string name="ui_a96fc5a20f27" formatted="false">"A verified account is waiting for approval."</string>
+  <string name="ui_a9e748819725" formatted="false">"More diagnostics"</string>
+  <string name="ui_aa4065b2b89b" formatted="false">"\nTubego revision: "</string>
+  <string name="ui_ab70a451b08e" formatted="false">"Low phone storage"</string>
+  <string name="ui_ae5dca68ed0d" formatted="false">"Deleted / Unavailable"</string>
+  <string name="ui_aeccae342e4b" formatted="false">"Close"</string>
+  <string name="ui_af378a087ca9" formatted="false">"Could not review the impact. Check your connection and permissions."</string>
+  <string name="ui_af77dd7d2318" formatted="false">"Downloaded on this phone"</string>
+  <string name="ui_afcf9f6ebf95" formatted="false">"Tubego: "</string>
+  <string name="ui_b0529afbef17" formatted="false">"Paste an HTTP or HTTPS link"</string>
+  <string name="ui_b0a3bce8d02c" formatted="false">"Updates and restart require a supervisor enabled by the deployment operator."</string>
+  <string name="ui_b0d1c0866b22" formatted="false">"Check your session and permissions."</string>
+  <string name="ui_b0f49e7dc97d" formatted="false">"allowed"</string>
+  <string name="ui_b12038428dd7" formatted="false">"Waiting to send"</string>
+  <string name="ui_b165bad93f2e" formatted="false">"Sign in to check your status."</string>
+  <string name="ui_b185e5e80ef9" formatted="false">"\nLast opened: "</string>
+  <string name="ui_b2024b6c5346" formatted="false">"Could not execute. Check your connection and try again."</string>
+  <string name="ui_b2104bb9e3b5" formatted="false">"Playback and download preferences"</string>
+  <string name="ui_b23fd12c1473" formatted="false">"Available: %.1f %% · %d MiB\nTubego on this phone: %d MiB\nThis account/device: %d MiB\nThreshold: %d %%"</string>
+  <string name="ui_b310a7e32177" formatted="false">"History / Request again"</string>
+  <string name="ui_b3181b8c6c6d" formatted="false">"Ready on server"</string>
+  <string name="ui_b37dbe4a17a0" formatted="false">"You can add links offline; they will be sent over any available network."</string>
+  <string name="ui_b3a2ff869be3" formatted="false">"The operator restored the service; the previous operation was interrupted."</string>
+  <string name="ui_b3cbcaf5c0ff" formatted="false">"An approved session is required"</string>
+  <string name="ui_b5529b48dc32" formatted="false">"Could not download. Check the link and retry."</string>
+  <string name="ui_b5fa51d564a9" formatted="false">"Ready"</string>
+  <string name="ui_b6f538972144" formatted="false">"Reject "</string>
+  <string name="ui_b71d069212df" formatted="false">" · email verified"</string>
+  <string name="ui_b766a8514c50" formatted="false">"Block user"</string>
+  <string name="ui_b7c113630b64" formatted="false">"Retry with current permissions"</string>
+  <string name="ui_b7d27ddc59e8" formatted="false">"yt-dlp: "</string>
+  <string name="ui_b7e6bddc97fa" formatted="false">"Disable system notifications"</string>
+  <string name="ui_b856239b22ba" formatted="false">"Make next in queue"</string>
+  <string name="ui_b8fba2065a4d" formatted="false">"Checking metadata…"</string>
+  <string name="ui_b921ef61c58b" formatted="false">"Sign in as an administrator."</string>
+  <string name="ui_b94c579a7fcc" formatted="false">"Approved version"</string>
+  <string name="ui_b985d76a6ff3" formatted="false">"Loading verified requests…"</string>
+  <string name="ui_ba37f704ecc3" formatted="false">"Signing out deletes that phone\'s downloads after confirmation. You can close sessions or unlink devices in My account. Blocking or deleting an account revokes access and orders file deletion on the next contact; copies exported to other apps are outside Tubego\'s control."</string>
+  <string name="ui_bb234d4d9d7a" formatted="false">"Checking devices…"</string>
+  <string name="ui_bb6e430ce0a7" formatted="false">"Pending"</string>
+  <string name="ui_bb9dbb406dcb" formatted="false">"Cancel"</string>
+  <string name="ui_bbfeaa790697" formatted="false">" · unavailable in this version"</string>
+  <string name="ui_bc127c13afe1" formatted="false">"The transfer failed permanently. Open Downloads to review the reason and retry."</string>
+  <string name="ui_bc5581f6f2ba" formatted="false">"Add"</string>
+  <string name="ui_bc6e81e874f3" formatted="false">"Permission saved for this file."</string>
+  <string name="ui_bcd5daeda883" formatted="false">"Add this link with "</string>
+  <string name="ui_bcec4bf3b103" formatted="false">"Downloaded files stay on your phone until you delete them. If space is low, the app pauses downloads and alerts you without automatically deleting content. Android may delay background work; if you force-stop Tubego, open the app to resume it."</string>
+  <string name="ui_bd02b9a7d71d" formatted="false">"All"</string>
+  <string name="ui_be113ca8d997" formatted="false">"Approved"</string>
+  <string name="ui_be11b4794490" formatted="false">"Clean up server"</string>
+  <string name="ui_be16d8f6aaa1" formatted="false">"Cleanup and retention changes apply to the server. Blocking or deleting users revokes access and orders deletion of their local copies on the next contact. Every destructive action asks for confirmation on its screen. Administration is unavailable offline."</string>
+  <string name="ui_bf7a3ac249c1" formatted="false">"Delete files"</string>
+  <string name="ui_c08d985cfe11" formatted="false">"720p video"</string>
+  <string name="ui_c1a65bf46f7f" formatted="false">"User administration"</string>
+  <string name="ui_c275b3d6f18d" formatted="false">"Synchronization pending"</string>
+  <string name="ui_c340da772b4c" formatted="false">"Waiting for approval"</string>
+  <string name="ui_c567649457f4" formatted="false">"Authorize"</string>
+  <string name="ui_c573fec9f90e" formatted="false">"Mobile data connection"</string>
+  <string name="ui_c5f8f231a6c5" formatted="false">"Add to queue"</string>
+  <string name="ui_c67d542c780c" formatted="false">"Quality or format"</string>
+  <string name="ui_c69147d8bb55" formatted="false">"Library / History"</string>
+  <string name="ui_c6b9529bc15f" formatted="false">"Could not read the shared link."</string>
+  <string name="ui_c6e6960395f4" formatted="false">"Sign out"</string>
+  <string name="ui_c76786b89397" formatted="false">"View item · "</string>
+  <string name="ui_c87ece2bf312" formatted="false">". Active downloads will be allowed to finish, and the service will be checked afterwards."</string>
+  <string name="ui_c90358a60cab" formatted="false">" · duration "</string>
+  <string name="ui_c9169c12cba9" formatted="false">"Library"</string>
+  <string name="ui_c9660f0c6e11" formatted="false">"If Wi-Fi is lost, downloads pause and resume from the same point when it returns. You can authorize mobile data for one file on this phone; this does not authorize other videos or devices. Links and small actions can use any connection."</string>
+  <string name="ui_c9fe1d2f0aa8" formatted="false">"Verified requests · Approve / Reject"</string>
+  <string name="ui_cb59afc78d23" formatted="false">"Mobile data authorized"</string>
+  <string name="ui_cb6a7ba862ce" formatted="false">"Local file missing"</string>
+  <string name="ui_ccc46ab69e06" formatted="false">"Tubego · "</string>
+  <string name="ui_cd0dc77ac58b" formatted="false">"Language saved on this phone; synchronization pending."</string>
+  <string name="ui_cebb55b6c348" formatted="false">"Saving the exact playback position depends on the VLC compatibility investigation. It is not guaranteed. If supported, resuming rewinds by your preference: initially ten seconds, configurable per user."</string>
+  <string name="ui_cefe8f25f252" formatted="false">"View existing items / History"</string>
+  <string name="ui_cf506aff0d86" formatted="false">"Save language"</string>
+  <string name="ui_cfba11035b1a" formatted="false">"The player is no longer available."</string>
+  <string name="ui_d02093474cac" formatted="false">"A maintenance operation\'s status has changed."</string>
+  <string name="ui_d06fc9065121" formatted="false">"Play local file"</string>
+  <string name="ui_d1b3107029a0" formatted="false">"yt-dlp update"</string>
+  <string name="ui_d266f6697dc3" formatted="false">"Refresh status"</string>
+  <string name="ui_d272d9e874e3" formatted="false">"Service maintenance…"</string>
+  <string name="ui_d39add8b30fb" formatted="false">"The download failed permanently. Review the reason and retry when appropriate."</string>
+  <string name="ui_d3d27616a071" formatted="false">"Your account language is saved even when offline. It synchronizes with your other devices when connected, without using data to download videos."</string>
+  <string name="ui_d41bfc99008d" formatted="false">"Check availability when requesting"</string>
+  <string name="ui_d447bcbb040a" formatted="false">"Manage account / Free up downloads on sign out"</string>
+  <string name="ui_d455cfb682d3" formatted="false">"Paused"</string>
+  <string name="ui_d4584547c7f6" formatted="false">"Administrator"</string>
+  <string name="ui_d461d95ca8ff" formatted="false">"Not recorded"</string>
+  <string name="ui_d53deae0a971" formatted="false">"Block access, cancel downloads and delete server files. Its devices will delete files on their next contact. The account and its history are preserved."</string>
+  <string name="ui_d546053726a3" formatted="false">"This feature is not available in this version yet."</string>
+  <string name="ui_d552e8fe7322" formatted="false">"Blocked"</string>
+  <string name="ui_d579622f4715" formatted="false">"Clean up server files…"</string>
+  <string name="ui_d5e466df811b" formatted="false">"Use a whole percentage between 1 and 90 and an active session."</string>
+  <string name="ui_d68ca9e15458" formatted="false">"Could not save: check your session or wait for the pending request to be sent."</string>
+  <string name="ui_d6f452667af7" formatted="false">"Manage requests"</string>
+  <string name="ui_d7b8d868354e" formatted="false">"Alerts requiring action"</string>
+  <string name="ui_d80433c4215c" formatted="false">"Could not prepare the change. Your language is still saved locally."</string>
+  <string name="ui_d93a991fa0e2" formatted="false">"Waiting for active downloads"</string>
+  <string name="ui_da0f23b03f69" formatted="false">" known files · "</string>
+  <string name="ui_dafbb9edb30b" formatted="false">"Request saved. It will be sent when connected."</string>
+  <string name="ui_db53eb937e37" formatted="false">"Could not save the action. Check your session and phone space."</string>
+  <string name="ui_db587178e257" formatted="false">"Saved. Server copies removed: "</string>
+  <string name="ui_db6b205d9d1f" formatted="false">"Downloads are waiting for sufficient space. Your files are preserved."</string>
+  <string name="ui_dba8521cc04a" formatted="false">"This action is not available in this version yet."</string>
+  <string name="ui_dc45d76bad9b" formatted="false">"An administrator approves accounts after email verification. Only administrators change user priorities, retention, limits, global cleanup and maintenance. Unless server retention is enabled, files are deleted when all devices confirm delivery or the limit expires: initially four hours after the first delivery and at most three days after the file is ready. Administrators can change these limits for all existing files."</string>
+  <string name="ui_de382028f386" formatted="false">"Could not open local file: "</string>
+  <string name="ui_de9d52c45c28" formatted="false">"Highest available"</string>
+  <string name="ui_dfb83043d401" formatted="false">"Server speed is measured in Administration; it does not download a large test to your phone. Diagnostics shows your connection and alerts; it does not share passwords, tokens or other accounts\' private logs. The Telegram bot still works with a separate list."</string>
+  <string name="ui_e05e4d6a5a19" formatted="false">"Next page"</string>
+  <string name="ui_e07ab2c06154" formatted="false">"Save this phone\'s threshold"</string>
+  <string name="ui_e0b973beb9ad" formatted="false">"Add a link by pasting it or sharing it from another app. Choose quality or audio only. The server prepares the file and your devices download it automatically over Wi-Fi; each user has a private library."</string>
+  <string name="ui_e0f19dbb9a8a" formatted="false">"Sign in to view alerts for this account and device."</string>
+  <string name="ui_e1920f44a0bf" formatted="false">"Available: "</string>
+  <string name="ui_e1941804d3d5" formatted="false">"Prioritize file"</string>
+  <string name="ui_e1e45356a605" formatted="false">"mobile-channel server files for ALL users"</string>
+  <string name="ui_e2fcf063ee06" formatted="false">"Version check"</string>
+  <string name="ui_e4d952794695" formatted="false">"Sign in to configure storage on this device."</string>
+  <string name="ui_e552aabf47dd" formatted="false">"Incorrect email or password, or invalid session."</string>
+  <string name="ui_e568dbe40fc5" formatted="false">"Sign in / My account"</string>
+  <string name="ui_e5983055827c" formatted="false">"Persistent priority: 3 turns to 1. Does not interrupt downloads."</string>
+  <string name="ui_e5ff11360ede" formatted="false">"Will delete "</string>
+  <string name="ui_e60465d97bea" formatted="false">"Could not read this account\'s library."</string>
+  <string name="ui_e77a153cf4fd" formatted="false">"Permanent failures. Temporary errors are retried up to three times."</string>
+  <string name="ui_e7de98cc83ca" formatted="false">"Session unavailable."</string>
+  <string name="ui_e83382cd81cc" formatted="false">"Could not complete the operation. Check your details."</string>
+  <string name="ui_ebcc204e4967" formatted="false">"Refresh alerts"</string>
+  <string name="ui_ec46749a1af4" formatted="false">" bytes"</string>
+  <string name="ui_ec64dc30a483" formatted="false">"Email address"</string>
+  <string name="ui_ec6e6405bf90" formatted="false">"Play"</string>
+  <string name="ui_ee556f7b0a9f" formatted="false">"Storage on this phone"</string>
+  <string name="ui_ee7e3972cf6d" formatted="false">" bytes · "</string>
+  <string name="ui_efa438fb86dd" formatted="false">"Could not read the local queue."</string>
+  <string name="ui_efe0ffa994e0" formatted="false">"Could not load. Check your session and connection."</string>
+  <string name="ui_f0886de0cbbf" formatted="false">"Alerts center"</string>
+  <string name="ui_f10f144b8d7b" formatted="false">"Not available locally"</string>
+  <string name="ui_f112ec19b82d" formatted="false">"Choose quality or audio before sending"</string>
+  <string name="ui_f22b352552c0" formatted="false">"No links sent from this device"</string>
+  <string name="ui_f31f63c4540f" formatted="false">"An active administrator session is required to check retention."</string>
+  <string name="ui_f32465cc4af9" formatted="false">"Audio only (MP3)"</string>
+  <string name="ui_f3540b6e1401" formatted="false">"Delete the account, personal data, history and server files. Its devices will delete files when they contact the server again; exported copies are outside Tubego\'s control. This action cannot be undone."</string>
+  <string name="ui_f38991bbd5ed" formatted="false">"Devices and server"</string>
+  <string name="ui_f398c6835082" formatted="false">"Server download: "</string>
+  <string name="ui_f39ac6ab7f28" formatted="false">"Could not check the limits."</string>
+  <string name="ui_f3b705f0c8be" formatted="false">"Delete files…"</string>
+  <string name="ui_f407384e2f30" formatted="false">"Cancelled"</string>
+  <string name="ui_f47118c721c4" formatted="false">"Quality preferences"</string>
+  <string name="ui_f48ed178e391" formatted="false">"Sign in to view pending actions."</string>
+  <string name="ui_f4903f823022" formatted="false">"Service restart"</string>
+  <string name="ui_f5a019fc1826" formatted="false">"Check available versions"</string>
+  <string name="ui_f620f0331df8" formatted="false">"Create account"</string>
+  <string name="ui_f635b9cd816c" formatted="false">"Limits saved. Copies removed: "</string>
+  <string name="ui_f64e3d1a04fe" formatted="false">"Session changed. Open administration again."</string>
+  <string name="ui_f6cd8d5c9dd1" formatted="false">"Could not measure server storage. Downloads are paused."</string>
+  <string name="ui_f72249109119" formatted="false">"Checking actual server storage…"</string>
+  <string name="ui_f7803a0c103e" formatted="false">"An active administrator session is required. Check your account and connection."</string>
+  <string name="ui_f816b77d6bf4" formatted="false">"You can play offline using VLC or another installed player. In VLC, configure background or PiP mode and allow its floating window. To listen with the screen locked, use play as audio or background audio mode. Features and gestures depend on your player; Tubego neither plays nor downloads another copy when you open a local file."</string>
+  <string name="ui_f9573fdc8c1b" formatted="false">"No operator-approved versions available."</string>
+  <string name="ui_f96fff9234cc" formatted="false">"Configure the server and sign in with an approved account."</string>
+  <string name="ui_f9b9325cc5e5" formatted="false">"Device unlinked. Local files deleted."</string>
+  <string name="ui_fa110c0666f5" formatted="false">"The request is invalid. Check its details before trying again."</string>
+  <string name="ui_fa1c39d484fd" formatted="false">"Connection failed. Retry when connected."</string>
+  <string name="ui_fa540e3582ca" formatted="false">"Downloading"</string>
+  <string name="ui_fa6042617831" formatted="false">"Save and check connection"</string>
+  <string name="ui_fabaa4328726" formatted="false">"paused"</string>
+  <string name="ui_fb60e45ad48c" formatted="false">"Verify your email before using the service."</string>
+  <string name="ui_fb9e3cf46f20" formatted="false">"Downloads pause without deleting files. They continue only when the pending file fits while preserving the free-space percentage. Messages and small actions remain available."</string>
+  <string name="ui_fc3399db4f6e" formatted="false">"Cancel server download"</string>
+  <string name="ui_fd0a6b16fb1b" formatted="false">"Session revoked. This account\'s local downloads have been removed."</string>
+  <string name="ui_fd3b826bbb52" formatted="false">"Linked devices"</string>
+  <string name="ui_fe152e54ad4f" formatted="false">"Using local preferences. You can save changes offline."</string>
+  <string name="ui_ff936839728b" formatted="false">"Could not complete. Check your details and connection."</string>
+</resources>
