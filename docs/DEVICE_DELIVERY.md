@@ -50,7 +50,7 @@ private history and explicitly request an available item with
 `POST /api/v1/resources/{id}/deliveries/request`, JSON `{}`. If the item was locally
 removed, send `{"approve_redownload":true}` only after user confirmation. If the
 server copy is unavailable, the endpoint returns 404 and the client must use the
-future resource re-request flow. Already completed same-file requests are no-ops.
+resource re-request flow documented in RESOURCE_RECOVERY.md. Already completed same-file requests are no-ops.
 
 ## Media transfer and confirmation
 
@@ -75,6 +75,9 @@ clients must calculate the checksum from the completed local file.
 
 Revoked sessions/devices, blocked/unverified owners, unavailable server files,
 and foreign resource IDs cannot confirm or initiate new media transfers.
-Transfers already streaming from an open descriptor are not forcibly interrupted
-by session revocation; coordinated cancellation belongs to the account-removal
-and worker lifecycle integration. Ready files must never be modified in place.
+Streaming revalidates session/device/owner and resource availability before each
+chunk, so a known revocation or deletion stops subsequent output. Client transfer
+writes and renames also check current session identity and local deletion markers;
+remote cleanup is applied when the offline client next contacts the server. Already
+received bytes or externally exported copies cannot be remotely recalled. Ready
+files must never be modified in place.

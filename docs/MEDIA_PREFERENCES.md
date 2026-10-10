@@ -13,8 +13,10 @@ Selection is exactly `480`, `720`, `1080`, `best`, or `audio`. Initially the app
 ask for each link. When asking is disabled, the saved selection supplies the default;
 a per-link choice overrides it without changing preferences. Rewind is 10 seconds
 by default, accepts integers 0–120, and is not a promise that external players return
-playback position; that capability remains the VLC spike. User preference changes
-require network to save; quality selection itself works offline.
+playback position; that capability remains the VLC spike. Preference changes save locally offline, then synchronize through the same
+ordered durable command queue as other account actions using any available network.
+Server snapshots cannot overwrite a newer local preference or pending change.
+Quality selection itself works offline.
 
 `resolve_selection()` must be called before creating a backend job. If asking is on
 and no explicit selection is supplied, it rejects submission. Persist
@@ -42,8 +44,9 @@ Android `MediaPreferencesActivity` can be launched by the authenticated app with
 `server_url` and reads the existing session-token store. It edits ask/default/rewind
 preferences. `QualityPicker.show(activity, selection, callback)` is reusable without
 network by the add/share flow; `MediaSelection.resolve()` mirrors enqueue validation.
-The preferences screen is registered but its menu entry is coordinated with PLA-233;
-it does not alter MainActivity concurrently.
+The preferences screen is reachable from MainActivity and the add/share screen.
+Its values are scoped to the current account/device and synchronize with backend
+preferences. The VLC position spike remains separate from these settings.
 
 ## Mobile quality notices and source errors (acceptance review)
 
