@@ -132,7 +132,10 @@ def restricted_ytdlp(options, *, resolver=socket.getaddrinfo):
     options = dict(options)
     options.update(proxy=proxy, external_downloader=None, hls_prefer_native=True,
                    cachedir=False, usenetrc=False, cookiefile=None, cookiesfrombrowser=None,
-                   enable_file_urls=False, logger=SilentLogger())
+                   enable_file_urls=False, logger=SilentLogger(),
+                   # EJS is installed at image build time. No npm/GitHub code fetch
+                   # or alternate JS runtime may evade the controlled egress path.
+                   js_runtimes={"deno": {}}, remote_components=[], nocheckcertificate=False)
     return GuardedYoutubeDL(options)
 
 
