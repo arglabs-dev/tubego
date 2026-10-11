@@ -20,6 +20,7 @@ TubeGo es una aplicación "Todo en Uno" para descargar contenido multimedia. Fun
 Toda la documentación técnica se ha movido a la carpeta `docs/`:
 
 - **[🤖 Guía del Bot de Telegram](docs/telegram_bot.md):** Cómo configurar el Token, el Userbot y los comandos.
+- **[🚀 Despliegue con Docker](docs/DEPLOY.md):** Cómo levantar el contenedor y autorizar la sesión para subir archivos grandes.
 - **[🏗 Arquitectura](docs/ARCHITECTURE.md):** Estructura interna del código y flujos de datos.
 - **[🧠 Contexto del Proyecto](docs/GEMINI.md):** Historial y contexto para desarrolladores/IA.
 
