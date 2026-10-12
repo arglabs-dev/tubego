@@ -59,4 +59,5 @@ volumes:
 networks:
   tunnel_origin:
     external: true
-    name: sjia_tunnel_origin
+    # Dedicated ingress network: never attach TubeGo to SJIA origin/backend networks.
+    name: tubego_tunnel_origin
