@@ -1,6 +1,6 @@
 FROM docker:cli
 
-RUN apk add --no-cache python3 py3-pip
+RUN apk add --no-cache git python3 py3-pip
 COPY backend/requirements-maintenance.txt /tmp/requirements-maintenance.txt
 RUN python3 -m venv /opt/tubego-maintenance \
     && /opt/tubego-maintenance/bin/pip install --no-cache-dir -r /tmp/requirements-maintenance.txt
