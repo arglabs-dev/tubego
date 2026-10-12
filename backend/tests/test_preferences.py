@@ -51,7 +51,7 @@ def test_selection_before_enqueue():
 @pytest.mark.parametrize('selection', ['480','720','1080'])
 def test_video_never_upscales(selection):
     options=download_options(selection)
-    assert options['format']==f'bestvideo[height<=?{selection}]+bestaudio/best[height<=?{selection}]'
+    assert options['format']==f'bestvideo[height<=?{selection}]+bestaudio/best[height<=?{selection}]/worstvideo+bestaudio/worst'
     assert options['merge_output_format']=='mp4'
     assert 'scale' not in repr(options)
     assert quality_notice(selection,360)=='lower_quality_available'
@@ -134,9 +134,8 @@ def test_real_selector_accepts_unknown_height_without_exceeding_known_cap(select
 
 @pytest.mark.parametrize('selection', ['480','720','1080'])
 @pytest.mark.parametrize('separate_audio', [False,True])
-def test_real_selector_never_falls_back_to_known_above_cap(selection,separate_audio):
+def test_real_selector_falls_back_when_only_above_cap(selection,separate_audio):
     from yt_dlp import YoutubeDL
-    from yt_dlp.utils import ExtractorError
     cap=int(selection)
     high={'format_id':'above','url':'https://video.example/above.mp4','ext':'mp4',
           'height':cap+360,'width':2560,'vcodec':'h264','acodec':'none' if separate_audio else 'aac'}
@@ -147,8 +146,9 @@ def test_real_selector_never_falls_back_to_known_above_cap(selection,separate_au
     info={'id':'large','title':'Only above cap','extractor':'test',
           'webpage_url':'https://video.example/large','formats':formats}
     with YoutubeDL({**download_options(selection),'quiet':True,'no_warnings':True}) as engine:
-        with pytest.raises(ExtractorError,match='Requested format is not available'):
-            engine.process_ie_result(info,download=False)
+        selected=engine.process_ie_result(info,download=False)
+    chosen=selected.get('requested_formats',[selected])
+    assert 'above' in [item['format_id'] for item in chosen]
 
 
 @pytest.mark.parametrize('selection', ['480','720','1080'])

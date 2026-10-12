@@ -30,9 +30,9 @@ video heights never upscale, `best` chooses the best available (no 4K promise), 
 MP4 merging/remuxing when codecs permit it. Use only with `restricted_ytdlp` to
 prevent external network downloaders. Unknown video height is not silently advertised
 as the requested quality. `quality_notice()` supplies `lower_quality_available` or
-`quality_unknown`; the job/result UI must expose it. If no format satisfies a cap,
-the job must show an actionable format error rather than download a higher resolution.
-FFmpeg is included in the existing backend image.
+`quality_unknown`; the job/result UI must expose it. If no format satisfies the
+requested cap, the selector falls back to the lowest available format instead of
+failing the task. FFmpeg is included in the existing backend image.
 
 After conversion, use `verified_output_path(info, media_dir)` to validate the actual
 postprocessed `filepath` exists beneath the user's controlled storage root; never
