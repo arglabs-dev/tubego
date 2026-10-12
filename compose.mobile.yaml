@@ -14,10 +14,16 @@ services:
       TUBEGO_SMTP_USERNAME: ${TUBEGO_SMTP_USERNAME:-}
       TUBEGO_SMTP_PASSWORD: ${TUBEGO_SMTP_PASSWORD:-}
       TUBEGO_SMTP_TLS: ${TUBEGO_SMTP_TLS:-true}
+      TUBEGO_SMTP_SSL: ${TUBEGO_SMTP_SSL:-false}
     depends_on:
       - egress
     ports:
       - "127.0.0.1:8000:8000"
+    networks:
+      default: {}
+      tunnel_origin:
+        aliases:
+          - tubego-api
     volumes:
       - mobile-data:/data
     restart: unless-stopped
@@ -50,3 +56,7 @@ services:
     # Container network only: never publish the unauthenticated proxy to the host.
 volumes:
   mobile-data:
+networks:
+  tunnel_origin:
+    external: true
+    name: sjia_tunnel_origin

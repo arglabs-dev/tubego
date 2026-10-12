@@ -7,7 +7,7 @@ from tubego_server.config import Settings
 from tubego_server.db import Database
 from src.storage import validate_channel_paths
 import os
-from tubego_server.routers import system, registration, admin_priority, library, login, media, preferences, devices, device_delivery, tasks, retention, resource_deletion, resource_recovery, server_cleanup, alerts
+from tubego_server.routers import system, registration, admin_priority, library, login, media, preferences, devices, device_delivery, tasks, retention, resource_deletion, resource_recovery, server_cleanup, alerts, admin_mail
 from tubego_server.mail import SmtpMailer
 from tubego_server.maintenance import ReadRunner
 from tubego_server.routers import maintenance
@@ -52,6 +52,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.state.db = database
     app.state.mailer = SmtpMailer(settings)
     app.include_router(system.router, prefix="/api/v1")
+    app.include_router(admin_mail.router, prefix="/api/v1")
     app.include_router(registration.router, prefix="/api/v1")
     app.include_router(admin_priority.router, prefix="/api/v1")
     app.include_router(library.router, prefix="/api/v1")

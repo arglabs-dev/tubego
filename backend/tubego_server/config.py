@@ -13,6 +13,7 @@ class Settings:
     smtp_password: str = ""
     smtp_sender: str = ""
     smtp_tls: bool = True
+    smtp_ssl: bool = False
     account_cleanup_interval: float = 5
 
     def __post_init__(self):
@@ -25,7 +26,10 @@ class Settings:
             os.environ.get("TUBEGO_PUBLIC_URL", "https://localhost").rstrip("/"),
             os.environ.get("TUBEGO_SMTP_HOST", ""), int(os.environ.get("TUBEGO_SMTP_PORT", "587")),
             os.environ.get("TUBEGO_SMTP_USERNAME", ""), os.environ.get("TUBEGO_SMTP_PASSWORD", ""),
-            os.environ.get("TUBEGO_SMTP_SENDER", ""), os.environ.get("TUBEGO_SMTP_TLS", "true").lower() == "true", float(os.environ.get("TUBEGO_ACCOUNT_CLEANUP_INTERVAL", "5")))
+            os.environ.get("TUBEGO_SMTP_SENDER", ""),
+            os.environ.get("TUBEGO_SMTP_TLS", "true").lower() == "true",
+            os.environ.get("TUBEGO_SMTP_SSL", "false").lower() == "true",
+            float(os.environ.get("TUBEGO_ACCOUNT_CLEANUP_INTERVAL", "5")))
 
     @property
     def database_path(self):

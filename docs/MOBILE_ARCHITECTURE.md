@@ -90,16 +90,22 @@ authenticated transport.
 ## Registration and approval (PLA-228)
 
 Configure `TUBEGO_PUBLIC_URL` as the public HTTPS origin, `TUBEGO_SMTP_HOST`,
-`TUBEGO_SMTP_PORT` (587), `TUBEGO_SMTP_SENDER`, and optionally
-`TUBEGO_SMTP_USERNAME` / `TUBEGO_SMTP_PASSWORD`. STARTTLS is enabled by default;
-`TUBEGO_SMTP_TLS=false` is only appropriate for a trusted local mail relay.
+`TUBEGO_SMTP_PORT`, `TUBEGO_SMTP_SENDER`, `TUBEGO_SMTP_USERNAME`, and
+`TUBEGO_SMTP_PASSWORD`. Use `TUBEGO_SMTP_SSL=true` for implicit SSL/TLS (usually
+port 465), or `TUBEGO_SMTP_TLS=true` for STARTTLS (usually port 587). Do not
+enable both modes. Plain SMTP is only appropriate for a trusted local relay.
 Secrets belong in deployment secret storage, not committed compose files.
 Compose forwards these SMTP/public-URL variables from the operator environment
 or its private `.env` file into the API container. The default configuration has
 no SMTP service: registration/recovery emails require configuring an actual relay
 and the externally reachable, trusted HTTPS origin before opening registration.
-Restart/recreate the API after changing these deployment values. Use STARTTLS
-for production relays; disabling TLS is intended only for a trusted local relay.
+Restart/recreate the API after changing these deployment values. Keep either
+implicit SSL/TLS or STARTTLS enabled for production relays.
+Administrators can inspect the non-secret SMTP settings in **Admin Center →
+Server email**. The connection check validates TLS and SMTP authentication
+without sending a message. The separate test action requires confirmation and
+sends only to the signed-in administrator; SMTP acceptance does not guarantee
+inbox delivery.
 The default Compose port is localhost HTTP behind the separately provisioned HTTPS
 reverse proxy; entering an HTTP address or an untrusted certificate in Android
 will fail. Bootstrap the first administrator against the same deployment database,
