@@ -6,24 +6,22 @@ The API checks the current approved administrator, device ownership and session 
 
 ## Mutations are disabled by default
 
-The immutable container deployment does not receive Docker access. Update/restart calls fail with `capability_unavailable` unless the API has `TUBEGO_MAINTENANCE_MUTATIONS=true` and an external supervisor has a fresh heartbeat. A supervisor approves a specific clean **pre-staged official Git revision**, and explicit yt-dlp versions. The mobile user cannot supply a repository, command, branch, shell expression or arbitrary package. Updating the backend means building/recreating from that operator-staged revision; staging another revision remains an operator deployment step. On startup the explicitly enabled supervisor verifies its exact SHA by fetching that object from the fixed official HTTPS GitHub repository with TLS verification and redirects disabled; it does not checkout or accept a client-provided ref. No production host maintenance was executed. The isolated local Docker rehearsal described below exercised real operations on disposable services.
+The API container does not receive Docker access. Update/restart calls fail with `capability_unavailable` unless the API has `TUBEGO_MAINTENANCE_MUTATIONS=true` and the separate `maintenance-supervisor` service has a fresh heartbeat. The supervisor approves a specific clean **pre-staged official Git revision**, and explicit yt-dlp versions. The mobile user cannot supply a repository, command, branch, shell expression or arbitrary package. Updating the backend means building/recreating from that operator-staged revision; staging another revision remains an operator deployment step. On startup the supervisor verifies its exact SHA by fetching that object from the fixed official HTTPS GitHub repository with TLS verification and redirects disabled; it does not checkout or accept a client-provided ref.
 
 An operator who chooses to enable this capability must:
 
 1. Back up the existing mobile database/files and stop/migrate the named `mobile-data` volume into an existing host bind directory without changing its ownership. Keep Telegram's storage independent. Do not enable the overlay with an empty directory.
 2. Use a clean, trusted checkout whose origin is `arglabs-dev/tubego`, including the tracked maintenance overlay. Pre-stage the reviewed commit; do not run the supervisor from a checkout being edited. The supervisor accepts only its exact current SHA.
 3. Bring the **existing Compose project** up using `compose.mobile.yaml` plus `compose.maintenance.yaml`, with the existing bind directory, approved SHA and version. The supervisor verifies the running API's `/data` bind source matches its database directory before acting. API, worker and retention must share the same SQLite database. Changing a project name creates a different deployment and is not supported.
-4. Run the supervisor outside the API containers, using a Python environment with the backend's requirements:
+4. Configure `TUBEGO_REPO_DIR` to the clean staged checkout, `TUBEGO_HOST_DATA_DIR` to the existing bind directory, `TUBEGO_BUILD_REVISION` to its exact SHA, and `TUBEGO_YTDLP_VERSION` to an explicitly approved version. Start the separate supervisor service with the same Compose project:
 
    ```sh
-   TUBEGO_MAINTENANCE_MUTATIONS=true PYTHONPATH=backend python -m tubego_server.maintenance_supervisor \
-     --repo /operator/staged-official-tubego \
-     --project existing-project \
-     --data-dir /operator/existing-mobile-data \
-     --yt-dlp-version 2026.8.19
+   docker compose --project-name existing-project \
+     -f compose.mobile.yaml -f compose.maintenance.yaml \
+     up --build -d maintenance-supervisor
    ```
 
-   Repeating `--yt-dlp-version` exposes more operator-approved package versions. The API and CLI must both be explicitly enabled. The host supervisor holds an exclusive file lock and polls durable jobs; it never accepts arguments/commands from the client other than the validated action, SHA or version.
+   The supervisor image alone mounts the Docker socket; API, worker and other application containers do not. Add another explicitly approved version to the supervisor configuration when it has been reviewed. The supervisor holds an exclusive file lock and polls durable jobs; it never accepts commands from the client beyond the validated action, SHA or version.
 
 A write job sets a durable scheduler gate before waiting. Current server downloads finish normally; no new task starts while maintenance waits. A paused task with a current worker lease also waits and can be canceled through the existing task UI; a paused row without a lease does not block maintenance because no worker owns it. Its state/partial files remain intact until the exclusive restarted worker performs its existing recovery. The supervisor stops the worker, uses fixed `docker compose` argv with `shell=False`, rebuilds pinned immutable images for updates, recreates only API/worker/retention/egress, checks API health, and verifies the observed package version and SHA. A yt-dlp update additionally requires the operator's staged SHA to match the running backend, avoiding an unintended simultaneous code update. The API may restart without losing the job because the supervisor is external and the job is stored in the shared database. Existing worker startup recovery and claim fencing remain in force.
 

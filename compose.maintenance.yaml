@@ -29,3 +29,27 @@ services:
       args:
         TUBEGO_BUILD_REVISION: ${TUBEGO_BUILD_REVISION}
         YTDLP_VERSION: ${TUBEGO_YTDLP_VERSION}
+  maintenance-supervisor:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile.maintenance
+    environment:
+      TUBEGO_MAINTENANCE_MUTATIONS: "true"
+      TUBEGO_BUILD_REVISION: ${TUBEGO_BUILD_REVISION:?approved revision required}
+      TUBEGO_YTDLP_VERSION: ${TUBEGO_YTDLP_VERSION:?approved version required}
+      TUBEGO_HOST_DATA_DIR: ${TUBEGO_HOST_DATA_DIR:?existing data directory required}
+      TUBEGO_REPO_DIR: ${TUBEGO_REPO_DIR:?clean staged repository required}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${TUBEGO_REPO_DIR:?clean staged repository required}:/opt/tubego-repo
+      - ${TUBEGO_HOST_DATA_DIR:?existing data directory required}:${TUBEGO_HOST_DATA_DIR}
+    command:
+      - --repo
+      - /opt/tubego-repo
+      - --project
+      - tubego
+      - --data-dir
+      - ${TUBEGO_HOST_DATA_DIR}
+      - --yt-dlp-version
+      - ${TUBEGO_YTDLP_VERSION}
+    restart: unless-stopped
