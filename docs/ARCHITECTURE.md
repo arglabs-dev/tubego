@@ -12,7 +12,8 @@ TubeGo is a cross-platform application built on **Python**. Its main feature is 
 | Component | Technology | Function |
 |------------|------------|---------|
 | **Language** | Python 3.10+ | Business logic. |
-| **UI Framework** | Flet | Reactive UI and mobile compilation. |
+| **Desktop UI** | Flet | Desktop graphical interface. |
+| **Android UI** | Java / Android SDK | Official native app in `android/`. |
 | **Download Engine** | yt-dlp | Video/audio stream extraction. |
 | **Bot Framework** | python-telegram-bot | Bot API (Commands, Menus). |
 | **Userbot** | Telethon | Large file uploads (>50MB). |
@@ -89,4 +90,4 @@ A robust, asynchronous server that handles:
 - Automatic updates via Git (`/update`).
 
 ## 5. Build Strategy
-The APK build process (`scripts/build_android.sh`) leverages Flet to bundle Python code, a lightweight interpreter, and pure Python libraries into an installable APK.
+The official Android app is the native Java project in `android/`. `scripts/build_android.sh` verifies localization and runs Gradle compilation, Android Lint and unit tests. The desktop Flet entry point remains a separate application; see `docs/ANDROID_UI.md` for the Android design and build.

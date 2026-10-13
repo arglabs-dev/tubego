@@ -83,10 +83,10 @@ Telegram continues to work alongside the Android MVP with separate files and que
 See [storage configuration and deployment](docs/INDEPENDENT_CHANNELS.md) before
 running both services.
 
-## Android MVP y API móvil
+## App Android oficial y API móvil
 
 La nueva app Android nativa y API están en `android/` y `backend/` y conviven con
-el bot sin modificarlo. Esta primera entrega ofrece configuración HTTPS del
-servidor y comprobación de conexión; el flujo completo se implementa por tarjetas.
+el bot sin modificarlo. La app oficial incluye biblioteca privada, descargas sin conexión y Ajustes por finalidad,
+con herramientas administrativas según el rol de la cuenta.
 Consulta [arquitectura, contrato API y ejecución](docs/MOBILE_ARCHITECTURE.md).
 El workflow `Mobile foundation` verifica Python y compila un APK debug descargable.
