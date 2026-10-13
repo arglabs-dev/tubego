@@ -32,7 +32,7 @@ public final class LibraryActivity extends DsActivity implements Host {
     private volatile DownloadPolicy.NetworkState network = DownloadPolicy.NetworkState.offline();
     private final List<Item> items = new ArrayList<>();
     private String nextCursor = "";
-    private boolean online, loaded, loading;
+    private boolean online, loaded, loading, resumed, reloadPending;
     private String filter = "all"; // all | video | audio
     private String query = "";
 
@@ -42,7 +42,10 @@ public final class LibraryActivity extends DsActivity implements Host {
     private final Runnable poll = new Runnable() {
         @Override public void run() {
             if (isDestroyed()) return;
-            if (hasActive()) refresh();
+            if (hasActive()) {
+                TransferJobs.wake(LibraryActivity.this, origin, false);
+                refresh();
+            }
             ui.postDelayed(this, 4000);
         }
     };
@@ -70,7 +73,13 @@ public final class LibraryActivity extends DsActivity implements Host {
             return;
         }
         build();
-        monitor = new NetworkMonitor(this, s -> { network = s; ui.post(this::render); });
+        monitor = new NetworkMonitor(this, s -> {
+            network = s;
+            if (resumed) {
+                TransferJobs.wake(this, origin, false);
+                refresh();
+            }
+        });
         network = monitor.current();
         handleShare(getIntent());
         io.execute(() -> {
@@ -93,6 +102,9 @@ public final class LibraryActivity extends DsActivity implements Host {
             return;
         }
         if (origin.isEmpty() || list == null) return;
+        resumed = true;
+        network = monitor.current();
+        TransferJobs.register(this, origin);
         ui.removeCallbacks(poll);
         ui.post(poll);
         load(true);
@@ -100,6 +112,7 @@ public final class LibraryActivity extends DsActivity implements Host {
 
     @Override protected void onPause() {
         super.onPause();
+        resumed = false;
         ui.removeCallbacks(poll);
     }
 
@@ -223,13 +236,15 @@ public final class LibraryActivity extends DsActivity implements Host {
 
     // ---- Datos ----
     private boolean hasActive() {
-        for (Item i : items) if (i.state.inProgress() || i.state == ItemState.WAITING_OFFLINE || i.state == ItemState.WAITING_WIFI) return true;
+        for (Item i : items) if (i.state.inProgress() || i.state == ItemState.WAITING_OFFLINE || i.state == ItemState.WAITING_WIFI
+                || (i.state == ItemState.REMOTE_ONLY && i.serverAvailable && i.localState.isEmpty())) return true;
         return false;
     }
 
     /** Recarga la biblioteca; con {@code fetch} intenta actualizar desde el servidor. */
     private void load(boolean fetch) {
-        if (loading || io.isShutdown()) return;
+        if (io.isShutdown()) return;
+        if (loading) { reloadPending = true; return; }
         loading = true;
         final DownloadPolicy.NetworkState net = network;
         io.execute(() -> {
@@ -245,6 +260,7 @@ public final class LibraryActivity extends DsActivity implements Host {
                     online = r.online;
                     loaded = true;
                     render();
+                    if (resumed && reloadPending) { reloadPending = false; refresh(); }
                 });
             } catch (LibraryRepo.NoSession e) {
                 runOnUiThread(() -> {

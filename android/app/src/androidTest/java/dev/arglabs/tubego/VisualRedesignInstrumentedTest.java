@@ -77,6 +77,18 @@ public final class VisualRedesignInstrumentedTest extends InstrumentationTestCas
     }
     private void close(Activity activity) { getInstrumentation().runOnMainSync(activity::finish); getInstrumentation().waitForIdleSync(); }
 
+    public void testLibraryRestoresPersistentTransferScheduling() throws Exception {
+        android.app.job.JobScheduler scheduler = context.getSystemService(android.app.job.JobScheduler.class);
+        assertNull(scheduler.getPendingJob(TransferJobs.jobId(ORIGIN, true)));
+        Activity activity = open(LibraryActivity.class);
+        try {
+            android.app.job.JobInfo job = scheduler.getPendingJob(TransferJobs.jobId(ORIGIN, true));
+            assertNotNull("Opening the library must restore background synchronization", job);
+            assertTrue(job.isPersisted());
+            assertEquals(ORIGIN, job.getExtras().getString("origin"));
+        } finally { close(activity); }
+    }
+
     public void testEveryManifestScreenUsesSharedVisualSystem() throws Exception {
         PackageInfo installed = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
         int checked = 0;
