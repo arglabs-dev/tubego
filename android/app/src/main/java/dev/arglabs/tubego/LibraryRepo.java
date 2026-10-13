@@ -122,7 +122,7 @@ final class LibraryRepo {
                                DownloadPermissions permissions, DownloadPolicy.NetworkState network) {
         Item item = new Item();
         item.id = row.optString("id");
-        item.title = row.optString("title", "");
+        item.title = row.isNull("title") ? "" : row.optString("title", "");
         item.mediaFormat = row.optString("media_format", "video");
         item.selection = "audio".equals(item.mediaFormat) ? "audio" : row.optString("quality", "best");
         item.sourceUrl = row.optString("source_url", "");

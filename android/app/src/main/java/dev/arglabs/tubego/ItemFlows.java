@@ -28,7 +28,7 @@ final class ItemFlows {
         switch (i.state) {
             case WAITING_WIFI: return a.t("En espera · Wi-Fi");
             case WAITING_OFFLINE: return a.t("En espera · sin conexión");
-            case PREPARING: return a.t("En proceso · paso 1 de 2");
+            case PREPARING: return "queued".equals(i.taskState) ? Texts.state(a, "queued") : a.t("En proceso · paso 1 de 2");
             case SAVING: return a.t("En proceso · paso 2 de 2");
             case READY: return a.t("Listo · en este teléfono");
             case PAUSED_SPACE: return a.t("En pausa · poco espacio");
