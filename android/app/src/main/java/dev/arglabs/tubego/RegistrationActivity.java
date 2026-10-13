@@ -12,7 +12,7 @@ public final class RegistrationActivity extends LocalizedActivity {
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
         LinearLayout layout = new LinearLayout(this); layout.setOrientation(LinearLayout.VERTICAL); layout.setPadding(32,64,32,32);
-        TextView heading = new TextView(this); heading.setText(Texts.text(RegistrationActivity.this,"Crear cuenta · Tubego")); heading.setTextSize(24); layout.addView(heading);
+        TextView heading = new TextView(this); heading.setText(Texts.text(RegistrationActivity.this,"Crear cuenta · Tubego")); heading.setTextSize(24);heading.setTag("legacy_heading"); layout.addView(heading);
         EditText email = new EditText(this); email.setHint(Texts.text(RegistrationActivity.this,"Correo electrónico")); email.setSingleLine(true); email.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS); layout.addView(email);
         EditText password = new EditText(this); password.setHint(Texts.text(RegistrationActivity.this,"Contraseña (12–128 caracteres)")); password.setSingleLine(true); password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD); layout.addView(password);
         Button register = new Button(this); register.setText(Texts.text(RegistrationActivity.this,"Registrarme")); layout.addView(register);

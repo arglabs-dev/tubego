@@ -8,5 +8,16 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
         <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:alertDialogTheme">@style/TubegoDialogTheme</item>
+        <item name="android:textColorPrimary">#1F2230</item>
+        <item name="android:textColorSecondary">#575C6B</item>
+        <item name="android:colorControlNormal">#4B32BE</item>
+    </style>
+    <style name="TubegoDialogTheme" parent="android:style/Theme.Material.Light.Dialog.Alert">
+        <item name="android:colorAccent">#674AE5</item>
+        <item name="android:windowBackground">@drawable/ds_dialog_background</item>
+        <item name="android:textColorPrimary">#1F2230</item>
+        <item name="android:textColorSecondary">#575C6B</item>
+        <item name="android:fontFamily">sans</item>
     </style>
 </resources>

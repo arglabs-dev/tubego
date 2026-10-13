@@ -29,6 +29,7 @@ public final class AdminRetentionActivity extends LocalizedActivity {
             runOnUiThread(()->{if(isDestroyed())return;
                 layout.removeAllViews();layout.addView(status);addDeadlines();
                 status.setText(Texts.text(AdminRetentionActivity.this,"Conservar evita la limpieza automática del servidor. No impide la limpieza manual ni el borrado por bloqueo. Los archivos del teléfono no cambian."));
+                UiKit.sectionCard(layout,"Conservación por usuario","Conservar mantiene sus copias en el servidor; no ocupa más espacio en el teléfono.");
                 var items=response.optJSONArray("items");
                 for(int i=0;items!=null && i<items.length();i++){
                     JSONObject user=items.optJSONObject(i);
@@ -48,8 +49,11 @@ public final class AdminRetentionActivity extends LocalizedActivity {
         }catch(Exception e){runOnUiThread(()->{if(!isDestroyed())status.setText(Texts.text(AdminRetentionActivity.this,"Se requiere una sesión administrativa activa para consultar conservación."));});}});
     }
     private void addDeadlines(){
+        UiKit.sectionCard(layout,"Plazos para todos los usuarios","Los plazos afectan a archivos existentes y nuevos. Solo borran copias del servidor.");
         TextView heading=new TextView(this);heading.setText(Texts.text(AdminRetentionActivity.this,"Plazos globales (horas). Aplican también a archivos existentes."));layout.addView(heading);
+        layout.addView(UiKit.text(this,Texts.text(this,"Máximo desde que el archivo queda listo (horas)"),15,Ds.INK));
         EditText absolute=new EditText(this);absolute.setHint(Texts.text(AdminRetentionActivity.this,"Máximo desde archivo listo (72)"));absolute.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);layout.addView(absolute);
+        layout.addView(UiKit.text(this,Texts.text(this,"Máximo desde la primera entrega (horas)"),15,Ds.INK));
         EditText delivery=new EditText(this);delivery.setHint(Texts.text(AdminRetentionActivity.this,"Máximo desde primera entrega (4)"));delivery.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);layout.addView(delivery);
         Button save=new Button(this);save.setText(Texts.text(AdminRetentionActivity.this,"Revisar impacto y guardar plazos"));save.setEnabled(false);layout.addView(save);
         network.execute(()->{try{JSONObject values=api().request("GET","/admin/retention/deadlines",null,token());runOnUiThread(()->{if(!isDestroyed()){absolute.setText(String.valueOf(values.optInt("absolute_hours")));delivery.setText(String.valueOf(values.optInt("delivery_hours")));save.setEnabled(true);}});}catch(Exception e){runOnUiThread(()->{if(!isDestroyed())status.setText(Texts.text(AdminRetentionActivity.this,"No se pudieron consultar los plazos."));});}});

@@ -1,15 +1,30 @@
-# Android visual redesign (PLA-261)
+# Interfaz oficial de TubeGo Android
 
-Android 0.2.0 adds a shared native visual system: warm paper surfaces, purple navigation, lime accents, rounded cards, vector icons and clearer typography. Home surfaces link entry and the private library; settings groups connection, account, downloads and help. Library cards show availability and quality with primary playback/request actions and secondary actions in an accessible menu. Full resource metadata remains available through Details.
+La implementación oficial vive exclusivamente en `android/`. La versión 0.5.0 (código 6) incorpora el diseño elegido, con biblioteca como inicio, una paleta compartida en las 30 pantallas, Ajustes por finalidad y alcance, y administración visible solo para cuentas autorizadas.
 
-No media thumbnails are fetched: the decorative covers are generated locally. No sample content is shipped. Authentication, session fences, permissions, transfer policy and existing command handlers remain authoritative. Both Spanish and English are supported. System insets and keyboard resizing are handled on API 29 and newer; page bodies scroll to support smaller displays and enlarged text.
+- Paquete oficial: `dev.arglabs.tubego`. Nombre: **TubeGo**.
+- Android mínimo: 10 (API 29). SDK de compilación y destino: 35.
+- Mantiene la firma de depuración local para actualizar instalaciones compatibles, sin desinstalar ni borrar datos.
+- Componentes: `Ds`, `UiKit` y `ScreenInfo`. Las pantallas existentes adoptan la misma paleta e iconos mediante una cabecera común.
+- Ajustes separa descargas, teléfono, cuenta, archivos propios del servidor, ayuda y administración. Cada destino indica su finalidad y alcance. La limpieza global se identifica y se oculta a usuarios normales.
+- Las gráficas de almacenamiento distinguen teléfono y servidor, con sus propios umbrales. Las preferencias, la seguridad de cuenta, la conservación y el mantenimiento se dividen en grupos explicados.
 
-## Validation
+## Compilar
 
-- Offline Gradle assembleDebug / assembleDebugAndroidTest / lintDebug / testDebugUnitTest successful.
-- 568 Spanish/English strings verified; git diff --check clean.
-- Existing Android regression suite plus visual tests: 20 tests passed on the emulator.
-- Three visual tests passed at 1080x2340, density 420, font scale 1.3, covering navigation, hidden administrator controls, offline cards, Details menu and link submission control.
-- Existing public-source test passed: UI link entry and quality confirmation, backend yt-dlp/FFmpeg processing, native download, verified local file and completion acknowledgement (10.728 seconds). Source: Blender's public Sintel trailer. The final subsequent change only widens the library refresh button for enlarged text.
+Requiere JDK 21, Gradle 8.11.1 y Android SDK 35 configurado en `ANDROID_HOME`.
 
-Screenshots in evidence/ui are actual emulator captures with isolated disposable test accounts and metadata fixtures. They demonstrate rendering, not production content or production connectivity. No embedded player, new backend feature or production deployment is included.
+```sh
+./scripts/build_android.sh
+```
+
+El script verifica la localización, compila, ejecuta Lint y las pruebas unitarias, y compila el APK de instrumentación. El APK instalable se genera en `android/app/build/outputs/apk/debug/app-debug.apk`. No elimina código ni datos.
+
+```sh
+adb install -r android/app/build/outputs/apk/debug/app-debug.apk
+```
+
+La prueba visual reproducible utiliza una API HTTPS local con datos sintéticos y escrituras bloqueadas; ver `android/ui-tests/README.md`. Cubre las pantallas declaradas, navegación de ajustes, roles, botones, hojas y confirmaciones, incluyendo fuente ampliada. No equivale a ejecutar correos, limpiezas o descargas contra producción.
+
+## Identidad de la versión oficial
+
+La vista previa independiente `dev.arglabs.tubego.claude` sirvió para evaluar el diseño. La app oficial conserva el identificador anterior de TubeGo y un código de versión mayor que las instalaciones 0.4.1 (código 5). Los APK oficiales de CI se construyen desde `android/`, que contiene el mismo diseño elegido.

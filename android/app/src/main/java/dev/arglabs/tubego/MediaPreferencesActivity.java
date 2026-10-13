@@ -23,14 +23,17 @@ public final class MediaPreferencesActivity extends LocalizedActivity {
         LinearLayout layout = new LinearLayout(this); layout.setOrientation(LinearLayout.VERTICAL);
         int padding = (int)(24 * getResources().getDisplayMetrics().density);
         layout.setPadding(padding, padding * 2, padding, padding);
-        TextView title = new TextView(this); title.setText(Texts.text(MediaPreferencesActivity.this,"Preferencias de reproducción y descarga")); title.setTextSize(22); layout.addView(title);
+        TextView title = new TextView(this); title.setText(Texts.text(MediaPreferencesActivity.this,"Preferencias de reproducción y descarga")); title.setTextSize(22);title.setTag("legacy_heading"); layout.addView(title);
+        UiKit.sectionCard(layout,"Al agregar un enlace","Puedes elegir la calidad cada vez o usar una opción predeterminada.");
         ask = new CheckBox(this); ask.setText(Texts.text(MediaPreferencesActivity.this,"Preguntar calidad o audio para cada enlace")); ask.setChecked(true); layout.addView(ask);
+        layout.addView(UiKit.heading(this,Texts.text(this,"Calidad predeterminada")));
         choice = new Spinner(this); choice.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Texts.labels(this,MediaSelection.LABELS)));
         choice.setSelection(MediaSelection.index("720")); layout.addView(choice);
+        UiKit.sectionCard(layout,"Al continuar la reproducción","El retroceso depende de que tu reproductor sea compatible; no cambia la calidad del archivo.");
         TextView rewindLabel = new TextView(this); rewindLabel.setText(Texts.text(MediaPreferencesActivity.this,"Retroceso al continuar (0 a 120 segundos; requiere reproductor compatible)")); layout.addView(rewindLabel);
         rewind = new EditText(this); rewind.setInputType(InputType.TYPE_CLASS_NUMBER); rewind.setText("10"); layout.addView(rewind);
         status = new TextView(this); layout.addView(status);
-        save = new Button(this); save.setText(Texts.text(MediaPreferencesActivity.this,"Guardar preferencias")); save.setEnabled(false); layout.addView(save);
+        save = new Button(this); save.setText(Texts.text(MediaPreferencesActivity.this,"Guardar preferencias")); save.setEnabled(false); UiKit.button(save,true); layout.addView(save);
         ScrollView scroll = new ScrollView(this); scroll.addView(layout); setContentView(scroll);
         try {
             api = new ApiClient(getIntent().getStringExtra("server_url"));

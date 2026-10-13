@@ -10,12 +10,16 @@ import java.util.concurrent.ExecutorService;
 /** Current-device settings; changing this does not affect backend quotas or peers. */
 public final class DeviceStorageActivity extends LocalizedActivity {
     private final ExecutorService io=Executors.newSingleThreadExecutor();
-    private TextView status;private EditText threshold;private String origin;
+    private LinearLayout chart;private TextView status;private EditText threshold;private String origin;
     private AndroidStorageGuard guard;private JSONObject session;
     @Override public void onCreate(Bundle state){super.onCreate(state);origin=getIntent().getStringExtra("server_url");
         LinearLayout layout=new LinearLayout(this);layout.setOrientation(LinearLayout.VERTICAL);layout.setPadding(32,64,32,32);
-        status=new TextView(this);layout.addView(status);threshold=new EditText(this);threshold.setHint(Texts.text(DeviceStorageActivity.this,"Porcentaje mínimo libre (1–90)"));threshold.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);layout.addView(threshold);
-        Button save=new Button(this);save.setText(Texts.text(DeviceStorageActivity.this,"Guardar umbral de este teléfono"));layout.addView(save);
+        LinearLayout card=UiKit.card(this);layout.addView(card);card.addView(UiKit.heading(this,Texts.text(this,"Espacio disponible")));
+        chart=Ds.column(this);card.addView(chart);status=new TextView(this);card.addView(status);
+        UiKit.sectionCard(layout,"Reserva de espacio libre","Si el teléfono baja de este porcentaje, se pausan las descargas; no se borra ningún archivo.");
+        layout.addView(UiKit.heading(this,Texts.text(this,"Porcentaje mínimo libre (1–90)")));
+        threshold=new EditText(this);threshold.setHint(Texts.text(DeviceStorageActivity.this,"Porcentaje mínimo libre (1–90)"));threshold.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);layout.addView(threshold);
+        Button save=new Button(this);save.setText(Texts.text(DeviceStorageActivity.this,"Guardar umbral de este teléfono"));UiKit.button(save,true);layout.addView(save);
         Button refresh=new Button(this);refresh.setText(Texts.text(DeviceStorageActivity.this,"Actualizar espacio disponible"));layout.addView(refresh);
         TextView explanation=new TextView(this);explanation.setText(Texts.text(DeviceStorageActivity.this,"Las descargas se pausan sin borrar archivos. Solo continúan cuando el archivo pendiente cabe manteniendo el porcentaje libre. Los mensajes y acciones pequeñas siguen funcionando."));layout.addView(explanation);
         Button cleanup=new Button(this);cleanup.setText(Texts.text(DeviceStorageActivity.this,"Gestionar cuenta / Liberar descargas al cerrar sesión"));layout.addView(cleanup);
@@ -31,7 +35,9 @@ public final class DeviceStorageActivity extends LocalizedActivity {
         long all=AndroidStorageGuard.used(new java.io.File(getFilesDir(),"tubego-media"));
         String message=String.format(Locale.ROOT,Texts.text(DeviceStorageActivity.this,"Disponible: %.1f %% · %d MiB\nTubego en este teléfono: %d MiB\nEsta cuenta/dispositivo: %d MiB\nUmbral: %d %%"),state.total>0?100.0*state.available/state.total:0.0,state.available/1048576,all/1048576,owned/1048576,guard.settings.threshold());
         if(state.paused)message+=Texts.text(DeviceStorageActivity.this,"\nDescargas pausadas. Libera espacio para continuar automáticamente.");
-        final String result=message;runOnUiThread(()->{if(!isDestroyed())status.setText(result);});
+        final String result=message;runOnUiThread(()->{if(!isDestroyed()){status.setText(result);chart.removeAllViews();float free=state.total>0?(float)Math.max(0,Math.min(1,(double)state.available/state.total)):0;
+            Ds.add(chart,Ds.segments(this,new float[]{1-free,free},new int[]{state.paused?Ds.WARN:Ds.BRAND,Ds.TRACK},1-guard.settings.threshold()/100f,Texts.text(this,"Espacio ocupado, libre y reserva mínima")),LinearLayout.LayoutParams.MATCH_PARENT,Ds.dp(this,24),0,12,0,8);
+            chart.addView(Ds.text(this,Texts.text(this,"Ocupado · libre · marca: reserva mínima"),12,Ds.MUTED,500));}});
     }catch(Exception e){runOnUiThread(()->{if(!isDestroyed())status.setText(Texts.text(DeviceStorageActivity.this,"No se pudo consultar el almacenamiento."));});}});}
     @Override protected void onDestroy(){io.shutdownNow();super.onDestroy();}
 }

@@ -14,12 +14,17 @@ public final class ServerCleanupActivity extends LocalizedActivity {
     @Override public void onCreate(Bundle state){super.onCreate(state);origin=getIntent().getStringExtra("server_url");
         LinearLayout layout=new LinearLayout(this);layout.setOrientation(LinearLayout.VERTICAL);int pad=(int)(16*getResources().getDisplayMetrics().density);layout.setPadding(pad,pad,pad,pad);
         status=new TextView(this);status.setText(Texts.text(ServerCleanupActivity.this,"Limpieza del servidor · conserva teléfono e historial"));layout.addView(status);
+        UiKit.sectionCard(layout,"Mis copias del servidor","Esta limpieza afecta solo a tus archivos del servidor. Conserva tus copias del teléfono y tu historial.");
         Button own=new Button(this);own.setText(Texts.text(ServerCleanupActivity.this,"Limpiar mis archivos del servidor"));layout.addView(own);
-        Button global=new Button(this);global.setText(Texts.text(ServerCleanupActivity.this,"Limpiar todos los archivos móviles del servidor (administración)"));layout.addView(global);
+        LinearLayout adminSection=Ds.column(this);
+        adminSection.addView(Ds.badge(this,Texts.text(this,"Solo administradores"),Ds.Tone.PROGRESS));
+        UiKit.sectionCard(adminSection,"Limpieza global","Afecta a las copias del servidor de todos los usuarios. Revisa el alcance antes de confirmar.");
+        layout.addView(adminSection);
+        Button global=new Button(this);global.setText(Texts.text(ServerCleanupActivity.this,"Limpiar todos los archivos móviles del servidor (administración)"));adminSection.addView(global);UiKit.danger(global);
         Button refresh=new Button(this);refresh.setText(Texts.text(ServerCleanupActivity.this,"Actualizar estimaciones / Enviar pendientes"));layout.addView(refresh);
         pending=new LinearLayout(this);pending.setOrientation(LinearLayout.VERTICAL);layout.addView(pending);ScrollView scroll=new ScrollView(this);scroll.addView(layout);setContentView(scroll);
-        try{store=new SessionStore(this,origin);JSONObject session=store.read();if(session==null||!"approved".equals(session.optString("status")))throw new Exception();global.setVisibility("admin".equals(session.optString("role"))?android.view.View.VISIBLE:android.view.View.GONE);}
-        catch(Exception e){own.setEnabled(false);global.setEnabled(false);refresh.setEnabled(false);status.setText(Texts.text(ServerCleanupActivity.this,"Inicia sesión con una cuenta aprobada."));return;}
+        try{store=new SessionStore(this,origin);JSONObject session=store.read();if(session==null||!"approved".equals(session.optString("status")))throw new Exception();adminSection.setVisibility(AdminAccess.allowed(session)?android.view.View.VISIBLE:android.view.View.GONE);}
+        catch(Exception e){adminSection.setVisibility(android.view.View.GONE);own.setEnabled(false);global.setEnabled(false);refresh.setEnabled(false);status.setText(Texts.text(ServerCleanupActivity.this,"Inicia sesión con una cuenta aprobada."));return;}
         own.setOnClickListener(v->confirm("own",ownPreview));global.setOnClickListener(v->confirm("global",globalPreview));refresh.setOnClickListener(v->load());load();
     }
     private void confirm(String scope,JSONObject preview){String label=scope.equals("own")?Texts.text(ServerCleanupActivity.this,"solo tus archivos del servidor"):Texts.text(ServerCleanupActivity.this,"los archivos móviles de TODOS los usuarios del servidor");
