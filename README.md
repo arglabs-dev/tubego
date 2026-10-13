@@ -67,12 +67,16 @@ python main.py "URL_VIDEO" --quality 720
 
 ---
 
-## 📱 Build para Android
-Para compilar la versión APK:
+## 📱 App oficial para Android
+
+La interfaz oficial está en `android/`: biblioteca, descargas y Ajustes con un sistema visual común y administración según el rol de la cuenta.
+
 ```bash
-flet build apk -v
+./scripts/build_android.sh
 ```
-_(Consulta la documentación oficial de Flet para requisitos de Android SDK)_
+
+Consulta [la interfaz oficial, requisitos e instalación](docs/ANDROID_UI.md). El APK se genera en `android/app/build/outputs/apk/debug/app-debug.apk`; el workflow de Android publica el mismo código como artefacto.
+
 ## Independent Telegram and mobile channels
 
 Telegram continues to work alongside the Android MVP with separate files and queues.

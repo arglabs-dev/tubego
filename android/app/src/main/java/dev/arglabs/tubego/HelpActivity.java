@@ -2,7 +2,7 @@ package dev.arglabs.tubego;
 import android.os.Bundle;import android.content.*;import android.widget.*;
 public final class HelpActivity extends LocalizedActivity {
  @Override public void onCreate(Bundle state){super.onCreate(state);LinearLayout layout=new LinearLayout(this);layout.setOrientation(LinearLayout.VERTICAL);layout.setPadding(32,48,32,32);
-  TextView title=new TextView(this);title.setText(Texts.text(this,"Ayuda de Tubego"));title.setTextSize(24);layout.addView(title);
+  TextView title=new TextView(this);title.setText(Texts.text(this,"Ayuda de Tubego"));title.setTextSize(24);title.setTag("legacy_heading");layout.addView(title);
   paragraph(layout,"Agrega un enlace pegándolo o compartiéndolo desde otra app. Elige calidad o solo audio. El servidor prepara el archivo y tus dispositivos lo descargan automáticamente por Wi-Fi; cada usuario tiene su biblioteca privada.");
   paragraph(layout,"Si se pierde Wi-Fi, la descarga se pausa y continúa desde donde quedó al regresar. Puedes autorizar datos móviles para un único archivo en este teléfono; no autoriza otros videos ni dispositivos. Los enlaces y acciones pequeñas pueden usar cualquier conexión.");
   paragraph(layout,"Los archivos descargados permanecen en el teléfono hasta que los borres. Si falta espacio, la app pausa las descargas y te avisa, sin borrar contenido automáticamente. Android puede demorar el trabajo en segundo plano; si fuerzas el cierre de Tubego, abre la app para reanudarlo.");

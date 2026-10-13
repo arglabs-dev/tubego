@@ -14,7 +14,7 @@ import java.util.*;
 
 /** Read grants name one verified local file; every proxy read rechecks account ownership. */
 public final class PrivateMediaContentProvider extends ContentProvider {
-    public static final String AUTHORITY="dev.arglabs.tubego.private-media";
+    public static final String AUTHORITY=BuildConfig.APPLICATION_ID+".private-media";
     private static final Map<String,Grant> grants=new LinkedHashMap<>();
     private static final class Grant {
         final String origin,user,device,id,sha,title,mime,sessionToken;final long size;

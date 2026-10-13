@@ -16,18 +16,21 @@ public final class LoginActivity extends LocalizedActivity {
     @Override public void onCreate(Bundle state) {
         super.onCreate(state); origin=getIntent().getStringExtra("server_url");
         LinearLayout layout=new LinearLayout(this); layout.setOrientation(LinearLayout.VERTICAL); layout.setPadding(32,64,32,32);
-        TextView title=new TextView(this);title.setText(Texts.text(LoginActivity.this,"Cuenta · Tubego"));title.setTextSize(24);layout.addView(title);
+        TextView title=new TextView(this);title.setText(Texts.text(LoginActivity.this,"Cuenta · Tubego"));title.setTextSize(24);title.setTag("legacy_heading");layout.addView(title);
+        UiKit.sectionCard(layout,"Acceso a tu cuenta","Usa tu correo y contraseña para entrar o recuperar el acceso.");
         email=new EditText(this);email.setHint(Texts.text(LoginActivity.this,"Correo electrónico"));email.setSingleLine(true);email.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);layout.addView(email);
         password=new EditText(this);password.setHint(Texts.text(LoginActivity.this,"Contraseña actual"));password.setSingleLine(true);password.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);layout.addView(password);
-        login=new Button(this);login.setText(Texts.text(LoginActivity.this,"Iniciar sesión"));layout.addView(login);
+        login=new Button(this);login.setText(Texts.text(LoginActivity.this,"Iniciar sesión"));UiKit.button(login,true);layout.addView(login);
         forgot=new Button(this);forgot.setText(Texts.text(LoginActivity.this,"Recuperar contraseña por correo"));layout.addView(forgot);
         refresh=new Button(this);refresh.setText(Texts.text(LoginActivity.this,"Consultar estado de mi cuenta"));layout.addView(refresh);
+        UiKit.sectionCard(layout,"Contraseña y seguridad","Para cambiar tu contraseña, escribe la actual arriba y la nueva aquí.");
         newPassword=new EditText(this);newPassword.setHint(Texts.text(LoginActivity.this,"Nueva contraseña (12–128 caracteres)"));newPassword.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);newPassword.setSingleLine(true);layout.addView(newPassword);
         revoke=new CheckBox(this);revoke.setText(Texts.text(LoginActivity.this,"Cerrar las demás sesiones al cambiar contraseña"));revoke.setChecked(true);layout.addView(revoke);
         change=new Button(this);change.setText(Texts.text(LoginActivity.this,"Cambiar contraseña"));layout.addView(change);
+        UiKit.sectionCard(layout,"Sesiones y dispositivos","Revisa tus equipos vinculados o cierra la sesión de este teléfono.");
         devices=new Button(this);devices.setText(Texts.text(LoginActivity.this,"Dispositivos vinculados"));layout.addView(devices);
         devices.setOnClickListener(v->startActivity(new android.content.Intent(this,DevicesActivity.class).putExtra("server_url",origin)));
-        logout=new Button(this);logout.setText(Texts.text(LoginActivity.this,"Cerrar sesión"));layout.addView(logout);
+        logout=new Button(this);logout.setText(Texts.text(LoginActivity.this,"Cerrar sesión"));UiKit.danger(logout);layout.addView(logout);
         logout.setOnClickListener(v->new android.app.AlertDialog.Builder(this).setMessage(Texts.text(LoginActivity.this,"Al cerrar sesión se borrarán las descargas de este teléfono. Los otros dispositivos conservarán sus archivos. ¿Continuar?")).setNegativeButton(Texts.text(LoginActivity.this,"Cancelar"),null).setPositiveButton(Texts.text(LoginActivity.this,"Cerrar sesión"),(d,w)->submit("logout")).show());
         status=new TextView(this);layout.addView(status);
         ScrollView scroll=new ScrollView(this);scroll.addView(layout);setContentView(scroll);

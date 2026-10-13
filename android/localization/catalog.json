@@ -2161,7 +2161,7 @@
   },
   "Agregar enlace": {
     "es": "Agregar enlace",
-    "en": "Add a link"
+    "en": "Add link"
   },
   "TU ESPACIO": {
     "es": "TU ESPACIO",
@@ -2270,5 +2270,933 @@
   "Descargas por Wi-Fi. Reproducción sin conexión.": {
     "es": "Descargas por Wi-Fi. Reproducción sin conexión.",
     "en": "Download on Wi-Fi. Play offline."
+  },
+  "Pegar": {
+    "es": "Pegar",
+    "en": "Paste"
+  },
+  "Video": {
+    "es": "Video",
+    "en": "Video"
+  },
+  "Solo audio": {
+    "es": "Solo audio",
+    "en": "Audio only"
+  },
+  "Si la fuente no ofrece esa calidad, se guarda la más cercana disponible. La descarga empieza con Wi-Fi.": {
+    "es": "Si la fuente no ofrece esa calidad, se guarda la más cercana disponible. La descarga empieza con Wi-Fi.",
+    "en": "If the source does not offer that quality, the closest available one is saved. Downloads start on Wi-Fi."
+  },
+  "Ligero": {
+    "es": "Ligero",
+    "en": "Light"
+  },
+  "480p · ocupa menos": {
+    "es": "480p · ocupa menos",
+    "en": "480p · takes less space"
+  },
+  "Equilibrado": {
+    "es": "Equilibrado",
+    "en": "Balanced"
+  },
+  "720p": {
+    "es": "720p",
+    "en": "720p"
+  },
+  "Alta": {
+    "es": "Alta",
+    "en": "High"
+  },
+  "1080p": {
+    "es": "1080p",
+    "en": "1080p"
+  },
+  "La mejor": {
+    "es": "La mejor",
+    "en": "Best"
+  },
+  "elegida": {
+    "es": "elegida",
+    "en": "selected"
+  },
+  "Sin conexión: se guardará y se validará cuando vuelva la red.": {
+    "es": "Sin conexión: se guardará y se validará cuando vuelva la red.",
+    "en": "Offline: it will be saved and checked when the network is back."
+  },
+  "Enlace agregado. Lo verás en “Ahora”.": {
+    "es": "Enlace agregado. Lo verás en “Ahora”.",
+    "en": "Link added. You will see it under “Now”."
+  },
+  "Enlace guardado. Se enviará cuando vuelva la conexión.": {
+    "es": "Enlace guardado. Se enviará cuando vuelva la conexión.",
+    "en": "Link saved. It will be sent when the connection is back."
+  },
+  "Agregado: %s. Lo verás en “Ahora”.": {
+    "es": "Agregado: %s. Lo verás en “Ahora”.",
+    "en": "Added: %s. You will see it under “Now”."
+  },
+  "En espera · Wi-Fi": {
+    "es": "En espera · Wi-Fi",
+    "en": "Waiting · Wi-Fi"
+  },
+  "En espera · sin conexión": {
+    "es": "En espera · sin conexión",
+    "en": "Waiting · offline"
+  },
+  "En proceso · paso 1 de 2": {
+    "es": "En proceso · paso 1 de 2",
+    "en": "In progress · step 1 of 2"
+  },
+  "En proceso · paso 2 de 2": {
+    "es": "En proceso · paso 2 de 2",
+    "en": "In progress · step 2 of 2"
+  },
+  "Listo · en este teléfono": {
+    "es": "Listo · en este teléfono",
+    "en": "Ready · on this phone"
+  },
+  "En pausa · poco espacio": {
+    "es": "En pausa · poco espacio",
+    "en": "Paused · low space"
+  },
+  "Se interrumpió": {
+    "es": "Se interrumpió",
+    "en": "Interrupted"
+  },
+  "No se pudo descargar": {
+    "es": "No se pudo descargar",
+    "en": "Couldn't download"
+  },
+  "Borrado de este teléfono": {
+    "es": "Borrado de este teléfono",
+    "en": "Deleted from this phone"
+  },
+  "En el servidor": {
+    "es": "En el servidor",
+    "en": "On the server"
+  },
+  "La conexión o la fuente falló por un momento. Casi siempre se resuelve al reintentar.": {
+    "es": "La conexión o la fuente falló por un momento. Casi siempre se resuelve al reintentar.",
+    "en": "The connection or the source failed for a moment. Retrying almost always fixes it."
+  },
+  "El archivo llegó incompleto o dañado. Vuelve a intentarlo.": {
+    "es": "El archivo llegó incompleto o dañado. Vuelve a intentarlo.",
+    "en": "The file arrived incomplete or damaged. Try again."
+  },
+  "Esta calidad no está disponible para este enlace. Prueba con otra o con solo audio.": {
+    "es": "Esta calidad no está disponible para este enlace. Prueba con otra o con solo audio.",
+    "en": "This quality is not available for this link. Try another one or audio only."
+  },
+  "No se pudo preparar el archivo en esta calidad. Prueba con otra o con solo audio.": {
+    "es": "No se pudo preparar el archivo en esta calidad. Prueba con otra o con solo audio.",
+    "en": "The file couldn't be prepared in this quality. Try another one or audio only."
+  },
+  "Este contenido es privado o pide iniciar sesión en su plataforma. TubeGo no puede descargarlo.": {
+    "es": "Este contenido es privado o pide iniciar sesión en su plataforma. TubeGo no puede descargarlo.",
+    "en": "This content is private or requires signing in on its platform. TubeGo cannot download it."
+  },
+  "Este contenido ya no está disponible en su plataforma.": {
+    "es": "Este contenido ya no está disponible en su plataforma.",
+    "en": "This content is no longer available on its platform."
+  },
+  "La plataforma limita el acceso a este contenido, por ejemplo por país, edad o permisos.": {
+    "es": "La plataforma limita el acceso a este contenido, por ejemplo por país, edad o permisos.",
+    "en": "The platform restricts access to this content, for example by country, age or permissions."
+  },
+  "TubeGo no admite este enlace.": {
+    "es": "TubeGo no admite este enlace.",
+    "en": "TubeGo does not support this link."
+  },
+  "Este enlace no es válido. Pega un solo enlace que empiece con http o https.": {
+    "es": "Este enlace no es válido. Pega un solo enlace que empiece con http o https.",
+    "en": "This link is not valid. Paste a single link starting with http or https."
+  },
+  "El archivo ya no está en el servidor. Puedes pedirlo otra vez.": {
+    "es": "El archivo ya no está en el servidor. Puedes pedirlo otra vez.",
+    "en": "The file is no longer on the server. You can request it again."
+  },
+  "No se pudo descargar. Revisa el enlace y vuelve a intentarlo.": {
+    "es": "No se pudo descargar. Revisa el enlace y vuelve a intentarlo.",
+    "en": "Couldn't download. Check the link and try again."
+  },
+  "Se interrumpió la descarga": {
+    "es": "Se interrumpió la descarga",
+    "en": "The download was interrupted"
+  },
+  "Detalle": {
+    "es": "Detalle",
+    "en": "Details"
+  },
+  "Poner como siguiente": {
+    "es": "Poner como siguiente",
+    "en": "Make it next"
+  },
+  "Listo: se descargará antes que los demás.": {
+    "es": "Listo: se descargará antes que los demás.",
+    "en": "Done: it will download before the others."
+  },
+  "Pedir otra calidad": {
+    "es": "Pedir otra calidad",
+    "en": "Request another quality"
+  },
+  "Disponible sin conexión": {
+    "es": "Disponible sin conexión",
+    "en": "Available offline"
+  },
+  "Se abre con tu reproductor (VLC u otro)": {
+    "es": "Se abre con tu reproductor (VLC u otro)",
+    "en": "Opens with your player (VLC or another)"
+  },
+  "Esta descarga empezará en cuanto te conectes a una red Wi-Fi.": {
+    "es": "Esta descarga empezará en cuanto te conectes a una red Wi-Fi.",
+    "en": "This download will start as soon as you connect to a Wi-Fi network."
+  },
+  "Usar datos móviles esta vez": {
+    "es": "Usar datos móviles esta vez",
+    "en": "Use mobile data this time"
+  },
+  "Reintentar": {
+    "es": "Reintentar",
+    "en": "Retry"
+  },
+  "Se enviará cuando vuelva la conexión. No tienes que hacer nada.": {
+    "es": "Se enviará cuando vuelva la conexión. No tienes que hacer nada.",
+    "en": "It will be sent when the connection is back. You do not need to do anything."
+  },
+  "Sin conexión. La descarga sigue cuando vuelva la red.": {
+    "es": "Sin conexión. La descarga sigue cuando vuelva la red.",
+    "en": "Offline. The download continues when the network is back."
+  },
+  "Guardando en tu teléfono": {
+    "es": "Guardando en tu teléfono",
+    "en": "Saving to your phone"
+  },
+  "Preparando en el servidor": {
+    "es": "Preparando en el servidor",
+    "en": "Preparing on the server"
+  },
+  "Volver a usar solo Wi-Fi": {
+    "es": "Volver a usar solo Wi-Fi",
+    "en": "Go back to Wi-Fi only"
+  },
+  "Tu teléfono tiene menos espacio libre que el mínimo que elegiste. No se borró nada; la descarga sigue sola al liberar espacio.": {
+    "es": "Tu teléfono tiene menos espacio libre que el mínimo que elegiste. No se borró nada; la descarga sigue sola al liberar espacio.",
+    "en": "Your phone has less free space than the minimum you chose. Nothing was deleted; the download resumes by itself once space is freed."
+  },
+  "Liberar espacio": {
+    "es": "Liberar espacio",
+    "en": "Free up space"
+  },
+  "Cambiar el mínimo libre": {
+    "es": "Cambiar el mínimo libre",
+    "en": "Change the free-space minimum"
+  },
+  "Tu avance se conserva · %d %%": {
+    "es": "Tu avance se conserva · %d %%",
+    "en": "Your progress is kept · %d %%"
+  },
+  "Al reintentar sigue desde ahí, no vuelve a empezar.": {
+    "es": "Al reintentar sigue desde ahí, no vuelve a empezar.",
+    "en": "Retrying continues from there; it does not start over."
+  },
+  "Elegir otra calidad": {
+    "es": "Elegir otra calidad",
+    "en": "Choose another quality"
+  },
+  "El archivo ya no está en este teléfono. Puedes pedirlo otra vez.": {
+    "es": "El archivo ya no está en este teléfono. Puedes pedirlo otra vez.",
+    "en": "The file is no longer on this phone. You can request it again."
+  },
+  "Este archivo no está en tu teléfono.": {
+    "es": "Este archivo no está en tu teléfono.",
+    "en": "This file is not on your phone."
+  },
+  "Pedir otra vez": {
+    "es": "Pedir otra vez",
+    "en": "Request again"
+  },
+  "Cancelar descarga": {
+    "es": "Cancelar descarga",
+    "en": "Cancel download"
+  },
+  "Cancelación guardada. Se enviará con cualquier conexión.": {
+    "es": "Cancelación guardada. Se enviará con cualquier conexión.",
+    "en": "Cancellation saved. It will be sent on any connection."
+  },
+  "Reintento guardado. Se enviará con cualquier conexión.": {
+    "es": "Reintento guardado. Se enviará con cualquier conexión.",
+    "en": "Retry saved. It will be sent on any connection."
+  },
+  "Reintento guardado. Se enviará cuando haya conexión.": {
+    "es": "Reintento guardado. Se enviará cuando haya conexión.",
+    "en": "Retry saved. It will be sent when there is a connection."
+  },
+  "Se recuperará este archivo sin crear otro registro. Si lo habías borrado, autorizas descargarlo de nuevo en este teléfono; tus otros dispositivos necesitarán su propia aprobación.": {
+    "es": "Se recuperará este archivo sin crear otro registro. Si lo habías borrado, autorizas descargarlo de nuevo en este teléfono; tus otros dispositivos necesitarán su propia aprobación.",
+    "en": "This file will be recovered without creating another record. If you had deleted it, you allow downloading it again on this phone; your other devices will need their own approval."
+  },
+  "¿Usar datos móviles para “%s” (%s)? El permiso dura hasta completar o cancelar esta descarga. No incluye otros archivos ni dispositivos.": {
+    "es": "¿Usar datos móviles para “%s” (%s)? El permiso dura hasta completar o cancelar esta descarga. No incluye otros archivos ni dispositivos.",
+    "en": "Use mobile data for “%s” (%s)? The permission lasts until this download completes or is cancelled. It does not include other files or devices."
+  },
+  "Listo: este archivo podrá usar datos móviles.": {
+    "es": "Listo: este archivo podrá usar datos móviles.",
+    "en": "Done: this file can use mobile data."
+  },
+  "No hay un reproductor compatible. Instala VLC u otro y vuelve a intentarlo.": {
+    "es": "No hay un reproductor compatible. Instala VLC u otro y vuelve a intentarlo.",
+    "en": "No compatible player found. Install VLC or another one and try again."
+  },
+  "Reproducir con…": {
+    "es": "Reproducir con…",
+    "en": "Play with…"
+  },
+  "¿Borrar “%s”?": {
+    "es": "¿Borrar “%s”?",
+    "en": "Delete “%s”?"
+  },
+  "Elige hasta dónde.": {
+    "es": "Elige hasta dónde.",
+    "en": "Choose how far to go."
+  },
+  "Libera %s en este teléfono. Elige hasta dónde.": {
+    "es": "Libera %s en este teléfono. Elige hasta dónde.",
+    "en": "Frees %s on this phone. Choose how far to go."
+  },
+  "Quitar de mis dispositivos": {
+    "es": "Quitar de mis dispositivos",
+    "en": "Remove from my devices"
+  },
+  "Se borra el archivo en todos tus dispositivos. Sigue en tu historial y puedes volver a pedirlo. Los equipos sin conexión lo harán al reconectar.": {
+    "es": "Se borra el archivo en todos tus dispositivos. Sigue en tu historial y puedes volver a pedirlo. Los equipos sin conexión lo harán al reconectar.",
+    "en": "The file is deleted on all your devices. It stays in your history and you can request it again. Offline devices will do it when they reconnect."
+  },
+  "Quitar también del servidor": {
+    "es": "Quitar también del servidor",
+    "en": "Also remove from the server"
+  },
+  "Además libera espacio en el servidor. Para tenerlo otra vez, habrá que volver a solicitarlo.": {
+    "es": "Además libera espacio en el servidor. Para tenerlo otra vez, habrá que volver a solicitarlo.",
+    "en": "It also frees space on the server. To have it again, you will need to request it again."
+  },
+  "Borrar": {
+    "es": "Borrar",
+    "en": "Delete"
+  },
+  "Borrado. Los dispositivos sin conexión lo quitarán al reconectar.": {
+    "es": "Borrado. Los dispositivos sin conexión lo quitarán al reconectar.",
+    "en": "Deleted. Offline devices will remove it when they reconnect."
+  },
+  "Estos archivos ocupan espacio en tu teléfono. Los más grandes, primero.": {
+    "es": "Estos archivos ocupan espacio en tu teléfono. Los más grandes, primero.",
+    "en": "These files take up space on your phone. Largest first."
+  },
+  "No hay archivos guardados en este teléfono.": {
+    "es": "No hay archivos guardados en este teléfono.",
+    "en": "There are no saved files on this phone."
+  },
+  "Buscar en tu biblioteca": {
+    "es": "Buscar en tu biblioteca",
+    "en": "Search your library"
+  },
+  "Todo": {
+    "es": "Todo",
+    "en": "All"
+  },
+  "Audio": {
+    "es": "Audio",
+    "en": "Audio"
+  },
+  "No se pudo cargar más. Revisa tu conexión.": {
+    "es": "No se pudo cargar más. Revisa tu conexión.",
+    "en": "Couldn't load more. Check your connection."
+  },
+  "Sin conexión. Puedes reproducir lo guardado y agregar enlaces; se envían al volver la red.": {
+    "es": "Sin conexión. Puedes reproducir lo guardado y agregar enlaces; se envían al volver la red.",
+    "en": "Offline. You can play what is saved and add links; they are sent when the network is back."
+  },
+  "Cargando…": {
+    "es": "Cargando…",
+    "en": "Loading…"
+  },
+  "No hay resultados. Prueba con otra búsqueda o filtro.": {
+    "es": "No hay resultados. Prueba con otra búsqueda o filtro.",
+    "en": "No results. Try another search or filter."
+  },
+  "Necesita atención": {
+    "es": "Necesita atención",
+    "en": "Needs attention"
+  },
+  "Ahora": {
+    "es": "Ahora",
+    "en": "Now"
+  },
+  "En tu teléfono": {
+    "es": "En tu teléfono",
+    "en": "On your phone"
+  },
+  "Anteriores": {
+    "es": "Anteriores",
+    "en": "Earlier"
+  },
+  "Ver más": {
+    "es": "Ver más",
+    "en": "Show more"
+  },
+  "Comparte un enlace desde otra app o pégalo aquí. Lo que descargues se queda en tu teléfono, listo para ver sin conexión.": {
+    "es": "Comparte un enlace desde otra app o pégalo aquí. Lo que descargues se queda en tu teléfono, listo para ver sin conexión.",
+    "en": "Share a link from another app or paste it here. Whatever you download stays on your phone, ready to watch offline."
+  },
+  "Pegar un enlace": {
+    "es": "Pegar un enlace",
+    "en": "Paste a link"
+  },
+  "Descargas": {
+    "es": "Descargas",
+    "en": "Downloads"
+  },
+  "Calidad predeterminada": {
+    "es": "Calidad predeterminada",
+    "en": "Default quality"
+  },
+  "Elige la calidad al agregar o usa siempre la misma": {
+    "es": "Elige la calidad al agregar o usa siempre la misma",
+    "en": "Choose the quality when adding, or always use the same one"
+  },
+  "Wi-Fi y datos móviles": {
+    "es": "Wi-Fi y datos móviles",
+    "en": "Wi-Fi and mobile data"
+  },
+  "Permisos de datos móviles por archivo": {
+    "es": "Permisos de datos móviles por archivo",
+    "en": "Mobile data permissions per file"
+  },
+  "Espacio en el teléfono": {
+    "es": "Espacio en el teléfono",
+    "en": "Phone storage"
+  },
+  "Mínimo libre y almacenamiento": {
+    "es": "Mínimo libre y almacenamiento",
+    "en": "Free-space minimum and storage"
+  },
+  "Cuenta": {
+    "es": "Cuenta",
+    "en": "Account"
+  },
+  "Idioma de la cuenta": {
+    "es": "Idioma de la cuenta",
+    "en": "Account language"
+  },
+  "Dispositivos": {
+    "es": "Dispositivos",
+    "en": "Devices"
+  },
+  "Teléfonos con tu sesión": {
+    "es": "Teléfonos con tu sesión",
+    "en": "Phones signed in to your account"
+  },
+  "Sesión": {
+    "es": "Sesión",
+    "en": "Session"
+  },
+  "Iniciar o cerrar sesión": {
+    "es": "Iniciar o cerrar sesión",
+    "en": "Sign in or sign out"
+  },
+  "Usuarios, correo y prioridades": {
+    "es": "Usuarios, correo y prioridades",
+    "en": "Users, email and priorities"
+  },
+  "Ayuda": {
+    "es": "Ayuda",
+    "en": "Help"
+  },
+  "Cómo funciona TubeGo": {
+    "es": "Cómo funciona TubeGo",
+    "en": "How TubeGo works"
+  },
+  "Errores de descarga": {
+    "es": "Errores de descarga",
+    "en": "Download errors"
+  },
+  "Qué falló y por qué": {
+    "es": "Qué falló y por qué",
+    "en": "What failed and why"
+  },
+  "Acciones pendientes": {
+    "es": "Acciones pendientes",
+    "en": "Pending actions"
+  },
+  "Órdenes que esperan conexión": {
+    "es": "Órdenes que esperan conexión",
+    "en": "Orders waiting for a connection"
+  },
+  "Limpieza del servidor": {
+    "es": "Limpieza del servidor",
+    "en": "Server cleanup"
+  },
+  "Libera espacio en el servidor": {
+    "es": "Libera espacio en el servidor",
+    "en": "Free up space on the server"
+  },
+  "Herramientas avanzadas": {
+    "es": "Herramientas avanzadas",
+    "en": "Advanced tools"
+  },
+  "Pantalla anterior con todas las opciones": {
+    "es": "Pantalla anterior con todas las opciones",
+    "en": "Previous screen with all options"
+  },
+  "Tus videos y audios, siempre contigo": {
+    "es": "Tus videos y audios, siempre contigo",
+    "en": "Your videos and audio, always with you"
+  },
+  "Comparte un enlace, elige la calidad y míralo después sin conexión. Primero conecta tu servidor y tu cuenta.": {
+    "es": "Comparte un enlace, elige la calidad y míralo después sin conexión. Primero conecta tu servidor y tu cuenta.",
+    "en": "Share a link, choose the quality and watch it later offline. First connect your server and your account."
+  },
+  "Dirección del servidor": {
+    "es": "Dirección del servidor",
+    "en": "Server address"
+  },
+  "Una cuenta nueva puede necesitar que verifiques tu correo y que un administrador la apruebe.": {
+    "es": "Una cuenta nueva puede necesitar que verifiques tu correo y que un administrador la apruebe.",
+    "en": "A new account may need you to verify your email and an administrator to approve it."
+  },
+  "Revisa la dirección del servidor: debe empezar con https://": {
+    "es": "Revisa la dirección del servidor: debe empezar con https://",
+    "en": "Check the server address: it must start with https://"
+  },
+  "Servidor": {
+    "es": "Servidor",
+    "en": "Server"
+  },
+  "Conecta esta app a la dirección HTTPS de tu servidor.": {
+    "es": "Conecta esta app a la dirección HTTPS de tu servidor.",
+    "en": "Connect this app to your server’s HTTPS address."
+  },
+  "Mi cuenta y seguridad": {
+    "es": "Mi cuenta y seguridad",
+    "en": "My account and security"
+  },
+  "Inicia sesión, cambia tu contraseña o cierra el acceso de este teléfono.": {
+    "es": "Inicia sesión, cambia tu contraseña o cierra el acceso de este teléfono.",
+    "en": "Sign in, change your password, or sign out on this phone."
+  },
+  "Registra tu correo, verifícalo y consulta la aprobación de tu cuenta.": {
+    "es": "Registra tu correo, verifícalo y consulta la aprobación de tu cuenta.",
+    "en": "Register and verify your email, then check your account approval."
+  },
+  "Mis dispositivos": {
+    "es": "Mis dispositivos",
+    "en": "My devices"
+  },
+  "Consulta tus teléfonos vinculados y cierra el acceso de un dispositivo.": {
+    "es": "Consulta tus teléfonos vinculados y cierra el acceso de un dispositivo.",
+    "en": "View your linked phones and revoke access for a device."
+  },
+  "Calidad y reproducción": {
+    "es": "Calidad y reproducción",
+    "en": "Quality and playback"
+  },
+  "Elige la calidad habitual y las preferencias de reproducción de tu cuenta.": {
+    "es": "Elige la calidad habitual y las preferencias de reproducción de tu cuenta.",
+    "en": "Choose your usual quality and your account’s playback preferences."
+  },
+  "Las descargas usan Wi-Fi. Puedes permitir datos para un archivo de este teléfono.": {
+    "es": "Las descargas usan Wi-Fi. Puedes permitir datos para un archivo de este teléfono.",
+    "en": "Downloads use Wi-Fi. You can allow mobile data for one file on this phone."
+  },
+  "Espacio en este teléfono": {
+    "es": "Espacio en este teléfono",
+    "en": "Storage on this phone"
+  },
+  "Reserva espacio libre para que las descargas se pausen antes de llenar tu teléfono.": {
+    "es": "Reserva espacio libre para que las descargas se pausen antes de llenar tu teléfono.",
+    "en": "Reserve free space so downloads pause before your phone fills up."
+  },
+  "El idioma se guarda en tu cuenta y se sincroniza con tus dispositivos.": {
+    "es": "El idioma se guarda en tu cuenta y se sincroniza con tus dispositivos.",
+    "en": "Your account language is saved and synced across your devices."
+  },
+  "Avisos y notificaciones": {
+    "es": "Avisos y notificaciones",
+    "en": "Alerts and notifications"
+  },
+  "Consulta tus avisos y decide si este teléfono debe mostrar notificaciones.": {
+    "es": "Consulta tus avisos y decide si este teléfono debe mostrar notificaciones.",
+    "en": "Read your alerts and choose whether this phone shows notifications."
+  },
+  "Problemas de mis descargas": {
+    "es": "Problemas de mis descargas",
+    "en": "My download issues"
+  },
+  "Consulta qué falló y las opciones para recuperar tus descargas.": {
+    "es": "Consulta qué falló y las opciones para recuperar tus descargas.",
+    "en": "See what failed and the options to recover your downloads."
+  },
+  "Revisa los cambios guardados que esperan enviarse al servidor.": {
+    "es": "Revisa los cambios guardados que esperan enviarse al servidor.",
+    "en": "Review saved changes waiting to be sent to the server."
+  },
+  "Conexión y diagnóstico": {
+    "es": "Conexión y diagnóstico",
+    "en": "Connection and diagnostics"
+  },
+  "Comprueba la red, la versión de la app y la respuesta del servidor.": {
+    "es": "Comprueba la red, la versión de la app y la respuesta del servidor.",
+    "en": "Check the network, app version, and server response."
+  },
+  "Aprende a descargar, reproducir sin conexión y gestionar tus archivos.": {
+    "es": "Aprende a descargar, reproducir sin conexión y gestionar tus archivos.",
+    "en": "Learn how to download, play offline, and manage your files."
+  },
+  "Limpiar copias del servidor": {
+    "es": "Limpiar copias del servidor",
+    "en": "Clean up server copies"
+  },
+  "Borra tus copias del servidor y conserva el historial y lo guardado en tus teléfonos.": {
+    "es": "Borra tus copias del servidor y conserva el historial y lo guardado en tus teléfonos.",
+    "en": "Delete your server copies and keep your history and files on your phones."
+  },
+  "Consulta tus archivos y lo que has descargado, incluso sin conexión.": {
+    "es": "Consulta tus archivos y lo que has descargado, incluso sin conexión.",
+    "en": "View your files and download history, even offline."
+  },
+  "Pega un enlace y elige cómo guardarlo en tu biblioteca.": {
+    "es": "Pega un enlace y elige cómo guardarlo en tu biblioteca.",
+    "en": "Paste a link and choose how to save it to your library."
+  },
+  "Recuperar archivos": {
+    "es": "Recuperar archivos",
+    "en": "Recover files"
+  },
+  "Vuelve a solicitar archivos de tu historial que ya no están disponibles.": {
+    "es": "Vuelve a solicitar archivos de tu historial que ya no están disponibles.",
+    "en": "Request files from your history that are no longer available."
+  },
+  "Elige qué archivos quitar de tus dispositivos y, si quieres, del servidor.": {
+    "es": "Elige qué archivos quitar de tus dispositivos y, si quieres, del servidor.",
+    "en": "Choose which files to remove from your devices and optionally the server."
+  },
+  "Enlace compartido": {
+    "es": "Enlace compartido",
+    "en": "Shared link"
+  },
+  "Agrega a tu biblioteca un enlace recibido desde otra app.": {
+    "es": "Agrega a tu biblioteca un enlace recibido desde otra app.",
+    "en": "Add a link shared from another app to your library."
+  },
+  "Gestiona usuarios y el funcionamiento del servicio para todas las cuentas.": {
+    "es": "Gestiona usuarios y el funcionamiento del servicio para todas las cuentas.",
+    "en": "Manage users and how the service works for all accounts."
+  },
+  "Aprobar cuentas": {
+    "es": "Aprobar cuentas",
+    "en": "Approve accounts"
+  },
+  "Aprueba o rechaza solicitudes que ya verificaron su correo.": {
+    "es": "Aprueba o rechaza solicitudes que ya verificaron su correo.",
+    "en": "Approve or reject requests whose email is already verified."
+  },
+  "Usuarios y permisos": {
+    "es": "Usuarios y permisos",
+    "en": "Users and permissions"
+  },
+  "Gestiona el estado, el rol y el acceso de las cuentas del servidor.": {
+    "es": "Gestiona el estado, el rol y el acceso de las cuentas del servidor.",
+    "en": "Manage account status, roles, and server access."
+  },
+  "Prioridades de usuarios": {
+    "es": "Prioridades de usuarios",
+    "en": "User priorities"
+  },
+  "Define qué usuarios tienen preferencia en la cola del servidor.": {
+    "es": "Define qué usuarios tienen preferencia en la cola del servidor.",
+    "en": "Choose which users get priority in the server queue."
+  },
+  "Conservación y plazos": {
+    "es": "Conservación y plazos",
+    "en": "Retention and deadlines"
+  },
+  "Decide qué copias conserva el servidor y cuándo puede limpiarlas.": {
+    "es": "Decide qué copias conserva el servidor y cuándo puede limpiarlas.",
+    "en": "Decide which copies the server keeps and when it can clean them up."
+  },
+  "Correo del servidor": {
+    "es": "Correo del servidor",
+    "en": "Server email"
+  },
+  "Revisa el correo de verificación y recuperación; comprueba el envío desde el servidor.": {
+    "es": "Revisa el correo de verificación y recuperación; comprueba el envío desde el servidor.",
+    "en": "Review verification and recovery email; check delivery from the server."
+  },
+  "Errores de todas las descargas": {
+    "es": "Errores de todas las descargas",
+    "en": "All download errors"
+  },
+  "Consulta los fallos del servidor que afectan a las descargas de los usuarios.": {
+    "es": "Consulta los fallos del servidor que afectan a las descargas de los usuarios.",
+    "en": "View server failures affecting users’ downloads."
+  },
+  "Consulta versiones, mide la conexión del servidor y revisa actualizaciones o reinicios.": {
+    "es": "Consulta versiones, mide la conexión del servidor y revisa actualizaciones o reinicios.",
+    "en": "Check versions, measure the server connection, and review updates or restarts."
+  },
+  "Personaliza tus descargas, tu cuenta y este teléfono.": {
+    "es": "Personaliza tus descargas, tu cuenta y este teléfono.",
+    "en": "Customize downloads, your account, and this phone."
+  },
+  "Conecta tu cuenta": {
+    "es": "Conecta tu cuenta",
+    "en": "Connect your account"
+  },
+  "Este teléfono": {
+    "es": "Este teléfono",
+    "en": "This phone"
+  },
+  "Tu cuenta": {
+    "es": "Tu cuenta",
+    "en": "Your account"
+  },
+  "Solo administradores": {
+    "es": "Solo administradores",
+    "en": "Administrators only"
+  },
+  "Para todos": {
+    "es": "Para todos",
+    "en": "For everyone"
+  },
+  "Cada opción indica si cambia este teléfono, tu cuenta o el servidor.": {
+    "es": "Cada opción indica si cambia este teléfono, tu cuenta o el servidor.",
+    "en": "Each option shows whether it changes this phone, your account, or the server."
+  },
+  "Descargas y reproducción": {
+    "es": "Descargas y reproducción",
+    "en": "Downloads and playback"
+  },
+  "Preferencias de tu cuenta": {
+    "es": "Preferencias de tu cuenta",
+    "en": "Your account preferences"
+  },
+  "Conexión y almacenamiento local": {
+    "es": "Conexión y almacenamiento local",
+    "en": "Connection and local storage"
+  },
+  "Mi cuenta": {
+    "es": "Mi cuenta",
+    "en": "My account"
+  },
+  "Tus preferencias y acceso": {
+    "es": "Tus preferencias y acceso",
+    "en": "Your preferences and access"
+  },
+  "Mis archivos en el servidor": {
+    "es": "Mis archivos en el servidor",
+    "en": "My files on the server"
+  },
+  "Gestiona solo tus copias": {
+    "es": "Gestiona solo tus copias",
+    "en": "Manage only your copies"
+  },
+  "Ayuda y actividad": {
+    "es": "Ayuda y actividad",
+    "en": "Help and activity"
+  },
+  "Entiende qué está pasando": {
+    "es": "Entiende qué está pasando",
+    "en": "Understand what is happening"
+  },
+  "Solo administradores · afecta al servidor y sus usuarios": {
+    "es": "Solo administradores · afecta al servidor y sus usuarios",
+    "en": "Administrators only · affects the server and its users"
+  },
+  "Usuarios, permisos, correo, conservación, prioridades y mantenimiento. Se comprobarán tus permisos al abrir cada herramienta.": {
+    "es": "Usuarios, permisos, correo, conservación, prioridades y mantenimiento. Se comprobarán tus permisos al abrir cada herramienta.",
+    "en": "Users, permissions, email, retention, priorities, and maintenance. Your permissions are checked when you open each tool."
+  },
+  "Esta dirección se usa solo en esta app. Si cambias de servidor, inicia sesión con una cuenta de ese servidor.": {
+    "es": "Esta dirección se usa solo en esta app. Si cambias de servidor, inicia sesión con una cuenta de ese servidor.",
+    "en": "This address is used only in this app. If you change servers, sign in with an account for that server."
+  },
+  "Espacio del servidor": {
+    "es": "Espacio del servidor",
+    "en": "Server storage"
+  },
+  "Cuentas y acceso": {
+    "es": "Cuentas y acceso",
+    "en": "Accounts and access"
+  },
+  "Estas opciones cambian quién puede usar el servicio.": {
+    "es": "Estas opciones cambian quién puede usar el servicio.",
+    "en": "These options change who can use the service."
+  },
+  "Descargas del servidor": {
+    "es": "Descargas del servidor",
+    "en": "Server downloads"
+  },
+  "Las prioridades y los plazos se aplican a los usuarios del servidor.": {
+    "es": "Las prioridades y los plazos se aplican a los usuarios del servidor.",
+    "en": "Priorities and deadlines apply to users on the server."
+  },
+  "Servicio y mantenimiento": {
+    "es": "Servicio y mantenimiento",
+    "en": "Service and maintenance"
+  },
+  "Comprueba el correo, libera espacio y revisa el funcionamiento del servidor.": {
+    "es": "Comprueba el correo, libera espacio y revisa el funcionamiento del servidor.",
+    "en": "Check email, free up storage, and review how the server is running."
+  },
+  "Limpieza global del servidor": {
+    "es": "Limpieza global del servidor",
+    "en": "Global server cleanup"
+  },
+  "Solo administradores · permite limpiar las copias de todos los usuarios.": {
+    "es": "Solo administradores · permite limpiar las copias de todos los usuarios.",
+    "en": "Administrators only · lets you clean up copies for all users."
+  },
+  "Las acciones que borran archivos, cambian accesos o reinician el servicio piden confirmación. Los permisos se verifican en el servidor.": {
+    "es": "Las acciones que borran archivos, cambian accesos o reinician el servicio piden confirmación. Los permisos se verifican en el servidor.",
+    "en": "Actions that delete files, change access, or restart the service require confirmation. Permissions are checked on the server."
+  },
+  "Uso del servidor y límite del 90 %": {
+    "es": "Uso del servidor y límite del 90 %",
+    "en": "Server usage and limit (90 %)"
+  },
+  "Morado: ocupado · claro: libre · marca: límite de pausa": {
+    "es": "Morado: ocupado · claro: libre · marca: límite de pausa",
+    "en": "Purple: used · light: free · marker: pause threshold"
+  },
+  "Al agregar un enlace": {
+    "es": "Al agregar un enlace",
+    "en": "When adding a link"
+  },
+  "Puedes elegir la calidad cada vez o usar una opción predeterminada.": {
+    "es": "Puedes elegir la calidad cada vez o usar una opción predeterminada.",
+    "en": "Choose the quality each time or use a default option."
+  },
+  "Al continuar la reproducción": {
+    "es": "Al continuar la reproducción",
+    "en": "When resuming playback"
+  },
+  "El retroceso depende de que tu reproductor sea compatible; no cambia la calidad del archivo.": {
+    "es": "El retroceso depende de que tu reproductor sea compatible; no cambia la calidad del archivo.",
+    "en": "Rewinding requires a compatible player; it does not change file quality."
+  },
+  "Acceso a tu cuenta": {
+    "es": "Acceso a tu cuenta",
+    "en": "Account access"
+  },
+  "Usa tu correo y contraseña para entrar o recuperar el acceso.": {
+    "es": "Usa tu correo y contraseña para entrar o recuperar el acceso.",
+    "en": "Use your email and password to sign in or recover access."
+  },
+  "Contraseña y seguridad": {
+    "es": "Contraseña y seguridad",
+    "en": "Password and security"
+  },
+  "Para cambiar tu contraseña, escribe la actual arriba y la nueva aquí.": {
+    "es": "Para cambiar tu contraseña, escribe la actual arriba y la nueva aquí.",
+    "en": "To change your password, enter your current password above and your new one here."
+  },
+  "Sesiones y dispositivos": {
+    "es": "Sesiones y dispositivos",
+    "en": "Sessions and devices"
+  },
+  "Revisa tus equipos vinculados o cierra la sesión de este teléfono.": {
+    "es": "Revisa tus equipos vinculados o cierra la sesión de este teléfono.",
+    "en": "Review your linked devices or sign out on this phone."
+  },
+  "Espacio disponible": {
+    "es": "Espacio disponible",
+    "en": "Available storage"
+  },
+  "Reserva de espacio libre": {
+    "es": "Reserva de espacio libre",
+    "en": "Free storage reserve"
+  },
+  "Si el teléfono baja de este porcentaje, se pausan las descargas; no se borra ningún archivo.": {
+    "es": "Si el teléfono baja de este porcentaje, se pausan las descargas; no se borra ningún archivo.",
+    "en": "If your phone drops below this percentage, downloads pause; no files are deleted."
+  },
+  "Espacio ocupado, libre y reserva mínima": {
+    "es": "Espacio ocupado, libre y reserva mínima",
+    "en": "Used storage, free storage, and minimum reserve"
+  },
+  "Morado: ocupado · claro: libre · marca: reserva mínima": {
+    "es": "Morado: ocupado · claro: libre · marca: reserva mínima",
+    "en": "Purple: used · light: free · marker: minimum reserve"
+  },
+  "Mis copias del servidor": {
+    "es": "Mis copias del servidor",
+    "en": "My server copies"
+  },
+  "Esta limpieza afecta solo a tus archivos del servidor. Conserva tus copias del teléfono y tu historial.": {
+    "es": "Esta limpieza afecta solo a tus archivos del servidor. Conserva tus copias del teléfono y tu historial.",
+    "en": "This cleanup affects only your files on the server. It keeps your phone copies and history."
+  },
+  "Limpieza global": {
+    "es": "Limpieza global",
+    "en": "Global cleanup"
+  },
+  "Afecta a las copias del servidor de todos los usuarios. Revisa el alcance antes de confirmar.": {
+    "es": "Afecta a las copias del servidor de todos los usuarios. Revisa el alcance antes de confirmar.",
+    "en": "Affects server copies for all users. Review the scope before confirming."
+  },
+  "Conservación por usuario": {
+    "es": "Conservación por usuario",
+    "en": "Retention per user"
+  },
+  "Conservar mantiene sus copias en el servidor; no ocupa más espacio en el teléfono.": {
+    "es": "Conservar mantiene sus copias en el servidor; no ocupa más espacio en el teléfono.",
+    "en": "Retention keeps their copies on the server; it does not use more phone storage."
+  },
+  "Plazos para todos los usuarios": {
+    "es": "Plazos para todos los usuarios",
+    "en": "Deadlines for all users"
+  },
+  "Los plazos afectan a archivos existentes y nuevos. Solo borran copias del servidor.": {
+    "es": "Los plazos afectan a archivos existentes y nuevos. Solo borran copias del servidor.",
+    "en": "Deadlines affect existing and new files. They only delete server copies."
+  },
+  "Máximo desde que el archivo queda listo (horas)": {
+    "es": "Máximo desde que el archivo queda listo (horas)",
+    "en": "Maximum time since the file is ready (hours)"
+  },
+  "Máximo desde la primera entrega (horas)": {
+    "es": "Máximo desde la primera entrega (horas)",
+    "en": "Maximum time since first delivery (hours)"
+  },
+  "Consulta y diagnóstico": {
+    "es": "Consulta y diagnóstico",
+    "en": "Status and diagnostics"
+  },
+  "Estas opciones consultan el servicio. La prueba de velocidad usa la conexión del servidor.": {
+    "es": "Estas opciones consultan el servicio. La prueba de velocidad usa la conexión del servidor.",
+    "en": "These options check the service. The speed test uses the server connection."
+  },
+  "Cambios en el servicio": {
+    "es": "Cambios en el servicio",
+    "en": "Service changes"
+  },
+  "Actualizar o reiniciar afecta a todos los usuarios y requiere confirmación.": {
+    "es": "Actualizar o reiniciar afecta a todos los usuarios y requiere confirmación.",
+    "en": "Updating or restarting affects all users and requires confirmation."
+  },
+  "Actividad reciente": {
+    "es": "Actividad reciente",
+    "en": "Recent activity"
+  },
+  "Consulta el resultado de las solicitudes antes de repetir una acción.": {
+    "es": "Consulta el resultado de las solicitudes antes de repetir una acción.",
+    "en": "Check request results before repeating an action."
+  },
+  "Ocupado · libre · marca: reserva mínima": {
+    "es": "Ocupado · libre · marca: reserva mínima",
+    "en": "Used · free · marker: minimum reserve"
+  },
+  "Ocupado · libre · marca: límite de pausa": {
+    "es": "Ocupado · libre · marca: límite de pausa",
+    "en": "Used · free · marker: pause threshold"
   }
 }
