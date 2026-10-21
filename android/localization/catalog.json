@@ -3198,5 +3198,17 @@
   "Ocupado · libre · marca: límite de pausa": {
     "es": "Ocupado · libre · marca: límite de pausa",
     "en": "Used · free · marker: pause threshold"
+  },
+  "Compartir video": {
+    "es": "Compartir video",
+    "en": "Share video"
+  },
+  "No se pudo abrir Compartir. Vuelve a intentarlo.": {
+    "es": "No se pudo abrir Compartir. Vuelve a intentarlo.",
+    "en": "Could not open Share. Try again."
+  },
+  "No se puede compartir este video. Comprueba que siga descargado y que tu sesión esté disponible.": {
+    "es": "No se puede compartir este video. Comprueba que siga descargado y que tu sesión esté disponible.",
+    "en": "Cannot share this video. Check that it is still downloaded and your session is available."
   }
 }
