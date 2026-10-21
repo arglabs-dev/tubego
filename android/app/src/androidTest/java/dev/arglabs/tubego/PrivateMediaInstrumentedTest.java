@@ -41,4 +41,25 @@ public final class PrivateMediaInstrumentedTest extends InstrumentationTestCase 
   try{PrivateMediaContentProvider.create(context,ORIGIN,RESOURCE);fail("corrupted");}catch(IOException expected){}
   assertTrue(record.media().exists());assertFalse(record.part().exists());
  }
+ public void testShareSendsLocalBytesWithTemporaryReadGrantAndNoLink() throws Exception {
+  android.content.Intent send=LocalVideoShare.prepare(context,ORIGIN,RESOURCE);
+  assertEquals(android.content.Intent.ACTION_SEND,send.getAction());assertEquals("video/mp4",send.getType());
+  Uri uri=send.getParcelableExtra(android.content.Intent.EXTRA_STREAM);
+  assertEquals("content",uri.getScheme());assertEquals(PrivateMediaContentProvider.AUTHORITY,uri.getAuthority());
+  assertEquals(uri,send.getClipData().getItemAt(0).getUri());
+  assertEquals(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION,send.getFlags());
+  assertFalse(send.hasExtra(android.content.Intent.EXTRA_TEXT));assertNull(send.getData());
+  try(InputStream in=context.getContentResolver().openInputStream(uri)) {
+   assertTrue(java.util.Arrays.equals(Files.readAllBytes(record.media().toPath()),in.readAllBytes()));
+  }
+  assertEquals("complete",TransferRecord.read(new File(record.root,RESOURCE+".properties")).state);
+ }
+ public void testShareRejectsIncompleteMissingAndAudioFiles() throws Exception {
+  record.state="downloading";record.save();
+  try{LocalVideoShare.prepare(context,ORIGIN,RESOURCE);fail("partial");}catch(IOException expected){}
+  record.state="complete";record.mediaFormat="audio";record.save();
+  try{LocalVideoShare.prepare(context,ORIGIN,RESOURCE);fail("audio");}catch(IOException expected){}
+  record.mediaFormat="video";record.save();record.media().delete();
+  try{LocalVideoShare.prepare(context,ORIGIN,RESOURCE);fail("missing");}catch(IOException expected){}
+ }
 }

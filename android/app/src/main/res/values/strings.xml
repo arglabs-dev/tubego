@@ -81,6 +81,7 @@
   <string name="ui_16e41d6059e6" formatted="false">"Todos los usuarios"</string>
   <string name="ui_16f1884f9491" formatted="false">"Aprobar cuentas"</string>
   <string name="ui_1756a6049f3b" formatted="false">") en este teléfono? El permiso dura hasta completar o cancelar esta descarga. No incluye otros archivos ni dispositivos."</string>
+  <string name="ui_175d70375816" formatted="false">"No se pudo abrir Compartir. Vuelve a intentarlo."</string>
   <string name="ui_17f064c0fd57" formatted="false">"En proceso · paso 1 de 2"</string>
   <string name="ui_184f9f08775f" formatted="false">"Falló"</string>
   <string name="ui_1a1b3e6ecc51" formatted="false">"Administración"</string>
@@ -393,6 +394,7 @@
   <string name="ui_7bf133b8243f" formatted="false">"Plazos globales (horas). Aplican también a archivos existentes."</string>
   <string name="ui_7c056cdb7c20" formatted="false">"Aprueba o rechaza solicitudes que ya verificaron su correo."</string>
   <string name="ui_7c1ac5649b71" formatted="false">"Velocidad del servidor"</string>
+  <string name="ui_7c341e634f7c" formatted="false">"No se puede compartir este video. Comprueba que siga descargado y que tu sesión esté disponible."</string>
   <string name="ui_7c49e9d6c45f" formatted="false">"Conectado · versión "</string>
   <string name="ui_7daed6a5bef0" formatted="false">"Borrar "</string>
   <string name="ui_7deb1b0a8b07" formatted="false">"Este archivo vuelve a esperar Wi-Fi."</string>
@@ -467,6 +469,7 @@
   <string name="ui_946f09de378d" formatted="false">"Verificando permisos administrativos…"</string>
   <string name="ui_94aa8efd93aa" formatted="false">"Qué falló y por qué"</string>
   <string name="ui_94b382b61b9d" formatted="false">"Español"</string>
+  <string name="ui_952be8779f63" formatted="false">"Compartir video"</string>
   <string name="ui_9536d53c4922" formatted="false">"Pegar"</string>
   <string name="ui_95640243fc88" formatted="false">"¿Borrar “%s”?"</string>
   <string name="ui_957b113c4f1e" formatted="false">"Podrán borrarse las copias del servidor que ya cumplan las condiciones de limpieza. La biblioteca y las copias locales se conservan."</string>

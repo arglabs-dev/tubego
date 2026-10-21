@@ -81,6 +81,7 @@
   <string name="ui_16e41d6059e6" formatted="false">"All users"</string>
   <string name="ui_16f1884f9491" formatted="false">"Approve accounts"</string>
   <string name="ui_1756a6049f3b" formatted="false">") on this phone? Permission lasts until this download completes or is cancelled. It excludes other files and devices."</string>
+  <string name="ui_175d70375816" formatted="false">"Could not open Share. Try again."</string>
   <string name="ui_17f064c0fd57" formatted="false">"In progress · step 1 of 2"</string>
   <string name="ui_184f9f08775f" formatted="false">"Failed"</string>
   <string name="ui_1a1b3e6ecc51" formatted="false">"Administration"</string>
@@ -393,6 +394,7 @@
   <string name="ui_7bf133b8243f" formatted="false">"Global limits (hours). Also apply to existing files."</string>
   <string name="ui_7c056cdb7c20" formatted="false">"Approve or reject requests whose email is already verified."</string>
   <string name="ui_7c1ac5649b71" formatted="false">"Server speed"</string>
+  <string name="ui_7c341e634f7c" formatted="false">"Cannot share this video. Check that it is still downloaded and your session is available."</string>
   <string name="ui_7c49e9d6c45f" formatted="false">"Connected · version "</string>
   <string name="ui_7daed6a5bef0" formatted="false">"Delete "</string>
   <string name="ui_7deb1b0a8b07" formatted="false">"This file will wait for Wi-Fi again."</string>
@@ -467,6 +469,7 @@
   <string name="ui_946f09de378d" formatted="false">"Verifying administrator permissions…"</string>
   <string name="ui_94aa8efd93aa" formatted="false">"What failed and why"</string>
   <string name="ui_94b382b61b9d" formatted="false">"Español"</string>
+  <string name="ui_952be8779f63" formatted="false">"Share video"</string>
   <string name="ui_9536d53c4922" formatted="false">"Paste"</string>
   <string name="ui_95640243fc88" formatted="false">"Delete “%s”?"</string>
   <string name="ui_957b113c4f1e" formatted="false">"Server copies that already meet the cleanup conditions may be deleted. Your library and local copies are preserved."</string>

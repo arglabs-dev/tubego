@@ -147,6 +147,8 @@ final class ItemFlows {
         switch (i.state) {
             case READY:
                 big(a, body, a.t("Reproducir"), Ds.Kind.PRIMARY, 16, () -> { sheet.dismiss(); play(host, i); });
+                if (!i.isAudio()) big(a, body, a.t("Compartir video"), Ds.Kind.SECONDARY, 8,
+                        () -> { sheet.dismiss(); share(host, i); });
                 LinearLayout two = Ds.row(a);
                 if (i.serverAvailable) {
                     Button next = Ds.button(a, a.t("Poner como siguiente"), Ds.Kind.SECONDARY);
@@ -372,6 +374,35 @@ final class ItemFlows {
                 a.runOnUiThread(() -> { host.message(a.t("Este archivo vuelve a esperar Wi-Fi.")); host.refresh(); });
             } catch (Exception e) {
                 a.runOnUiThread(() -> host.message(a.t("No se pudo retirar el permiso.")));
+            }
+        });
+    }
+
+    /** Comparte el video local verificado mediante la hoja nativa del sistema. */
+    static void share(Host host, Item i) {
+        DsActivity a = host.act();
+        if (i.state != ItemState.READY || i.isAudio() || i.outbox) return;
+        host.io().execute(() -> {
+            try {
+                String token = new SessionStore(a, host.origin()).token();
+                Intent send = LocalVideoShare.prepare(a, host.origin(), i.id);
+                a.runOnUiThread(() -> {
+                    if (a.isDestroyed() || a.isFinishing()) return;
+                    try {
+                        if (!token.equals(new SessionStore(a, host.origin()).token())) throw new SecurityException();
+                        // Android propagates ClipData and its temporary read grant to the chosen app.
+                        // Dismissing the chooser has no side effects and is not reported as success.
+                        a.startActivity(Intent.createChooser(send, a.t("Compartir video")));
+                    } catch (Exception e) {
+                        host.message(a.t("No se pudo abrir Compartir. Vuelve a intentarlo."));
+                    }
+                });
+            } catch (Exception e) {
+                a.runOnUiThread(() -> {
+                    if (a.isDestroyed()) return;
+                    host.message(a.t("No se puede compartir este video. Comprueba que siga descargado y que tu sesión esté disponible."));
+                    host.refresh();
+                });
             }
         });
     }
