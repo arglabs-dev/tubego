@@ -4,15 +4,13 @@ import android.content.*;
 import android.database.*;
 import android.net.Uri;
 import android.os.*;
-import android.os.storage.StorageManager;
 import android.provider.OpenableColumns;
-import android.system.*;
 import org.json.JSONObject;
 import java.io.*;
 import java.security.SecureRandom;
 import java.util.*;
 
-/** Read grants name one verified local file; every proxy read rechecks account ownership. */
+/** Read grants name one verified local file and are revalidated whenever a file is opened. */
 public final class PrivateMediaContentProvider extends ContentProvider {
     public static final String AUTHORITY=BuildConfig.APPLICATION_ID+".private-media";
     private static final Map<String,Grant> grants=new LinkedHashMap<>();
@@ -70,21 +68,18 @@ public final class PrivateMediaContentProvider extends ContentProvider {
     }
     @Override public ParcelFileDescriptor openFile(Uri uri,String mode) throws FileNotFoundException {
         if(!"r".equals(mode))throw new SecurityException("Solo lectura");
-        Grant g=grant(uri);final RandomAccessFile file;final RandomAccessFile[] opened=new RandomAccessFile[1];final HandlerThread thread=new HandlerThread("Tubego local reader");
+        Grant g=grant(uri);
         try {
-            TransferRecord r; synchronized(SessionStore.class){r=validate(getContext(),g);}
-            OfflineMediaAccess.verify(r);
-            synchronized(SessionStore.class){r=validate(getContext(),g);file=new RandomAccessFile(r.media(),"r");opened[0]=file;}
-            thread.start();
-            return getContext().getSystemService(StorageManager.class).openProxyFileDescriptor(ParcelFileDescriptor.MODE_READ_ONLY,new ProxyFileDescriptorCallback(){
-                @Override public long onGetSize() throws ErrnoException {synchronized(SessionStore.class){check();return g.size;}}
-                private void check() throws ErrnoException {try{validate(getContext(),g);}catch(Exception e){throw new ErrnoException("media revoked",OsConstants.EACCES);}}
-                @Override public int onRead(long offset,int size,byte[] data) throws ErrnoException {
-                    synchronized(SessionStore.class){check();try {file.seek(offset);int count=file.read(data,0,(int)Math.min(size,Math.max(0,g.size-offset)));return Math.max(0,count);}catch(IOException e){throw new ErrnoException("read",OsConstants.EIO);}}
-                }
-                @Override public void onRelease(){try{file.close();}catch(IOException ignored){}thread.quitSafely();}
-            },new Handler(thread.getLooper()));
-        } catch(Exception e){if(opened[0]!=null)try{opened[0].close();}catch(IOException ignored){}thread.quitSafely();FileNotFoundException failure=new FileNotFoundException("Archivo local no disponible");failure.initCause(e);throw failure;}
+            TransferRecord record;
+            synchronized(SessionStore.class){record=validate(getContext(),g);}
+            OfflineMediaAccess.verify(record);
+            synchronized(SessionStore.class){
+                TransferRecord current=validate(getContext(),g);
+                if(!record.sha256.equals(current.sha256)||record.size!=current.size)
+                    throw new SecurityException("El archivo local cambió");
+                return ParcelFileDescriptor.open(current.media(),ParcelFileDescriptor.MODE_READ_ONLY);
+            }
+        } catch(Exception e){FileNotFoundException failure=new FileNotFoundException("Archivo local no disponible");failure.initCause(e);throw failure;}
     }
     @Override public Uri insert(Uri u,ContentValues v){throw new SecurityException("Solo lectura");}
     @Override public int update(Uri u,ContentValues v,String s,String[] a){throw new SecurityException("Solo lectura");}

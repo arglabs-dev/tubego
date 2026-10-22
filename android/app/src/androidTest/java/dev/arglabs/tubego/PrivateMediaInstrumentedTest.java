@@ -12,13 +12,14 @@ public final class PrivateMediaInstrumentedTest extends InstrumentationTestCase 
   File root=LocalLibraryStorage.root(context,ORIGIN,USER,DEVICE);root.mkdirs();record=new TransferRecord(root,RESOURCE,hash.toString(),bytes.length,"Offline fixture","");record.state="complete";Files.write(record.media().toPath(),bytes);record.save();
  }
  @Override protected void tearDown() throws Exception {sessions.clear();LocalLibraryStorage.wipe(context,ORIGIN,USER,DEVICE);super.tearDown();}
- public void testSeekableReadOnlyLocalFileAndKnownRevocationStopsOpenReader() throws Exception {
+ public void testSeekableReadOnlyLocalFileAndOpenDescriptorSurvivesSessionChange() throws Exception {
   Uri uri=PrivateMediaContentProvider.create(context,ORIGIN,RESOURCE);assertEquals("video/mp4",context.getContentResolver().getType(uri));
   try(ParcelFileDescriptor pfd=context.getContentResolver().openFileDescriptor(uri,"r");FileInputStream stream=new FileInputStream(pfd.getFileDescriptor())) {
    stream.getChannel().position(65536);byte[] bytes=new byte[128];assertEquals(128,stream.read(bytes));assertEquals((byte)(65536%251),bytes[0]);
    synchronized(SessionStore.class){sessions.clear();}
    stream.getChannel().position(131072);
-   try{stream.read(bytes);fail("Existing proxy must stop after revocation");}catch(IOException expected){}
+   assertEquals(128,stream.read(bytes));assertEquals((byte)(131072%251),bytes[0]);
+   try(ParcelFileDescriptor ignored=context.getContentResolver().openFileDescriptor(uri,"r")){fail("A changed session must not open a new descriptor");}catch(FileNotFoundException expected){}
   }
  }
  public void testRejectsArbitraryUriAndWriteModes() throws Exception {
