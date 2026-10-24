@@ -39,6 +39,7 @@ final class LibraryRepo {
             if (session == null || !"approved".equals(session.optString("status"))) throw new NoSession();
             token = session.getString("token");
             root = LocalLibraryStorage.root(ctx, origin, session.getString("user_id"), session.getString("device_id"));
+            SharedMedia.restoreRecords(ctx,origin,session,root);
             for (Map.Entry<String, String> e : new HistoryCache(root).read().entrySet()) {
                 try { rows.put(e.getKey(), new JSONObject(e.getValue())); } catch (Exception ignored) { }
             }
@@ -95,7 +96,7 @@ final class LibraryRepo {
         ordered.sort(Comparator.comparing((JSONObject r) -> r.optString("created_at")).reversed()
                 .thenComparing(r -> r.optString("id")));
         for (JSONObject row : ordered) {
-            result.items.add(toItem(row, root, origin, result.userId, result.deviceId, permissions, network));
+            result.items.add(toItem(ctx, row, root, origin, result.userId, result.deviceId, permissions, network));
         }
 
         try {
@@ -118,11 +119,13 @@ final class LibraryRepo {
         return result;
     }
 
-    private static Item toItem(JSONObject row, File root, String origin, String userId, String deviceId,
+    private static Item toItem(Context ctx,JSONObject row, File root, String origin, String userId, String deviceId,
                                DownloadPermissions permissions, DownloadPolicy.NetworkState network) {
         Item item = new Item();
         item.id = row.optString("id");
         item.title = row.isNull("title") ? "" : row.optString("title", "");
+        item.thumbnailKey = root.getAbsolutePath()+"/"+row.optString("id");
+        item.hasThumbnail = row.optBoolean("has_thumbnail",false);
         item.mediaFormat = row.optString("media_format", "video");
         item.selection = "audio".equals(item.mediaFormat) ? "audio" : row.optString("quality", "best");
         item.sourceUrl = row.optString("source_url", "");
@@ -136,7 +139,7 @@ final class LibraryRepo {
         TransferRecord record = null;
         try { record = OfflineMediaAccess.record(root, item.id); } catch (Exception ignored) { }
         boolean downloaded = false;
-        try { downloaded = record != null && OfflineMediaAccess.available(record); } catch (Exception ignored) { }
+        try { downloaded = record != null && SharedMedia.available(ctx,record); } catch (Exception ignored) { }
         item.downloaded = downloaded;
 
         JSONObject task = row.optJSONObject("latest_task");

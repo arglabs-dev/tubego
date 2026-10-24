@@ -106,3 +106,15 @@ def opened(resource_id:str,body:OpenedRequest,request:Request,principal=Depends(
         if previous is None or timestamp>previous:
             put_setting(conn,'resource',resource_id,'last_opened_at',timestamp)
     return {'resource_id':resource_id,'last_opened_at':max(previous or timestamp,timestamp)}
+
+
+@router.get('/{resource_id}/thumbnail')
+def thumbnail(resource_id: str, request: Request, principal=Depends(require_approved)):
+    with request.app.state.db.transaction() as conn:
+        scope = live_scope(conn, principal)
+        scope.resource(resource_id)
+        encoded = value(conn, resource_id, 'thumbnail_base64')
+    if not encoded:
+        raise HTTPException(404, 'Preview unavailable')
+    return Response(json.dumps({'thumbnail_base64': encoded}), media_type='application/json', headers={
+        'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff'})

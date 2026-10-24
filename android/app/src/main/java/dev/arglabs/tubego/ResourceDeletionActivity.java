@@ -62,7 +62,7 @@ public final class ResourceDeletionActivity extends LocalizedActivity {
         TransferRuntime.stopOrigin(origin);
         synchronized(SessionStore.class){if(!token.equals(store.token()))return;
             DeletionOutboxDispatch.box(this,origin,session).add(id,scope);
-            LocalResourceDeletion.apply(DeletionOutboxDispatch.root(this,origin,session),id);
+            SharedMedia.delete(this,DeletionOutboxDispatch.root(this,origin,session),id);
         }
         DeletionOutboxDispatch.schedule(this,origin);message(Texts.text(ResourceDeletionActivity.this,"Borrado local. La orden para los demás dispositivos se enviará con cualquier conexión."));
         DeletionOutboxDispatch.flush(this);

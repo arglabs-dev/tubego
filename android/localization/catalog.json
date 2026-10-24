@@ -3210,5 +3210,61 @@
   "No se puede compartir este video. Comprueba que siga descargado y que tu sesión esté disponible.": {
     "es": "No se puede compartir este video. Comprueba que siga descargado y que tu sesión esté disponible.",
     "en": "Cannot share this video. Check that it is still downloaded and your session is available."
+  },
+  "Ubicación del archivo": {
+    "es": "Ubicación del archivo",
+    "en": "File location"
+  },
+  "Carpeta de descargas": {
+    "es": "Carpeta de descargas",
+    "en": "Download folder"
+  },
+  "Elegir carpeta": {
+    "es": "Elegir carpeta",
+    "en": "Choose folder"
+  },
+  "Usar Descargas/TubeGo": {
+    "es": "Usar Descargas/TubeGo",
+    "en": "Use Downloads/TubeGo"
+  },
+  "Las descargas nuevas se guardan como una sola copia. Puedes modificarlas con el gestor de archivos. Los archivos compartidos se conservan al cerrar sesión o desinstalar TubeGo.": {
+    "es": "Las descargas nuevas se guardan como una sola copia. Puedes modificarlas con el gestor de archivos. Los archivos compartidos se conservan al cerrar sesión o desinstalar TubeGo.",
+    "en": "New downloads are saved as a single copy. You can modify them with your file manager. Shared files remain when you sign out or uninstall TubeGo."
+  },
+  "Mover a la carpeta de descargas": {
+    "es": "Mover a la carpeta de descargas",
+    "en": "Move to download folder"
+  },
+  "Moviendo el archivo a la carpeta elegida…": {
+    "es": "Moviendo el archivo a la carpeta elegida…",
+    "en": "Moving the file to the chosen folder…"
+  },
+  "Archivo movido. Se conserva una sola copia.": {
+    "es": "Archivo movido. Se conserva una sola copia.",
+    "en": "File moved. Only one copy is kept."
+  },
+  "Gestionar mi cuenta y sesiones": {
+    "es": "Gestionar mi cuenta y sesiones",
+    "en": "Manage my account and sessions"
+  },
+  "Al cerrar sesión se borra la biblioteca privada de TubeGo. Los archivos de Descargas o de tu carpeta elegida se conservan. ¿Continuar?": {
+    "es": "Al cerrar sesión se borra la biblioteca privada de TubeGo. Los archivos de Descargas o de tu carpeta elegida se conservan. ¿Continuar?",
+    "en": "Signing out removes the private TubeGo library. Files in Downloads or your chosen folder are kept. Continue?"
+  },
+  "Cierra la sesión actual antes de cambiar de cuenta. Solo se borran las copias privadas; los archivos de tu carpeta se conservan.": {
+    "es": "Cierra la sesión actual antes de cambiar de cuenta. Solo se borran las copias privadas; los archivos de tu carpeta se conservan.",
+    "en": "Sign out before switching accounts. Only private copies are removed; files in your folder are kept."
+  },
+  "Esta carpeta se aplica a todos los videos de TubeGo. Al cambiarla se trasladan los archivos existentes. Se conserva una sola copia y puedes modificarla con el gestor de archivos.": {
+    "es": "Esta carpeta se aplica a todos los videos de TubeGo. Al cambiarla se trasladan los archivos existentes. Se conserva una sola copia y puedes modificarla con el gestor de archivos.",
+    "en": "This folder applies to all TubeGo videos. Changing it moves existing files. Only one copy is kept and you can edit it with your file manager."
+  },
+  "Moviendo los videos a la carpeta elegida…": {
+    "es": "Moviendo los videos a la carpeta elegida…",
+    "en": "Moving videos to the selected folder…"
+  },
+  "Vuelve a elegir la carpeta para completar el traslado. Los originales se conservan hasta verificar la copia.": {
+    "es": "Vuelve a elegir la carpeta para completar el traslado. Los originales se conservan hasta verificar la copia.",
+    "en": "Select the folder again to finish moving. Originals are kept until the copy is verified."
   }
 }

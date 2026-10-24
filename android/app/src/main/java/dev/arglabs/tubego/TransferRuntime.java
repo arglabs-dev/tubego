@@ -4,6 +4,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /** Synchronizes cleanup with active transfers so logout cannot recreate wiped files. */
 public final class TransferRuntime {
+    static final Object storageLock=new Object();
     private static final ConcurrentHashMap<String,Object> locks=new ConcurrentHashMap<>();
     private static final ConcurrentHashMap<String,Control> running=new ConcurrentHashMap<>();
     public static Object lock(String origin) {return locks.computeIfAbsent(origin,key->new Object());}

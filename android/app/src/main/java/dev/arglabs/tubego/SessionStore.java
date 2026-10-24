@@ -85,6 +85,7 @@ public final class SessionStore {
     public String token() throws Exception {JSONObject session=read();return session==null?null:session.getString("token");}
     public void clear() {
         synchronized(SessionStore.class){
+        Thumbnails.clearMemory();
         AndroidDownloadPermissions.create(context).revokeOrigin(origin);
         if(!prefs.edit().remove(namespace+".iv").remove(namespace+".ciphertext").putLong(namespace+".generation",generation()+1).commit())
             throw new IllegalStateException("No se pudo borrar la sesión");

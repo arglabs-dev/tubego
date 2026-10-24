@@ -158,7 +158,9 @@ def analyze_media(url, *, factory=None, resolver=socket.getaddrinfo):
         canonical = normalize_url(info.get("webpage_url") or normalized, resolver)
         title = info.get("title")
         duration = info.get("duration")
+        from tubego_server.thumbnails import preview
         return {
+            "thumbnail_base64": preview(info),
             "url": canonical,
             "source_id": str(info["id"])[:256] if info.get("id") is not None else None,
             "extractor": str(info.get("extractor_key") or info.get("extractor") or "")[:128] or None,

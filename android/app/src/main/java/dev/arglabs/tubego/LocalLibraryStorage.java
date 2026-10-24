@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.UUID;
 
-/** All managed downloads must use this root. Logout never touches another device. */
+/** Account-scoped private manifests, legacy files and transfer staging. Published user files live outside this root. */
 public final class LocalLibraryStorage {
     public static File root(Context context,String origin,String userId,String deviceId) throws Exception {
         return root(context.getFilesDir(),origin,userId,deviceId);
@@ -19,6 +19,7 @@ public final class LocalLibraryStorage {
     }
     public static void wipe(Context context,String origin,String userId,String deviceId) throws Exception {
         File directory=root(context,origin,userId,deviceId);
+        SharedMedia.cleanupPending(context,directory);
         wipeDirectory(directory);
     }
     static void wipeDirectory(File directory) throws IOException { remove(directory,directory.getCanonicalPath()); }

@@ -47,6 +47,7 @@
   <string name="ui_0bac15ed4b88" formatted="false">"Server unavailable"</string>
   <string name="ui_0bd7df514524" formatted="false">"Pending actions"</string>
   <string name="ui_0c42537c22eb" formatted="false">"Resume rewind (0 to 120 seconds; requires a compatible player)"</string>
+  <string name="ui_0cc30c665597" formatted="false">"Manage my account and sessions"</string>
   <string name="ui_0ce5c840a9e8" formatted="false">"Manage priorities"</string>
   <string name="ui_0cfcd9e40fbd" formatted="false">"Purple: used · light: free · marker: pause threshold"</string>
   <string name="ui_0d265734e052" formatted="false">"Maximum time since the file is ready (hours)"</string>
@@ -82,6 +83,7 @@
   <string name="ui_16f1884f9491" formatted="false">"Approve accounts"</string>
   <string name="ui_1756a6049f3b" formatted="false">") on this phone? Permission lasts until this download completes or is cancelled. It excludes other files and devices."</string>
   <string name="ui_175d70375816" formatted="false">"Could not open Share. Try again."</string>
+  <string name="ui_17c9b124aa7d" formatted="false">"Signing out removes the private TubeGo library. Files in Downloads or your chosen folder are kept. Continue?"</string>
   <string name="ui_17f064c0fd57" formatted="false">"In progress · step 1 of 2"</string>
   <string name="ui_184f9f08775f" formatted="false">"Failed"</string>
   <string name="ui_1a1b3e6ecc51" formatted="false">"Administration"</string>
@@ -254,6 +256,7 @@
   <string name="ui_4fb43264c4e4" formatted="false">"Transfers respect your network permissions."</string>
   <string name="ui_4fda28d8d35a" formatted="false">"Connection not checked"</string>
   <string name="ui_4ff402d76821" formatted="false">"All"</string>
+  <string name="ui_50318bdf67fa" formatted="false">"This folder applies to all TubeGo videos. Changing it moves existing files. Only one copy is kept and you can edit it with your file manager."</string>
   <string name="ui_5032ea51552f" formatted="false">"Accounts and access"</string>
   <string name="ui_517d49a81a82" formatted="false">"Pending change prepared to send when connected."</string>
   <string name="ui_518bd027de9f" formatted="false">"Check server version and connection"</string>
@@ -278,6 +281,7 @@
   <string name="ui_566dec43bd2d" formatted="false">"Server storage"</string>
   <string name="ui_5678a7dd3fa7" formatted="false">"Preferences"</string>
   <string name="ui_573816c2df7b" formatted="false">"Choose which files to remove from your devices and optionally the server."</string>
+  <string name="ui_57862328d962" formatted="false">"File location"</string>
   <string name="ui_57bebd93b756" formatted="false">"Could not check storage. Check your connection and permissions; no cleanup was executed."</string>
   <string name="ui_58d797b839c2" formatted="false">"Private history synchronized. Offline cache: up to 2000 viewed items; full history remains on the server."</string>
   <string name="ui_58fcc9468fe1" formatted="false">"Home"</string>
@@ -378,6 +382,7 @@
   <string name="ui_75f1f75e3337" formatted="false">"In progress"</string>
   <string name="ui_76785560b49b" formatted="false">"Sign out other sessions when changing password"</string>
   <string name="ui_76aa492fc502" formatted="false">"Refresh local list"</string>
+  <string name="ui_76d6f29cdbfa" formatted="false">"Moving videos to the selected folder…"</string>
   <string name="ui_76f2bfafa6f9" formatted="false">"Actions that delete files, change access, or restart the service require confirmation. Permissions are checked on the server."</string>
   <string name="ui_7722fa7aedfd" formatted="false">"The selected format or quality is unavailable. Request another quality or audio only."</string>
   <string name="ui_777f2818da9c" formatted="false">"Could not read this account\'s history."</string>
@@ -411,6 +416,7 @@
   <string name="ui_81158b713ec5" formatted="false">"Update backend"</string>
   <string name="ui_817832ee24a9" formatted="false">"Signing out deletes downloads on this phone. Other devices keep their files. Continue?"</string>
   <string name="ui_82628594bc10" formatted="false">"An approved administrator account is required."</string>
+  <string name="ui_82b545cc0a4e" formatted="false">"File moved. Only one copy is kept."</string>
   <string name="ui_82de52fb070c" formatted="false">"Waiting · offline"</string>
   <string name="ui_82ef7e8cf31c" formatted="false">"Refresh / Send pending actions"</string>
   <string name="ui_832e90b26c0f" formatted="false">"The connection or the source failed for a moment. Retrying almost always fixes it."</string>
@@ -513,6 +519,7 @@
   <string name="ui_a0abee7ea979" formatted="false">"Manage server retention"</string>
   <string name="ui_a1278712793f" formatted="false">"Request"</string>
   <string name="ui_a172296206a4" formatted="false">"Downloads wait for Wi-Fi unless individually authorized."</string>
+  <string name="ui_a1a89d7d7f19" formatted="false">"Moving the file to the chosen folder…"</string>
   <string name="ui_a2180d2c924d" formatted="false">"Could not save. An active administrator session is required."</string>
   <string name="ui_a260e6d66ee8" formatted="false">"Only my server files"</string>
   <string name="ui_a34fd9940dfa" formatted="false">"Minimum free percentage (1–90)"</string>
@@ -546,6 +553,7 @@
   <string name="ui_ab26ae7bca36" formatted="false">"Back"</string>
   <string name="ui_ab70a451b08e" formatted="false">"Low phone storage"</string>
   <string name="ui_ac4926872082" formatted="false">"PLAYBACK AND DOWNLOADS"</string>
+  <string name="ui_ad38fa1197af" formatted="false">"Choose folder"</string>
   <string name="ui_ae5dca68ed0d" formatted="false">"Deleted / Unavailable"</string>
   <string name="ui_aeaeb04f3c14" formatted="false">"Clean up server copies"</string>
   <string name="ui_aeccae342e4b" formatted="false">"Close"</string>
@@ -609,6 +617,7 @@
   <string name="ui_be113ca8d997" formatted="false">"Approved"</string>
   <string name="ui_be11b4794490" formatted="false">"Clean up server"</string>
   <string name="ui_be16d8f6aaa1" formatted="false">"Cleanup and retention changes apply to the server. Blocking or deleting users revokes access and orders deletion of their local copies on the next contact. Every destructive action asks for confirmation on its screen. Administration is unavailable offline."</string>
+  <string name="ui_bf48a33d54c7" formatted="false">"Use Downloads/TubeGo"</string>
   <string name="ui_bf7a3ac249c1" formatted="false">"Delete files"</string>
   <string name="ui_bf9fc1983ffa" formatted="false">"No results"</string>
   <string name="ui_c0523a6eeb87" formatted="false">"Connection and diagnostics"</string>
@@ -640,6 +649,7 @@
   <string name="ui_c9fe1d2f0aa8" formatted="false">"Verified requests · Approve / Reject"</string>
   <string name="ui_ca5fd7acb418" formatted="false">"Delete your server copies and keep your history and files on your phones."</string>
   <string name="ui_ca8da382b354" formatted="false">"Used · free · marker: minimum reserve"</string>
+  <string name="ui_cafcd25d54cb" formatted="false">"Move to download folder"</string>
   <string name="ui_cb5272f57744" formatted="false">"TO GO"</string>
   <string name="ui_cb59afc78d23" formatted="false">"Mobile data authorized"</string>
   <string name="ui_cb6a7ba862ce" formatted="false">"Local file missing"</string>
@@ -653,6 +663,7 @@
   <string name="ui_cedcddb7fbf7" formatted="false">"Review your linked devices or sign out on this phone."</string>
   <string name="ui_ceeb01a4a329" formatted="false">"Connect server"</string>
   <string name="ui_cefe8f25f252" formatted="false">"View existing items / History"</string>
+  <string name="ui_cf12f3422d7d" formatted="false">"Select the folder again to finish moving. Originals are kept until the copy is verified."</string>
   <string name="ui_cf506aff0d86" formatted="false">"Save language"</string>
   <string name="ui_cfba11035b1a" formatted="false">"The player is no longer available."</string>
   <string name="ui_d02093474cac" formatted="false">"A maintenance operation\'s status has changed."</string>
@@ -729,11 +740,13 @@
   <string name="ui_e60465d97bea" formatted="false">"Could not read this account\'s library."</string>
   <string name="ui_e77a153cf4fd" formatted="false">"Permanent failures. Temporary errors are retried up to three times."</string>
   <string name="ui_e7de98cc83ca" formatted="false">"Session unavailable."</string>
+  <string name="ui_e7e74d02da27" formatted="false">"Sign out before switching accounts. Only private copies are removed; files in your folder are kept."</string>
   <string name="ui_e83382cd81cc" formatted="false">"Could not complete the operation. Check your details."</string>
   <string name="ui_e8d6df997c2c" formatted="false">"Share a link from another app or paste it here. Whatever you download stays on your phone, ready to watch offline."</string>
   <string name="ui_e9035cc9ea38" formatted="false">"My download issues"</string>
   <string name="ui_e92868180b61" formatted="false">"Recent activity"</string>
   <string name="ui_e942297b0a5b" formatted="false">"Sessions and devices"</string>
+  <string name="ui_e9511f94fb9f" formatted="false">"Download folder"</string>
   <string name="ui_eb20b66df02c" formatted="false">"Could not convert the file. Request another quality or format."</string>
   <string name="ui_ebcc204e4967" formatted="false">"Refresh alerts"</string>
   <string name="ui_ec46749a1af4" formatted="false">" bytes"</string>
@@ -745,6 +758,7 @@
   <string name="ui_ee556f7b0a9f" formatted="false">"Storage on this phone"</string>
   <string name="ui_ee7e3972cf6d" formatted="false">" bytes · "</string>
   <string name="ui_ef262d0a0730" formatted="false">"Make it next"</string>
+  <string name="ui_ef2ba177ab57" formatted="false">"New downloads are saved as a single copy. You can modify them with your file manager. Shared files remain when you sign out or uninstall TubeGo."</string>
   <string name="ui_efa438fb86dd" formatted="false">"Could not read the local queue."</string>
   <string name="ui_efe0ffa994e0" formatted="false">"Could not load. Check your session and connection."</string>
   <string name="ui_f0886de0cbbf" formatted="false">"Alerts center"</string>

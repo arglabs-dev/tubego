@@ -26,6 +26,7 @@ import java.util.concurrent.Executors;
 /** Pantalla única "Mi biblioteca": agregar, ver el avance y reproducir sin cambiar de lugar. */
 public final class LibraryActivity extends DsActivity implements Host {
     private final ExecutorService io = Executors.newSingleThreadExecutor();
+    private final ExecutorService accountIo = Executors.newSingleThreadExecutor();
     private final Handler ui = new Handler(Looper.getMainLooper());
     private String origin = "";
     private NetworkMonitor monitor;
@@ -62,7 +63,7 @@ public final class LibraryActivity extends DsActivity implements Host {
         ui.postDelayed(hideToast, 5000);
     }
     private final Runnable hideToast = () -> { if (toast != null) toast.setVisibility(View.GONE); };
-    @Override public void refresh() { load(false); }
+    @Override public void refresh() { load(true); }
 
     @Override protected void onCreate(Bundle state) {
         super.onCreate(state);
@@ -82,7 +83,7 @@ public final class LibraryActivity extends DsActivity implements Host {
         });
         network = monitor.current();
         handleShare(getIntent());
-        io.execute(() -> {
+        accountIo.execute(() -> {
             if (AccountSync.refresh(this, origin)) runOnUiThread(this::recreate);
         });
     }
@@ -107,7 +108,7 @@ public final class LibraryActivity extends DsActivity implements Host {
         TransferJobs.register(this, origin);
         ui.removeCallbacks(poll);
         ui.post(poll);
-        load(true);
+        load(false);
     }
 
     @Override protected void onPause() {
@@ -121,6 +122,7 @@ public final class LibraryActivity extends DsActivity implements Host {
         ui.removeCallbacksAndMessages(null);
         if (monitor != null) monitor.close();
         io.shutdownNow();
+        accountIo.shutdownNow();
     }
 
     private void handleShare(Intent intent) {
@@ -249,7 +251,7 @@ public final class LibraryActivity extends DsActivity implements Host {
         final DownloadPolicy.NetworkState net = network;
         io.execute(() -> {
             try {
-                LibraryRepo.Result r = LibraryRepo.load(this, origin, DownloadPolicy.allowsControl(net), "", net);
+                LibraryRepo.Result r = LibraryRepo.load(this, origin, fetch && DownloadPolicy.allowsControl(net), "", net);
                 runOnUiThread(() -> {
                     loading = false;
                     if (isDestroyed()) return;
@@ -260,7 +262,8 @@ public final class LibraryActivity extends DsActivity implements Host {
                     online = r.online;
                     loaded = true;
                     render();
-                    if (resumed && reloadPending) { reloadPending = false; refresh(); }
+                    if (!fetch && resumed && DownloadPolicy.allowsControl(network)) {reloadPending=false;load(true);}
+                    else if (resumed && reloadPending) { reloadPending = false; refresh(); }
                 });
             } catch (LibraryRepo.NoSession e) {
                 runOnUiThread(() -> {
@@ -356,8 +359,9 @@ public final class LibraryActivity extends DsActivity implements Host {
         card.setClickable(true);
         card.setContentDescription(i.title + ", " + ItemFlows.stateLabel(this, i));
         boolean bad = i.state == ItemState.FAILED;
-        card.addView(Ds.thumb(this, i.isAudio(), bad ? Ds.ERR_BG : Ds.SOFT, bad ? Ds.ERR : Ds.BRAND_DARK, 56),
-                new LinearLayout.LayoutParams(Ds.dp(this, 56), Ds.dp(this, 56)));
+        android.widget.ImageView thumbnail=Thumbnails.view(this);
+        card.addView(thumbnail,new LinearLayout.LayoutParams(Ds.dp(this,80),Ds.dp(this,56)));
+        Thumbnails.load(this,thumbnail,i);
 
         LinearLayout col = Ds.column(this);
         TextView title = Ds.text(this, i.title, 16, Ds.INK, 800);

@@ -33,3 +33,47 @@ adb shell am instrument -w -e class dev.arglabs.tubego.VlcIntegrationInstrumente
 # Cambiar en VLC al modo de segundo plano antes del siguiente caso.
 adb shell am instrument -w -e class dev.arglabs.tubego.VlcIntegrationInstrumentedTest#testVlcVideoAudioWithScreenOff dev.arglabs.tubego.test/android.test.InstrumentationTestRunner
 ```
+
+## User-owned shared files from Android 0.5.6
+
+New downloads are finalized into MediaStore Downloads or a user-selected SAF tree
+through `SharedMedia`. Private manifests and transfer staging remain account-scoped.
+Use `SharedMedia.available/verify/open/location` with a Context for production media
+access; the context-free `OfflineMediaAccess` helpers cover legacy private files.
+Private files still require the original checksum. Published user-owned files may
+be modified outside TubeGo and do not require the original source checksum for
+playback. Provider grants still require the currently approved account/session.
+The descriptive filename is the last URI path segment; the random capability is
+its parent segment. User-owned public files survive logout/uninstall; session
+revocation removes app access/private data and cannot revoke a user's public file.
+
+
+### Carpeta global y traslado (Android 0.5.7)
+
+Ajustes → Espacio en este teléfono → Carpeta de descargas aplica una carpeta
+para toda la instalación. Elegir una carpeta o volver a Descargas/TubeGo mueve
+los videos completos registrados por TubeGo, incluidos archivos antiguos privados
+y archivos públicos conservados al cerrar sesión. No recorre archivos ajenos.
+Las descargas en curso se coordinan con el traslado para publicar en el destino.
+
+El cambio corre fuera del hilo de interfaz. Cada archivo se copia, se vuelve a
+leer y se verifica con SHA-256 antes de actualizar sus referencias y eliminar
+el original. Se conserva un registro del destino y de la limpieza pendiente para
+reintentar después de una interrupción. La preferencia global se confirma al
+terminar; ante un error se debe elegir nuevamente la carpeta para completar el
+traslado. Mientras se copia un archivo se necesita espacio temporal para ambas
+copias. Los archivos borrados o movidos fuera de TubeGo no se recrean.
+
+
+### Nombres portables (Android 0.5.9)
+
+El nombre visible usa únicamente A–Z, a–z, 0–9 y guiones bajos, más el punto
+de la extensión. Los acentos se descomponen (niño → nino), espacios y signos se
+convierten en un único `_`, se eliminan separadores iniciales/finales y se
+mantiene un límite de 160 caracteres. Ejemplo: `Canción del niño (2026)` →
+`Cancion_del_nino_2026.mp4`. Los duplicados usan `_2`, `_3`, etc. La extensión
+sigue siendo `.mp4` o `.mp3` según el formato; el título dentro de la app no cambia.
+
+Al aplicar de nuevo la carpeta de descargas también se reemplazan archivos
+anteriores cuyo nombre contenga espacios o signos, conservando una sola copia
+verificada. Los manifiestos de nombres antiguos siguen siendo compatibles.

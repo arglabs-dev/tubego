@@ -90,3 +90,15 @@ el bot sin modificarlo. La app oficial incluye biblioteca privada, descargas sin
 con herramientas administrativas según el rol de la cuenta.
 Consulta [arquitectura, contrato API y ejecución](docs/MOBILE_ARCHITECTURE.md).
 El workflow `Mobile foundation` verifica Python y compila un APK debug descargable.
+
+## Enviar desde la laptop al teléfono
+
+Abre `/send` en el mismo servidor HTTPS configurado en la app Android. Inicia
+sesión con tu cuenta de TubeGo, pega el enlace, elige calidad o audio y pulsa
+**Enviar a mis teléfonos**. La página muestra la preparación en el servidor y
+la confirmación de descarga de cada dispositivo vinculado.
+
+El teléfono debe haber iniciado sesión previamente. Las solicitudes esperan si
+está desconectado; la sincronización periódica de Android y las preferencias de
+red pueden demorar la descarga. Esta versión distribuye a todos los dispositivos
+activos de la cuenta. Consulta [el flujo y sus límites](docs/WEB_SEND.md).
