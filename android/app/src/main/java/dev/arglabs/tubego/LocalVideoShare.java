@@ -16,7 +16,8 @@ final class LocalVideoShare {
         if (mime == null || !mime.startsWith("video/")) throw new IOException("Video required");
         Intent send = new Intent(Intent.ACTION_SEND).setType(mime);
         send.putExtra(Intent.EXTRA_STREAM, uri);
-        send.setClipData(ClipData.newRawUri("TubeGo", uri));
+        send.putExtra(Intent.EXTRA_TITLE,uri.getLastPathSegment());
+        send.setClipData(ClipData.newRawUri(uri.getLastPathSegment(), uri));
         send.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         return send;
     }

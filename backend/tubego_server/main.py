@@ -12,7 +12,7 @@ from tubego_server.mail import SmtpMailer
 from tubego_server.maintenance import ReadRunner
 from tubego_server.routers import maintenance
 from tubego_server.account_cleanup import CleanupRunner
-from tubego_server.routers import admin_users, commands
+from tubego_server.routers import admin_users, commands, web
 from tubego_server.resource_cleanup import Runner as ResourceCleanupRunner
 
 
@@ -37,7 +37,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.middleware("http")
     async def private_auth_responses(request: Request, call_next):
         response = await call_next(request)
-        if request.url.path.startswith(("/api/v1/auth/", "/api/v1/account/", "/api/v1/admin/", "/api/v1/server-cleanup")):
+        if request.url.path.startswith(("/api/v1/auth/", "/api/v1/account/", "/api/v1/admin/", "/api/v1/server-cleanup", "/api/v1/web/")):
             response.headers["Cache-Control"] = "no-store"
         return response
 
@@ -70,6 +70,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(alerts.router,prefix="/api/v1")
     app.include_router(maintenance.router, prefix="/api/v1")
     app.include_router(commands.router, prefix="/api/v1")
+    app.include_router(web.router)
     return app
 
 

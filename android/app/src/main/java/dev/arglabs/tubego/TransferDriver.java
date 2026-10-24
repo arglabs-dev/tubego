@@ -13,9 +13,11 @@ public final class TransferDriver {
     private TransferDriver() {}
     public enum Outcome {DONE,WAIT_WIFI,WAIT_NETWORK,WAIT_SPACE,RETRY,STOPPED}
     public static Outcome run(Context context,String origin,TransferRuntime.Control control) throws Exception {
-        synchronized(TransferRuntime.lock(origin)) {
-            TransferRuntime.register(origin,control);
-            try {return execute(context,origin,control);}finally {TransferRuntime.unregister(origin,control);}
+        synchronized(TransferRuntime.storageLock) {
+            synchronized(TransferRuntime.lock(origin)) {
+                TransferRuntime.register(origin,control);
+                try {return execute(context,origin,control);}finally {TransferRuntime.unregister(origin,control);}
+            }
         }
     }
     private static Outcome execute(Context context,String origin,TransferRuntime.Control control) throws Exception {
@@ -63,13 +65,13 @@ public final class TransferDriver {
                 // re-download. Current delivery snapshots win over stale events.
                 for(JSONObject row:rows)if(UUID.fromString(row.getString("id")).toString().equals(deletedId)
                         && (!row.isNull("local_deleted_at") || row.optString("delivery_status").equals("approval_required"))) {
-                    LocalResourceDeletion.apply(root,deletedId);break;
+                    SharedMedia.delete(context,root,deletedId);break;
                 }
             }
-            if((kind.equals("delete_local") || kind.equals("local_deleted")) && payload!=null && payload.has("resource_id")) removeRecord(root,payload.getString("resource_id"));
+            if((kind.equals("delete_local") || kind.equals("local_deleted")) && payload!=null && payload.has("resource_id")) removeRecord(context,root,payload.getString("resource_id"));
         }
         }
-        List<TransferRecord> queue=new ArrayList<>(),missing=new ArrayList<>();
+        List<TransferRecord> queue=new ArrayList<>(),missing=new ArrayList<>();Set<String> confirmed=new HashSet<>();
         synchronized(SessionStore.class) {
         if(!sameSession(store,token,control))return Outcome.STOPPED;
         for(JSONObject row:rows) {
@@ -79,28 +81,38 @@ public final class TransferDriver {
             TransferRecord record=manifest.isFile()?TransferRecord.read(manifest):null;
             if(!row.isNull("local_deleted_at") || row.optString("delivery_status").equals("approval_required")) {
                 if(record!=null)grants.revoke(key(origin,user,device,record));
-                LocalResourceDeletion.apply(root,id);
+                SharedMedia.delete(context,root,id);
                 continue;
             }
             if(LocalResourceDeletion.deleted(root,id))continue;
-            if(record!=null && "complete".equals(row.optString("delivery_status")) && record.media().isFile()
+            if(record!=null && "complete".equals(row.optString("delivery_status")) && SharedMedia.available(context,record)
                 && record.sha256.equals(row.optString("sha256")) && record.size==row.optLong("size_bytes",-1)){
                 // The confirmation response was lost, but the durable snapshot
                 // acknowledges success. Keep the verified file and clear its budget.
                 if(record.failures>0)TransferRetry.reset(record);
                 grants.revoke(key(origin,user,device,record));
             }
+            if(record!=null&&!record.sharedUri.isEmpty()) {
+                record.state=SharedMedia.available(context,record)?"complete":"missing";
+                record.message=record.state.equals("missing")?"El archivo fue movido o borrado fuera de TubeGo. Puedes solicitarlo nuevamente.":"";
+                if(record.state.equals("complete"))java.nio.file.Files.deleteIfExists(record.media().toPath());
+                record.save();continue;
+            }
+            if(record!=null&&"complete".equals(row.optString("delivery_status"))&&record.sha256.equals(row.optString("sha256"))&&record.size==row.optLong("size_bytes",-1))confirmed.add(id);
+            if(record!=null&&record.publishRequested&&record.media().isFile()&&record.media().length()==record.size&&confirmed.contains(id)) {
+                record.state="complete";record.save();queue.add(record);continue;
+            }
             if(!row.optBoolean("server_available")) {
-                if(record!=null && !record.media().isFile()) {record.state="unavailable";record.message="El archivo ya no está en el servidor. Solicítalo nuevamente.";record.save();}
+                if(record!=null && !SharedMedia.available(context,record)) {record.state="unavailable";record.message="El archivo ya no está en el servidor. Solicítalo nuevamente.";record.save();}
                 continue;
             }
             if(row.isNull("sha256") || row.isNull("size_bytes")) continue;
             String digest=row.getString("sha256");long size=row.getLong("size_bytes");
-            if(record==null) record=new TransferRecord(root,id,digest,size,row.optString("title","Archivo"),row.optString("created_at",""));
+            if(record==null) {record=new TransferRecord(root,id,digest,size,row.optString("title","Archivo"),row.optString("created_at",""));record.publishRequested=true;}
             else record.reconcile(digest,size);
             record.mediaFormat=row.optString("media_format","video");
             if(record.state.equals("cancelled") || record.state.equals("deleted")) continue;
-            if(row.optString("delivery_status").equals("complete") && !record.media().isFile()) {
+            if(row.optString("delivery_status").equals("complete") && !SharedMedia.available(context,record)) {
                 record.state="missing";record.message="El archivo no está en el teléfono. Solicita la descarga explícitamente.";record.save();missing.add(record);continue;
             }
             record.save();queue.add(record);
@@ -132,10 +144,10 @@ public final class TransferDriver {
             if(record.nextRetryAt>System.currentTimeMillis()){
                 retryPending=true;control.retryAt=control.retryAt==0?record.nextRetryAt:Math.min(control.retryAt,record.nextRetryAt);continue;
             }
-            if(record.media().isFile() && ResumableTransfer.verifies(record.media(),record.size,record.sha256)) {
+            if(SharedMedia.available(context,record) && ResumableTransfer.verifies(record.media(),record.size,record.sha256)) {
                 if(!controlNetworkAvailable(manager)){waitAny=true;continue;}
-                try{confirm(api,token,record);synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;TransferRetry.reset(record);}grants.revoke(key);}
-                catch(Exception e){if(Thread.currentThread().isInterrupted()||control.stopped)return Outcome.STOPPED;if(!controlNetworkAvailable(manager)){waitAny=true;continue;}synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;TransferRetry.failed(record,e,System.currentTimeMillis());}if(record.nextRetryAt>0){retryPending=true;control.retryAt=control.retryAt==0?record.nextRetryAt:Math.min(control.retryAt,record.nextRetryAt);}}
+                try{if(!confirmed.contains(record.id))confirm(api,token,record);synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;TransferRetry.reset(record);}SharedMedia.publish(context,origin,session,record);grants.revoke(key);}
+                catch(Exception e){if(Thread.currentThread().isInterrupted()||control.stopped)return Outcome.STOPPED;if(e instanceof ResumableTransfer.StoragePause){synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;record.state="paused";record.pauseReason="device_storage";record.save();}waitSpace=true;continue;}if(!controlNetworkAvailable(manager)){waitAny=true;continue;}synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;TransferRetry.failed(record,e,System.currentTimeMillis());}if(record.nextRetryAt>0){retryPending=true;control.retryAt=control.retryAt==0?record.nextRetryAt:Math.min(control.retryAt,record.nextRetryAt);}}
                 continue;
             }
             if(!storage.allows(Math.max(0,record.size-record.offset()))){
@@ -172,7 +184,7 @@ public final class TransferDriver {
                     };
                 },()->permitted(manager,selected,grants,key,control) && !new File(root,record.id+".deleted").exists(),SessionStore.class,()->sameSession(store,token,control) && !new File(root,record.id+".deleted").exists(),storage);
                 if(result==ResumableTransfer.Result.PAUSED) {if(grants.authorized(key))waitAny=true;else waitWifi=true;continue;}
-                confirm(api,token,record);synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;TransferRetry.reset(record);}grants.revoke(key);
+                confirm(api,token,record);synchronized(SessionStore.class){if(!sameSession(store,token,control))return Outcome.STOPPED;TransferRetry.reset(record);}SharedMedia.publish(context,origin,session,record);grants.revoke(key);
             } catch(Exception e) {
                 if(control.stopped) return Outcome.STOPPED;
                 if(!permitted(manager,selected,grants,key,control) || Thread.currentThread().isInterrupted()){
@@ -218,11 +230,18 @@ public final class TransferDriver {
         DownloadPolicy.NetworkState state=new DownloadPolicy.NetworkState(caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET),caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED),caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI),caps.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR),!caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED));
         return DownloadPolicy.allowsMedia(state,grants.authorized(key));
     }
-    private static void removeRecord(File root,String resource) throws Exception {
+    private static void removeRecord(Context context,File root,String resource) throws Exception {
         String id=UUID.fromString(resource).toString();
         try(FileOutputStream tombstone=new FileOutputStream(new File(root,id+".deleted"))){tombstone.write(1);tombstone.getFD().sync();}
-        for(String suffix:new String[]{".part",".media"}) {File file=new File(root,id+suffix);if(file.exists()&&!file.delete())throw new IOException("No se pudo borrar archivo local");}
         File manifest=new File(root,id+".properties");
+        if(manifest.isFile())SharedMedia.delete(context,root,id);
+        if(manifest.isFile()&&!java.nio.file.Files.isSymbolicLink(manifest.toPath())) {
+            java.util.Properties saved=new java.util.Properties();try(FileInputStream in=new FileInputStream(manifest)){saved.load(in);}
+            String fileName=saved.getProperty("file_name");
+            if(MediaFileName.validStored(fileName,id))java.nio.file.Files.deleteIfExists(new File(root,fileName).toPath());
+        }
+        for(String suffix:new String[]{".part",".media"}) {File file=new File(root,id+suffix);if(file.exists()&&!file.delete())throw new IOException("No se pudo borrar archivo local");}
+        java.nio.file.Files.deleteIfExists(new File(root,id+".thumbnail").toPath());
         if(manifest.isFile()){TransferRecord r=TransferRecord.read(manifest);r.state="deleted";r.save();}
     }
 }

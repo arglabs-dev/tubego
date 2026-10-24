@@ -144,9 +144,27 @@ final class ItemFlows {
         Ds.add(body, header(a, i), 6);
         if (!i.outbox) Ds.add(body, Ds.text(a, meta(a, i), 15, Ds.MUTED, 500), 8);
 
+        if(i.downloaded) {
+            TextView location=Ds.text(a,a.t("Ubicación del archivo"),13,Ds.MUTED,500);location.setTextIsSelectable(true);Ds.add(body,location,10);
+            host.io().execute(()->{try{
+                org.json.JSONObject session=new SessionStore(a,host.origin()).read();if(session==null)return;
+                java.io.File root=LinkOutboxDispatch.root(a,host.origin(),session);
+                TransferRecord record=OfflineMediaAccess.record(root,i.id);String path=SharedMedia.location(a,record);
+                a.runOnUiThread(()->{try{if(sheet.isShowing()&&session.getString("token").equals(new SessionStore(a,host.origin()).token()))location.setText(a.t("Ubicación del archivo")+"\n"+path);}catch(Exception ignored){}});
+            }catch(Exception ignored){}});
+        }
         switch (i.state) {
             case READY:
                 big(a, body, a.t("Reproducir"), Ds.Kind.PRIMARY, 16, () -> { sheet.dismiss(); play(host, i); });
+                Button move=Ds.button(a,a.t("Mover a la carpeta de descargas"),Ds.Kind.SECONDARY);
+                move.setVisibility(android.view.View.GONE);Ds.add(body,move,8);
+                host.io().execute(()->{try{org.json.JSONObject s=new SessionStore(a,host.origin()).read();if(s==null)return;TransferRecord r=OfflineMediaAccess.record(LinkOutboxDispatch.root(a,host.origin(),s),i.id);if(r.sharedUri.isEmpty())a.runOnUiThread(()->{if(sheet.isShowing())move.setVisibility(android.view.View.VISIBLE);});}catch(Exception ignored){}});
+                move.setOnClickListener(v->{move.setEnabled(false);host.message(a.t("Moviendo el archivo a la carpeta elegida…"));host.io().execute(()->{
+                    try{org.json.JSONObject s=new SessionStore(a,host.origin()).read();if(s==null)return;TransferRecord r;
+                        synchronized(SessionStore.class){if(!s.getString("token").equals(new SessionStore(a,host.origin()).token()))return;r=OfflineMediaAccess.record(LinkOutboxDispatch.root(a,host.origin(),s),i.id);r.publishRequested=true;r.save();}
+                        SharedMedia.publish(a,host.origin(),s,r);a.runOnUiThread(()->{sheet.dismiss();host.message(a.t("Archivo movido. Se conserva una sola copia."));host.refresh();});
+                    }catch(Exception error){a.runOnUiThread(()->{move.setEnabled(true);host.message(Texts.error(a,error));});}
+                });});
                 if (!i.isAudio()) big(a, body, a.t("Compartir video"), Ds.Kind.SECONDARY, 8,
                         () -> { sheet.dismiss(); share(host, i); });
                 LinearLayout two = Ds.row(a);
@@ -514,7 +532,7 @@ final class ItemFlows {
                 synchronized (SessionStore.class) {
                     if (!token.equals(new SessionStore(a, host.origin()).token())) return;
                     DeletionOutboxDispatch.box(a, host.origin(), session).add(i.id, scope);
-                    LocalResourceDeletion.apply(DeletionOutboxDispatch.root(a, host.origin(), session), i.id);
+                    SharedMedia.delete(a,DeletionOutboxDispatch.root(a, host.origin(), session), i.id);
                 }
                 DeletionOutboxDispatch.schedule(a, host.origin());
                 a.runOnUiThread(() -> { host.message(a.t("Borrado. Los dispositivos sin conexión lo quitarán al reconectar.")); host.refresh(); });

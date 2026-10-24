@@ -23,6 +23,7 @@ final class AddLinkSheet {
     private boolean audio;
     private EditText input;
     private TextView info;
+    private android.widget.ImageView thumbnail;
     private LinearLayout optionsBox;
     private Button tabVideo, tabAudio, add;
     private final String knownTitle;
@@ -77,6 +78,8 @@ final class AddLinkSheet {
         Ds.add(body, field, 4);
         field.setMinimumHeight(Ds.dp(a, 56));
 
+        thumbnail=Thumbnails.view(a);thumbnail.setVisibility(android.view.View.GONE);
+        Ds.add(body,thumbnail,LinearLayout.LayoutParams.MATCH_PARENT,Ds.dp(a,160),0,12,0,0);
         info = Ds.text(a, "", 15, Ds.MUTED, 600);
         Ds.add(body, info, 10);
 
@@ -107,8 +110,9 @@ final class AddLinkSheet {
         input.addTextChangedListener(new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int st, int c, int af) { }
             public void onTextChanged(CharSequence s, int st, int b, int c) { }
-            public void afterTextChanged(Editable e) { if (!knownTitle.isEmpty()) return; info.setText(""); }
+            public void afterTextChanged(Editable e) { analyzedUrl="";thumbnail.setImageDrawable(null);thumbnail.setVisibility(android.view.View.GONE);info.setText(""); }
         });
+        input.setOnFocusChangeListener((v,focused)->{if(!focused)analyze();});
         input.setOnEditorActionListener((v, action, ev) -> { analyze(); return false; });
     }
 
@@ -171,17 +175,23 @@ final class AddLinkSheet {
         info.setText(a.t("Consultando…"));
         host.io().execute(() -> {
             String text;
+            android.graphics.Bitmap preview=null;
+            String ownerToken=null;
             try {
-                String token = new SessionStore(a, host.origin()).token();
+                String token = new SessionStore(a, host.origin()).token();ownerToken=token;
                 MediaInfoClient.Info i = new MediaInfoClient(new ApiClient(host.origin())::request).analyze(url, token);
+                preview=Thumbnails.decode(i.thumbnailBase64);
                 String title = i.title == null ? a.t("Sin título disponible") : i.title;
                 String dur = i.durationSeconds == null ? "" : " · " + Item.formatDuration(i.durationSeconds);
                 text = title + dur;
             } catch (Exception e) {
                 text = a.t("Sin conexión: se guardará y se validará cuando vuelva la red.");
             }
-            final String result = text;
-            a.runOnUiThread(() -> { if (!a.isDestroyed() && sheet.isShowing()) info.setText(result); });
+            final String result = text;final android.graphics.Bitmap image=preview;final String expectedToken=ownerToken;
+            a.runOnUiThread(() -> { if (!a.isDestroyed() && sheet.isShowing() && input.getText().toString().trim().equals(url)) {
+                try{if(expectedToken!=null&&!expectedToken.equals(new SessionStore(a,host.origin()).token()))return;}catch(Exception changed){return;}
+                info.setText(result);thumbnail.setImageBitmap(image);thumbnail.setVisibility(image==null?android.view.View.GONE:android.view.View.VISIBLE);
+            } });
         });
     }
 
