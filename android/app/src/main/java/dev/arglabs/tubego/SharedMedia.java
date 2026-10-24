@@ -47,7 +47,9 @@ final class SharedMedia {
  private static void collect(File folder,java.util.List<TransferRecord> records)throws Exception{
   File[] files=folder.listFiles();if(files==null)return;
   for(File f:files){if(java.nio.file.Files.isSymbolicLink(f.toPath()))continue;
-   if(f.isDirectory())collect(f,records);else if(f.getName().matches("[0-9a-f-]{36}\\.properties"))records.add(TransferRecord.read(f));
+   // Only descend through the origin/account/device hierarchy, never command or link outboxes.
+   if(f.isDirectory()){if(f.getName().matches("[0-9a-f]{64}|[0-9a-f-]{36}"))collect(f,records);}
+   else if(f.getName().matches("[0-9a-f-]{36}\\.properties"))records.add(TransferRecord.read(f));
   }
  }
  private static boolean inFolder(Context c,TransferRecord r,String selected){
@@ -68,9 +70,13 @@ final class SharedMedia {
   try{if(DocumentsContract.isDocumentUri(c,uri))DocumentsContract.deleteDocument(c.getContentResolver(),uri);else c.getContentResolver().delete(uri,null,null);}catch(FileNotFoundException gone){}
  }
  private static final class MoveSession{
-  final SessionStore store;final String token;
-  MoveSession(Context c,String origin,JSONObject s)throws Exception{store=new SessionStore(c,origin);token=s.getString("token");}
-  void check()throws Exception{if(!token.equals(store.token())||Thread.currentThread().isInterrupted())throw new IOException("La sesión cambió");}
+  final SessionStore store;final long generation;
+  MoveSession(Context c,String origin,JSONObject s)throws Exception{
+   store=new SessionStore(c,origin);
+   synchronized(SessionStore.class){if(!s.getString("token").equals(store.token()))throw new IOException("La sesión cambió");generation=store.generation();}
+  }
+  // Reading the durable epoch avoids decrypting the token for every 64 KiB copied.
+  void check()throws Exception{if(generation!=store.generation()||Thread.currentThread().isInterrupted())throw new IOException("La sesión cambió");}
   void save(TransferRecord r)throws Exception{synchronized(SessionStore.class){check();if(LocalResourceDeletion.deleted(r.root,r.id))throw new IOException("El archivo fue eliminado");r.save();}}
  }
  private static void move(Context c,TransferRecord r,String target,MoveSession active)throws Exception{

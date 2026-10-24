@@ -66,4 +66,14 @@ public final class FolderMigrationInstrumentedTest extends InstrumentationTestCa
   SharedMedia.folder(context,origin,session,"");SharedMedia.restoreRecords(context,origin,session,record.root);record=TransferRecord.read(record.manifest());assertFalse(old.equals(record.sharedUri));assertTrue(SharedMedia.available(context,record));assertTrue(SharedMedia.location(context,record).contains("Download/TubeGo/"));
  }
 
+ public void testMigrationIgnoresCommandAndLinkOutboxRecords()throws Exception{
+  for(String directory:new String[]{"command-outbox","link-outbox","recovery-outbox","deletion-outbox","outbox"}){
+   File outbox=new File(record.root,directory);outbox.mkdirs();
+   Files.write(new File(outbox,UUID.randomUUID()+".properties").toPath(),"id=queued-command\naction=delete\n".getBytes());
+  }
+  SharedMedia.folder(context,origin,session,"");record=TransferRecord.read(record.manifest());
+  assertFalse(record.media().exists());assertTrue(SharedMedia.available(context,record));
+  for(String directory:new String[]{"command-outbox","link-outbox","recovery-outbox","deletion-outbox","outbox"})assertEquals(1,new File(record.root,directory).list().length);
+ }
+
 }
