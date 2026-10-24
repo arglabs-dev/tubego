@@ -38,7 +38,7 @@ public final class FolderMigrationInstrumentedTest extends InstrumentationTestCa
   String uri=record.sharedUri;LocalLibraryStorage.wipe(context,origin,session.getString("user_id"),session.getString("device_id"));SharedMedia.restoreRecords(context,origin,session,record.root);assertEquals(uri,TransferRecord.read(record.manifest()).sharedUri);
  }
  private Uri publicFile(String path,byte[] bytes)throws Exception{
-  ContentValues values=new ContentValues();values.put(MediaStore.MediaColumns.DISPLAY_NAME,record.title+".mp4");values.put(MediaStore.MediaColumns.MIME_TYPE,"video/mp4");values.put(MediaStore.MediaColumns.RELATIVE_PATH,path);
+  ContentValues values=new ContentValues();values.put(MediaStore.MediaColumns.DISPLAY_NAME,MediaFileName.display(record.title,false));values.put(MediaStore.MediaColumns.MIME_TYPE,"video/mp4");values.put(MediaStore.MediaColumns.RELATIVE_PATH,path);
   Uri uri=context.getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI,values);try(OutputStream out=context.getContentResolver().openOutputStream(uri)){out.write(bytes);}return uri;
  }
  public void testPublicMovePreservesExternalEditsAndDoesNotDuplicateOnRetry()throws Exception{
@@ -74,6 +74,17 @@ public final class FolderMigrationInstrumentedTest extends InstrumentationTestCa
   SharedMedia.folder(context,origin,session,"");record=TransferRecord.read(record.manifest());
   assertFalse(record.media().exists());assertTrue(SharedMedia.available(context,record));
   for(String directory:new String[]{"command-outbox","link-outbox","recovery-outbox","deletion-outbox","outbox"})assertEquals(1,new File(record.root,directory).list().length);
+ }
+
+ public void testExistingSpecialCharactersAreNormalizedInTheSameFolder()throws Exception{
+  Uri old=publicFile("Download/TubeGo",Files.readAllBytes(record.media().toPath()));
+  ContentValues rename=new ContentValues();rename.put(MediaStore.MediaColumns.DISPLAY_NAME,"Canción del niño (2026) "+UUID.randomUUID()+".mp4");context.getContentResolver().update(old,rename,null,null);
+  record.title="Canción del niño (2026)";record.sharedUri=old.toString();Files.delete(record.media().toPath());record.save();
+  SharedMedia.folder(context,origin,session,"");record=TransferRecord.read(record.manifest());
+  try(android.database.Cursor cursor=context.getContentResolver().query(Uri.parse(record.sharedUri),new String[]{MediaStore.MediaColumns.DISPLAY_NAME},null,null,null)){
+   assertTrue("Expected a readable destination",cursor.moveToFirst());assertTrue("Unexpected filename: "+cursor.getString(0),cursor.getString(0).matches("Cancion_del_nino_2026(?:_[0-9]+)?\\.mp4"));
+  }
+  assertFalse(old.toString().equals(record.sharedUri));assertTrue(SharedMedia.available(context,record));
  }
 
 }

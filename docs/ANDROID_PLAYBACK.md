@@ -63,3 +63,17 @@ reintentar después de una interrupción. La preferencia global se confirma al
 terminar; ante un error se debe elegir nuevamente la carpeta para completar el
 traslado. Mientras se copia un archivo se necesita espacio temporal para ambas
 copias. Los archivos borrados o movidos fuera de TubeGo no se recrean.
+
+
+### Nombres portables (Android 0.5.9)
+
+El nombre visible usa únicamente A–Z, a–z, 0–9 y guiones bajos, más el punto
+de la extensión. Los acentos se descomponen (niño → nino), espacios y signos se
+convierten en un único `_`, se eliminan separadores iniciales/finales y se
+mantiene un límite de 160 caracteres. Ejemplo: `Canción del niño (2026)` →
+`Cancion_del_nino_2026.mp4`. Los duplicados usan `_2`, `_3`, etc. La extensión
+sigue siendo `.mp4` o `.mp3` según el formato; el título dentro de la app no cambia.
+
+Al aplicar de nuevo la carpeta de descargas también se reemplazan archivos
+anteriores cuyo nombre contenga espacios o signos, conservando una sola copia
+verificada. Los manifiestos de nombres antiguos siguen siendo compatibles.

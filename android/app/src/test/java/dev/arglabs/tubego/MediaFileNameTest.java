@@ -11,8 +11,8 @@ public class MediaFileNameTest {
  @Rule public TemporaryFolder temp=new TemporaryFolder();
  private final String id="11111111-1111-4111-8111-111111111111";
  @Test public void normalizesPortableUnicodeNames(){
-  assertEquals("Mi vídeo 2026 resumen.mp4",MediaFileName.display(" ../Mi vídeo: 2026/ resumen?* ",false));
-  assertEquals("Video CON.mp3",MediaFileName.display("CON",true));
+  assertEquals("Mi_video_2026_resumen.mp4",MediaFileName.display(" ../Mi vídeo: 2026/ resumen?* ",false));
+  assertEquals("Video_CON.mp3",MediaFileName.display("CON",true));
   assertEquals("Video.mp4",MediaFileName.display(".../\\",false));
   assertEquals("ABC.mp4",MediaFileName.display("ＡＢＣ",false));
   assertTrue(MediaFileName.display("🎥".repeat(200),false).getBytes(StandardCharsets.UTF_8).length<=164);
@@ -20,7 +20,7 @@ public class MediaFileNameTest {
  @Test public void persistsStableDescriptivePathAndDeletesIt()throws Exception{
   TransferRecord r=new TransferRecord(temp.getRoot(),id,"a".repeat(64),3,"Título / prueba","");
   Files.write(r.media().toPath(),new byte[]{1,2,3});r.state="complete";r.save();
-  String name=r.media().getName();assertTrue(name.endsWith("Título prueba.mp4"));assertTrue(name.startsWith(id));
+  String name=r.media().getName();assertTrue(name.endsWith("Titulo_prueba.mp4"));assertTrue(name.startsWith(id));
   TransferRecord restored=TransferRecord.read(r.manifest());restored.title="Changed metadata";restored.save();
   assertEquals(name,TransferRecord.read(r.manifest()).media().getName());
   LocalResourceDeletion.apply(temp.getRoot(),id);assertFalse(new File(temp.getRoot(),name).exists());
@@ -40,4 +40,13 @@ public class MediaFileNameTest {
   p.setProperty("file_name",id+"--../../escape.mp4");try(FileOutputStream out=new FileOutputStream(r.manifest())){p.store(out,null);}
   assertThrows(IOException.class,()->TransferRecord.read(r.manifest()));
  }
+ @Test public void onlyAsciiLettersNumbersAndUnderscores(){
+  assertEquals("Cancion_del_nino_2026.mp4",MediaFileName.display(" ¡Canción del niño! 🎵 (2026) ",false));
+  assertEquals("uno_dos_tres_cuatro.mp3",MediaFileName.display("uno  dos\t tres—cuatro",true));
+  assertEquals("Video.mp4",MediaFileName.display("🎥 日本語 !!!",false));
+  assertTrue(MediaFileName.normalized(MediaFileName.display("áéíóú Ñ ß / \n",false)));
+  assertEquals("Same_title_2.mp4",MediaFileName.numbered("Same title",false,2));
+  assertFalse(MediaFileName.normalized("Title (1).mp4"));
+ }
+
 }

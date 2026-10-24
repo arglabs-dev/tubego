@@ -38,7 +38,7 @@ final class SharedMedia {
     if(!r.pendingUri.isEmpty()){removeUri(c,r.pendingUri);r.pendingUri="";active.save(r);}
     if(!r.sharedUri.isEmpty()&&!available(c,r))continue;
     if(r.sharedUri.isEmpty()&&(!r.media().isFile()||!ResumableTransfer.verifies(r.media(),r.size,r.sha256)))continue;
-    if(!r.sharedUri.isEmpty()&&inFolder(c,r,uri)&&r.moveUri.isEmpty())continue;
+    if(!r.sharedUri.isEmpty()&&inFolder(c,r,uri)&&MediaFileName.normalized(displayName(c,Uri.parse(r.sharedUri)))&&r.moveUri.isEmpty())continue;
     move(c,r,uri,active);
    }
    synchronized(SessionStore.class){active.check();if(!c.getSharedPreferences("tubego_download_folder",0).edit().putString("global",uri).commit())throw new IOException("No se pudo guardar la carpeta");}
@@ -57,13 +57,36 @@ final class SharedMedia {
   if(selected.isEmpty())return false;
   try{Uri tree=Uri.parse(selected),child=Uri.parse(r.sharedUri);return tree.getAuthority().equals(child.getAuthority())&&DocumentsContract.isChildDocument(c.getContentResolver(),DocumentsContract.buildDocumentUriUsingTree(tree,DocumentsContract.getTreeDocumentId(tree)),child);}catch(Exception ignored){return false;}
  }
+ private static String displayName(Context c,Uri uri)throws IOException{
+  try(Cursor cursor=c.getContentResolver().query(uri,new String[]{OpenableColumns.DISPLAY_NAME},null,null,null)){
+   if(cursor!=null&&cursor.moveToFirst())return cursor.getString(0);
+  }catch(Exception error){throw new IOException("No se pudo leer el nombre del archivo",error);}
+  throw new IOException("No se pudo leer el nombre del archivo");
+ }
  private static Uri createDestination(Context c,TransferRecord r,String selected)throws Exception{
-  ContentResolver resolver=c.getContentResolver();String name=MediaFileName.display(r.title,"audio".equals(r.mediaFormat));Uri destination;
-  if(selected.isEmpty()){
-   ContentValues values=new ContentValues();values.put(MediaStore.MediaColumns.DISPLAY_NAME,name);values.put(MediaStore.MediaColumns.MIME_TYPE,OfflineMediaAccess.mime(r));values.put(MediaStore.MediaColumns.RELATIVE_PATH,Environment.DIRECTORY_DOWNLOADS+"/TubeGo");values.put(MediaStore.MediaColumns.IS_PENDING,1);
-   destination=resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI,values);
-  }else{Uri tree=Uri.parse(selected);destination=DocumentsContract.createDocument(resolver,DocumentsContract.buildDocumentUriUsingTree(tree,DocumentsContract.getTreeDocumentId(tree)),OfflineMediaAccess.mime(r),name);}
-  if(destination==null)throw new IOException("No se pudo crear el archivo en la carpeta elegida");return destination;
+  ContentResolver resolver=c.getContentResolver();java.util.Set<String> names=new java.util.HashSet<>();
+  Uri tree=selected.isEmpty()?null:Uri.parse(selected);
+  Uri children=tree==null?MediaStore.Downloads.EXTERNAL_CONTENT_URI:DocumentsContract.buildChildDocumentsUriUsingTree(tree,DocumentsContract.getTreeDocumentId(tree));
+  String filter=tree==null?MediaStore.MediaColumns.RELATIVE_PATH+"=?":null;
+  String[] args=tree==null?new String[]{Environment.DIRECTORY_DOWNLOADS+"/TubeGo/"}:null;
+  try(Cursor cursor=resolver.query(children,new String[]{OpenableColumns.DISPLAY_NAME},filter,args,null)){
+   if(cursor!=null)while(cursor.moveToNext())names.add(cursor.getString(0).toLowerCase(java.util.Locale.ROOT));
+  }
+  for(int number=1;number<10000;number++){
+   String name=MediaFileName.numbered(r.title,"audio".equals(r.mediaFormat),number);
+   if(names.contains(name.toLowerCase(java.util.Locale.ROOT)))continue;
+   Uri destination;
+   if(tree==null){
+    ContentValues values=new ContentValues();values.put(MediaStore.MediaColumns.DISPLAY_NAME,name);values.put(MediaStore.MediaColumns.MIME_TYPE,OfflineMediaAccess.mime(r));values.put(MediaStore.MediaColumns.RELATIVE_PATH,Environment.DIRECTORY_DOWNLOADS+"/TubeGo");values.put(MediaStore.MediaColumns.IS_PENDING,1);
+    destination=resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI,values);
+   }else destination=DocumentsContract.createDocument(resolver,DocumentsContract.buildDocumentUriUsingTree(tree,DocumentsContract.getTreeDocumentId(tree)),OfflineMediaAccess.mime(r),name);
+   if(destination==null)throw new IOException("No se pudo crear el archivo en la carpeta elegida");
+   // Providers may append '(1)' when another writer wins a collision. Retry with our safe suffix.
+   try{if(MediaFileName.normalized(displayName(c,destination)))return destination;}
+   catch(Exception error){removeUri(c,destination.toString());throw error;}
+   removeUri(c,destination.toString());
+  }
+  throw new IOException("No se pudo crear un nombre de archivo único");
  }
  private static void removeUri(Context c,String value)throws Exception{
   if(value.isEmpty())return;Uri uri=Uri.parse(value);
@@ -80,7 +103,7 @@ final class SharedMedia {
   void save(TransferRecord r)throws Exception{synchronized(SessionStore.class){check();if(LocalResourceDeletion.deleted(r.root,r.id))throw new IOException("El archivo fue eliminado");r.save();}}
  }
  private static void move(Context c,TransferRecord r,String target,MoveSession active)throws Exception{
-  if(!r.moveUri.isEmpty()&&!target.equals(r.moveTarget)){removeUri(c,r.moveUri);r.moveUri="";active.save(r);}
+  if(!r.moveUri.isEmpty()&&(!target.equals(r.moveTarget)||!MediaFileName.normalized(displayName(c,Uri.parse(r.moveUri))))){removeUri(c,r.moveUri);r.moveUri="";active.save(r);}
   if(r.moveUri.isEmpty()){r.moveUri=createDestination(c,r,target).toString();r.moveTarget=target;active.save(r);}
   Uri destination=Uri.parse(r.moveUri);MessageDigest digest=MessageDigest.getInstance("SHA-256");long count=0;
   try(InputStream input=r.sharedUri.isEmpty()?new FileInputStream(r.media()):c.getContentResolver().openInputStream(Uri.parse(r.sharedUri));ParcelFileDescriptor fd=c.getContentResolver().openFileDescriptor(destination,"rwt")){
@@ -202,22 +225,15 @@ final class SharedMedia {
   File source=r.media();if(!source.isFile())return;
   SessionStore store=new SessionStore(c,origin);String token=expected.getString("token");
   long generation=store.generation();
-  String selected=tree(c,origin,expected),name=MediaFileName.display(r.title,"audio".equals(r.mediaFormat));
+  String selected=tree(c,origin,expected);
   if(selected.isEmpty()&&!new AndroidStorageGuard(c,origin,expected.getString("user_id"),expected.getString("device_id")).allows(r.size))throw new ResumableTransfer.StoragePause();
   ContentResolver resolver=c.getContentResolver();Uri destination;
   synchronized(SessionStore.class){
    if(!token.equals(store.token())||LocalResourceDeletion.deleted(r.root,r.id))throw new IOException("La sesión cambió");
+   if(!r.pendingUri.isEmpty()&&!MediaFileName.normalized(displayName(c,Uri.parse(r.pendingUri)))){removeUri(c,r.pendingUri);r.pendingUri="";r.save();}
    if(!r.pendingUri.isEmpty())destination=Uri.parse(r.pendingUri);
    else {
-    if(selected.isEmpty()){
-     ContentValues values=new ContentValues();values.put(MediaStore.MediaColumns.DISPLAY_NAME,name);values.put(MediaStore.MediaColumns.MIME_TYPE,OfflineMediaAccess.mime(r));
-     values.put(MediaStore.MediaColumns.RELATIVE_PATH,Environment.DIRECTORY_DOWNLOADS+"/TubeGo");values.put(MediaStore.MediaColumns.IS_PENDING,1);
-     destination=resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI,values);
-    }else{
-     Uri tree=Uri.parse(selected),parent=DocumentsContract.buildDocumentUriUsingTree(tree,DocumentsContract.getTreeDocumentId(tree));
-     destination=DocumentsContract.createDocument(resolver,parent,OfflineMediaAccess.mime(r),name);
-    }
-    if(destination==null)throw new IOException("No se pudo crear el archivo en la carpeta elegida");
+    destination=createDestination(c,r,selected);
     r.pendingUri=destination.toString();r.save();
    }
   }

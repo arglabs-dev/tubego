@@ -49,7 +49,7 @@ public final class SharedMediaInstrumentedTest extends InstrumentationTestCase {
   SharedMedia.publish(context,origin,session,record);
   byte[] original;try(InputStream in=context.getContentResolver().openInputStream(Uri.parse(record.sharedUri))){original=in.readAllBytes();}
   TransferRecord other=new TransferRecord(record.root,UUID.randomUUID().toString(),record.sha256,record.size,record.title,"");other.state="complete";other.publishRequested=true;Files.write(other.media().toPath(),original);other.save();
-  try{SharedMedia.publish(context,origin,session,other);assertFalse(record.sharedUri.equals(other.sharedUri));assertFalse(SharedMedia.location(context,record).equals(SharedMedia.location(context,other)));
+  try{SharedMedia.publish(context,origin,session,other);assertFalse(record.sharedUri.equals(other.sharedUri));assertTrue(SharedMedia.location(context,other).endsWith(MediaFileName.numbered(record.title,false,2)));assertFalse(SharedMedia.location(context,record).equals(SharedMedia.location(context,other)));
    try(InputStream in=context.getContentResolver().openInputStream(Uri.parse(record.sharedUri))){assertTrue(java.util.Arrays.equals(original,in.readAllBytes()));}
   }finally{if(!other.sharedUri.isEmpty())context.getContentResolver().delete(Uri.parse(other.sharedUri),null,null);SharedMedia.forget(context,other.sharedUri);}
  }
