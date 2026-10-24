@@ -53,3 +53,26 @@ No recibe listas ni descarga archivos en la laptop.
 entre cuentas, sesión sin dispositivo, logout sin afectar Android, envío idempotente,
 publicación al teléfono, sincronización y confirmación local. La prueba usa archivos
 y teléfonos simulados; no sustituye una descarga real en un teléfono físico.
+
+## Miniaturas y nombres de archivo (Android 0.5.5)
+
+La app muestra la miniatura de la fuente al consultar un enlace y en la biblioteca.
+El backend descarga únicamente previews pequeñas (hasta 32 KiB, JPEG/PNG/WebP),
+a través del mismo proxy de salida restringida que los videos. Las imágenes de
+biblioteca se consultan con la sesión de su propietario y se guardan en la carpeta
+privada de su cuenta/dispositivo para poder verlas sin conexión. No se incorporan
+imágenes en los listados JSON de biblioteca. Cuando una fuente no ofrece miniatura,
+se mantiene el ícono; para videos locales anteriores también puede mostrarse un
+fotograma del archivo. Un error de la miniatura no impide descargar el video.
+
+Los archivos nuevos utilizan el título normalizado con Unicode NFKC: se eliminan
+separadores de ruta, caracteres de control y caracteres no válidos en Windows;
+se limitan los títulos a 160 bytes UTF-8 y se corrigen nombres reservados. El nombre
+privado incluye el identificador del recurso para evitar colisiones y permanece
+estable aunque cambie el título. Se usa `.mp4` para video y `.mp3` para audio.
+Al compartir y en la cabecera HTTP se ofrece el título descriptivo normalizado.
+Los archivos ya guardados con el nombre interno anterior siguen funcionando;
+no se mueven ni se vuelven a descargar. El borrado y cierre de sesión incluyen
+los nuevos archivos y las miniaturas.
+
+Esta ampliación requiere instalar el APK Android 0.5.5 (código 11).

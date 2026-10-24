@@ -43,8 +43,11 @@ def download(resource_id: str,request: Request,principal=Depends(require_approve
     except BaseException:
         stream.close();raise
     length=max(0,end-start+1)
+    from urllib.parse import quote
+    from tubego_server.filenames import download_name
+    name=download_name(resource['title'],resource['media_format'])
     headers={'Cache-Control':'no-store','X-Content-Type-Options':'nosniff',
-             'Content-Disposition':'attachment; filename="tubego-media"',
+             'Content-Disposition':"attachment; filename=\"tubego"+('.mp3' if resource['media_format']=='audio' else '.mp4')+"\"; filename*=UTF-8''"+quote(name,safe=''),
              'Content-Length':str(length),'Accept-Ranges':'bytes','ETag':etag,'X-Content-SHA256':digest}
     if requested:headers['Content-Range']=f'bytes {start}-{end}/{info.st_size}'
     code=206 if requested else 200

@@ -356,8 +356,9 @@ public final class LibraryActivity extends DsActivity implements Host {
         card.setClickable(true);
         card.setContentDescription(i.title + ", " + ItemFlows.stateLabel(this, i));
         boolean bad = i.state == ItemState.FAILED;
-        card.addView(Ds.thumb(this, i.isAudio(), bad ? Ds.ERR_BG : Ds.SOFT, bad ? Ds.ERR : Ds.BRAND_DARK, 56),
-                new LinearLayout.LayoutParams(Ds.dp(this, 56), Ds.dp(this, 56)));
+        android.widget.ImageView thumbnail=Thumbnails.view(this);
+        card.addView(thumbnail,new LinearLayout.LayoutParams(Ds.dp(this,80),Ds.dp(this,56)));
+        Thumbnails.load(this,thumbnail,i);
 
         LinearLayout col = Ds.column(this);
         TextView title = Ds.text(this, i.title, 16, Ds.INK, 800);

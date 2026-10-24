@@ -14,6 +14,13 @@ public final class LocalResourceDeletion {
         File temp=new File(root,id+".deleted.tmp");
         try(FileOutputStream out=new FileOutputStream(temp)){out.write(("deleted:"+UUID.randomUUID()).getBytes(java.nio.charset.StandardCharsets.UTF_8));out.getFD().sync();}
         Files.move(temp.toPath(),marker(root,id).toPath(),StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);
+        File savedManifest=new File(root,id+".properties");
+        if(savedManifest.isFile()&&!Files.isSymbolicLink(savedManifest.toPath())) {
+            Properties saved=new Properties();try(FileInputStream in=new FileInputStream(savedManifest)){saved.load(in);}
+            String fileName=saved.getProperty("file_name");
+            if(MediaFileName.validStored(fileName,id))Files.deleteIfExists(new File(root,fileName).toPath());
+        }
+        Files.deleteIfExists(new File(root,id+".thumbnail").toPath());
         for(String suffix:new String[]{".part",".media"})Files.deleteIfExists(new File(root,id+suffix).toPath());
         File manifest=new File(root,id+".properties");
         if(manifest.isFile()&&!Files.isSymbolicLink(manifest.toPath())) {

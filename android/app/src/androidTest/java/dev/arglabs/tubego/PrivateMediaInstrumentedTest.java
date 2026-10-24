@@ -12,6 +12,14 @@ public final class PrivateMediaInstrumentedTest extends InstrumentationTestCase 
   File root=LocalLibraryStorage.root(context,ORIGIN,USER,DEVICE);root.mkdirs();record=new TransferRecord(root,RESOURCE,hash.toString(),bytes.length,"Offline fixture","");record.state="complete";Files.write(record.media().toPath(),bytes);record.save();
  }
  @Override protected void tearDown() throws Exception {sessions.clear();LocalLibraryStorage.wipe(context,ORIGIN,USER,DEVICE);super.tearDown();}
+ public void testNormalizedDescriptiveFileNameWhenSharing() throws Exception {
+  record.title="Mi vídeo: resumen / 2026?";record.save();
+  Uri uri=PrivateMediaContentProvider.create(context,ORIGIN,RESOURCE);
+  try(android.database.Cursor cursor=context.getContentResolver().query(uri,null,null,null,null)) {
+   assertTrue(cursor.moveToFirst());assertEquals("Mi vídeo resumen 2026.mp4",cursor.getString(cursor.getColumnIndexOrThrow(android.provider.OpenableColumns.DISPLAY_NAME)));
+  }
+  assertTrue(record.media().getName().endsWith(".mp4"));
+ }
  public void testSeekableReadOnlyLocalFileAndOpenDescriptorSurvivesSessionChange() throws Exception {
   Uri uri=PrivateMediaContentProvider.create(context,ORIGIN,RESOURCE);assertEquals("video/mp4",context.getContentResolver().getType(uri));
   try(ParcelFileDescriptor pfd=context.getContentResolver().openFileDescriptor(uri,"r");FileInputStream stream=new FileInputStream(pfd.getFileDescriptor())) {

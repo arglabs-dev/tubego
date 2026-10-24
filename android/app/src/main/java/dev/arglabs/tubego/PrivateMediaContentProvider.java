@@ -63,7 +63,7 @@ public final class PrivateMediaContentProvider extends ContentProvider {
         Grant g=grant(uri);getType(uri);
         String[] columns=projection==null?new String[]{OpenableColumns.DISPLAY_NAME,OpenableColumns.SIZE}:projection;
         MatrixCursor cursor=new MatrixCursor(columns);Object[] row=new Object[columns.length];
-        for(int i=0;i<columns.length;i++){if(OpenableColumns.DISPLAY_NAME.equals(columns[i]))row[i]=g.title+(g.mime.startsWith("audio")?".mp3":".mp4");else if(OpenableColumns.SIZE.equals(columns[i]))row[i]=g.size;}
+        for(int i=0;i<columns.length;i++){if(OpenableColumns.DISPLAY_NAME.equals(columns[i]))row[i]=MediaFileName.display(g.title,g.mime.startsWith("audio"));else if(OpenableColumns.SIZE.equals(columns[i]))row[i]=g.size;}
         cursor.addRow(row);return cursor;
     }
     @Override public ParcelFileDescriptor openFile(Uri uri,String mode) throws FileNotFoundException {

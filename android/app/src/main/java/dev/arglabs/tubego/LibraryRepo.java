@@ -123,6 +123,7 @@ final class LibraryRepo {
         Item item = new Item();
         item.id = row.optString("id");
         item.title = row.isNull("title") ? "" : row.optString("title", "");
+        item.hasThumbnail = row.optBoolean("has_thumbnail",false);
         item.mediaFormat = row.optString("media_format", "video");
         item.selection = "audio".equals(item.mediaFormat) ? "audio" : row.optString("quality", "best");
         item.sourceUrl = row.optString("source_url", "");

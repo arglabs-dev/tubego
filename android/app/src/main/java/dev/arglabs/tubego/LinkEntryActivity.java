@@ -14,6 +14,7 @@ public final class LinkEntryActivity extends LocalizedActivity {
  private final ExecutorService network=Executors.newSingleThreadExecutor();
  private final ExecutorService storage=Executors.newSingleThreadExecutor();
  private volatile boolean qualityOverride;
+ private ImageView thumbnail;
  private String origin;private JSONObject session,prefs;private TextView status,history;private LinearLayout resourceCards;private Button submit,analyze;private EditText input;private Spinner quality;
  @Override public void onCreate(Bundle state){super.onCreate(state);
   origin=getIntent().getStringExtra("server_url");
@@ -24,6 +25,7 @@ public final class LinkEntryActivity extends LocalizedActivity {
   LinearLayout form=UiKit.card(this);layout.addView(form,new LinearLayout.LayoutParams(-1,-2));UiKit.margin(form,18,14);
   form.addView(UiKit.text(this,Texts.text(this,"ENLACE"),11,UiKit.MUTED));
   input=new EditText(this);input.setHint(Texts.text(LinkEntryActivity.this,"Pega un enlace HTTP o HTTPS"));input.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_URI);input.setSingleLine(true);form.addView(input,new LinearLayout.LayoutParams(-1,-2));
+  thumbnail=Thumbnails.view(this);thumbnail.setVisibility(android.view.View.GONE);form.addView(thumbnail,new LinearLayout.LayoutParams(-1,Ds.dp(this,160)));
   quality=new Spinner(this);quality.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,Texts.labels(this,MediaSelection.LABELS)));quality.setSelection(MediaSelection.index("720"));quality.setOnTouchListener((v,event)->{qualityOverride=true;return false;});form.addView(quality,new LinearLayout.LayoutParams(-1,-2));
   analyze=new Button(this);analyze.setText(Texts.text(LinkEntryActivity.this,"Consultar título y duración (con conexión)"));form.addView(analyze,new LinearLayout.LayoutParams(-1,-2));
   submit=new Button(this);submit.setText(Texts.text(LinkEntryActivity.this,"Agregar a la cola"));UiKit.button(submit,true);form.addView(submit,new LinearLayout.LayoutParams(-1,-2));UiKit.margin(submit,10,0);
@@ -80,7 +82,7 @@ public final class LinkEntryActivity extends LocalizedActivity {
  }catch(Exception ignored){/* offline cached selection stays usable */}});}
 
  private void analyze(){final String url;try{url=SharedUrl.parse(input.getText().toString());}catch(Exception e){status.setText(Texts.error(this,e));return;}analyze.setEnabled(false);status.setText(Texts.text(LinkEntryActivity.this,"Consultando metadatos…"));network.execute(()->{
-  try{MediaInfoClient.Info info=new MediaInfoClient(new ApiClient(origin)::request).analyze(url,session.getString("token"));show((info.title==null?Texts.text(LinkEntryActivity.this,"Sin título disponible"):info.title)+(info.durationSeconds==null?"":Texts.text(LinkEntryActivity.this," · duración ")+Math.round(info.durationSeconds)+Texts.text(LinkEntryActivity.this," segundos")));}
+  try{MediaInfoClient.Info info=new MediaInfoClient(new ApiClient(origin)::request).analyze(url,session.getString("token"));android.graphics.Bitmap image=Thumbnails.decode(info.thumbnailBase64);runOnUiThread(()->{if(!isDestroyed()&&input.getText().toString().trim().equals(url)){thumbnail.setImageBitmap(image);thumbnail.setVisibility(image==null?android.view.View.GONE:android.view.View.VISIBLE);}});show((info.title==null?Texts.text(LinkEntryActivity.this,"Sin título disponible"):info.title)+(info.durationSeconds==null?"":Texts.text(LinkEntryActivity.this," · duración ")+Math.round(info.durationSeconds)+Texts.text(LinkEntryActivity.this," segundos")));}
   catch(Exception e){show(Texts.error(this,e)+"\n"+Texts.text(LinkEntryActivity.this,"No se pudieron consultar metadatos. Puedes guardar el enlace para validarlo cuando vuelva la conexión."));}
   runOnUiThread(()->{if(!isDestroyed())analyze.setEnabled(true);});
  });}

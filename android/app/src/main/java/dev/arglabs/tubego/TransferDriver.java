@@ -221,8 +221,14 @@ public final class TransferDriver {
     private static void removeRecord(File root,String resource) throws Exception {
         String id=UUID.fromString(resource).toString();
         try(FileOutputStream tombstone=new FileOutputStream(new File(root,id+".deleted"))){tombstone.write(1);tombstone.getFD().sync();}
-        for(String suffix:new String[]{".part",".media"}) {File file=new File(root,id+suffix);if(file.exists()&&!file.delete())throw new IOException("No se pudo borrar archivo local");}
         File manifest=new File(root,id+".properties");
+        if(manifest.isFile()&&!java.nio.file.Files.isSymbolicLink(manifest.toPath())) {
+            java.util.Properties saved=new java.util.Properties();try(FileInputStream in=new FileInputStream(manifest)){saved.load(in);}
+            String fileName=saved.getProperty("file_name");
+            if(MediaFileName.validStored(fileName,id))java.nio.file.Files.deleteIfExists(new File(root,fileName).toPath());
+        }
+        for(String suffix:new String[]{".part",".media"}) {File file=new File(root,id+suffix);if(file.exists()&&!file.delete())throw new IOException("No se pudo borrar archivo local");}
+        java.nio.file.Files.deleteIfExists(new File(root,id+".thumbnail").toPath());
         if(manifest.isFile()){TransferRecord r=TransferRecord.read(manifest);r.state="deleted";r.save();}
     }
 }
