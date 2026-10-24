@@ -31,7 +31,7 @@ public final class LoginActivity extends LocalizedActivity {
         devices=new Button(this);devices.setText(Texts.text(LoginActivity.this,"Dispositivos vinculados"));layout.addView(devices);
         devices.setOnClickListener(v->startActivity(new android.content.Intent(this,DevicesActivity.class).putExtra("server_url",origin)));
         logout=new Button(this);logout.setText(Texts.text(LoginActivity.this,"Cerrar sesión"));UiKit.danger(logout);layout.addView(logout);
-        logout.setOnClickListener(v->new android.app.AlertDialog.Builder(this).setMessage(Texts.text(LoginActivity.this,"Al cerrar sesión se borrarán las descargas de este teléfono. Los otros dispositivos conservarán sus archivos. ¿Continuar?")).setNegativeButton(Texts.text(LoginActivity.this,"Cancelar"),null).setPositiveButton(Texts.text(LoginActivity.this,"Cerrar sesión"),(d,w)->submit("logout")).show());
+        logout.setOnClickListener(v->new android.app.AlertDialog.Builder(this).setMessage(Texts.text(LoginActivity.this,"Al cerrar sesión se borra la biblioteca privada de TubeGo. Los archivos de Descargas o de tu carpeta elegida se conservan. ¿Continuar?")).setNegativeButton(Texts.text(LoginActivity.this,"Cancelar"),null).setPositiveButton(Texts.text(LoginActivity.this,"Cerrar sesión"),(d,w)->submit("logout")).show());
         status=new TextView(this);layout.addView(status);
         ScrollView scroll=new ScrollView(this);scroll.addView(layout);setContentView(scroll);
         login.setOnClickListener(v->submit("login"));forgot.setOnClickListener(v->submit("forgot"));refresh.setOnClickListener(v->submit("status"));change.setOnClickListener(v->submit("change"));
@@ -95,7 +95,7 @@ public final class LoginActivity extends LocalizedActivity {
                     }
                 }
             } catch(AccountSwitchRequired e) {
-                message=Texts.text(LoginActivity.this,"Cierra la sesión actual antes de cambiar de cuenta. Se te pedirá confirmar el borrado de sus descargas locales.");
+                message=Texts.text(LoginActivity.this,"Cierra la sesión actual antes de cambiar de cuenta. Solo se borran las copias privadas; los archivos de tu carpeta se conservan.");
             } catch(ApiClient.ApiException e) {
                 if(e.code.equals("session_revoked") || e.code.equals("account_unavailable")) {
                     try {SessionLifecycle.remotelyRevoked(this,origin,requestToken,e.code);} catch(Exception ignored) { }

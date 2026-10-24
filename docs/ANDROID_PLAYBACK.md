@@ -33,3 +33,16 @@ adb shell am instrument -w -e class dev.arglabs.tubego.VlcIntegrationInstrumente
 # Cambiar en VLC al modo de segundo plano antes del siguiente caso.
 adb shell am instrument -w -e class dev.arglabs.tubego.VlcIntegrationInstrumentedTest#testVlcVideoAudioWithScreenOff dev.arglabs.tubego.test/android.test.InstrumentationTestRunner
 ```
+
+## User-owned shared files from Android 0.5.6
+
+New downloads are finalized into MediaStore Downloads or a user-selected SAF tree
+through `SharedMedia`. Private manifests and transfer staging remain account-scoped.
+Use `SharedMedia.available/verify/open/location` with a Context for production media
+access; the context-free `OfflineMediaAccess` helpers cover legacy private files.
+Private files still require the original checksum. Published user-owned files may
+be modified outside TubeGo and do not require the original source checksum for
+playback. Provider grants still require the currently approved account/session.
+The descriptive filename is the last URI path segment; the random capability is
+its parent segment. User-owned public files survive logout/uninstall; session
+revocation removes app access/private data and cannot revoke a user's public file.

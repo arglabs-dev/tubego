@@ -5,7 +5,7 @@ import java.util.Locale;
 /** Un video o audio de la biblioteca, o un enlace guardado que aún no se envía. */
 final class Item {
     String id = "", title = "", mediaFormat = "video", selection = "best", sourceUrl = "", host = "";
-    String createdAt = "", lastOpenedAt = "";
+    String createdAt = "", lastOpenedAt = "", thumbnailKey = "";
     String taskId = "", taskState = "", localState = "", pauseReason = "", failureCode = "", qualityNoticeCode = "";
     double durationSeconds = -1, serverProgress = -1;
     long sizeBytes = -1, offsetBytes = 0;

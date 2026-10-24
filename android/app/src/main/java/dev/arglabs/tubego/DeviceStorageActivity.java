@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutorService;
 /** Current-device settings; changing this does not affect backend quotas or peers. */
 public final class DeviceStorageActivity extends LocalizedActivity {
     private final ExecutorService io=Executors.newSingleThreadExecutor();
+    private TextView folderStatus;
     private LinearLayout chart;private TextView status;private EditText threshold;private String origin;
     private AndroidStorageGuard guard;private JSONObject session;
     @Override public void onCreate(Bundle state){super.onCreate(state);origin=getIntent().getStringExtra("server_url");
@@ -22,13 +23,30 @@ public final class DeviceStorageActivity extends LocalizedActivity {
         Button save=new Button(this);save.setText(Texts.text(DeviceStorageActivity.this,"Guardar umbral de este teléfono"));UiKit.button(save,true);layout.addView(save);
         Button refresh=new Button(this);refresh.setText(Texts.text(DeviceStorageActivity.this,"Actualizar espacio disponible"));layout.addView(refresh);
         TextView explanation=new TextView(this);explanation.setText(Texts.text(DeviceStorageActivity.this,"Las descargas se pausan sin borrar archivos. Solo continúan cuando el archivo pendiente cabe manteniendo el porcentaje libre. Los mensajes y acciones pequeñas siguen funcionando."));layout.addView(explanation);
-        Button cleanup=new Button(this);cleanup.setText(Texts.text(DeviceStorageActivity.this,"Gestionar cuenta / Liberar descargas al cerrar sesión"));layout.addView(cleanup);
+        TextView folderHeading=UiKit.heading(this,Texts.text(this,"Carpeta de descargas"));layout.addView(folderHeading);
+        folderStatus=new TextView(this);folderStatus.setTextIsSelectable(true);layout.addView(folderStatus);
+        Button choose=new Button(this);choose.setText(Texts.text(this,"Elegir carpeta"));layout.addView(choose);
+        Button defaults=new Button(this);defaults.setText(Texts.text(this,"Usar Descargas/TubeGo"));layout.addView(defaults);
+        layout.addView(UiKit.text(this,Texts.text(this,"Las descargas nuevas se guardan como una sola copia. Puedes modificarlas con el gestor de archivos. Los archivos compartidos se conservan al cerrar sesión o desinstalar TubeGo."),14,UiKit.MUTED));
+        choose.setOnClickListener(v->{android.content.Intent picker=new android.content.Intent(android.content.Intent.ACTION_OPEN_DOCUMENT_TREE);picker.putExtra(android.content.Intent.EXTRA_LOCAL_ONLY,true);picker.addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION|android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION|android.content.Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);startActivityForResult(picker,4812);});
+        defaults.setOnClickListener(v->{try{SharedMedia.folder(this,origin,session,"");showFolder();}catch(Exception error){status.setText(Texts.error(this,error));}});
+        Button cleanup=new Button(this);cleanup.setText(Texts.text(DeviceStorageActivity.this,"Gestionar mi cuenta y sesiones"));layout.addView(cleanup);
         cleanup.setOnClickListener(v->startActivity(new android.content.Intent(this,LoginActivity.class).putExtra("server_url",origin)));
         ScrollView scroll=new ScrollView(this);scroll.addView(layout);setContentView(scroll);
         try{session=new SessionStore(this,origin).read();if(session==null)throw new Exception();guard=new AndroidStorageGuard(this,origin,session.getString("user_id"),session.getString("device_id"));threshold.setText(String.valueOf(guard.settings.threshold()));}
         catch(Exception e){status.setText(Texts.text(DeviceStorageActivity.this,"Inicia sesión para configurar el almacenamiento de este dispositivo."));save.setEnabled(false);refresh.setEnabled(false);return;}
+        showFolder();
         save.setOnClickListener(v->{try{synchronized(SessionStore.class){JSONObject current=new SessionStore(this,origin).read();if(current==null||!session.optString("user_id").equals(current.optString("user_id"))||!session.optString("device_id").equals(current.optString("device_id")))throw new Exception();guard.settings.threshold(Integer.parseInt(threshold.getText().toString()));}TransferJobs.wake(this,origin,false);refresh();}catch(Exception e){status.setText(Texts.text(DeviceStorageActivity.this,"Usa un porcentaje entero entre 1 y 90 y una sesión activa."));}});
         refresh.setOnClickListener(v->refresh());refresh();
+    }
+    private void showFolder(){try{String tree=SharedMedia.tree(this,origin,session);folderStatus.setText(SharedMedia.folderLocation(tree));}catch(Exception e){folderStatus.setText(Texts.error(this,e));}}
+    @Override protected void onActivityResult(int request,int result,android.content.Intent data){super.onActivityResult(request,result,data);
+        if(request!=4812||result!=RESULT_OK||data==null||data.getData()==null)return;
+        try{org.json.JSONObject current=new SessionStore(this,origin).read();if(current==null||!session.getString("token").equals(current.getString("token")))return;
+            int flags=data.getFlags()&(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION|android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            if((flags&android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION)==0)throw new java.io.IOException("La carpeta requiere permiso de escritura");
+            getContentResolver().takePersistableUriPermission(data.getData(),android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION|android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION);SharedMedia.folder(this,origin,session,data.getData().toString());showFolder();
+        }catch(Exception e){status.setText(Texts.error(this,e));}
     }
     private void refresh(){io.execute(()->{try{DeviceStoragePolicy.Decision state=guard.sample(0);
         long owned=AndroidStorageGuard.used(LocalLibraryStorage.root(this,origin,session.getString("user_id"),session.getString("device_id")));

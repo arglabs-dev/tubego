@@ -31,7 +31,7 @@ public final class CommandDispatch {
     if(!entry.state.equals("queued"))continue;if(++count>100)return false;if(!active(store,token))return false;
     JSONObject payload=new JSONObject(entry.payload);String resource=payload.optString("resource_id");String stamp="";
     synchronized(SessionStore.class){if(!active(store,token))return false;
-     if(entry.kind.equals("delete")){TransferRuntime.stopOrigin(origin);LocalResourceDeletion.apply(root,resource);}
+     if(entry.kind.equals("delete")){TransferRuntime.stopOrigin(origin);SharedMedia.delete(c,root,resource);}
      if(entry.kind.equals("recover"))stamp=LocalResourceDeletion.stamp(root,resource);
     }
     JSONObject response=api.request("POST","/device/commands",new JSONObject().put("id",entry.id).put("sequence",entry.sequence).put("kind",entry.kind).put("payload",payload),token);
@@ -41,7 +41,7 @@ public final class CommandDispatch {
     synchronized(SessionStore.class){if(!active(store,token))return false;
      if(accepted&&entry.kind.equals("recover")&&LocalResourceRevision.accept(root,resource,result.optLong("revision",0))&&!newerBarrier(queue,entry,resource)&&stamp.equals(LocalResourceDeletion.stamp(root,resource))){
       if(payload.optBoolean("approve_redownload"))LocalResourceDeletion.approve(root,resource);
-      File manifest=new File(root,UUID.fromString(resource)+".properties");if(manifest.isFile()){TransferRecord record=TransferRecord.read(manifest);if(Arrays.asList("deleted","cancelled","unavailable","missing").contains(record.state)){record.state="pending";record.message="Solicitud aprobada. Esperando disponibilidad y red permitida.";record.save();}}
+      File manifest=new File(root,UUID.fromString(resource)+".properties");if(manifest.isFile()){TransferRecord record=TransferRecord.read(manifest);if(Arrays.asList("deleted","cancelled","unavailable","missing").contains(record.state)){record.sharedUri="";record.pendingUri="";record.state="pending";record.message="Solicitud aprobada. Esperando disponibilidad y red permitida.";record.save();}}
      }
      if(accepted&&entry.kind.equals("language"))LanguageCommands.acknowledge(c,origin,session.getString("user_id"),payload.getLong("revision"));
      if(accepted&&entry.kind.equals("delete"))LocalResourceRevision.accept(root,resource,result.optLong("revision",0));

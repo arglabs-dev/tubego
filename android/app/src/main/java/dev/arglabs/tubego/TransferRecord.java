@@ -11,6 +11,8 @@ public final class TransferRecord {
     public final String id;
     public String sha256,title,createdAt,mediaFormat="video",state="pending",message="";
     private String fileName;
+    public String sharedUri="",pendingUri="";
+    public boolean publishRequested;
     public long size,nextRetryAt;
     public int failures;
     public String failureCode="",pauseReason="",failureIncident="";
@@ -30,7 +32,7 @@ public final class TransferRecord {
     public long offset() {return part().length();}
     public void save() throws IOException {
         if(!root.isDirectory() && !root.mkdirs()) throw new IOException("No se pudo crear la biblioteca");
-        Properties p=new Properties();p.setProperty("file_name",media().getName());p.setProperty("id",id);p.setProperty("sha256",sha256);p.setProperty("size",Long.toString(size));
+        Properties p=new Properties();p.setProperty("publish_requested",Boolean.toString(publishRequested));p.setProperty("shared_uri",sharedUri);p.setProperty("pending_uri",pendingUri);p.setProperty("file_name",media().getName());p.setProperty("id",id);p.setProperty("sha256",sha256);p.setProperty("size",Long.toString(size));
         p.setProperty("retry_failures",Integer.toString(failures));p.setProperty("next_retry_at",Long.toString(nextRetryAt));p.setProperty("failure_code",failureCode);p.setProperty("pause_reason",pauseReason);p.setProperty("failure_incident",failureIncident);
         p.setProperty("media_format",mediaFormat);p.setProperty("title",title);p.setProperty("created_at",createdAt);p.setProperty("state",state);p.setProperty("message",message);p.setProperty("offset",Long.toString(offset()));
         File tmp=new File(root,id+".properties.tmp");
@@ -41,6 +43,8 @@ public final class TransferRecord {
         Properties p=new Properties();try(FileInputStream in=new FileInputStream(manifest)){p.load(in);}
         TransferRecord r=new TransferRecord(manifest.getParentFile(),p.getProperty("id"),p.getProperty("sha256"),Long.parseLong(p.getProperty("size")),p.getProperty("title","Archivo"),p.getProperty("created_at",""));
         r.failures=Integer.parseInt(p.getProperty("retry_failures","0"));r.nextRetryAt=Long.parseLong(p.getProperty("next_retry_at","0"));r.failureCode=p.getProperty("failure_code","");r.pauseReason=p.getProperty("pause_reason","");r.failureIncident=p.getProperty("failure_incident","");
+        r.publishRequested=Boolean.parseBoolean(p.getProperty("publish_requested","false"));
+        r.sharedUri=p.getProperty("shared_uri","");r.pendingUri=p.getProperty("pending_uri","");
         String stored=p.getProperty("file_name");
         if(stored!=null && !stored.equals(r.id+".media")) {
             if(!MediaFileName.validStored(stored,r.id))throw new IOException("Nombre de archivo inválido");

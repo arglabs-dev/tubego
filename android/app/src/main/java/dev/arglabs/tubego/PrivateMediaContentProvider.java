@@ -27,13 +27,13 @@ public final class PrivateMediaContentProvider extends ContentProvider {
             session=approved(context,origin);
             record=OfflineMediaAccess.record(LocalLibraryStorage.root(context,origin,session.getString("user_id"),session.getString("device_id")),id);
         }
-        OfflineMediaAccess.verify(record); // Hashing does not block session cleanup.
+        SharedMedia.verify(context,record); // Hashing does not block session cleanup.
         synchronized(SessionStore.class){
             Grant grant=new Grant(origin,session,record);validate(context,grant);
             byte[] random=new byte[32];new SecureRandom().nextBytes(random);
             StringBuilder token=new StringBuilder();for(byte b:random)token.append(String.format(Locale.ROOT,"%02x",b&255));
             synchronized(grants){if(grants.size()>=128)grants.remove(grants.keySet().iterator().next());grants.put(token.toString(),grant);}
-            return new Uri.Builder().scheme("content").authority(AUTHORITY).appendPath("media").appendPath(token.toString()).build();
+            return new Uri.Builder().scheme("content").authority(AUTHORITY).appendPath("media").appendPath(token.toString()).appendPath(MediaFileName.display(grant.title,grant.mime.startsWith("audio"))).build();
         }
     }
     private static JSONObject approved(Context context,String origin) throws Exception {
@@ -47,15 +47,15 @@ public final class PrivateMediaContentProvider extends ContentProvider {
         if(!grant.sessionToken.equals(session.optString("token")) || !grant.user.equals(session.optString("user_id")) || !grant.device.equals(session.optString("device_id")))
             throw new SecurityException("La cuenta de esta biblioteca cambió");
         TransferRecord r=OfflineMediaAccess.record(LocalLibraryStorage.root(context,grant.origin,grant.user,grant.device),grant.id);
-        if(!r.sha256.equals(grant.sha) || r.size!=grant.size || !OfflineMediaAccess.available(r))
+        if(!r.sha256.equals(grant.sha) || r.size!=grant.size || !SharedMedia.available(context,r))
             throw new SecurityException("Archivo no disponible");
         return r;
     }
     private Grant grant(Uri uri) {
         if(!"content".equals(uri.getScheme()) || !AUTHORITY.equals(uri.getAuthority()) || uri.getQuery()!=null || uri.getFragment()!=null
-            || uri.getPathSegments().size()!=2 || !"media".equals(uri.getPathSegments().get(0)))throw new SecurityException("URI inválido");
+            || uri.getPathSegments().size()!=3 || !"media".equals(uri.getPathSegments().get(0)))throw new SecurityException("URI inválido");
         String token=uri.getPathSegments().get(1);if(!token.matches("[0-9a-f]{64}"))throw new SecurityException("URI inválido");
-        synchronized(grants){Grant grant=grants.get(token);if(grant==null)throw new SecurityException("Permiso no disponible; abre el archivo otra vez desde Tubego");return grant;}
+        synchronized(grants){Grant grant=grants.get(token);if(grant==null)throw new SecurityException("Permiso no disponible; abre el archivo otra vez desde Tubego");if(!MediaFileName.display(grant.title,grant.mime.startsWith("audio")).equals(uri.getLastPathSegment()))throw new SecurityException("Nombre inválido");return grant;}
     }
     @Override public boolean onCreate(){return true;}
     @Override public String getType(Uri uri){Grant g=grant(uri);try{synchronized(SessionStore.class){validate(getContext(),g);}}catch(Exception e){throw new SecurityException("Archivo no disponible",e);}return g.mime;}
@@ -63,7 +63,7 @@ public final class PrivateMediaContentProvider extends ContentProvider {
         Grant g=grant(uri);getType(uri);
         String[] columns=projection==null?new String[]{OpenableColumns.DISPLAY_NAME,OpenableColumns.SIZE}:projection;
         MatrixCursor cursor=new MatrixCursor(columns);Object[] row=new Object[columns.length];
-        for(int i=0;i<columns.length;i++){if(OpenableColumns.DISPLAY_NAME.equals(columns[i]))row[i]=MediaFileName.display(g.title,g.mime.startsWith("audio"));else if(OpenableColumns.SIZE.equals(columns[i]))row[i]=g.size;}
+        for(int i=0;i<columns.length;i++){if(OpenableColumns.DISPLAY_NAME.equals(columns[i]))row[i]=MediaFileName.display(g.title,g.mime.startsWith("audio"));else if(OpenableColumns.SIZE.equals(columns[i])){try{row[i]=SharedMedia.size(getContext(),validate(getContext(),g));}catch(Exception ignored){row[i]=null;}}}
         cursor.addRow(row);return cursor;
     }
     @Override public ParcelFileDescriptor openFile(Uri uri,String mode) throws FileNotFoundException {
@@ -72,12 +72,12 @@ public final class PrivateMediaContentProvider extends ContentProvider {
         try {
             TransferRecord record;
             synchronized(SessionStore.class){record=validate(getContext(),g);}
-            OfflineMediaAccess.verify(record);
+            SharedMedia.verify(getContext(),record);
             synchronized(SessionStore.class){
                 TransferRecord current=validate(getContext(),g);
                 if(!record.sha256.equals(current.sha256)||record.size!=current.size)
                     throw new SecurityException("El archivo local cambió");
-                return ParcelFileDescriptor.open(current.media(),ParcelFileDescriptor.MODE_READ_ONLY);
+                return SharedMedia.open(getContext(),current);
             }
         } catch(Exception e){FileNotFoundException failure=new FileNotFoundException("Archivo local no disponible");failure.initCause(e);throw failure;}
     }

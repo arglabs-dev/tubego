@@ -76,3 +76,60 @@ no se mueven ni se vuelven a descargar. El borrado y cierre de sesión incluyen
 los nuevos archivos y las miniaturas.
 
 Esta ampliación requiere instalar el APK Android 0.5.5 (código 11).
+
+## Correcciones de caché y almacenamiento compartido (Android 0.5.6)
+
+Las miniaturas extraídas de videos locales también se persisten, además de las
+miniaturas de fuente. Se reutilizan desde una caché de memoria acotada y desde
+el disco, se coordinan cargas concurrentes y se evitan solicitudes de red cuando
+la copia local ya está disponible. La caché se elimina con la biblioteca privada.
+La URI de compartir termina en el título normalizado, además de informar
+DISPLAY_NAME y EXTRA_TITLE, para receptores que usan el último segmento como nombre.
+Los detalles muestran la ubicación real completa (o la URI del proveedor cuando
+no existe una ruta local convencional).
+
+Las descargas nuevas se publican por defecto mediante MediaStore en
+`Download/TubeGo`. En Ajustes → Espacio en este teléfono → Carpeta de descargas
+se puede elegir otra carpeta con el selector del sistema y un permiso persistente
+SAF de lectura/escritura. No se solicitan permisos de acceso a todos los archivos,
+no se necesita root y no se utiliza chmod.
+
+Solo se conserva una copia final. La transferencia usa staging privado; tras la
+confirmación de descarga, se copia al destino, comprueba tamaño/SHA-256, sincroniza,
+guarda su URI en el manifiesto y elimina el staging. Una publicación interrumpida
+reutiliza el destino pendiente para no crear duplicados. MediaStore mantiene el
+archivo pendiente oculto hasta completar la publicación. Los temporales pendientes
+se limpian al borrar el recurso o la biblioteca privada.
+
+Los archivos publicados pertenecen al usuario: se conservan al cerrar sesión y
+al desinstalar, y pueden modificarse desde el administrador de archivos. La app
+admite la reproducción de esas modificaciones sin exigir el hash del original.
+Si el archivo se mueve a otra URI o se borra externamente, se muestra que falta;
+no se vuelve a descargar automáticamente. El borrado explícito desde TubeGo sí
+elimina su archivo publicado cuando conserva permiso para hacerlo.
+
+Los videos privados anteriores no se mueven automáticamente. En sus detalles,
+**Mover a la carpeta de descargas** permite trasladarlos explícitamente, verificando
+la copia antes de eliminar el original. El cierre de sesión sigue borrando las
+copias privadas heredadas; las copias compartidas ya publicadas permanecen.
+
+Verificación en el teléfono Android 13 conectado: pruebas de copia única,
+MediaStore, ruta real, edición externa, compartir con nombre descriptivo, conservar
+el archivo después del logout y borrado explícito. Se generaron 24 miniaturas
+persistentes y se comprobó que, al reiniciar el proceso, se cargan desde disco.
+
+El índice local de archivos publicados se conserva por cuenta en este teléfono,
+sin credenciales. Al volver a iniciar sesión se reconstruyen sus manifiestos a
+partir de ese índice, sin descargar ni duplicar los videos que siguen disponibles.
+Los nombres repetidos crean archivos distintos, sin sobrescribir el anterior.
+Las publicaciones fallidas vacían el temporal de salida, y se respeta la reserva
+de espacio al finalizar en Descargas. Una confirmación ya recibida del servidor
+no se repite al reanudar una publicación local pendiente.
+
+La biblioteca muestra primero los datos guardados y después consulta la red;
+la comprobación del estado de la cuenta usa un ejecutor separado para evitar
+que una conexión lenta retrase la primera vista local.
+
+Validación final 0.5.6: compilación y lint, 72 pruebas unitarias, 13 pruebas en el
+teléfono real (incluyendo colisiones, publicación interrumpida y recuperación
+tras logout), más 24 lecturas de miniatura desde disco al reiniciar el proceso.

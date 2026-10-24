@@ -15,6 +15,7 @@ public final class PrivateMediaInstrumentedTest extends InstrumentationTestCase 
  public void testNormalizedDescriptiveFileNameWhenSharing() throws Exception {
   record.title="Mi vídeo: resumen / 2026?";record.save();
   Uri uri=PrivateMediaContentProvider.create(context,ORIGIN,RESOURCE);
+  assertEquals("Mi vídeo resumen 2026.mp4",uri.getLastPathSegment());
   try(android.database.Cursor cursor=context.getContentResolver().query(uri,null,null,null,null)) {
    assertTrue(cursor.moveToFirst());assertEquals("Mi vídeo resumen 2026.mp4",cursor.getString(cursor.getColumnIndexOrThrow(android.provider.OpenableColumns.DISPLAY_NAME)));
   }
