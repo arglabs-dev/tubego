@@ -46,3 +46,20 @@ playback. Provider grants still require the currently approved account/session.
 The descriptive filename is the last URI path segment; the random capability is
 its parent segment. User-owned public files survive logout/uninstall; session
 revocation removes app access/private data and cannot revoke a user's public file.
+
+
+### Carpeta global y traslado (Android 0.5.7)
+
+Ajustes → Espacio en este teléfono → Carpeta de descargas aplica una carpeta
+para toda la instalación. Elegir una carpeta o volver a Descargas/TubeGo mueve
+los videos completos registrados por TubeGo, incluidos archivos antiguos privados
+y archivos públicos conservados al cerrar sesión. No recorre archivos ajenos.
+Las descargas en curso se coordinan con el traslado para publicar en el destino.
+
+El cambio corre fuera del hilo de interfaz. Cada archivo se copia, se vuelve a
+leer y se verifica con SHA-256 antes de actualizar sus referencias y eliminar
+el original. Se conserva un registro del destino y de la limpieza pendiente para
+reintentar después de una interrupción. La preferencia global se confirma al
+terminar; ante un error se debe elegir nuevamente la carpeta para completar el
+traslado. Mientras se copia un archivo se necesita espacio temporal para ambas
+copias. Los archivos borrados o movidos fuera de TubeGo no se recrean.

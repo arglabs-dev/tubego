@@ -13,9 +13,11 @@ public final class TransferDriver {
     private TransferDriver() {}
     public enum Outcome {DONE,WAIT_WIFI,WAIT_NETWORK,WAIT_SPACE,RETRY,STOPPED}
     public static Outcome run(Context context,String origin,TransferRuntime.Control control) throws Exception {
-        synchronized(TransferRuntime.lock(origin)) {
-            TransferRuntime.register(origin,control);
-            try {return execute(context,origin,control);}finally {TransferRuntime.unregister(origin,control);}
+        synchronized(TransferRuntime.storageLock) {
+            synchronized(TransferRuntime.lock(origin)) {
+                TransferRuntime.register(origin,control);
+                try {return execute(context,origin,control);}finally {TransferRuntime.unregister(origin,control);}
+            }
         }
     }
     private static Outcome execute(Context context,String origin,TransferRuntime.Control control) throws Exception {

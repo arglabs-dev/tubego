@@ -256,6 +256,7 @@
   <string name="ui_4fb43264c4e4" formatted="false">"Las transferencias respetan tus permisos de red."</string>
   <string name="ui_4fda28d8d35a" formatted="false">"Sin conexión comprobada"</string>
   <string name="ui_4ff402d76821" formatted="false">"Todo"</string>
+  <string name="ui_50318bdf67fa" formatted="false">"Esta carpeta se aplica a todos los videos de TubeGo. Al cambiarla se trasladan los archivos existentes. Se conserva una sola copia y puedes modificarla con el gestor de archivos."</string>
   <string name="ui_5032ea51552f" formatted="false">"Cuentas y acceso"</string>
   <string name="ui_517d49a81a82" formatted="false">"Cambio pendiente preparado para enviar cuando haya conexión."</string>
   <string name="ui_518bd027de9f" formatted="false">"Consultar versión y conexión del servidor"</string>
@@ -381,6 +382,7 @@
   <string name="ui_75f1f75e3337" formatted="false">"En curso"</string>
   <string name="ui_76785560b49b" formatted="false">"Cerrar las demás sesiones al cambiar contraseña"</string>
   <string name="ui_76aa492fc502" formatted="false">"Actualizar lista local"</string>
+  <string name="ui_76d6f29cdbfa" formatted="false">"Moviendo los videos a la carpeta elegida…"</string>
   <string name="ui_76f2bfafa6f9" formatted="false">"Las acciones que borran archivos, cambian accesos o reinician el servicio piden confirmación. Los permisos se verifican en el servidor."</string>
   <string name="ui_7722fa7aedfd" formatted="false">"No está disponible el formato o la calidad elegida. Solicita otra calidad o solo audio."</string>
   <string name="ui_777f2818da9c" formatted="false">"No se pudo leer el historial de esta cuenta."</string>
@@ -661,6 +663,7 @@
   <string name="ui_cedcddb7fbf7" formatted="false">"Revisa tus equipos vinculados o cierra la sesión de este teléfono."</string>
   <string name="ui_ceeb01a4a329" formatted="false">"Conectar servidor"</string>
   <string name="ui_cefe8f25f252" formatted="false">"Ver fichas existentes / Historial"</string>
+  <string name="ui_cf12f3422d7d" formatted="false">"Vuelve a elegir la carpeta para completar el traslado. Los originales se conservan hasta verificar la copia."</string>
   <string name="ui_cf506aff0d86" formatted="false">"Guardar idioma"</string>
   <string name="ui_cfba11035b1a" formatted="false">"El reproductor ya no está disponible."</string>
   <string name="ui_d02093474cac" formatted="false">"Hay un cambio de estado de una operación de mantenimiento."</string>

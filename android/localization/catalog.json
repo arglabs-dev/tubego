@@ -3254,5 +3254,17 @@
   "Cierra la sesión actual antes de cambiar de cuenta. Solo se borran las copias privadas; los archivos de tu carpeta se conservan.": {
     "es": "Cierra la sesión actual antes de cambiar de cuenta. Solo se borran las copias privadas; los archivos de tu carpeta se conservan.",
     "en": "Sign out before switching accounts. Only private copies are removed; files in your folder are kept."
+  },
+  "Esta carpeta se aplica a todos los videos de TubeGo. Al cambiarla se trasladan los archivos existentes. Se conserva una sola copia y puedes modificarla con el gestor de archivos.": {
+    "es": "Esta carpeta se aplica a todos los videos de TubeGo. Al cambiarla se trasladan los archivos existentes. Se conserva una sola copia y puedes modificarla con el gestor de archivos.",
+    "en": "This folder applies to all TubeGo videos. Changing it moves existing files. Only one copy is kept and you can edit it with your file manager."
+  },
+  "Moviendo los videos a la carpeta elegida…": {
+    "es": "Moviendo los videos a la carpeta elegida…",
+    "en": "Moving videos to the selected folder…"
+  },
+  "Vuelve a elegir la carpeta para completar el traslado. Los originales se conservan hasta verificar la copia.": {
+    "es": "Vuelve a elegir la carpeta para completar el traslado. Los originales se conservan hasta verificar la copia.",
+    "en": "Select the folder again to finish moving. Originals are kept until the copy is verified."
   }
 }

@@ -256,6 +256,7 @@
   <string name="ui_4fb43264c4e4" formatted="false">"Transfers respect your network permissions."</string>
   <string name="ui_4fda28d8d35a" formatted="false">"Connection not checked"</string>
   <string name="ui_4ff402d76821" formatted="false">"All"</string>
+  <string name="ui_50318bdf67fa" formatted="false">"This folder applies to all TubeGo videos. Changing it moves existing files. Only one copy is kept and you can edit it with your file manager."</string>
   <string name="ui_5032ea51552f" formatted="false">"Accounts and access"</string>
   <string name="ui_517d49a81a82" formatted="false">"Pending change prepared to send when connected."</string>
   <string name="ui_518bd027de9f" formatted="false">"Check server version and connection"</string>
@@ -381,6 +382,7 @@
   <string name="ui_75f1f75e3337" formatted="false">"In progress"</string>
   <string name="ui_76785560b49b" formatted="false">"Sign out other sessions when changing password"</string>
   <string name="ui_76aa492fc502" formatted="false">"Refresh local list"</string>
+  <string name="ui_76d6f29cdbfa" formatted="false">"Moving videos to the selected folder…"</string>
   <string name="ui_76f2bfafa6f9" formatted="false">"Actions that delete files, change access, or restart the service require confirmation. Permissions are checked on the server."</string>
   <string name="ui_7722fa7aedfd" formatted="false">"The selected format or quality is unavailable. Request another quality or audio only."</string>
   <string name="ui_777f2818da9c" formatted="false">"Could not read this account\'s history."</string>
@@ -661,6 +663,7 @@
   <string name="ui_cedcddb7fbf7" formatted="false">"Review your linked devices or sign out on this phone."</string>
   <string name="ui_ceeb01a4a329" formatted="false">"Connect server"</string>
   <string name="ui_cefe8f25f252" formatted="false">"View existing items / History"</string>
+  <string name="ui_cf12f3422d7d" formatted="false">"Select the folder again to finish moving. Originals are kept until the copy is verified."</string>
   <string name="ui_cf506aff0d86" formatted="false">"Save language"</string>
   <string name="ui_cfba11035b1a" formatted="false">"The player is no longer available."</string>
   <string name="ui_d02093474cac" formatted="false">"A maintenance operation\'s status has changed."</string>
