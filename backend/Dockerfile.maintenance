@@ -1,0 +1,12 @@
+FROM docker:cli
+
+RUN apk add --no-cache git python3 py3-pip \
+    && git config --system --add safe.directory /opt/tubego-repo
+COPY backend/requirements-maintenance.txt /tmp/requirements-maintenance.txt
+RUN python3 -m venv /opt/tubego-maintenance \
+    && /opt/tubego-maintenance/bin/pip install --no-cache-dir -r /tmp/requirements-maintenance.txt
+
+ENV PATH=/opt/tubego-maintenance/bin:$PATH
+ENV PYTHONPATH=/opt/tubego-repo/backend
+WORKDIR /opt/tubego-repo
+ENTRYPOINT ["python3", "-m", "tubego_server.maintenance_supervisor"]

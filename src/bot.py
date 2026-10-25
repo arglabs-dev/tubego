@@ -5,9 +5,11 @@ import logging
 import asyncio
 import traceback
 import concurrent.futures
+import re
 import speedtest
 import urllib.request
 import json
+from urllib.parse import parse_qs, quote, urlsplit, urlunsplit
 import yt_dlp
 from dotenv import load_dotenv
 from telegram import Update, BotCommand, InlineKeyboardButton, InlineKeyboardMarkup
@@ -23,8 +25,63 @@ API_ID = os.getenv("API_ID")
 API_HASH = os.getenv("API_HASH")
 
 if not os.path.exists('logs'): os.makedirs('logs')
+class SecretRedactionFilter(logging.Filter):
+    """Keep credentials out of HTTP and exception messages written by any handler."""
+    def filter(self, record):
+        if TOKEN:
+            message = record.getMessage()
+            if TOKEN in message:
+                record.msg = message.replace(TOKEN, "[REDACTED]")
+                record.args = ()
+            if record.exc_info:
+                traceback_text = logging.Formatter().formatException(record.exc_info)
+                if TOKEN in traceback_text:
+                    record.exc_text = traceback_text.replace(TOKEN, "[REDACTED]")
+                    record.exc_info = None
+        return True
+
+
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO, handlers=[logging.FileHandler("logs/bot.log", encoding='utf-8'), logging.StreamHandler()])
+for handler in logging.getLogger().handlers:
+    handler.addFilter(SecretRedactionFilter())
+# httpx logs Telegram API URLs at INFO, and Telegram embeds the bot token in each URL.
+logging.getLogger("httpx").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
+
+
+def _log_text(value, limit=500):
+    """Keep log fields on one line and bounded in size."""
+    return str(value).replace("\r", " ").replace("\n", " ")[:limit]
+
+
+def _safe_url_for_log(value):
+    """Log a source identity without credentials, fragments, or arbitrary query data."""
+    try:
+        parts = urlsplit(str(value))
+        host = (parts.hostname or "unknown-host").lower()
+        # Keep a YouTube video ID, but omit arbitrary paths and query fields:
+        # other providers may put credentials or signed data in either place.
+        youtube_hosts = {"youtube.com", "www.youtube.com", "m.youtube.com", "music.youtube.com"}
+        video_id = None
+        path = ""
+        if host in youtube_hosts:
+            video_id = parse_qs(parts.query).get("v", [None])[0]
+            if parts.path.startswith(("/shorts/", "/embed/")):
+                video_id = parts.path.split("/", 2)[2].split("/", 1)[0]
+            elif parts.path == "/watch":
+                path = parts.path
+        elif host == "youtu.be":
+            video_id = parts.path.strip("/").split("/", 1)[0] or None
+        query = f"v={quote(video_id, safe='')}" if video_id else ""
+        return _log_text(urlunsplit((parts.scheme, host, path, query, "")), 500)
+    except (TypeError, ValueError):
+        return "<invalid-url>"
+
+
+def _safe_error_for_log(error):
+    """Remove URL query secrets from downloader and transport error messages."""
+    message = _log_text(error)
+    return re.sub(r"https?://[^\s\"'<>]+", lambda match: _safe_url_for_log(match.group(0)), message)
 
 manager = DownloadManager()
 download_executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
@@ -138,7 +195,7 @@ def detect_language(user): global CURRENT_LANG; CURRENT_LANG = 'es' if user and 
 
 def get_keyboard(task_id, status):
     keyboard = []
-    if status in ['starting', 'downloading', 'processing', 'uploading']: keyboard.append([InlineKeyboardButton(T('btn_cancel'), callback_data=f"cancel_{task_id}")])
+    if status in ['starting', 'downloading', 'processing', 'uploading', 'paused']: keyboard.append([InlineKeyboardButton(T('btn_cancel'), callback_data=f"cancel_{task_id}")])
     elif status == 'failed_dl': keyboard.append([InlineKeyboardButton(T('btn_retry'), callback_data=f"retry_dl_{task_id}"), InlineKeyboardButton(T('btn_delete'), callback_data=f"delete_{task_id}"), InlineKeyboardButton(T('btn_log'), callback_data=f"log_{task_id}")])
     elif status == 'failed_ul': keyboard.append([InlineKeyboardButton(T('btn_retry_ul'), callback_data=f"retry_ul_{task_id}"), InlineKeyboardButton(T('btn_delete'), callback_data=f"delete_{task_id}")])
     elif status == 'success': keyboard.append([InlineKeyboardButton(T('btn_upload_now'), callback_data=f"retry_ul_{task_id}"), InlineKeyboardButton(T('btn_delete'), callback_data=f"delete_{task_id}")])
@@ -233,9 +290,14 @@ async def upload_with_userbot(file_path, filename, target, task_id):
 
 async def upload_file(task_id, bot, chat_id, msg_id):
     task = manager.get_task(task_id)
-    if not task or not task['file_path'] or not os.path.exists(task['file_path']): return
+    if not task or not task['file_path'] or not os.path.exists(task['file_path']):
+        logger.warning("event=upload_skipped task_id=%s reason=file_unavailable", task_id)
+        return
     try:
         f = task['file_path']; sz = os.path.getsize(f)/(1024*1024)
+        method = 'userbot' if sz > 50 else 'bot'
+        logger.info("event=upload_started task_id=%s filename=%s size_mb=%.2f method=%s",
+                    task_id, _log_text(task['filename'], 240), sz, method)
         if sz > 50:
             await bot.edit_message_text(T('upload_userbot', task['filename'], sz), chat_id=chat_id, message_id=msg_id, parse_mode='Markdown')
             await upload_with_userbot(f, task['filename'], (await bot.get_me()).username, task_id)
@@ -243,32 +305,59 @@ async def upload_file(task_id, bot, chat_id, msg_id):
         else:
             await bot.edit_message_text(T('upload_bot', task['filename'], sz), chat_id=chat_id, message_id=msg_id, parse_mode='Markdown')
             try: await bot.send_video(chat_id, open(f,'rb'), caption=f"✅ {task['filename']}", supports_streaming=True, read_timeout=3600, write_timeout=3600)
-            except: await bot.send_document(chat_id, open(f,'rb'), caption=f"✅ {task['filename']}", read_timeout=3600, write_timeout=3600)
+            except Exception as e:
+                logger.warning("event=video_upload_fallback task_id=%s error_type=%s error=%s",
+                               task_id, type(e).__name__, _safe_error_for_log(e))
+                await bot.send_document(chat_id, open(f,'rb'), caption=f"✅ {task['filename']}", read_timeout=3600, write_timeout=3600)
             await bot.edit_message_text(T('upload_success', task['filename']), chat_id=chat_id, message_id=msg_id, reply_markup=get_keyboard(task_id, 'completed'), parse_mode='Markdown')
         manager.update_status(task_id, 'completed'); manager.archive_task_file(task_id)
+        logger.info("event=upload_completed task_id=%s filename=%s size_mb=%.2f method=%s",
+                    task_id, _log_text(task['filename'], 240), sz, method)
     except Exception as e:
+        logger.exception("event=upload_failed task_id=%s filename=%s error_type=%s error=%s",
+                         task_id, _log_text(task.get('filename'), 240), type(e).__name__, _safe_error_for_log(e))
         manager.update_status(task_id, 'failed_ul', str(e)); await bot.edit_message_text(T('upload_error', str(e)[:50]), chat_id=chat_id, message_id=msg_id, reply_markup=get_keyboard(task_id, 'failed_ul'))
 
 async def download_phase(task_id, chat_id, msg_id, bot, quality):
+    task = manager.get_task(task_id)
+    logger.info("event=download_started task_id=%s source=%s quality=%s",
+                task_id, _safe_url_for_log(task.get('url', '') if task else ''), _log_text(quality, 40))
     await bot.edit_message_text(T('downloading', quality, task_id), chat_id=chat_id, message_id=msg_id, reply_markup=get_keyboard(task_id, 'downloading'), parse_mode='Markdown')
     def run():
         task = manager.get_task(task_id)
         try:
             mode = 'audio' if quality == 'audio' else 'video'
-            res = task['downloader'].download(task['url'], mode, quality, progress_hook=lambda d: manager.tasks[task_id].update({'progress':d.get('_percent_str','0%')}) if d['status']=='downloading' else None, check_cancel=lambda: manager.tasks[task_id]['cancel_flag'])
+            res = task['downloader'].download(task['url'], mode, quality, progress_hook=lambda d: manager.tasks[task_id].update({'progress':d.get('_percent_str',manager.tasks[task_id]['progress']), 'status':'paused' if d['status']=='paused' else 'downloading' if d['status'] in ('downloading','resuming') else 'processing'}), check_cancel=lambda: manager.tasks[task_id]['cancel_flag'])
             if res['status'] == 'success': 
                 with manager.lock: manager.tasks[task_id].update({'file_path': res['path'], 'filename': os.path.basename(res['path']), 'status': 'success'})
             return res
         except Exception as e: return {'status': 'error', 'message': str(e)}
     res = await asyncio.get_running_loop().run_in_executor(download_executor, run)
-    if res['status'] == 'success': await upload_file(task_id, bot, chat_id, msg_id)
-    elif res['status'] == 'cancelled': await bot.edit_message_text(T('cancel_ok'), chat_id=chat_id, message_id=msg_id); manager.delete_task_data(task_id)
-    else: await bot.edit_message_text(T('error_generic', res['message'][:50]), chat_id=chat_id, message_id=msg_id, reply_markup=get_keyboard(task_id, 'failed_dl'))
+    if res['status'] == 'success':
+        downloaded = manager.get_task(task_id)
+        file_path = downloaded.get('file_path') if downloaded else None
+        size_mb = os.path.getsize(file_path)/(1024*1024) if file_path and os.path.isfile(file_path) else 0
+        logger.info("event=download_completed task_id=%s filename=%s size_mb=%.2f",
+                    task_id, _log_text(downloaded.get('filename') if downloaded else '', 240), size_mb)
+        await upload_file(task_id, bot, chat_id, msg_id)
+    elif res['status'] == 'cancelled':
+        logger.info("event=download_cancelled task_id=%s", task_id)
+        await bot.edit_message_text(T('cancel_ok'), chat_id=chat_id, message_id=msg_id); manager.delete_task_data(task_id)
+    else:
+        logger.error("event=download_failed task_id=%s source=%s error=%s",
+                     task_id, _safe_url_for_log(task.get('url', '') if task else ''), _safe_error_for_log(res.get('message', 'unknown error')))
+        await bot.edit_message_text(T('error_generic', res['message'][:50]), chat_id=chat_id, message_id=msg_id, reply_markup=get_keyboard(task_id, 'failed_dl'))
 
 async def analyze_phase(url, update, context):
     task_id = manager.create_task(url); msg = await update.message.reply_text(T('analyzing'), parse_mode='Markdown')
+    logger.info("event=video_request_received task_id=%s source=%s", task_id, _safe_url_for_log(url))
     info = await asyncio.get_running_loop().run_in_executor(download_executor, manager.tasks[task_id]['downloader'].get_video_info, url)
-    if info['status'] == 'error': await msg.edit_text(T('error_generic', info['message'])); manager.delete_task_data(task_id); return
+    if info['status'] == 'error':
+        logger.error("event=video_request_failed task_id=%s source=%s error=%s",
+                     task_id, _safe_url_for_log(url), _safe_error_for_log(info.get('message', 'unknown error')))
+        await msg.edit_text(T('error_generic', info['message'])); manager.delete_task_data(task_id); return
+    logger.info("event=video_requested task_id=%s title=%s source=%s duration=%s",
+                task_id, _log_text(info.get('title', 'unknown'), 240), _safe_url_for_log(url), _log_text(info.get('duration', 'unknown'), 40))
     safe_title = info['title'].replace('_', '\\_').replace('*', '\\*').replace('`', '\\`').replace('[', '\\[')
     await msg.edit_text(T('quality_select', safe_title, info['duration']), reply_markup=get_quality_keyboard(task_id), parse_mode='Markdown')
 
@@ -277,7 +366,9 @@ async def handle_msg(update, context):
     url = update.message.text.strip()
     if not url.startswith("http"): await update.message.reply_text(T('invalid_link')); return
     if DEFAULT_QUALITY != 'ask':
-        tid = manager.create_task(url); msg = await update.message.reply_text(T('task_init', tid), parse_mode='Markdown')
+        tid = manager.create_task(url)
+        logger.info("event=video_request_received task_id=%s source=%s", tid, _safe_url_for_log(url))
+        msg = await update.message.reply_text(T('task_init', tid), parse_mode='Markdown')
         asyncio.create_task(download_phase(tid, update.effective_user.id, msg.message_id, context.bot, DEFAULT_QUALITY))
     else: await analyze_phase(url, update, context)
 

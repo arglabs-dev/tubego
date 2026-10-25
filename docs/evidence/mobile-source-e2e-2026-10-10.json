@@ -1,0 +1,74 @@
+{
+  "tested_revision": "e3bdea371efbb0587d827432dc720f86224065bb",
+  "tested_selector_fix_parent": "a896aa5",
+  "date": "2026-10-10",
+  "test": "dev.arglabs.tubego.MobileSourceInstrumentedTest.testPasteAndConfirmPublicSourceReachesVerifiedOfflineFile",
+  "opt_in_argument": "publicSource=true",
+  "result": "PASS",
+  "elapsed_seconds": 10.276,
+  "platform": "Android API 35 emulator",
+  "source": "https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4",
+  "selection": "720",
+  "resource_id": "9b364ac8-4cc1-4dfc-9eae-3abe31a06db6",
+  "bytes": 4372373,
+  "sha256": "b670602fa00934ca27c4351bb0efe7ea7a07fae57284e44226025eeed7c51254",
+  "server_task_status": "completed",
+  "device_delivery_status": "complete",
+  "local_manifest_state": "complete",
+  "quality_notice": "quality_unknown",
+  "stages": [
+    "real API login of approved disposable fixture account",
+    "SessionStore persists returned session",
+    "actual LinkEntryActivity URL EditText and Add button",
+    "accessibility quality/submission confirmations",
+    "durable production command outbox",
+    "real JobScheduler command service",
+    "real restricted egress proxy and yt-dlp Worker",
+    "real FFmpeg MP4 postprocessing and publication",
+    "real network-bound WiFi transfer job",
+    "local whole-file SHA256 and size verification",
+    "server delivery confirmation and completed task assertions"
+  ],
+  "limits": [
+    "Approved account is seeded only in disposable fixture data; LoginActivity/Main onboarding and SMTP are not tested by this test",
+    "Jobs are explicitly forced by cmd jobscheduler run -f; no spontaneous scheduling or latency claim",
+    "Instrumentation-only trust of disposable certificate; normal hostname verification remains enabled and production TLS trust is unchanged",
+    "Only the fixed public Blender source/default720 video path is covered; other platforms and audio have separate evidence",
+    "VLC playback/PiP/audio are separate tests; exact position callbacks are not implemented as an MVP guarantee"
+  ],
+  "preceding_failed_attempt": {
+    "reason": "format_unavailable because bounded selector excluded an unknown-height direct video format",
+    "resolution": "a896aa5 retains explicit known-height caps while allowing unknown-height fallback and honest quality_unknown notice",
+    "masked_by_selection_change": false
+  },
+  "additional_final_validation": {
+    "executed_revision": "e3bdea371efbb0587d827432dc720f86224065bb",
+    "backend_full_suite": {
+      "result": "PASS",
+      "tests": 301,
+      "elapsed_seconds": 40.9
+    },
+    "native_transfer_regression": {
+      "result": "PASS",
+      "elapsed_seconds": 17.393,
+      "bytes": 16777216,
+      "checks": [
+        "positive partial offset and Range resume",
+        "real background job with screen asleep",
+        "whole-file SHA and size before server confirmation",
+        "remote revocation wipes managed media"
+      ]
+    },
+    "previous_integrated_native_suite": {
+      "tests": 17,
+      "result": "PASS",
+      "elapsed_seconds": 7.556,
+      "revision": "9fa3a24"
+    },
+    "android_build_lint_jvm": {
+      "result": "PASS",
+      "elapsed_seconds": 19,
+      "revision": "9fa3a24"
+    }
+  }
+}

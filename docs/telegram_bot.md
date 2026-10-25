@@ -40,11 +40,14 @@ API_HASH=your_app_hash
 
 ## 5. First Run Authentication
 
-The first time you run the bot or the setup script, it will ask for a login code to authorize the Userbot session.
+The bot container needs an authorized Telegram user session to upload files larger than 50 MB. After starting the container, create that session interactively:
 
 ```bash
-# Generate session file
+docker exec -it tubego_bot bash
+cd /app
 python setup_session.py
 ```
 
-Follow the prompts. Once `user_session.session` is created, the bot is ready.
+Follow the prompts to enter your phone number, the login code Telegram sends you, and your two-step verification password if requested. The Compose setup mounts the project's `data/` directory at `/app/data`, so the generated `user_session.session` remains available after the container restarts.
+
+The Docker image already sets `/app` as its working directory, so `cd app` would try to enter `/app/app`; use `cd /app` (or skip that command).

@@ -20,6 +20,7 @@ TubeGo es una aplicación "Todo en Uno" para descargar contenido multimedia. Fun
 Toda la documentación técnica se ha movido a la carpeta `docs/`:
 
 - **[🤖 Guía del Bot de Telegram](docs/telegram_bot.md):** Cómo configurar el Token, el Userbot y los comandos.
+- **[🚀 Despliegue con Docker](docs/DEPLOY.md):** Cómo levantar el contenedor y autorizar la sesión para subir archivos grandes.
 - **[🏗 Arquitectura](docs/ARCHITECTURE.md):** Estructura interna del código y flujos de datos.
 - **[🧠 Contexto del Proyecto](docs/GEMINI.md):** Historial y contexto para desarrolladores/IA.
 
@@ -66,9 +67,38 @@ python main.py "URL_VIDEO" --quality 720
 
 ---
 
-## 📱 Build para Android
-Para compilar la versión APK:
+## 📱 App oficial para Android
+
+La interfaz oficial está en `android/`: biblioteca, descargas y Ajustes con un sistema visual común y administración según el rol de la cuenta.
+
 ```bash
-flet build apk -v
+./scripts/build_android.sh
 ```
-_(Consulta la documentación oficial de Flet para requisitos de Android SDK)_
+
+Consulta [la interfaz oficial, requisitos e instalación](docs/ANDROID_UI.md). El APK se genera en `android/app/build/outputs/apk/debug/app-debug.apk`; el workflow de Android publica el mismo código como artefacto.
+
+## Independent Telegram and mobile channels
+
+Telegram continues to work alongside the Android MVP with separate files and queues.
+See [storage configuration and deployment](docs/INDEPENDENT_CHANNELS.md) before
+running both services.
+
+## App Android oficial y API móvil
+
+La nueva app Android nativa y API están en `android/` y `backend/` y conviven con
+el bot sin modificarlo. La app oficial incluye biblioteca privada, descargas sin conexión y Ajustes por finalidad,
+con herramientas administrativas según el rol de la cuenta.
+Consulta [arquitectura, contrato API y ejecución](docs/MOBILE_ARCHITECTURE.md).
+El workflow `Mobile foundation` verifica Python y compila un APK debug descargable.
+
+## Enviar desde la laptop al teléfono
+
+Abre `/send` en el mismo servidor HTTPS configurado en la app Android. Inicia
+sesión con tu cuenta de TubeGo, pega el enlace, elige calidad o audio y pulsa
+**Enviar a mis teléfonos**. La página muestra la preparación en el servidor y
+la confirmación de descarga de cada dispositivo vinculado.
+
+El teléfono debe haber iniciado sesión previamente. Las solicitudes esperan si
+está desconectado; la sincronización periódica de Android y las preferencias de
+red pueden demorar la descarga. Esta versión distribuye a todos los dispositivos
+activos de la cuenta. Consulta [el flujo y sus límites](docs/WEB_SEND.md).

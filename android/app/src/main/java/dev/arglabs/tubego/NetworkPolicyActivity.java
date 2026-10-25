@@ -1,0 +1,126 @@
+package dev.arglabs.tubego;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.os.Bundle;
+import android.widget.*;
+import org.json.JSONObject;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+/** Explicit file-specific mobile-data consent; transfer worker consumes the grant. */
+public final class NetworkPolicyActivity extends LocalizedActivity {
+    private final ExecutorService executor=Executors.newSingleThreadExecutor();
+    private String origin;
+    private LinearLayout layout;
+    private TextView status;
+    private NetworkMonitor monitor;
+    private DownloadPermissions permissions;
+    private JSONObject session;
+    @Override public void onCreate(Bundle state) {
+        super.onCreate(state);
+        try {origin=new ApiClient(getIntent().getStringExtra("server_url")).getBaseUrl();}
+        catch(Exception e) {finish();return;}
+        permissions=AndroidDownloadPermissions.create(this);
+        layout=new LinearLayout(this);layout.setOrientation(LinearLayout.VERTICAL);layout.setPadding(32,64,32,32);
+        status=new TextView(this);layout.addView(status);
+        ScrollView scroll=new ScrollView(this);scroll.addView(layout);setContentView(scroll);
+        monitor=new NetworkMonitor(this,network->{
+            if(!isDestroyed()) status.setText(DownloadPolicy.mediaDecision(network,false)==DownloadPolicy.Decision.ALLOW_WIFI
+                ?Texts.text(NetworkPolicyActivity.this,"Wi-Fi disponible. Las descargas pueden continuar.")
+                :DownloadPolicy.allowsControl(network)?Texts.text(NetworkPolicyActivity.this,"Las descargas esperan Wi-Fi salvo autorización individual."):Texts.text(NetworkPolicyActivity.this,"Sin conexión validada. Las descargas quedan en espera."));
+        });
+        try {session=new SessionStore(this,origin).read();if(session!=null&&"approved".equals(session.optString("status")))addLocalControls(session);}catch(Exception ignored){}
+        load("");
+    }
+    private void load(String cursor) {
+        executor.execute(()->{
+            try {
+                if(session==null || !"approved".equals(session.optString("status")) || !sameSession(session)) throw new Exception(Texts.text(this,"Sesión aprobada requerida"));
+                JSONObject account=session;
+                JSONObject result=new ApiClient(origin).request("GET","/device/sync?delivery_cursor="+java.net.URLEncoder.encode(cursor,"UTF-8"),null,account.getString("token"));
+                runOnUiThread(()->{
+                    if(isDestroyed()) return;
+                    if(!sameSession(account)){clearStaleControls();return;}
+                    if(cursor.isEmpty()) {layout.removeAllViews();layout.addView(status);addLocalControls(account);}
+                    var rows=result.optJSONArray("deliveries");
+                    for(int i=0;rows!=null && i<rows.length();i++) {
+                        JSONObject row=rows.optJSONObject(i);
+                        try {
+                            TransferKey key=new TransferKey(origin,account.getString("user_id"),account.getString("device_id"),row.getString("id"),row.getString("sha256"));
+                            if("complete".equals(row.optString("delivery_status"))) {permissions.revoke(key);continue;}
+                            if(!row.optBoolean("server_available") || !"pending".equals(row.optString("delivery_status"))) continue;
+                            TextView description=new TextView(this);
+                            String title=row.optString("title",Texts.text(NetworkPolicyActivity.this,"Archivo"));
+                            String size=row.isNull("size_bytes")?Texts.text(NetworkPolicyActivity.this,"tamaño desconocido"):row.optLong("size_bytes")+Texts.text(NetworkPolicyActivity.this," bytes");
+                            String localMessage="";
+                            java.io.File localRoot=LocalLibraryStorage.root(this,origin,key.userId,key.deviceId);
+                            java.io.File manifest=new java.io.File(localRoot,key.resourceId+".properties");
+                            if(manifest.isFile()){TransferRecord local=TransferRecord.read(manifest);if("device_storage".equals(local.pauseReason))localMessage=Texts.text(NetworkPolicyActivity.this,"\nDescarga pausada: libera espacio o ajusta el umbral.");}
+                            description.setText(title+" · "+size+localMessage);layout.addView(description);
+                            Button allow=new Button(this);allow.setText(permissions.authorized(key)?Texts.text(NetworkPolicyActivity.this,"Datos móviles autorizados"):Texts.text(NetworkPolicyActivity.this,"Permitir datos móviles"));layout.addView(allow);
+                            allow.setOnClickListener(v->new AlertDialog.Builder(this).setTitle(Texts.text(NetworkPolicyActivity.this,"Usar datos móviles"))
+                                .setMessage(Texts.text(NetworkPolicyActivity.this,"¿Autorizar ")+title+" ("+size+Texts.text(NetworkPolicyActivity.this,") en este teléfono? El permiso dura hasta completar o cancelar esta descarga. No incluye otros archivos ni dispositivos."))
+                                .setNegativeButton(Texts.text(NetworkPolicyActivity.this,"Cancelar"),null).setPositiveButton(Texts.text(NetworkPolicyActivity.this,"Autorizar"),(d,w)->{
+                                    try {
+                                        synchronized(SessionStore.class) {
+                                            JSONObject current=new SessionStore(this,origin).read();
+                                            if(current==null || !key.userId.equals(current.optString("user_id")) || !key.deviceId.equals(current.optString("device_id"))) throw new Exception(Texts.text(NetworkPolicyActivity.this,"Cuenta cambió"));
+                                            java.io.File root=LocalLibraryStorage.root(this,origin,key.userId,key.deviceId);
+                                            if(new java.io.File(root,key.resourceId+".deleted").exists())throw new Exception(Texts.text(NetworkPolicyActivity.this,"Archivo borrado"));
+                                            permissions.authorize(key);
+                                        }
+                                        TransferJobs.wake(this,origin,false);allow.setText(Texts.text(NetworkPolicyActivity.this,"Datos móviles autorizados"));status.setText(Texts.text(NetworkPolicyActivity.this,"Autorización guardada para este archivo."));
+                                    } catch(Exception e) {status.setText(Texts.text(NetworkPolicyActivity.this,"No se pudo guardar el permiso. Revisa tu sesión."));}
+                                }).show());
+                            Button remove=new Button(this);remove.setText(Texts.text(NetworkPolicyActivity.this,"Retirar permiso de datos"));layout.addView(remove);
+                            remove.setOnClickListener(v->{try {permissions.revoke(key);TransferRuntime.permissionRemoved(origin,key);allow.setText(Texts.text(NetworkPolicyActivity.this,"Permitir datos móviles"));status.setText(Texts.text(NetworkPolicyActivity.this,"Este archivo vuelve a esperar Wi-Fi."));}catch(Exception e){status.setText(Texts.text(NetworkPolicyActivity.this,"No se pudo retirar el permiso."));}});
+                        } catch(Exception ignored) {status.setText(Texts.text(NetworkPolicyActivity.this,"Algunos archivos todavía no están listos."));}
+                    }
+                    if(!result.isNull("next_delivery_cursor")) {
+                        Button next=new Button(this);next.setText(Texts.text(NetworkPolicyActivity.this,"Más archivos"));layout.addView(next);
+                        next.setOnClickListener(v->{next.setEnabled(false);load(result.optString("next_delivery_cursor"));});
+                    }
+                });
+            } catch(Exception e) {
+                if(e instanceof ApiClient.ApiException) {
+                    ApiClient.ApiException apiError=(ApiClient.ApiException)e;
+                    if((apiError.code.equals("session_revoked") || apiError.code.equals("account_unavailable")) && session!=null) {
+                        try {permissions.revokeAccount(origin,session.getString("user_id"),session.getString("device_id"));}catch(Exception ignored){}
+                    }
+                }
+                runOnUiThread(()->{if(!isDestroyed()){if(session==null||!sameSession(session))clearStaleControls();else status.setText(Texts.text(this,"No se pudieron consultar descargas. Los avisos y el almacenamiento local siguen disponibles."));}});
+            }
+        });
+    }
+    private boolean sameSession(JSONObject account){try {JSONObject current=new SessionStore(this,origin).read();return current!=null&&account.optString("token").equals(current.optString("token"));}catch(Exception e){return false;}}
+    private void clearStaleControls(){layout.removeAllViews();layout.addView(status);status.setText(Texts.text(this,"La sesión cambió. Abre nuevamente esta pantalla desde tu cuenta."));}
+    private void addLocalControls(JSONObject account){
+        Button alerts=new Button(this);alerts.setText(Texts.text(this,"Centro de avisos"));alerts.setTag("local-alerts");layout.addView(alerts);
+        alerts.setOnClickListener(v->{if(!sameSession(account)){clearStaleControls();return;}startActivity(new android.content.Intent(this,AlertsActivity.class).putExtra("server_url",origin));});
+        Button storage=new Button(this);storage.setText(Texts.text(this,"Almacenamiento de este teléfono"));storage.setTag("local-storage");layout.addView(storage);
+        storage.setOnClickListener(v->{if(!sameSession(account)){clearStaleControls();return;}startActivity(new android.content.Intent(this,DeviceStorageActivity.class).putExtra("server_url",origin));});
+        addFailedTransfers(account);
+    }
+    private void addFailedTransfers(JSONObject account){
+        try{
+            java.io.File root=LocalLibraryStorage.root(this,origin,account.getString("user_id"),account.getString("device_id"));
+            java.io.File[] files=root.listFiles((dir,name)->name.endsWith(".properties"));
+            if(files==null)return;
+            for(java.io.File file:files){
+                if(java.nio.file.Files.isSymbolicLink(file.toPath()))continue;
+                try{java.util.UUID.fromString(file.getName().replace(".properties",""));}catch(IllegalArgumentException nonResource){continue;}
+                final TransferRecord record;try{record=TransferRecord.read(file);}catch(Exception corruptResource){continue;}if(!"failed".equals(record.state))continue;
+                TextView title=new TextView(this);title.setText(record.title+" · "+Texts.failure(this,record.failureCode));layout.addView(title);
+                Button retry=new Button(this);retry.setText(Texts.text(this,"Reintentar descarga"));layout.addView(retry);
+                retry.setOnClickListener(v->{try{synchronized(SessionStore.class){JSONObject current=new SessionStore(this,origin).read();
+                    if(current==null||!current.optString("user_id").equals(account.optString("user_id"))||!current.optString("device_id").equals(account.optString("device_id")))throw new Exception();
+                    if(new java.io.File(root,record.id+".deleted").exists())throw new Exception();
+                    TransferRecord latest=TransferRecord.read(file);if("failed".equals(latest.state))TransferRetry.reset(latest);
+                }TransferJobs.wake(this,origin,false);retry.setEnabled(false);status.setText(Texts.text(NetworkPolicyActivity.this,"Reintento solicitado. Se mantienen los permisos de red de este archivo."));}catch(Exception e){status.setText(Texts.text(NetworkPolicyActivity.this,"No se pudo reintentar. Revisa tu sesión."));}});
+            }
+        }catch(Exception e){status.setText(Texts.text(NetworkPolicyActivity.this,"No se pudieron consultar las descargas fallidas."));}
+    }
+    @Override protected void onResume(){super.onResume();if(session!=null&&!sameSession(session))clearStaleControls();}
+    @Override protected void onDestroy() {if(monitor!=null) monitor.close();executor.shutdownNow();super.onDestroy();}
+}

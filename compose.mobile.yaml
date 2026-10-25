@@ -1,0 +1,63 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      TUBEGO_MEDIA_EGRESS_PROXY: http://egress:8081
+      # These names are forwarded from the operator environment / Compose .env.
+      # Keep credentials outside version control; the worker does not need SMTP.
+      TUBEGO_PUBLIC_URL: ${TUBEGO_PUBLIC_URL:-https://localhost}
+      TUBEGO_SMTP_HOST: ${TUBEGO_SMTP_HOST:-}
+      TUBEGO_SMTP_PORT: ${TUBEGO_SMTP_PORT:-587}
+      TUBEGO_SMTP_SENDER: ${TUBEGO_SMTP_SENDER:-}
+      TUBEGO_SMTP_USERNAME: ${TUBEGO_SMTP_USERNAME:-}
+      TUBEGO_SMTP_PASSWORD: ${TUBEGO_SMTP_PASSWORD:-}
+      TUBEGO_SMTP_TLS: ${TUBEGO_SMTP_TLS:-true}
+      TUBEGO_SMTP_SSL: ${TUBEGO_SMTP_SSL:-false}
+    depends_on:
+      - egress
+    ports:
+      - "127.0.0.1:8000:8000"
+    networks:
+      default: {}
+      tunnel_origin:
+        aliases:
+          - tubego-api
+    volumes:
+      - mobile-data:/data
+    restart: unless-stopped
+  worker:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    command: ["python", "-m", "tubego_server.worker"]
+    environment:
+      TUBEGO_MEDIA_EGRESS_PROXY: http://egress:8081
+    volumes:
+      - mobile-data:/data
+    depends_on:
+      - egress
+    restart: unless-stopped
+  retention:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    command: ["python", "-m", "tubego_server.retention_service"]
+    volumes:
+      - mobile-data:/data
+    restart: unless-stopped
+  egress:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    command: ["python", "-m", "tubego_server.egress_proxy", "--host", "0.0.0.0", "--port", "8081"]
+    restart: unless-stopped
+    # Container network only: never publish the unauthenticated proxy to the host.
+volumes:
+  mobile-data:
+networks:
+  tunnel_origin:
+    external: true
+    # Dedicated ingress network: never attach TubeGo to SJIA origin/backend networks.
+    name: tubego_tunnel_origin

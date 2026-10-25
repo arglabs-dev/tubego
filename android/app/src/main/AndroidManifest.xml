@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <queries><intent><action android:name="android.intent.action.VIEW"/><data android:mimeType="video/*"/></intent><intent><action android:name="android.intent.action.VIEW"/><data android:mimeType="audio/*"/></intent><package android:name="org.videolan.vlc"/></queries>
+    <application android:name=".TubegoApplication" android:label="TubeGo" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" android:theme="@style/TubegoTheme"
+        android:allowBackup="false" android:usesCleartextTraffic="false" android:supportsRtl="true">
+        <activity android:name=".LanguageActivity" android:exported="false" />
+        <activity android:name=".HelpActivity" android:exported="false" />
+        <activity android:name=".DiagnosticsActivity" android:exported="false" />
+        <activity android:name=".CommandsActivity" android:exported="false" />
+        <service android:name=".CommandJobService" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="false" />
+        <service android:name=".LinkOutboxJobService" android:exported="true" android:permission="android.permission.BIND_JOB_SERVICE" />
+        <activity android:name=".MaintenanceActivity" android:exported="false" />
+        <service android:name=".MaintenanceJobService" android:exported="true" android:permission="android.permission.BIND_JOB_SERVICE" />
+        <activity android:name=".ResubmitActivity" android:exported="false" />
+        <service android:name=".RecoveryOutboxJobService" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="false" />
+        <activity android:name=".ServerCleanupActivity" android:exported="false" />
+        <service android:name=".ServerCleanupOutboxJobService" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="false" />
+        <activity android:name=".ResourceDeletionActivity" android:exported="false" />
+        <service android:name=".DeletionOutboxJobService" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="false" />
+        <activity android:name=".LinkEntryActivity" android:exported="false" />
+        <activity android:name=".ShareReceiverActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AdminDownloadErrorsActivity" android:exported="false" />
+        <activity android:name=".AdminMailActivity" android:exported="false" />
+        <provider android:name=".PrivateMediaContentProvider" android:authorities="${applicationId}.private-media" android:exported="false" android:grantUriPermissions="true" />
+        <activity android:name=".LocalLibraryActivity" android:exported="false" />
+        <activity android:name=".AdminUsersActivity" android:exported="false" />
+        <activity android:name=".AdminCenterActivity" android:exported="false" />
+        <activity android:name=".AdminRetentionActivity" android:exported="false" />
+        <activity android:name=".AdminPriorityActivity" android:exported="false" />
+        <service android:name=".TransferJobService" android:exported="true" android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service android:name=".LogoutJobService" android:exported="true" android:permission="android.permission.BIND_JOB_SERVICE" />
+        <activity android:name=".DevicesActivity" android:exported="false" />
+        <activity android:name=".LoginActivity" android:exported="false" />
+        <activity android:name=".MediaPreferencesActivity" android:exported="false" />
+        <activity android:name=".DeviceStorageActivity" android:exported="false" />
+        <activity android:name=".DownloadFailuresActivity" android:exported="false" />
+        <activity android:name=".AlertsActivity" android:exported="false" />
+        <activity android:name=".NetworkPolicyActivity" android:exported="false" />
+        <activity android:name=".RegistrationActivity" android:exported="false" />
+        <activity android:name=".AdminRegistrationsActivity" android:exported="false" />
+        <activity android:name=".MainActivity" android:exported="false" />
+        <activity android:name=".LibraryActivity" android:exported="true" android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SettingsActivity" android:exported="false" />
+        <activity android:name=".OnboardingActivity" android:exported="false" />
+    </application>
+</manifest>

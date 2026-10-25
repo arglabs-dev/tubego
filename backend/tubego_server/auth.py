@@ -1,0 +1,71 @@
+"""Shared authentication primitives. Session issuance belongs to PLA-229."""
+from contextlib import closing
+from datetime import datetime, timezone
+import hashlib
+import hmac
+import secrets
+from fastapi import Request, HTTPException
+
+
+def utcnow():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def token_hash(token):
+    return hashlib.sha256(token.encode()).hexdigest()
+
+
+def hash_password(password):
+    salt = secrets.token_bytes(16)
+    digest = hashlib.scrypt(password.encode(), salt=salt, n=16384, r=8, p=1).hex()
+    return f"scrypt$16384$8$1${salt.hex()}${digest}"
+
+
+def verify_password(password, encoded):
+    try:
+        kind, n, r, p, salt, digest = encoded.split("$")
+        if kind != "scrypt" or (n, r, p) != ("16384", "8", "1"):
+            return False
+        actual = hashlib.scrypt(password.encode(), salt=bytes.fromhex(salt), n=16384, r=8, p=1).hex()
+        return hmac.compare_digest(actual, digest)
+    except (ValueError, TypeError):
+        return False
+
+
+def get_principal(request: Request):
+    header = request.headers.get("Authorization", "")
+    if not header.startswith("Bearer ") or len(header) > 512:
+        raise HTTPException(401, "Authentication required")
+    with closing(request.app.state.db.connect()) as conn:
+        row = conn.execute("""SELECT u.*, s.id AS session_id, s.device_id, s.revoked_at AS session_revoked,
+            s.expires_at AS session_expires, d.revoked_at AS device_revoked, d.user_id AS device_owner FROM users u
+            JOIN sessions s ON u.id=s.user_id LEFT JOIN devices d ON d.id=s.device_id
+            WHERE s.token_hash=?""", (token_hash(header[7:]),)).fetchone()
+    if row is None:
+        raise HTTPException(401, {"code":"invalid_session"})
+    if row["status"] in ("blocked", "rejected", "deleted"):
+        raise HTTPException(403, {"code":"account_unavailable", "wipe_local":True})
+    if row["device_id"] is not None and row["device_owner"] != row["id"]:
+        raise HTTPException(401, {"code":"invalid_session"})
+    if row["session_revoked"] or row["device_revoked"]:
+        raise HTTPException(401, {"code":"session_revoked", "wipe_local":True})
+    if row["session_expires"] <= utcnow():
+        raise HTTPException(401, {"code":"session_expired"})
+    if row["device_id"] is not None:
+        with request.app.state.db.transaction() as conn:
+            conn.execute("UPDATE devices SET last_seen_at=? WHERE id=? AND user_id=?",(utcnow(),row["device_id"],row["id"]))
+    return dict(row)
+
+
+def require_approved(request: Request):
+    principal = get_principal(request)
+    if principal["status"] != "approved" or not principal["email_verified_at"]:
+        raise HTTPException(403, "Email verification and approval required")
+    return principal
+
+
+def require_admin(request: Request):
+    principal = require_approved(request)
+    if principal["role"] != "admin":
+        raise HTTPException(403, "Administrator required")
+    return principal
