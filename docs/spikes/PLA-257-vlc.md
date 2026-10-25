@@ -63,7 +63,19 @@ java -jar /tmp/pla257-ecj.jar -1.8 -bootclasspath "$ANDROID_JAR" -d /tmp/pla257-
 
 SDK de compilación: `https://dl.google.com/android/repository/platform-35_r02.zip`, SHA-256 `0988cacad01b38a18a47bac14a0695f246bc76c1b06c0eeb8eb0dc825ab0c8e0`.
 
-Estos tests verifican retroceso, límites, ausencia de datos y resultados inválidos; no prueban Android ni VLC. No se ejecutaron pruebas de dispositivo o emulador en esta sesión. No hay evidencia de APK instalada, retorno real de posición, PiP ni pantalla bloqueada.
+Estos tests verifican retroceso, límites, ausencia de datos y resultados inválidos; no prueban por sí solos Android ni VLC.
+
+## Evidencia de dispositivo (2026-10-24)
+
+Dispositivo físico `DN2103`, Android 13 / API 33; TubeGo `0.5.9` (código 15); VLC `3.7.1` (código 13070109). Se ejecutó `VlcIntegrationInstrumentedTest` contra el fixture local `vlc_sample.mp4`; no se usó backend. El hash/origen de la APK instalada de VLC no quedó registrado y cada variante se ejecutó una vez.
+
+* Con la preferencia inicial de VLC **Detener**, ambas pruebas fallaron al salir a Home: VLC dejó de estar en estado `PLAYING`. Esto confirma que TubeGo no puede garantizar que VLC continúe si VLC está configurado para detenerse al cambiar de app.
+* Con **Superposición en miniatura (PIP)**, `testVlcReadsVerifiedLocalClipWithoutBackend` pasó: VLC leyó el URI privado y mantuvo la reproducción en PiP.
+* Con **Reproducir en segundo plano**, `testVlcVideoAudioWithScreenOff` pasó: VLC mantuvo su estado de reproducción al ir a Home y apagar la pantalla.
+
+La configuración original era **Detener**. La prueba dejó el dispositivo en pantalla de bloqueo al apagar la pantalla, así que no pude devolver la preferencia a su valor original sin desbloquearlo. Para restaurarla, abre VLC > Preferencias > Vídeo > Modo fondo o superposición (PIP) y selecciona **Detener**. El test-package ya no aparece instalado.
+
+Esto valida el acceso al archivo local, PiP y reproducción de fondo según la preferencia de VLC. No mide la pausa periódica reportada, no valida el retorno de `extra_position`/`extra_duration`, ni cubre Maps, reproducción durante varios minutos, cierre forzado o repetición tres veces. PLA-257 sigue abierto.
 
 ## Matriz pendiente para cerrar PLA-257
 
@@ -74,8 +86,8 @@ Probar al menos un dispositivo físico y un emulador Android soportados por el M
 | VLC cerrado y ya abierto | URI privada legible; no resultado cancelado inmediato por singleTask | Pendiente |
 | Pausar en 15:32 y salir normal | Callback, tipos Long, duración correcta, posición ±2 s | Pendiente |
 | Reabrir en 15:22 y retroceso cerca de cero | Seek aplicado, sin diálogo/conflicto de resume de VLC | Pendiente |
-| Home/Maps y PiP | Video continúa, permisos explicados, callback y tiempo registrados | Pendiente |
-| Pantalla bloqueada/modo audio | Audio continúa; verificar checkpoint al volver y al terminar | Pendiente |
+| Home/Maps y PiP | Video continúa, permisos explicados, callback y tiempo registrados | PiP validado 1 vez con preferencia VLC; Maps y callback pendientes |
+| Pantalla bloqueada/modo audio | Audio continúa; verificar checkpoint al volver y al terminar | Pantalla apagada validada 1 vez con reproducción de fondo; checkpoint pendiente |
 | Quitar de recientes y force-stop VLC | Sin promesa de callback; historial previo conservado | Pendiente |
 | Matar/recrear Tubego durante VLC | Asociación correcta de recurso, sin cruce de cuenta | Pendiente |
 | VLC ausente, permiso revocado, archivo borrado | Error recuperable, sin borrar historial ni usar streaming | Pendiente |
