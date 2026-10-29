@@ -6,6 +6,8 @@ public final class MediaFailureText {
     public static String source(String code) {
         if (code == null) code = "";
         return switch (code) {
+            case "audio_track_unavailable" -> "La pista de audio elegida ya no está disponible. Elige Original u otra pista.";
+            case "audio_verification_failed" -> "No se pudo verificar el audio del archivo. Reintenta o elige otra pista.";
             case "invalid_url" -> "Usa un único enlace HTTP o HTTPS público válido.";
             case "unsupported", "unsupported_url" -> "La plataforma o colección de este enlace no es compatible.";
             case "private", "authentication_required" -> "El contenido es privado o requiere iniciar sesión en la plataforma. Tubego no admite credenciales ni cookies de esa fuente.";
@@ -22,7 +24,7 @@ public final class MediaFailureText {
     public static boolean known(String code) {
         if (code == null) return false;
         return switch (code) {
-            case "invalid_url", "unsupported", "unsupported_url", "private", "authentication_required", "unavailable", "source_restricted", "format_unavailable", "temporary_failure", "temporary_network_failure", "network_error", "download_timeout", "download_failed_transient", "integrity_mismatch", "checksum_mismatch", "size_mismatch", "resource_unavailable", "file_missing", "conversion_failed" -> true;
+            case "audio_track_unavailable", "audio_verification_failed", "invalid_url", "unsupported", "unsupported_url", "private", "authentication_required", "unavailable", "source_restricted", "format_unavailable", "temporary_failure", "temporary_network_failure", "network_error", "download_timeout", "download_failed_transient", "integrity_mismatch", "checksum_mismatch", "size_mismatch", "resource_unavailable", "file_missing", "conversion_failed" -> true;
             default -> false;
         };
     }

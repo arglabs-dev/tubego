@@ -23,6 +23,7 @@ public final class MediaInfoClient {
     public static final class Info {
         public final String url, title, sourceId, extractor, thumbnailBase64;
         public final Double durationSeconds;
+        public final java.util.List<AudioTrack> audioTracks = new java.util.ArrayList<>();
 
         private Info(String url, String title, String sourceId, String extractor, Double duration, String thumbnail) {
             this.url = url;
@@ -35,8 +36,15 @@ public final class MediaInfoClient {
 
         public static Info fromJson(JSONObject json) throws Exception {
             Double duration = json.isNull("duration_seconds") ? null : json.getDouble("duration_seconds");
-            return new Info(json.getString("url"), optional(json, "title"),
+            Info info = new Info(json.getString("url"), optional(json, "title"),
                     optional(json, "source_id"), optional(json, "extractor"), duration, optional(json,"thumbnail_base64"));
+            org.json.JSONArray tracks = json.optJSONArray("audio_tracks");
+            if (tracks != null) for (int n=0;n<tracks.length();n++) {
+                JSONObject track=tracks.getJSONObject(n);
+                try { info.audioTracks.add(new AudioTrack(track.getString("id"),track.getString("language"),track.getString("kind"))); }
+                catch (IllegalArgumentException invalid) { /* Unknown future choices are not offered. */ }
+            }
+            return info;
         }
 
         private static String optional(JSONObject json, String key) {

@@ -71,3 +71,11 @@ filtra antes de paginar; omitirlo incluye todo y `category=` selecciona los recu
 sin categoría. `GET /api/v1/resources/{id}` conserva la misma categoría incluso
 cuando se elimina el archivo del servidor. Se utiliza el almacenamiento existente
 de metadatos privados, sin migración de esquema.
+
+## Elegir pista de audio
+
+La hoja **Agregar enlace** incluye **Pista de audio: Original**. Al analizar un
+video se ofrecen únicamente los idiomas que la fuente expone, con variantes
+regionales y señales de doblaje cuando existan. La selección se conserva también
+para Solo audio y al reenviar la cola después de una desconexión. Consulta
+[el contrato, los límites y las pruebas de pistas de audio](AUDIO_TRACKS.md).

@@ -47,7 +47,16 @@ class Handler(BaseHTTPRequestHandler):
         self.respond(value)
     def respond(self,value,status=200):
         body=json.dumps(value).encode();self.send_response(status);self.send_header('Content-Type','application/json');self.send_header('Content-Length',str(len(body)));self.end_headers();self.wfile.write(body)
-    def do_POST(self): self.respond({'detail':{'code':'read_only_visual_fixture'}},405)
+    def do_POST(self):
+        if self.command == 'POST' and urlparse(self.path).path == '/api/v1/media/analyze':
+            body=json.loads(self.rfile.read(min(int(self.headers.get('Content-Length','0')),16384)))
+            url=body.get('url','')
+            tracks=[dict(id='en~original',language='en',kind='original')]
+            if 'no-spanish' not in url:
+                tracks += [dict(id='es-es~dubbed',language='es-es',kind='dubbed'),dict(id='es-419~auto',language='es-419',kind='auto')]
+            self.respond(dict(url=url,title='Video con idiomas',duration_seconds=20,source_id='audio-fixture',extractor='Fixture',audio_tracks=tracks))
+            return
+        self.respond({'detail':{'code':'read_only_visual_fixture'}},405)
     do_PUT=do_POST
     do_DELETE=do_POST
     def log_message(self,*args): pass

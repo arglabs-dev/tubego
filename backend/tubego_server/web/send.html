@@ -15,6 +15,8 @@
 <section><h2>Enviar un video</h2><p id="devices"></p>
 <form id="sendForm"><label for="url">Enlace del video</label><input id="url" type="url" placeholder="https://…" required maxlength="4096">
 <label for="quality">Calidad</label><select id="quality"><option value="480">480p</option><option value="720" selected>720p</option><option value="1080">1080p</option><option value="best">Mejor disponible</option><option value="audio">Solo audio</option></select>
+<label for="audioTrack">Pista de audio</label><select id="audioTrack"><option value="original">Original</option></select>
+<button type="button" id="analyzeAudio">Consultar pistas disponibles</button><p id="audioNotice" class="muted">Las pistas dependen de la fuente. Los subtítulos no son audio.</p>
 <button id="sendButton">Enviar a mis teléfonos</button></form>
 <p class="muted">Se enviará a los dispositivos vinculados a tu cuenta. Si el teléfono está desconectado, esperará a que vuelva a conectarse. Android y tus ajustes de Wi-Fi pueden demorar la descarga.</p></section>
 <section><h2>Estado de descargas</h2><button id="refresh">Actualizar estado</button><ul id="tasks"></ul><ul id="deliveries"></ul></section>
@@ -23,10 +25,10 @@
 <script nonce="CSP_NONCE">
 'use strict';
 const el=id=>document.getElementById(id);
-let token=null, pending=null, timer=null;
+let token=null, pending=null, timer=null, audioVersion=0, audioTimer=null;
 const states={queued:'En cola',running:'Preparando video',paused:'En pausa',completed:'Listo en el servidor',failed:'Error al preparar',cancelled:'Cancelado',pending:'Pendiente de descarga',complete:'Descargado en el teléfono',approval_required:'Requiere confirmación en el teléfono',device_revoked:'Dispositivo desvinculado'};
 function notice(text){el('notice').textContent=text;}
-function clearSession(){token=null;pending=null;clearInterval(timer);el('account').hidden=true;el('loginPanel').hidden=false;el('tasks').replaceChildren();el('deliveries').replaceChildren();}
+function clearSession(){audioVersion++;clearTimeout(audioTimer);resetAudio();token=null;pending=null;clearInterval(timer);el('account').hidden=true;el('loginPanel').hidden=false;el('tasks').replaceChildren();el('deliveries').replaceChildren();}
 async function api(path,body){
  const response=await fetch('/api/v1/'+path,{method:body===undefined?'GET':'POST',headers:{'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{})},...(body===undefined?{}:{body:JSON.stringify(body)}),cache:'no-store',credentials:'omit',redirect:'error'});
  const data=await response.json();
@@ -39,12 +41,33 @@ async function refresh(){
  el('devices').textContent=delivery.devices.length?'Dispositivos vinculados: '+delivery.devices.map(d=>d.name).join(', '):'Primero inicia sesión en TubeGo desde tu teléfono para vincularlo.';
  el('sendButton').disabled=!delivery.devices.length;
  el('tasks').replaceChildren();el('deliveries').replaceChildren();
- for(const t of delivery.tasks)addItem(el('tasks'),(t.title||t.source_url)+' · '+(states[t.status]||t.status)+' · '+Math.round((t.progress||0)*100)+'%'+(t.error_message?' · '+t.error_message:''));
+ for(const t of delivery.tasks)addItem(el('tasks'),(t.title||t.source_url)+' · '+(states[t.status]||t.status)+' · '+Math.round((t.progress||0)*100)+'%'+(t.audio_track&&t.audio_track!=='original'?' · Audio: '+t.audio_track.split('~')[0]:'')+(t.error_message?' · '+t.error_message:''));
  for(const d of delivery.items)addItem(el('deliveries'),(d.title||d.source_url)+' → '+d.device_name+': '+(states[d.status]||d.status));
  if(!delivery.tasks.length)addItem(el('tasks'),'Aún no hay solicitudes.');
 }
 el('loginForm').onsubmit=async event=>{event.preventDefault();const button=event.submitter;button.disabled=true;try{const data=await api('web/login',{email:el('email').value,password:el('password').value});token=data.token;el('loginPanel').hidden=true;el('account').hidden=false;notice('Sesión iniciada.');await refresh();timer=setInterval(()=>refresh().catch(e=>notice(e.message)),15000);}catch(e){notice(e.message);}finally{el('password').value='';button.disabled=false;}};
-el('sendForm').onsubmit=async event=>{event.preventDefault();el('sendButton').disabled=true;const input={url:el('url').value.trim(),selection:el('quality').value};if(!pending||pending.url!==input.url||pending.selection!==input.selection)pending={...input,request_id:crypto.randomUUID()};try{const result=await api('resources',pending);pending=null;notice(result.existing?'Este enlace ya está en tu biblioteca. Consulta su estado en la app.':'Enlace recibido. La descarga en el teléfono se completará cuando esté disponible.');el('url').value='';await refresh();}catch(e){notice(e.message);}finally{if(token)el('sendButton').disabled=false;}};
+el('sendForm').onsubmit=async event=>{event.preventDefault();el('sendButton').disabled=true;const input={url:el('url').value.trim(),selection:el('quality').value,audio_track:el('audioTrack').value};if(!pending||pending.url!==input.url||pending.selection!==input.selection||pending.audio_track!==input.audio_track)pending={...input,request_id:crypto.randomUUID()};try{const result=await api('resources',pending);pending=null;notice(result.existing?'Este enlace ya está en tu biblioteca. Consulta su estado en la app.':'Enlace recibido. La descarga en el teléfono se completará cuando esté disponible.');el('url').value='';audioVersion++;resetAudio();await refresh();}catch(e){notice(e.message);}finally{if(token)el('sendButton').disabled=false;}};
+function resetAudio(){el('audioTrack').replaceChildren(new Option('Original','original'));el('audioNotice').textContent='Las pistas dependen de la fuente. Los subtítulos no son audio.';}
+async function analyzeAudio(){
+ const url=el('url').value.trim(),version=++audioVersion,owner=token;
+ if(!url||!owner)return;
+ el('audioNotice').textContent='Consultando pistas…';
+ try{
+  const info=await api('media/analyze',{url});if(version!==audioVersion||owner!==token||url!==el('url').value.trim())return;
+  const previous=el('audioTrack').value;resetAudio();let spanish=false;
+  const kinds={original:'Original',auto:'Doblaje automático',dubbed:'Doblaje',unknown:'Procedencia no indicada'};
+  for(const track of info.audio_tracks||[]){
+   if(track.language==='es'||track.language.startsWith('es-'))spanish=true;
+   el('audioTrack').add(new Option(track.language+' · '+(kinds[track.kind]||kinds.unknown),track.id));
+  }
+  const missing=previous!=='original'&&![...el('audioTrack').options].some(option=>option.value===previous);
+  if(missing)el('audioTrack').add(new Option('Pista ya no disponible · '+previous.split('~')[0],previous));
+  el('audioTrack').value=previous;
+  el('audioNotice').textContent=missing?'La pista elegida ya no aparece. Elige Original u otra pista; no se sustituirá automáticamente.':spanish?'Elige la pista antes de enviar. También se aplica a solo audio.':'La fuente no expone audio en español. Puedes elegir Original o cancelar el envío.';
+ }catch(e){if(version===audioVersion)el('audioNotice').textContent=e.message+' Puedes continuar con Original.';}
+}
+el('url').oninput=()=>{audioVersion++;resetAudio();clearTimeout(audioTimer);audioTimer=setTimeout(analyzeAudio,700);};
+el('analyzeAudio').onclick=analyzeAudio;
 el('refresh').onclick=()=>refresh().catch(e=>notice(e.message));
 el('logout').onclick=async()=>{try{await api('web/logout',{});clearSession();notice('Sesión web cerrada. Tus teléfonos siguen conectados.');}catch(e){notice(e.message);}};
 window.addEventListener('pagehide',clearSession);

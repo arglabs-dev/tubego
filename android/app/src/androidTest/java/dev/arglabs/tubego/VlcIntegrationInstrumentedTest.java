@@ -8,7 +8,12 @@ import java.io.*;import java.nio.file.Files;import java.security.MessageDigest;
 public final class VlcIntegrationInstrumentedTest extends InstrumentationTestCase {
  public void testVlcReadsVerifiedLocalClipWithoutBackend() throws Exception { runVlc(true); }
  public void testVlcVideoAudioWithScreenOff() throws Exception { runVlc(false); }
- private void runVlc(boolean pip) throws Exception {
+ public void testChosenSourceAudioFilePlaysOfflineInVlc() throws Exception {
+  if(((android.test.InstrumentationTestRunner)getInstrumentation()).getArguments().getString("audioClip")==null){android.util.Log.i("TubegoAudioVlc","SKIP: supply -e audioClip with a source-verified local file");return;}
+  runVlc(false,false);
+ }
+ private void runVlc(boolean pip) throws Exception {runVlc(pip,true);}
+ private void runVlc(boolean pip,boolean background) throws Exception {
   Context app=getInstrumentation().getTargetContext();Context test=getInstrumentation().getContext();
   String origin="https://vlc-offline.example.invalid",user="11111111-1111-4111-8111-111111111111",device="22222222-2222-4222-8222-222222222222",id="33333333-3333-4333-8333-333333333333";
   SessionStore store=new SessionStore(app,origin);File root=LocalLibraryStorage.root(app,origin,user,device);
@@ -16,7 +21,10 @@ public final class VlcIntegrationInstrumentedTest extends InstrumentationTestCas
   try {
    store.save(new JSONObject().put("token","vlc-test-only-session").put("status","approved").put("user_id",user).put("device_id",device));
    root.mkdirs();int raw=test.getResources().getIdentifier("vlc_sample","raw",test.getPackageName());assertTrue(raw!=0);
-   byte[] bytes;try(InputStream input=test.getResources().openRawResource(raw)){bytes=read(input);}
+   String clip=((android.test.InstrumentationTestRunner)getInstrumentation()).getArguments().getString("audioClip");
+   byte[] bytes;
+   if(clip!=null)bytes=Files.readAllBytes(new File(clip).toPath());
+   else try(InputStream input=test.getResources().openRawResource(raw)){bytes=read(input);}
    StringBuilder hash=new StringBuilder();for(byte b:MessageDigest.getInstance("SHA-256").digest(bytes))hash.append(String.format(java.util.Locale.ROOT,"%02x",b&255));
    TransferRecord record=new TransferRecord(root,id,hash.toString(),bytes.length,"Tubego offline VLC test","");record.state="complete";record.mediaFormat="video";Files.write(record.media().toPath(),bytes);record.save();
    Uri uri=PrivateMediaContentProvider.create(app,origin,id);
@@ -25,6 +33,7 @@ public final class VlcIntegrationInstrumentedTest extends InstrumentationTestCas
    boolean playing=false;long until=System.currentTimeMillis()+15000;
    while(System.currentTimeMillis()<until){if(playing()){playing=true;break;}Thread.sleep(250);}
    assertTrue("VLC did not enter playback of the granted local clip",playing);
+   if(!background){Thread.sleep(2000);assertTrue("The selected source audio/video stopped during offline playback",playing());return;}
    Thread.sleep(2000);shell("input keyevent 3");Thread.sleep(2000);
    until=System.currentTimeMillis()+10000;while(!playing() && System.currentTimeMillis()<until)Thread.sleep(250);
    assertTrue("VLC stopped on leaving its activity; set its Background/PiP preference",playing());

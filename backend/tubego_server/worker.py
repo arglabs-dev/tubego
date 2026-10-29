@@ -259,6 +259,12 @@ class Worker:
             self._check(task)
             if not isinstance(info,dict) or 'entries' in info or info.get('_type') in ('playlist','multi_video'):
                 raise MediaError('unsupported')
+            from tubego_server.audio_tracks import resolve, restrict, verify_output
+            with closing(self.database.connect()) as conn:
+                from tubego_server.tasks import resource_audio
+                requested_audio = resource_audio(conn,rid)
+            resolved_audio = resolve(info, requested_audio)
+            restrict(info, resolved_audio)
             from tubego_server.thumbnails import preview
             thumbnail = preview(info)
             # Finalized metadata and local file remain separate from publication.
@@ -279,6 +285,12 @@ class Worker:
         self._check(task)
         self._storage_check(task)
         output=verified_output_path(final_info,directory)
+        if resolved_audio:
+            self._storage_check(task,output.stat().st_size)
+            effective_audio=verify_output(final_info,output,resolved_audio,selection,lambda:self._check(task))
+            with self.database.transaction() as conn:
+                self._check(task,conn)
+                put_setting(conn,'resource',rid,'audio_resolved',effective_audio)
         # File has been finalized by yt-dlp/FFmpeg. Publish only after a transaction
         # check of both cancellation and lease, including the expensive digest race.
         publish_ready(self.database,root,rid,str(output),

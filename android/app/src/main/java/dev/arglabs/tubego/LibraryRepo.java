@@ -116,6 +116,7 @@ final class LibraryRepo {
                 item.outboxState = entry.state;
                 item.sourceUrl = entry.url;
                 item.selection = entry.selection;
+                item.audioTrack = entry.audioTrack;
                 item.mediaFormat = "audio".equals(entry.selection) ? "audio" : "video";
                 item.title = hostOf(entry.url) + shortPath(entry.url);
                 item.host = hostOf(entry.url);
@@ -131,6 +132,13 @@ final class LibraryRepo {
                                DownloadPermissions permissions, DownloadPolicy.NetworkState network) {
         Item item = new Item();
         item.id = row.optString("id");
+        item.audioTrack = row.optString("audio_track", "original");
+        JSONObject resolved = row.optJSONObject("audio_resolved");
+        if (resolved != null) {
+            item.audioLanguage = resolved.optString("language", "");
+            item.audioKind = resolved.optString("kind", "");
+            item.audioVerified = resolved.optBoolean("verified", false);
+        }
         item.category = row.isNull("category") ? "" : row.optString("category", "");
         item.title = row.isNull("title") ? "" : row.optString("title", "");
         item.thumbnailKey = root.getAbsolutePath()+"/"+row.optString("id");

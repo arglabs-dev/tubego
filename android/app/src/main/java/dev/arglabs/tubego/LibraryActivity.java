@@ -472,6 +472,11 @@ public final class LibraryActivity extends DsActivity implements Host {
             categoryText.setEllipsize(android.text.TextUtils.TruncateAt.END);
             Ds.add(col, categoryText, 2);
         }
+        if (!i.audioTrack.equals("original") || !i.audioLanguage.isEmpty()) {
+            String audioLabel = i.audioLanguage.isEmpty() ? i.audioTrack.split("~")[0] : i.audioLanguage;
+            TextView track = Ds.text(this, t("Audio") + " · " + audioLabel + (i.audioVerified ? " · " + t("Verificado") : ""), 13, Ds.MUTED, 600);
+            Ds.add(col, track, 2);
+        }
         Ds.add(col, Ds.badge(this, ItemFlows.stateLabel(this, i), ItemFlows.tone(i)),
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0, 6, 0, 0);
         int pct = i.state == ItemState.SAVING ? i.phonePercent() : i.state == ItemState.PREPARING ? i.serverPercent() : -1;

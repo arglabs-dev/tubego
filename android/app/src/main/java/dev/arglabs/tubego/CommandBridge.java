@@ -9,7 +9,7 @@ public final class CommandBridge {
  public static boolean production(File dir){return Arrays.asList("outbox","recovery-outbox","deletion-outbox","server-cleanup-outbox").contains(dir.getName());}
  public static String quote(String value){StringBuilder out=new StringBuilder("\"");for(char c:value.toCharArray())switch(c){case '"':out.append("\\\"");break;case '\\':out.append("\\\\");break;case '\n':out.append("\\n");break;case '\r':out.append("\\r");break;case '\t':out.append("\\t");break;default:if(c<32)out.append(String.format(java.util.Locale.ROOT,"\\u%04x",(int)c));else out.append(c);}return out.append('"').toString();}
  public static String payload(String kind,Properties p){
-  if(kind.equals("submit"))return "{\"url\":"+quote(p.getProperty("url"))+",\"selection\":"+quote(p.getProperty("selection"))+"}";
+  if(kind.equals("submit"))return "{\"url\":"+quote(p.getProperty("url"))+",\"selection\":"+quote(p.getProperty("selection"))+(p.getProperty("audio_track","original").equals("original")?"":",\"audio_track\":"+quote(AudioTrack.validate(p.getProperty("audio_track"))))+"}";
   if(kind.equals("server_cleanup"))return "{\"scope\":"+quote(p.getProperty("scope"))+",\"confirmed\":true}";
   return "{\"resource_id\":"+quote(p.getProperty("resource"))+","+(kind.equals("recover")?"\"approve_redownload\":"+p.getProperty("scope").equals("approved"):"\"scope\":"+quote(p.getProperty("scope")))+"}";
  }

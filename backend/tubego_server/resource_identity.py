@@ -21,7 +21,9 @@ def identity(url):
     return 'youtube:'+video if video else 'url:'+url
 
 def key(value,fields):
-    return hashlib.sha256((value+'\n'+fields['media_format']+'\n'+fields['quality']).encode()).hexdigest()
+    audio=fields.get('audio_track','original')
+    suffix='' if audio=='original' else '\n'+audio
+    return hashlib.sha256((value+'\n'+fields['media_format']+'\n'+fields['quality']+suffix).encode()).hexdigest()
 
 def alias_key(url):return 'source_identity:'+hashlib.sha256(url.encode()).hexdigest()
 

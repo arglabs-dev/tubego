@@ -36,3 +36,9 @@ Guarda capturas `Library-categories-*.png` en la misma carpeta de vistas previas
 Ejecutarla también con `font_scale=1.3` y en una pantalla estrecha. Conceder el
 permiso de notificaciones al APK de ejemplo antes de capturar para evitar diálogos
 del sistema durante la prueba.
+
+La regresión `AudioTrackInstrumentedTest` usa el POST de análisis de metadatos
+sintéticos (sin mutaciones) para probar pistas `es-es` y `es-419`, doblaje, Solo
+audio, persistencia de la cola y cancelación cuando no existe español. Guarda la
+captura `ui-audio-tracks/audio-track-choices.png`. La comprobación opcional del
+archivo real en VLC y las URLs verificadas están en `docs/AUDIO_TRACKS.md`.

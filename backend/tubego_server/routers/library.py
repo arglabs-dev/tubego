@@ -13,6 +13,7 @@ from tubego_server.tasks import live_scope
 from tubego_server.scheduler import put_setting
 from tubego_server.auth import require_approved
 from tubego_server.ownership import LibraryScope
+from tubego_server.audio_tracks import AudioChoice
 from tubego_server.categories import SQL as CATEGORY_SQL, available as available_categories
 
 router = APIRouter(prefix='/resources', tags=['private library'])
@@ -124,3 +125,39 @@ def thumbnail(resource_id: str, request: Request, principal=Depends(require_appr
         raise HTTPException(404, 'Preview unavailable')
     return Response(json.dumps({'thumbnail_base64': encoded}), media_type='application/json', headers={
         'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff'})
+
+
+class AudioTrackRequest(BaseModel):
+    audio_track: AudioChoice
+    request_id: UUID
+
+
+@router.post('/{resource_id}/audio-track')
+def change_audio_track(resource_id:str, body:AudioTrackRequest, request:Request, principal=Depends(require_approved)):
+    from tubego_server.delivery import read_setting, write_setting
+    from tubego_server.tasks import resource_audio
+    from tubego_server.resource_identity import known, key as identity_key
+    from tubego_server.auth import utcnow
+    with request.app.state.db.transaction() as conn:
+        scope=live_scope(conn,principal); resource=scope.resource(resource_id)
+        receipt_key='audio_choice:'+str(body.request_id)
+        previous=read_setting(conn,'user',scope.user_id,receipt_key)
+        if previous:
+            if previous['resource_id']!=resource_id or previous['audio_track']!=body.audio_track:
+                raise HTTPException(409,'Request identifier already used')
+            return previous
+        task=conn.execute('SELECT * FROM tasks WHERE resource_id=? ORDER BY created_at DESC,id DESC LIMIT 1',(resource_id,)).fetchone()
+        if not task or task['status']!='queued' or task['attempts']!=0 or resource['ready_at']:
+            raise HTTPException(409,{'code':'audio_choice_locked','message':'Processing already started. Add a new request to choose another audio track.'})
+        identity=known(conn,scope.user_id,resource['source_url'])
+        for other in conn.execute('SELECT * FROM resources WHERE user_id=? AND media_format=? AND quality=? AND id<>?',
+                (scope.user_id,resource['media_format'],resource['quality'],resource_id)):
+            if resource_audio(conn,other['id'])==body.audio_track and known(conn,scope.user_id,other['source_url'])==identity:
+                raise HTTPException(409,{'code':'audio_variant_exists','message':'This audio variant is already in your library.'})
+        fields=dict(resource)|{'audio_track':body.audio_track}
+        conn.execute('UPDATE resources SET source_key=?,updated_at=? WHERE id=?',(identity_key(identity,fields),utcnow(),resource_id))
+        write_setting(conn,'resource',resource_id,'audio_track',body.audio_track)
+        result={'resource_id':resource_id,'audio_track':body.audio_track}
+        write_setting(conn,'user',scope.user_id,receipt_key,result)
+        conn.execute("INSERT INTO events(user_id,kind,payload_json,created_at) VALUES(?,'resource.audio_changed',?,?)",(scope.user_id,json.dumps(result),utcnow()))
+        return result
