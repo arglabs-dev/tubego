@@ -13,6 +13,7 @@ from tubego_server.tasks import live_scope
 from tubego_server.scheduler import put_setting
 from tubego_server.auth import require_approved
 from tubego_server.ownership import LibraryScope
+from tubego_server.categories import SQL as CATEGORY_SQL, available as available_categories
 
 router = APIRouter(prefix='/resources', tags=['private library'])
 # Filesystem paths, user IDs and internal error payloads are deliberately omitted.
@@ -38,9 +39,13 @@ def decode_cursor(value):
 def resources(request: Request, principal=Depends(require_approved),
               limit: int=Query(50,ge=1,le=100), cursor: str=Query('',max_length=1024),
               search: str=Query('',max_length=200),
+              category: str | None=Query(None,max_length=80),
               status: Literal['ready','processing','failed','deleted','downloaded','pending','error','unavailable'] | None=None,
               order: Literal['oldest','newest']='oldest'):
     clauses=['r.user_id=?']; parameters=[principal['id']]
+    if category is not None:
+        clauses.append(CATEGORY_SQL+'=?')
+        parameters.append(category)
     if cursor:
         created, key=decode_cursor(cursor)
         operator='>' if order=='oldest' else '<'
@@ -67,8 +72,9 @@ def resources(request: Request, principal=Depends(require_approved),
         direction='ASC' if order=='oldest' else 'DESC'
         rows=conn.execute('SELECT r.* FROM resources r WHERE '+' AND '.join(clauses)+f' ORDER BY r.created_at {direction},r.id {direction} LIMIT ?',(*parameters,limit+1)).fetchall()
         items=[public_resource(row) | enrich(conn,row,principal.get('device_id')) for row in rows[:limit]]
+        categories=available_categories(conn,principal['id'])
     next_cursor=base64.urlsafe_b64encode(json.dumps([items[-1]['created_at'],items[-1]['id']]).encode()).decode() if len(rows)>limit else None
-    return Response(json.dumps({'items':items,'next_cursor':next_cursor}),media_type='application/json',headers={'Cache-Control':'no-store'})
+    return Response(json.dumps({'items':items,'next_cursor':next_cursor,'categories':categories}),media_type='application/json',headers={'Cache-Control':'no-store'})
 
 
 @router.get('/{resource_id}')

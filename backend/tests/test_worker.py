@@ -88,6 +88,8 @@ def test_real_worker_download_publish_and_authenticated_range(service,monkeypatc
         with app.state.db.transaction() as conn:
             resource=conn.execute('SELECT * FROM resources WHERE id=?',(rid,)).fetchone()
             assert resource['title']=='lecture' and resource['size_bytes']==4
+            from tubego_server.history import value
+            assert value(conn,rid,'category')==''
             assert conn.execute('SELECT status FROM deliveries WHERE resource_id=? AND device_id=?',(rid,device)).fetchone()[0]=='pending'
         # Private media is served through the API, never as a public path.
         response=client.get(f'/api/v1/resources/{rid}/download',headers={**headers,'Range':'bytes=1-2'})

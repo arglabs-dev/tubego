@@ -9,6 +9,7 @@
   <string name="ui_012cd2dcb6df" formatted="false">"No se pudo ejecutar. Revisa permisos y conexión."</string>
   <string name="ui_0192c60a386c" formatted="false">"El idioma se guarda en tu cuenta y se sincroniza con tus dispositivos."</string>
   <string name="ui_01a652a19fd7" formatted="false">"\nLimpieza del servidor pendiente"</string>
+  <string name="ui_0208294ea49a" formatted="false">"Sin categoría"</string>
   <string name="ui_020d2b924c4f" formatted="false">"Preguntar calidad o audio para cada enlace"</string>
   <string name="ui_02511d8c7ef1" formatted="false">"Usa entre 12 y 128 caracteres."</string>
   <string name="ui_038413907b57" formatted="false">"No se pudo guardar la solicitud. Revisa sesión y almacenamiento."</string>
@@ -215,6 +216,7 @@
   <string name="ui_41d8694e4363" formatted="false">"Volver a solicitar archivo"</string>
   <string name="ui_42186204bb7d" formatted="false">"Falló la verificación del archivo. Reintenta la descarga."</string>
   <string name="ui_422eb9f12e66" formatted="false">"¿Autorizar "</string>
+  <string name="ui_425a839def0b" formatted="false">"Todas las categorías"</string>
   <string name="ui_426234e72a5b" formatted="false">"Detalle"</string>
   <string name="ui_42719229fd62" formatted="false">"Alta"</string>
   <string name="ui_427935ef480a" formatted="false">"Este enlace no es válido. Pega un solo enlace que empiece con http o https."</string>
@@ -274,6 +276,7 @@
   <string name="ui_5511a8083de4" formatted="false">"Tu cuenta, tus dispositivos y tu forma de descargar."</string>
   <string name="ui_55120f5b2678" formatted="false">"Espacio del servidor"</string>
   <string name="ui_55459b662cd6" formatted="false">"La fuente no informó la resolución. La calidad mostrada es la solicitada; no se ha confirmado la resolución del archivo."</string>
+  <string name="ui_558bb20a82ed" formatted="false">"Categoría"</string>
   <string name="ui_5598f435410f" formatted="false">"Puedes elegir la calidad cada vez o usar una opción predeterminada."</string>
   <string name="ui_55e1f816f8cc" formatted="false">"Inicia sesión con una cuenta aprobada para consultar tu biblioteca."</string>
   <string name="ui_55e51b6a21eb" formatted="false">" Mbps (5 MB)"</string>

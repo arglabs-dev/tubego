@@ -10,12 +10,12 @@ import json
 from pathlib import Path
 import ssl
 import subprocess
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 
 RESOURCE = dict(id='33333333-3333-4333-8333-333333333333', title='Ideas para aprender algo nuevo',
                 source_url='https://video.example.invalid/ideas', media_format='video', quality='720',
                 created_at='2026-10-12T08:00:00Z', server_available=True, duration_seconds=180,
-                size_bytes=18000000, latest_task=dict(id='44444444-4444-4444-8444-444444444444',
+                size_bytes=18000000, category='Education', latest_task=dict(id='44444444-4444-4444-8444-444444444444',
                 status='completed', progress=1, phase='ready'))
 USER = dict(id='11111111-1111-4111-8111-111111111111', email='persona@example.invalid',
             role='user', status='approved', level='normal', preserve_server_files=False)
@@ -33,7 +33,10 @@ class Handler(BaseHTTPRequestHandler):
         elif path == '/health': value = dict(status='ok', version='ui-fixture')
         elif path == '/account/preferences/language': value = dict(language='en' if '-en' in token else 'es')
         elif path == '/account/preferences': value = dict(ask_every_time=True, selection='720', rewind_seconds=10)
-        elif path == '/resources': value = dict(items=[RESOURCE], next_cursor=None)
+        elif path == '/resources':
+            category = parse_qs(urlparse(self.path).query, keep_blank_values=True).get('category')
+            value = dict(items=[RESOURCE] if category is None or category == ['Education'] else [],
+                         next_cursor=None, categories=['Education'])
         elif path == '/device/sync': value = dict(deliveries=[], next_delivery_cursor=None, resources=[], deletions=[])
         elif path == '/admin/storage': value = dict(used_percent=47, free_bytes=53*1024**3, total_bytes=100*1024**3, downloads_paused=False, checked_at='2026-10-12T08:00:00Z')
         elif path == '/admin/mail/status': value = dict(host='smtp.example.invalid',port=587,transport='STARTTLS',sender='avisos@example.invalid',username='servidor',password_configured=True,public_url_https=True,ready=True,test_recipient='prueba@example.invalid')

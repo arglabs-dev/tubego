@@ -239,6 +239,73 @@ public final class VisualRedesignInstrumentedTest extends InstrumentationTestCas
         } finally { close(activity); }
     }
 
+    public void testLibraryCategoryAndSearchSurviveRotation() throws Exception {
+        Activity activity = open(LibraryActivity.class);
+        try {
+            activity = rotateLibrary(activity, android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            waitFor(activity, "Ideas para aprender algo nuevo");
+            capture("Library-categories-portrait");
+            LibraryRepo.Result offline = LibraryRepo.load(context, ORIGIN, false, "", DownloadPolicy.NetworkState.offline());
+            assertFalse(offline.items.isEmpty());
+            assertEquals("Education", offline.items.get(0).category);
+            Activity current = activity;
+            getInstrumentation().runOnMainSync(() -> {
+                View root = current.getWindow().getDecorView();
+                ((android.widget.Button) root.findViewWithTag("category_filter")).performClick();
+            });
+            getInstrumentation().waitForIdleSync();
+            var choices = getInstrumentation().getUiAutomation().getRootInActiveWindow().findAccessibilityNodeInfosByText("Education");
+            assertFalse("Source category must be offered", choices.isEmpty());
+            assertTrue(choices.get(0).performAction(android.view.accessibility.AccessibilityNodeInfo.ACTION_CLICK));
+            getInstrumentation().waitForIdleSync();
+            getInstrumentation().runOnMainSync(() -> edit(current.getWindow().getDecorView()).setText("Ideas"));
+            activity = rotateLibrary(activity, android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            waitFor(activity, "Ideas para aprender algo nuevo");
+            assertEquals("Ideas", edit(activity.getWindow().getDecorView()).getText().toString());
+            android.widget.Button selected = activity.getWindow().getDecorView().findViewWithTag("category_filter");
+            assertEquals("Education", selected.getText().toString());
+            View controls = activity.getWindow().getDecorView().findViewWithTag("library_controls");
+            View library = activity.getWindow().getDecorView().findViewWithTag("library_scroll");
+            int[] c = new int[2], l = new int[2]; controls.getLocationOnScreen(c); library.getLocationOnScreen(l);
+            assertTrue("Landscape places the library beside its controls", l[0] >= c[0] + controls.getWidth());
+            assertTrue("Library has usable height", library.getHeight() >= Ds.dp(activity, 160));
+            capture("Library-categories-landscape");
+            activity = rotateLibrary(activity, android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            waitFor(activity, "Ideas para aprender algo nuevo");
+            assertEquals("Ideas", edit(activity.getWindow().getDecorView()).getText().toString());
+            selected = activity.getWindow().getDecorView().findViewWithTag("category_filter");
+            assertEquals("Education", selected.getText().toString());
+            capture("Library-categories-portrait-restored");
+        } finally { close(activity); }
+    }
+
+    private Activity rotateLibrary(Activity activity, int orientation) throws Exception {
+        boolean landscape = orientation == android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+        boolean already = activity.getResources().getConfiguration().orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE;
+        if (landscape == already) return activity;
+        Instrumentation.ActivityMonitor monitor = getInstrumentation().addMonitor(LibraryActivity.class.getName(), null, false);
+        try {
+            getInstrumentation().runOnMainSync(() -> activity.setRequestedOrientation(orientation));
+            Activity rotated = getInstrumentation().waitForMonitorWithTimeout(monitor, 10000);
+            assertNotNull("Library must recreate after rotation", rotated);
+            getInstrumentation().waitForIdleSync();
+            Thread.sleep(600); // Allow the system rotation animation to finish before screenshots.
+            return rotated;
+        } finally { getInstrumentation().removeMonitor(monitor); }
+    }
+
+    private android.widget.EditText edit(View view) {
+        if (view instanceof android.widget.EditText) return (android.widget.EditText) view;
+        if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) view;
+            for (int n = 0; n < group.getChildCount(); n++) {
+                android.widget.EditText result = edit(group.getChildAt(n));
+                if (result != null) return result;
+            }
+        }
+        return null;
+    }
+
     private void waitFor(Activity a, String label) throws Exception {
         long end = System.currentTimeMillis() + 5000;
         while (find(a.getWindow().getDecorView(), label) == null && System.currentTimeMillis() < end) { Thread.sleep(100); getInstrumentation().waitForIdleSync(); }

@@ -20,6 +20,7 @@ final class LibraryRepo {
 
     static final class Result {
         final List<Item> items = new ArrayList<>();
+        final List<String> categories = new ArrayList<>();
         final List<Item> outbox = new ArrayList<>();
         boolean online;
         String nextCursor = "";
@@ -30,6 +31,10 @@ final class LibraryRepo {
     static final class NoSession extends Exception {}
 
     static Result load(Context ctx, String origin, boolean fetch, String cursor, DownloadPolicy.NetworkState network) throws Exception {
+        return load(ctx, origin, fetch, cursor, network, null);
+    }
+
+    static Result load(Context ctx, String origin, boolean fetch, String cursor, DownloadPolicy.NetworkState network, String category) throws Exception {
         final JSONObject session;
         final String token;
         final File root;
@@ -65,7 +70,10 @@ final class LibraryRepo {
             try {
                 HistoryOpened.flush(ctx, origin, token, root);
                 String path = "/resources?order=newest&limit=50&cursor=" + java.net.URLEncoder.encode(cursor == null ? "" : cursor, "UTF-8");
+                if (category != null) path += "&category=" + java.net.URLEncoder.encode(category, "UTF-8");
                 JSONObject page = new ApiClient(origin).request("GET", path, null, token);
+                JSONArray categories = page.optJSONArray("categories");
+                if (categories != null) for (int i = 0; i < categories.length(); i++) result.categories.add(categories.getString(i));
                 JSONArray items = page.getJSONArray("items");
                 Map<String, String> cache = new HashMap<>();
                 for (int i = 0; i < items.length(); i++) {
@@ -123,6 +131,7 @@ final class LibraryRepo {
                                DownloadPermissions permissions, DownloadPolicy.NetworkState network) {
         Item item = new Item();
         item.id = row.optString("id");
+        item.category = row.isNull("category") ? "" : row.optString("category", "");
         item.title = row.isNull("title") ? "" : row.optString("title", "");
         item.thumbnailKey = root.getAbsolutePath()+"/"+row.optString("id");
         item.hasThumbnail = row.optBoolean("has_thumbnail",false);

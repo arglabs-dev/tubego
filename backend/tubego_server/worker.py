@@ -265,6 +265,8 @@ class Worker:
             with self.database.transaction() as conn:
                 self._check(task,conn)
                 if thumbnail: put_setting(conn,'resource',rid,'thumbnail_base64',thumbnail)
+                from tubego_server.categories import from_metadata
+                put_setting(conn,'resource',rid,'category',from_metadata(info))
                 title=info.get('title'); duration=info.get('duration')
                 conn.execute('UPDATE resources SET title=?,duration_seconds=?,updated_at=? WHERE id=?',
                     (title[:512] if isinstance(title,str) else None,duration if isinstance(duration,(int,float)) and not isinstance(duration,bool) and math.isfinite(duration) and duration>=0 else None,utcnow(),rid))

@@ -28,3 +28,11 @@ La prueba visual usa únicamente una API HTTPS con datos sintéticos. El servici
 Las pruebas comprueban las pantallas declaradas, el estilo compartido, la navegación de los ajustes personales, el cambio de rol al regresar, la separación de administración, los controles de almacenamiento y la cancelación de la confirmación de cierre de sesión. Las capturas usan datos de ejemplo y se guardan en los archivos externos de la app bajo `ui-previews-v021`.
 
 Usar únicamente un emulador desechable. Las sesiones de ejemplo sustituyen el estado de la app de pruebas. Para revisar textos ampliados, repetir la prueba de pantallas con `settings put system font_scale 1.3` en ese emulador. La cobertura del manifiesto y los textos nuevos se comprueban también en `localization/verify.py`.
+
+La regresión `VisualRedesignInstrumentedTest#testLibraryCategoryAndSearchSurviveRotation`
+comprueba la categoría recibida de la API, su copia sin conexión, el selector y la
+conservación de búsqueda y categoría al girar de vertical a horizontal y de vuelta.
+Guarda capturas `Library-categories-*.png` en la misma carpeta de vistas previas.
+Ejecutarla también con `font_scale=1.3` y en una pantalla estrecha. Conceder el
+permiso de notificaciones al APK de ejemplo antes de capturar para evitar diálogos
+del sistema durante la prueba.

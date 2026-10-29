@@ -3266,5 +3266,17 @@
   "Vuelve a elegir la carpeta para completar el traslado. Los originales se conservan hasta verificar la copia.": {
     "es": "Vuelve a elegir la carpeta para completar el traslado. Los originales se conservan hasta verificar la copia.",
     "en": "Select the folder again to finish moving. Originals are kept until the copy is verified."
+  },
+  "Todas las categorías": {
+    "es": "Todas las categorías",
+    "en": "All categories"
+  },
+  "Sin categoría": {
+    "es": "Sin categoría",
+    "en": "Uncategorized"
+  },
+  "Categoría": {
+    "es": "Categoría",
+    "en": "Category"
   }
 }

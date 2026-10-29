@@ -9,6 +9,7 @@
   <string name="ui_012cd2dcb6df" formatted="false">"Could not execute. Check your permissions and connection."</string>
   <string name="ui_0192c60a386c" formatted="false">"Your account language is saved and synced across your devices."</string>
   <string name="ui_01a652a19fd7" formatted="false">"\nServer cleanup pending"</string>
+  <string name="ui_0208294ea49a" formatted="false">"Uncategorized"</string>
   <string name="ui_020d2b924c4f" formatted="false">"Ask for quality or audio for each link"</string>
   <string name="ui_02511d8c7ef1" formatted="false">"Use between 12 and 128 characters."</string>
   <string name="ui_038413907b57" formatted="false">"Could not save the request. Check your session and storage."</string>
@@ -215,6 +216,7 @@
   <string name="ui_41d8694e4363" formatted="false">"Request file again"</string>
   <string name="ui_42186204bb7d" formatted="false">"File verification failed. Retry the download."</string>
   <string name="ui_422eb9f12e66" formatted="false">"Authorize "</string>
+  <string name="ui_425a839def0b" formatted="false">"All categories"</string>
   <string name="ui_426234e72a5b" formatted="false">"Details"</string>
   <string name="ui_42719229fd62" formatted="false">"High"</string>
   <string name="ui_427935ef480a" formatted="false">"This link is not valid. Paste a single link starting with http or https."</string>
@@ -274,6 +276,7 @@
   <string name="ui_5511a8083de4" formatted="false">"Your account, your devices and how you download."</string>
   <string name="ui_55120f5b2678" formatted="false">"Server storage"</string>
   <string name="ui_55459b662cd6" formatted="false">"The source did not report its resolution. The displayed quality is the requested preference; the file resolution has not been confirmed."</string>
+  <string name="ui_558bb20a82ed" formatted="false">"Category"</string>
   <string name="ui_5598f435410f" formatted="false">"Choose the quality each time or use a default option."</string>
   <string name="ui_55e1f816f8cc" formatted="false">"Sign in with an approved account to view your library."</string>
   <string name="ui_55e51b6a21eb" formatted="false">" Mbps (5 MB)"</string>
