@@ -8,6 +8,7 @@ from tubego_server.auth import require_approved,require_admin
 from tubego_server.ownership import LibraryScope
 from tubego_server.media import MediaError
 from tubego_server.preferences import Selection
+from tubego_server.audio_tracks import AudioChoice
 from tubego_server.tasks import action, submit, task_value,live_scope
 
 router=APIRouter(tags=['tasks'])
@@ -18,12 +19,13 @@ class Submission(BaseModel):
     url:str=Field(min_length=1,max_length=4096)
     selection:Selection|None=None
     request_id:UUID|None=None
+    audio_track:AudioChoice="original"
 
 
 @router.post('/resources')
 def create_resource(body:Submission,request:Request,principal=Depends(require_approved)):
     try:
-        return submit(request.app.state.db,principal,body.url,body.selection,body.request_id)
+        return submit(request.app.state.db,principal,body.url,body.selection,body.request_id,audio_track=body.audio_track)
     except MediaError as error:
         raise HTTPException(503 if error.code=='temporary_failure' else 422,{'code':error.code,'message':str(error)}) from None
     except ValueError:

@@ -7,9 +7,12 @@ import java.util.*;
 /** Durable token-free request outbox. The owning account/device supplies transport. */
 public final class LinkOutbox {
     public static final class Entry {
-        public final String id,url,selection,state,error,resourceId;
+        public final String id,url,selection,state,error,resourceId,audioTrack;
         Entry(String id,String url,String selection,String state,String error,String resourceId) {
-            this.id=id;this.url=url;this.selection=selection;this.state=state;this.error=error;this.resourceId=resourceId;
+            this(id,url,selection,state,error,resourceId,"original");
+        }
+        Entry(String id,String url,String selection,String state,String error,String resourceId,String audioTrack) {
+            this.id=id;this.url=url;this.selection=selection;this.state=state;this.error=error;this.resourceId=resourceId;this.audioTrack=AudioTrack.validate(audioTrack);
         }
     }
     public static class PermanentFailure extends Exception {public PermanentFailure(String reason){super(reason);}}
@@ -18,13 +21,18 @@ public final class LinkOutbox {
     private final File directory;
     public LinkOutbox(File directory){this.directory=directory;}
     public Entry add(String text,String selection) throws Exception {
+        return add(text,selection,"original");
+    }
+    public Entry add(String text,String selection,String audioTrack) throws Exception {
+        AudioTrack.validate(audioTrack);
         String url=SharedUrl.parse(text);MediaSelection.index(selection);
-        Entry entry=new Entry(UUID.randomUUID().toString(),url,selection,"queued","","");
+        Entry entry=new Entry(UUID.randomUUID().toString(),url,selection,"queued","","",audioTrack);
         synchronized(LinkOutbox.class){write(entry);}return entry;
     }
     private void write(Entry entry) throws IOException {
         if(!directory.exists()&&!directory.mkdirs()) throw new IOException("No se pudo guardar el enlace");
         Properties record=new Properties();record.setProperty("id",entry.id);record.setProperty("url",entry.url);record.setProperty("selection",entry.selection);
+        record.setProperty("audio_track",entry.audioTrack);
         record.setProperty("state",entry.state);record.setProperty("error",entry.error);record.setProperty("resource_id",entry.resourceId);
         if(entry.state.equals("queued")){CommandBridge.add(directory,entry.id,"submit",record);}
         File temporary=new File(directory,entry.id+".tmp"),target=new File(directory,entry.id+".properties");
@@ -41,7 +49,7 @@ public final class LinkOutbox {
                 Properties values=new Properties();try(FileInputStream input=new FileInputStream(file)){values.load(input);}
                 String id=UUID.fromString(values.getProperty("id")).toString();
                 if(!file.getName().equals(id+".properties"))throw new IOException("Registro de cola inválido");
-                rows.add(new Entry(id,SharedUrl.parse(values.getProperty("url")),MediaSelection.VALUES[MediaSelection.index(values.getProperty("selection"))],values.getProperty("state","queued"),values.getProperty("error",""),values.getProperty("resource_id","")));
+                rows.add(new Entry(id,SharedUrl.parse(values.getProperty("url")),MediaSelection.VALUES[MediaSelection.index(values.getProperty("selection"))],values.getProperty("state","queued"),values.getProperty("error",""),values.getProperty("resource_id",""),values.getProperty("audio_track","original")));
             }
             return rows;
         }
@@ -58,17 +66,17 @@ public final class LinkOutbox {
             try {
                 String resource=transport.send(entry);
                 if(resource==null||resource.isEmpty())throw new IOException("Respuesta incompleta del servidor");
-                if(!commit(new Entry(entry.id,entry.url,entry.selection,"submitted","",resource),lock,active))return false;
+                if(!commit(new Entry(entry.id,entry.url,entry.selection,"submitted","",resource,entry.audioTrack),lock,active))return false;
             }catch(SessionGone e){return false;}
-            catch(PermanentFailure e){if(!commit(new Entry(entry.id,entry.url,entry.selection,"error",e.getMessage(),""),lock,active))return false;}
-            catch(Exception e){if(!commit(new Entry(entry.id,entry.url,entry.selection,"queued","Pendiente de conexión o reintento",""),lock,active))return false;done=false;break;}
+            catch(PermanentFailure e){if(!commit(new Entry(entry.id,entry.url,entry.selection,"error",e.getMessage(),"",entry.audioTrack),lock,active))return false;}
+            catch(Exception e){if(!commit(new Entry(entry.id,entry.url,entry.selection,"queued","Pendiente de conexión o reintento","",entry.audioTrack),lock,active))return false;done=false;break;}
         }
         return done;
     }
     public void retry(String id) throws Exception {
         synchronized(LinkOutbox.class){for(Entry entry:entries())if(entry.id.equals(id)){
-            if(CommandBridge.production(directory)){if(!entry.state.equals("error"))throw new IOException("La acción no requiere reintento");add(entry.url,entry.selection);return;}
-            write(new Entry(entry.id,entry.url,entry.selection,"queued","",""));
+            if(CommandBridge.production(directory)){if(!entry.state.equals("error"))throw new IOException("La acción no requiere reintento");add(entry.url,entry.selection,entry.audioTrack);return;}
+            write(new Entry(entry.id,entry.url,entry.selection,"queued","","",entry.audioTrack));
         }}
     }
 }

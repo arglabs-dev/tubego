@@ -41,3 +41,41 @@ se reinicia el proceso de TubeGo; en ese caso hay que volver a compartirlo.
 ## Identidad de la versión oficial
 
 La vista previa independiente `dev.arglabs.tubego.claude` sirvió para evaluar el diseño. La app oficial conserva el identificador anterior de TubeGo y un código de versión mayor que las instalaciones 0.4.1 (código 5). Los APK oficiales de CI se construyen desde `android/`, que contiene el mismo diseño elegido.
+
+## Categorías y orientación de la biblioteca
+
+Cada nueva descarga conserva la primera categoría válida que publique la plataforma
+(por ejemplo, `Education` o `Music`). Se normalizan espacios y caracteres y se limita
+la etiqueta a 80 caracteres. La categoría conserva el idioma de la fuente. Si esta
+no proporciona categorías, o el video es anterior a esta función, se muestra **Sin
+categoría**. No se infieren temas a partir del título ni se recategorizan archivos
+anteriores mediante nuevas descargas.
+
+**Todas las categorías** abre el selector. Puede combinarse con Video/Audio y la
+búsqueda. Con conexión, el catálogo de categorías incluye toda la biblioteca privada,
+aunque sus videos todavía estén en otras páginas; elegir una categoría consulta su
+primera página en el servidor. **Ver más** permanece disponible incluso si otro
+filtro oculta los videos de la página actual. Sin conexión se filtran los metadatos
+que ya están guardados en el teléfono.
+
+En vertical los controles van sobre la lista. En horizontal, con al menos 480 dp
+de ancho, pasan a un panel lateral desplazable y la lista aprovecha la altura disponible.
+El botón de agregar tiene un espacio propio para no tapar las tarjetas.
+Los filtros de formato pueden desplazarse horizontalmente en espacios estrechos.
+La búsqueda, categoría, formato y posición de la lista se conservan al girar el
+móvil. Se respetan las barras del sistema y el teclado.
+
+El contrato `GET /api/v1/resources` añade `category` a cada recurso y `categories`
+a la respuesta (solo etiquetas de la cuenta autenticada). El parámetro `category`
+filtra antes de paginar; omitirlo incluye todo y `category=` selecciona los recursos
+sin categoría. `GET /api/v1/resources/{id}` conserva la misma categoría incluso
+cuando se elimina el archivo del servidor. Se utiliza el almacenamiento existente
+de metadatos privados, sin migración de esquema.
+
+## Elegir pista de audio
+
+La hoja **Agregar enlace** incluye **Pista de audio: Original**. Al analizar un
+video se ofrecen únicamente los idiomas que la fuente expone, con variantes
+regionales y señales de doblaje cuando existan. La selección se conserva también
+para Solo audio y al reenviar la cola después de una desconexión. Consulta
+[el contrato, los límites y las pruebas de pistas de audio](AUDIO_TRACKS.md).

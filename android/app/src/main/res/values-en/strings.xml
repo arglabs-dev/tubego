@@ -6,9 +6,11 @@
   <string name="ui_00cd944998c0" formatted="false">"Now"</string>
   <string name="ui_00d91496a022" formatted="false">"The file is no longer on this phone. You can request it again."</string>
   <string name="ui_00f397609e09" formatted="false">"ACCOUNT"</string>
+  <string name="ui_0124c77ec096" formatted="false">"The source exposes no Spanish audio. You can continue with Original or close to cancel."</string>
   <string name="ui_012cd2dcb6df" formatted="false">"Could not execute. Check your permissions and connection."</string>
   <string name="ui_0192c60a386c" formatted="false">"Your account language is saved and synced across your devices."</string>
   <string name="ui_01a652a19fd7" formatted="false">"\nServer cleanup pending"</string>
+  <string name="ui_0208294ea49a" formatted="false">"Uncategorized"</string>
   <string name="ui_020d2b924c4f" formatted="false">"Ask for quality or audio for each link"</string>
   <string name="ui_02511d8c7ef1" formatted="false">"Use between 12 and 128 characters."</string>
   <string name="ui_038413907b57" formatted="false">"Could not save the request. Check your session and storage."</string>
@@ -38,6 +40,7 @@
   <string name="ui_097ed3bc6722" formatted="false">"Connection and local storage"</string>
   <string name="ui_09a60097cd46" formatted="false">"Free storage reserve"</string>
   <string name="ui_0a164fa4c787" formatted="false">"Your session expired. Sign in again."</string>
+  <string name="ui_0a23de230baf" formatted="false">"Dubbed"</string>
   <string name="ui_0a2437ee7835" formatted="false">"Phones signed in to your account"</string>
   <string name="ui_0a8bf48f81f4" formatted="false">"Checking connection…"</string>
   <string name="ui_0a955b58a956" formatted="false">"Tubego help"</string>
@@ -147,6 +150,7 @@
   <string name="ui_2e538697cba0" formatted="false">"Use mobile data"</string>
   <string name="ui_2e54c325faaf" formatted="false">"Couldn\'t download. Check the link and try again."</string>
   <string name="ui_2e5c1f25628f" formatted="false">"Account language"</string>
+  <string name="ui_2ed286c87653" formatted="false">"Origin not specified"</string>
   <string name="ui_2ef68536d8e2" formatted="false">"Pending"</string>
   <string name="ui_2f48c1990766" formatted="false">"Request another quality"</string>
   <string name="ui_2f834eea785a" formatted="false">"Maintenance is not enabled for this deployment."</string>
@@ -188,6 +192,7 @@
   <string name="ui_391ba411400b" formatted="false">"View my alerts"</string>
   <string name="ui_394845033d6b" formatted="false">"Maximum since first delivery (4)"</string>
   <string name="ui_39614a476f39" formatted="false">"1080p"</string>
+  <string name="ui_39dc8146b49d" formatted="false">"Auto-dubbed"</string>
   <string name="ui_39e48edb72f3" formatted="false">"Sign in with an approved account to save your language."</string>
   <string name="ui_3a04898a6b8b" formatted="false">"Apply"</string>
   <string name="ui_3a38a63aecf6" formatted="false">"Register"</string>
@@ -215,6 +220,7 @@
   <string name="ui_41d8694e4363" formatted="false">"Request file again"</string>
   <string name="ui_42186204bb7d" formatted="false">"File verification failed. Retry the download."</string>
   <string name="ui_422eb9f12e66" formatted="false">"Authorize "</string>
+  <string name="ui_425a839def0b" formatted="false">"All categories"</string>
   <string name="ui_426234e72a5b" formatted="false">"Details"</string>
   <string name="ui_42719229fd62" formatted="false">"High"</string>
   <string name="ui_427935ef480a" formatted="false">"This link is not valid. Paste a single link starting with http or https."</string>
@@ -233,6 +239,7 @@
   <string name="ui_47467a163f37" formatted="false">"Tubego update"</string>
   <string name="ui_474a73d1dfab" formatted="false">"Priority saved"</string>
   <string name="ui_481b278aece1" formatted="false">"Administrator diagnostics and maintenance"</string>
+  <string name="ui_483b168dd05d" formatted="false">"Could not check audio tracks. Check your connection."</string>
   <string name="ui_499a5c37dcd6" formatted="false">"Add link"</string>
   <string name="ui_49b85ee08c7a" formatted="false">". Phone files are unaffected."</string>
   <string name="ui_4a361079bdc6" formatted="false">"Local playback. No connection required."</string>
@@ -274,6 +281,7 @@
   <string name="ui_5511a8083de4" formatted="false">"Your account, your devices and how you download."</string>
   <string name="ui_55120f5b2678" formatted="false">"Server storage"</string>
   <string name="ui_55459b662cd6" formatted="false">"The source did not report its resolution. The displayed quality is the requested preference; the file resolution has not been confirmed."</string>
+  <string name="ui_558bb20a82ed" formatted="false">"Category"</string>
   <string name="ui_5598f435410f" formatted="false">"Choose the quality each time or use a default option."</string>
   <string name="ui_55e1f816f8cc" formatted="false">"Sign in with an approved account to view your library."</string>
   <string name="ui_55e51b6a21eb" formatted="false">" Mbps (5 MB)"</string>
@@ -361,6 +369,7 @@
   <string name="ui_715621903c70" formatted="false">"Refresh pending links and try sending"</string>
   <string name="ui_717bedea36fc" formatted="false">"Confirm"</string>
   <string name="ui_71811177c10a" formatted="false">"Search by title"</string>
+  <string name="ui_71867d50deeb" formatted="false">"Audio track: Original"</string>
   <string name="ui_7191f0e063b1" formatted="false">"No pending requests"</string>
   <string name="ui_71c8c8a47e72" formatted="false">"No connection or service restarting. The request keeps its identifier; check its status when connected again."</string>
   <string name="ui_71daf27f0a66" formatted="false">"Administrator alerts"</string>
@@ -376,6 +385,7 @@
   <string name="ui_74abe2683078" formatted="false">" seconds"</string>
   <string name="ui_74c764f14f21" formatted="false">"Reading phone files…"</string>
   <string name="ui_753d7e4e1c80" formatted="false">"Decide which copies the server keeps and when it can clean them up."</string>
+  <string name="ui_7588598d53bb" formatted="false">"Choose an available track. Your choice also applies to audio-only downloads."</string>
   <string name="ui_75c4bfe48d33" formatted="false">"Checking…"</string>
   <string name="ui_75d6b4579e1d" formatted="false">"File"</string>
   <string name="ui_75e091f65862" formatted="false">"Checking server failures…"</string>
@@ -427,6 +437,7 @@
   <string name="ui_8548607eee01" formatted="false">"Maintenance"</string>
   <string name="ui_856641d2b3ee" formatted="false">"Completed"</string>
   <string name="ui_86097c8308bf" formatted="false">"Analyzing"</string>
+  <string name="ui_865de431e2a4" formatted="false">"Analyze the link to see available audio tracks. Subtitles are not audio tracks."</string>
   <string name="ui_8688663707ac" formatted="false">"User retention and global limits"</string>
   <string name="ui_86ad044c5b66" formatted="false">"Free-space minimum and storage"</string>
   <string name="ui_86e49c08f3c0" formatted="false">"Quality and playback"</string>
@@ -438,6 +449,7 @@
   <string name="ui_888381c696f4" formatted="false">"Tubego · Downloads in progress"</string>
   <string name="ui_88b80b4e325d" formatted="false">"Check my account status"</string>
   <string name="ui_88d637185838" formatted="false">"Revoke mobile data permission"</string>
+  <string name="ui_88d759ea02ce" formatted="false">"Original"</string>
   <string name="ui_88e7f990d154" formatted="false">"only your server files"</string>
   <string name="ui_88ecbd9eab6d" formatted="false">"Previous screen with all options"</string>
   <string name="ui_88efb201a001" formatted="false">"Session"</string>
@@ -581,6 +593,7 @@
   <string name="ui_b3a2ff869be3" formatted="false">"The operator restored the service; the previous operation was interrupted."</string>
   <string name="ui_b3cbcaf5c0ff" formatted="false">"An approved session is required"</string>
   <string name="ui_b44a2b20e8bf" formatted="false">"480p · takes less space"</string>
+  <string name="ui_b469207495b8" formatted="false">"Choose another track"</string>
   <string name="ui_b46e67b3cf16" formatted="false">"Choose another quality"</string>
   <string name="ui_b498fc9442b2" formatted="false">"See what failed and the options to recover your downloads."</string>
   <string name="ui_b5529b48dc32" formatted="false">"Could not download. Check the link and retry."</string>
@@ -596,6 +609,7 @@
   <string name="ui_b8fba2065a4d" formatted="false">"Checking metadata…"</string>
   <string name="ui_b916aded84f5" formatted="false">"Available storage"</string>
   <string name="ui_b921ef61c58b" formatted="false">"Sign in as an administrator."</string>
+  <string name="ui_b92d56caac01" formatted="false">"Offline: you can save the original track. Check other tracks when connected."</string>
   <string name="ui_b94c579a7fcc" formatted="false">"Approved version"</string>
   <string name="ui_b985d76a6ff3" formatted="false">"Loading verified requests…"</string>
   <string name="ui_b9d0c5e9c1a6" formatted="false">"This content is no longer available on its platform."</string>
@@ -613,6 +627,7 @@
   <string name="ui_bc6e81e874f3" formatted="false">"Permission saved for this file."</string>
   <string name="ui_bcd5daeda883" formatted="false">"Add this link with "</string>
   <string name="ui_bcec4bf3b103" formatted="false">"Downloaded files stay on your phone until you delete them. If space is low, the app pauses downloads and alerts you without automatically deleting content. Android may delay background work; if you force-stop Tubego, open the app to resume it."</string>
+  <string name="ui_bcfa5fc75f44" formatted="false">"Verified"</string>
   <string name="ui_bd02b9a7d71d" formatted="false">"All"</string>
   <string name="ui_be113ca8d997" formatted="false">"Approved"</string>
   <string name="ui_be11b4794490" formatted="false">"Clean up server"</string>
@@ -639,6 +654,7 @@
   <string name="ui_c6df43a8476c" formatted="false">"Administrators only · affects the server and its users"</string>
   <string name="ui_c6e6960395f4" formatted="false">"Sign out"</string>
   <string name="ui_c76786b89397" formatted="false">"View item · "</string>
+  <string name="ui_c865c461d1b2" formatted="false">"The selected audio track is no longer available. Choose Original or another track."</string>
   <string name="ui_c87ece2bf312" formatted="false">". Active downloads will be allowed to finish, and the service will be checked afterwards."</string>
   <string name="ui_c8a74ca68d39" formatted="false">"Details"</string>
   <string name="ui_c90358a60cab" formatted="false">" · duration "</string>
@@ -657,6 +673,7 @@
   <string name="ui_ccc46ab69e06" formatted="false">"Tubego · "</string>
   <string name="ui_ccdcf50c9b55" formatted="false">"Your files stay on your phone until you delete them."</string>
   <string name="ui_cd0dc77ac58b" formatted="false">"Language saved on this phone; synchronization pending."</string>
+  <string name="ui_cd7fc980ffb7" formatted="false">"Change audio track"</string>
   <string name="ui_cdb2373465f3" formatted="false">"Request files from your history that are no longer available."</string>
   <string name="ui_ce06bfb67e9b" formatted="false">"Earlier"</string>
   <string name="ui_cebb55b6c348" formatted="false">"Saving the exact playback position depends on the VLC compatibility investigation. It is not guaranteed. If supported, resuming rewinds by your preference: initially ten seconds, configurable per user."</string>
@@ -703,6 +720,7 @@
   <string name="ui_d9e9799780cf" formatted="false">"Check versions, measure the server connection, and review updates or restarts."</string>
   <string name="ui_da0f23b03f69" formatted="false">" known files · "</string>
   <string name="ui_da3e1e6f12da" formatted="false">"My files on the server"</string>
+  <string name="ui_da711670a691" formatted="false">"The file audio could not be verified. Retry or choose another track."</string>
   <string name="ui_dafbb9edb30b" formatted="false">"Request saved. It will be sent when connected."</string>
   <string name="ui_db53eb937e37" formatted="false">"Could not save the action. Check your session and phone space."</string>
   <string name="ui_db587178e257" formatted="false">"Saved. Server copies removed: "</string>
@@ -738,6 +756,7 @@
   <string name="ui_e5983055827c" formatted="false">"Persistent priority: 3 turns to 1. Does not interrupt downloads."</string>
   <string name="ui_e5ff11360ede" formatted="false">"Will delete "</string>
   <string name="ui_e60465d97bea" formatted="false">"Could not read this account\'s library."</string>
+  <string name="ui_e6610e428eb4" formatted="false">"Audio track"</string>
   <string name="ui_e77a153cf4fd" formatted="false">"Permanent failures. Temporary errors are retried up to three times."</string>
   <string name="ui_e7de98cc83ca" formatted="false">"Session unavailable."</string>
   <string name="ui_e7e74d02da27" formatted="false">"Sign out before switching accounts. Only private copies are removed; files in your folder are kept."</string>
@@ -754,12 +773,14 @@
   <string name="ui_ec6e6405bf90" formatted="false">"Play"</string>
   <string name="ui_ecca582bd825" formatted="false">"Affects server copies for all users. Review the scope before confirming."</string>
   <string name="ui_ed9d691f5d18" formatted="false">"Available offline"</string>
+  <string name="ui_edea2ec69dc8" formatted="false">"Choose audio track"</string>
   <string name="ui_ee4e70548183" formatted="false">"Also remove from the server"</string>
   <string name="ui_ee556f7b0a9f" formatted="false">"Storage on this phone"</string>
   <string name="ui_ee7e3972cf6d" formatted="false">" bytes · "</string>
   <string name="ui_ef262d0a0730" formatted="false">"Make it next"</string>
   <string name="ui_ef2ba177ab57" formatted="false">"New downloads are saved as a single copy. You can modify them with your file manager. Shared files remain when you sign out or uninstall TubeGo."</string>
   <string name="ui_efa438fb86dd" formatted="false">"Could not read the local queue."</string>
+  <string name="ui_efbe3ae00cde" formatted="false">"The track was not changed. Check your connection; if processing already started, add another request."</string>
   <string name="ui_efe0ffa994e0" formatted="false">"Could not load. Check your session and connection."</string>
   <string name="ui_f0886de0cbbf" formatted="false">"Alerts center"</string>
   <string name="ui_f0c0a1d7cc29" formatted="false">"Ready · on this phone"</string>

@@ -12,6 +12,11 @@ from tubego_server.scheduler import put_setting
 from tubego_server.resource_identity import known,key as identity_key
 
 
+def resource_audio(conn, resource_id):
+    from tubego_server.history import value
+    return value(conn, resource_id, 'audio_track', 'original')
+
+
 def live_scope(conn, principal):
     current=conn.execute('''SELECT u.* FROM users u JOIN sessions s ON s.user_id=u.id
         LEFT JOIN devices d ON d.id=s.device_id WHERE u.id=? AND s.id=?
@@ -28,25 +33,28 @@ def task_value(conn, task):
     pause=conn.execute("SELECT value_json FROM settings WHERE scope='task' AND owner_id=? AND key='pause_reason'",(task['id'],)).fetchone()
     notice=conn.execute("SELECT value_json FROM settings WHERE scope='resource' AND owner_id=? AND key='quality_notice'",(task['resource_id'],)).fetchone()
     retry=conn.execute("SELECT value_json FROM settings WHERE scope='task' AND owner_id=? AND key='next_retry_at'",(task['id'],)).fetchone()
-    return {key:task[key] for key in ('id','resource_id','status','priority','progress','attempts','error_code','error_message','created_at','updated_at')} | {'phase':phase,'next_retry_at':json.loads(retry[0]) if retry else None,'quality_notice':json.loads(notice[0]) if notice else None,'pause_reason':json.loads(pause[0]) if pause else None}
+    return {key:task[key] for key in ('id','resource_id','status','priority','progress','attempts','error_code','error_message','created_at','updated_at')} | {'audio_track':resource_audio(conn,task['resource_id']),'phase':phase,'next_retry_at':json.loads(retry[0]) if retry else None,'quality_notice':json.loads(notice[0]) if notice else None,'pause_reason':json.loads(pause[0]) if pause else None}
 
 
-def submit(database, principal, url, selection=None, request_id=None, resolver=None):
+def submit(database, principal, url, selection=None, request_id=None, resolver=None, audio_track="original"):
+    from pydantic import TypeAdapter
+    from tubego_server.audio_tracks import AudioChoice
+    audio_track=TypeAdapter(AudioChoice).validate_python(audio_track)
     # URL validation performs DNS; never call it while holding a DB write lock.
     canonical=normalize_url(url, resolver) if resolver else normalize_url(url)
     selection=resolve_selection(read_preferences(database,principal['id']),selection)
-    fields=resource_fields(selection)
+    fields=resource_fields(selection) | {"audio_track":audio_track}
     with database.transaction() as conn:
         scope=live_scope(conn,principal)
         source_identity=known(conn,scope.user_id,canonical)
         source_key=identity_key(source_identity,fields)
         legacy_key=hashlib.sha256((canonical+'\n'+fields['media_format']+'\n'+fields['quality']).encode()).hexdigest()
-        existing=conn.execute('''SELECT r.id FROM resources r LEFT JOIN settings i ON i.scope='resource' AND i.owner_id=r.id AND i.key='source_identity' WHERE user_id=? AND media_format=? AND quality=? AND (source_key IN (?,?) OR i.value_json=?) ORDER BY created_at LIMIT 1''',(scope.user_id,fields['media_format'],fields['quality'],source_key,legacy_key,json.dumps(source_identity))).fetchone()
+        existing=conn.execute('''SELECT r.id FROM resources r LEFT JOIN settings i ON i.scope='resource' AND i.owner_id=r.id AND i.key='source_identity' WHERE user_id=? AND media_format=? AND quality=? AND COALESCE((SELECT json_extract(a.value_json,'$') FROM settings a WHERE a.scope='resource' AND a.owner_id=r.id AND a.key='audio_track'),'original')=? AND (source_key IN (?,?) OR i.value_json=?) ORDER BY created_at LIMIT 1''',(scope.user_id,fields['media_format'],fields['quality'],audio_track,source_key,legacy_key if audio_track=='original' else source_key,json.dumps(source_identity))).fetchone()
         if existing is None:
             # Resources created before portal identities were stored retain their
             # history. Recognize their old validated URLs instead of duplicating.
             for candidate in conn.execute('SELECT id,source_url FROM resources WHERE user_id=? AND media_format=? AND quality=? ORDER BY created_at',(scope.user_id,fields['media_format'],fields['quality'])):
-                if known(conn,scope.user_id,candidate['source_url'])==source_identity:
+                if known(conn,scope.user_id,candidate['source_url'])==source_identity and resource_audio(conn,candidate['id'])==audio_track:
                     existing={'id':candidate['id']};put_setting(conn,'resource',candidate['id'],'source_identity',source_identity);break
         if request_id:
             key='submission:'+str(request_id)
@@ -54,8 +62,8 @@ def submit(database, principal, url, selection=None, request_id=None, resolver=N
             if previous:
                 data=json.loads(previous[0])
                 previous_resource=conn.execute('SELECT * FROM resources WHERE id=? AND user_id=?',(data['resource_id'],scope.user_id)).fetchone()
-                matches=previous_resource and previous_resource['media_format']==fields['media_format'] and previous_resource['quality']==fields['quality'] and known(conn,scope.user_id,previous_resource['source_url'])==source_identity
-                if data['source_key'] not in (source_key,legacy_key) and not matches:raise HTTPException(409,'Request ID already used for another resource')
+                matches=previous_resource and resource_audio(conn,previous_resource['id'])==audio_track and previous_resource['media_format']==fields['media_format'] and previous_resource['quality']==fields['quality'] and known(conn,scope.user_id,previous_resource['source_url'])==source_identity
+                if (data['source_key'] not in ((source_key,legacy_key) if audio_track=='original' else (source_key,)) or not previous_resource or resource_audio(conn,previous_resource['id'])!=audio_track) and not matches:raise HTTPException(409,'Request ID already used for another resource')
                 existing={'id':data['resource_id']}
         if existing:
             task=conn.execute('SELECT * FROM tasks WHERE resource_id=? AND user_id=? ORDER BY created_at DESC LIMIT 1',(existing['id'],scope.user_id)).fetchone()
@@ -67,6 +75,7 @@ def submit(database, principal, url, selection=None, request_id=None, resolver=N
             VALUES(?,?,?,?,?,?,?,?)''',(rid,scope.user_id,canonical,source_key,fields['media_format'],fields['quality'],timestamp,timestamp))
         conn.execute('INSERT INTO tasks(id,user_id,resource_id,created_at,updated_at) VALUES(?,?,?,?,?)',(tid,scope.user_id,rid,timestamp,timestamp))
         put_setting(conn,'resource',rid,'source_identity',source_identity)
+        put_setting(conn,'resource',rid,'audio_track',audio_track)
         if request_id:
             put_setting(conn,'user',scope.user_id,key,{'source_key':source_key,'resource_id':rid})
         task=conn.execute('SELECT * FROM tasks WHERE id=?',(tid,)).fetchone()

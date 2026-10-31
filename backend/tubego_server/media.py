@@ -7,6 +7,8 @@ from urllib.parse import urlsplit, urlunsplit
 
 
 MESSAGES = {
+    "audio_track_unavailable": "The selected audio track is no longer available. Choose original or another track.",
+    "audio_verification_failed": "The selected audio could not be verified in the final file. Retry or choose another track.",
     "invalid_url": "Use one public HTTP or HTTPS resource URL.",
     "unsupported": "This source or collection is not supported.",
     "format_unavailable": "The selected audio or video format is unavailable. Choose another quality.",
@@ -159,7 +161,9 @@ def analyze_media(url, *, factory=None, resolver=socket.getaddrinfo):
         title = info.get("title")
         duration = info.get("duration")
         from tubego_server.thumbnails import preview
+        from tubego_server.audio_tracks import catalog
         return {
+            "audio_tracks": catalog(info),
             "thumbnail_base64": preview(info),
             "url": canonical,
             "source_id": str(info["id"])[:256] if info.get("id") is not None else None,

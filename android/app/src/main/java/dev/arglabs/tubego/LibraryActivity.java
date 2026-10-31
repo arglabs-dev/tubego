@@ -36,6 +36,12 @@ public final class LibraryActivity extends DsActivity implements Host {
     private boolean online, loaded, loading, resumed, reloadPending;
     private String filter = "all"; // all | video | audio
     private String query = "";
+    private String category; // null = all; empty = uncategorized
+    private final java.util.Set<String> categories = new java.util.TreeSet<>(String.CASE_INSENSITIVE_ORDER.thenComparing(java.util.Comparator.naturalOrder()));
+    private Button categoryButton;
+    private ScrollView libraryScroll;
+    private int restoreScroll;
+    private boolean wide;
 
     private LinearLayout list;
     private TextView banner, toast;
@@ -73,6 +79,14 @@ public final class LibraryActivity extends DsActivity implements Host {
             finish();
             return;
         }
+        if (state != null) {
+            filter = state.getString("media_filter", "all");
+            query = state.getString("library_query", "");
+            category = state.getString("library_category");
+            restoreScroll = state.getInt("library_scroll", 0);
+            categories.addAll(state.getStringArrayList("library_categories") == null
+                    ? java.util.Collections.emptyList() : state.getStringArrayList("library_categories"));
+        }
         build();
         monitor = new NetworkMonitor(this, s -> {
             network = s;
@@ -86,6 +100,15 @@ public final class LibraryActivity extends DsActivity implements Host {
         accountIo.execute(() -> {
             if (AccountSync.refresh(this, origin)) runOnUiThread(this::recreate);
         });
+    }
+
+    @Override protected void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+        state.putString("media_filter", filter);
+        state.putString("library_query", query);
+        state.putString("library_category", category);
+        state.putStringArrayList("library_categories", new ArrayList<>(categories));
+        state.putInt("library_scroll", libraryScroll == null ? 0 : libraryScroll.getScrollY());
     }
 
     @Override protected void onNewIntent(Intent intent) {
@@ -146,21 +169,34 @@ public final class LibraryActivity extends DsActivity implements Host {
     // ---- Estructura ----
     private void build() {
         FrameLayout root = new FrameLayout(this);
-        LinearLayout page = Ds.column(this);
+        wide = getResources().getConfiguration().screenWidthDp >= 480
+                && getResources().getConfiguration().screenWidthDp > getResources().getConfiguration().screenHeightDp;
+        LinearLayout page = wide ? Ds.row(this) : Ds.column(this);
+        page.setGravity(Gravity.TOP);
+        LinearLayout controls = Ds.column(this);
+        controls.setTag("library_controls");
+        if (wide) {
+            ScrollView controlScroll = new ScrollView(this);
+            controlScroll.setFillViewport(true);
+            controlScroll.addView(controls, new ScrollView.LayoutParams(-1, -2));
+            page.addView(controlScroll, new LinearLayout.LayoutParams(Ds.dp(this, Math.min(260, getResources().getConfiguration().screenWidthDp * 0.36f)), -1));
+        } else {
+            page.addView(controls, new LinearLayout.LayoutParams(-1, -2));
+        }
 
         LinearLayout top = Ds.row(this);
         top.setPadding(Ds.dp(this, 20), Ds.dp(this, 14), Ds.dp(this, 8), 0);
-        Ds.addWeighted(top, Ds.text(this, t("Mi biblioteca"), 30, Ds.INK, 800), 1, 0, 8);
+        Ds.addWeighted(top, Ds.text(this, t("Mi biblioteca"), wide ? 24 : 30, Ds.INK, 800), 1, 0, 8);
         ImageButton settings = Ds.iconButton(this, R.drawable.ic_ds_sliders, t("Ajustes"));
         settings.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class).putExtra("server_url", origin)));
         top.addView(settings, new LinearLayout.LayoutParams(Ds.dp(this, 48), Ds.dp(this, 48)));
-        page.addView(top, new LinearLayout.LayoutParams(-1, -2));
+        controls.addView(top, new LinearLayout.LayoutParams(-1, -2));
 
         banner = Ds.text(this, "", 14, Ds.WARN_DEEP, 600);
         banner.setBackground(Ds.rounded(this, Ds.WARN_BG, 0, 14));
         banner.setPadding(Ds.dp(this, 14), Ds.dp(this, 10), Ds.dp(this, 14), Ds.dp(this, 10));
         banner.setVisibility(View.GONE);
-        Ds.add(page, banner, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 20, 10, 20, 0);
+        Ds.add(controls, banner, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 20, 10, 20, 0);
 
         LinearLayout search = Ds.row(this);
         search.setBackground(Ds.rounded(this, 0xFFFFFFFF, Ds.OUTLINE, 16));
@@ -173,33 +209,48 @@ public final class LibraryActivity extends DsActivity implements Host {
         box.setTextSize(16);
         box.setTextColor(Ds.INK);
         box.setInputType(InputType.TYPE_CLASS_TEXT);
+        box.setText(query);
         box.addTextChangedListener(new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int a, int b, int c) { }
             public void onTextChanged(CharSequence s, int a, int b, int c) { }
-            public void afterTextChanged(Editable e) { query = e.toString().trim().toLowerCase(Locale.ROOT); render(); }
+            public void afterTextChanged(Editable e) { query = e.toString(); render(); }
         });
         Ds.addWeighted(search, box, 1, 10, 0);
         search.setMinimumHeight(Ds.dp(this, 52));
-        Ds.add(page, search, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 20, 12, 20, 0);
+        Ds.add(controls, search, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 20, 12, 20, 0);
 
         chips = Ds.row(this);
-        Ds.add(page, chips, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 20, 10, 20, 0);
+        android.widget.HorizontalScrollView chipScroll = new android.widget.HorizontalScrollView(this);
+        chipScroll.setHorizontalScrollBarEnabled(false);
+        chipScroll.addView(chips);
+        Ds.add(controls, chipScroll, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 20, 10, 20, 0);
         paintChips();
 
+        categoryButton = Ds.button(this, categoryLabel(), Ds.Kind.SECONDARY);
+        categoryButton.setTag("category_filter");
+        categoryButton.setOnClickListener(v -> chooseCategory());
+        Ds.add(controls, categoryButton, -1, -2, 20, 10, 20, 8);
+
         ScrollView scroll = new ScrollView(this);
+        libraryScroll = scroll;
+        scroll.setTag("library_scroll");
         scroll.setOverScrollMode(View.OVER_SCROLL_NEVER);
         list = Ds.column(this);
-        list.setPadding(Ds.dp(this, 20), Ds.dp(this, 4), Ds.dp(this, 20), Ds.dp(this, 110));
+        list.setPadding(Ds.dp(this, 20), Ds.dp(this, 4), Ds.dp(this, 20), Ds.dp(this, 16));
         scroll.addView(list, new ScrollView.LayoutParams(-1, -2));
-        page.addView(scroll, new LinearLayout.LayoutParams(-1, 0, 1));
+        LinearLayout content = Ds.column(this);
+        content.addView(scroll, new LinearLayout.LayoutParams(-1, 0, 1));
+        page.addView(content, wide ? new LinearLayout.LayoutParams(0, -1, 1) : new LinearLayout.LayoutParams(-1, 0, 1));
         root.addView(page, new FrameLayout.LayoutParams(-1, -1));
 
         Button fab = Ds.button(this, "  " + t("Agregar enlace"), Ds.Kind.PRIMARY);
         fab.setCompoundDrawablesWithIntrinsicBounds(tinted(R.drawable.ic_ds_plus), null, null, null);
         fab.setOnClickListener(v -> AddLinkSheet.show(this, "", null, ""));
         FrameLayout.LayoutParams fp = new FrameLayout.LayoutParams(-2, Ds.bigButtonHeight(this), Gravity.BOTTOM | Gravity.END);
-        fp.setMargins(0, 0, Ds.dp(this, 20), Ds.dp(this, 20));
-        root.addView(fab, fp);
+        fp.setMargins(Ds.dp(this, 20), Ds.dp(this, 12), Ds.dp(this, 20), Ds.dp(this, 20));
+        FrameLayout actions = new FrameLayout(this);
+        actions.addView(fab, fp);
+        content.addView(actions, new LinearLayout.LayoutParams(-1, -2));
 
         toast = Ds.text(this, "", 15, 0xFFFFFFFF, 600);
         toast.setBackground(Ds.rounded(this, Ds.INK, 0, 16));
@@ -220,17 +271,45 @@ public final class LibraryActivity extends DsActivity implements Host {
         return d;
     }
 
+    private String categoryLabel() {
+        return category == null ? t("Todas las categorías") : category.isEmpty() ? t("Sin categoría") : category;
+    }
+
+    private void chooseCategory() {
+        java.util.List<String> values = new ArrayList<>();
+        values.add(null);
+        values.add("");
+        for (String value : categories) if (!value.isEmpty()) values.add(value);
+        String[] labels = new String[values.size()];
+        int checked = 0;
+        for (int n = 0; n < values.size(); n++) {
+            String value = values.get(n);
+            labels[n] = value == null ? t("Todas las categorías") : value.isEmpty() ? t("Sin categoría") : value;
+            if (java.util.Objects.equals(value, category)) checked = n;
+        }
+        new android.app.AlertDialog.Builder(this).setTitle(t("Categoría"))
+                .setSingleChoiceItems(labels, checked, (dialog, which) -> {
+                    category = values.get(which);
+                    categoryButton.setText(categoryLabel());
+                    nextCursor = "";
+                    libraryScroll.scrollTo(0, 0);
+                    render();
+                    refresh();
+                    dialog.dismiss();
+                }).setNegativeButton(t("Cancelar"), null).show();
+    }
+
     private void paintChips() {
         chips.removeAllViews();
         String[][] defs = {{"all", t("Todo")}, {"video", t("Video")}, {"audio", t("Audio")}};
         for (String[] d : defs) {
             boolean on = d[0].equals(filter);
             Button b = Ds.button(this, d[1], Ds.Kind.TEXT);
-            b.setMinHeight(Ds.dp(this, 40));
+            b.setMinHeight(Ds.dp(this, 48));
             b.setTextColor(on ? 0xFFFFFFFF : Ds.BRAND_DARK);
             b.setBackground(Ds.ripple(this, Ds.rounded(this, on ? Ds.BRAND : Ds.SOFT, 0, 20)));
             b.setOnClickListener(v -> { filter = d[0]; paintChips(); render(); });
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(-2, Ds.dp(this, 40));
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(-2, -2);
             lp.setMarginEnd(Ds.dp(this, 8));
             chips.addView(b, lp);
         }
@@ -249,12 +328,17 @@ public final class LibraryActivity extends DsActivity implements Host {
         if (loading) { reloadPending = true; return; }
         loading = true;
         final DownloadPolicy.NetworkState net = network;
+        final String requestedCategory = category;
         io.execute(() -> {
             try {
-                LibraryRepo.Result r = LibraryRepo.load(this, origin, fetch && DownloadPolicy.allowsControl(net), "", net);
+                LibraryRepo.Result r = LibraryRepo.load(this, origin, fetch && DownloadPolicy.allowsControl(net), "", net, requestedCategory);
                 runOnUiThread(() -> {
                     loading = false;
                     if (isDestroyed()) return;
+                    if (!java.util.Objects.equals(category, requestedCategory)) { refresh(); return; }
+                    categories.clear();
+                    categories.addAll(r.categories);
+                    for (Item item : r.items) categories.add(item.category);
                     items.clear();
                     items.addAll(r.outbox);
                     items.addAll(r.items);
@@ -282,12 +366,17 @@ public final class LibraryActivity extends DsActivity implements Host {
         loading = true;
         final String cursor = nextCursor;
         final DownloadPolicy.NetworkState net = network;
+        final String requestedCategory = category;
         io.execute(() -> {
             try {
-                LibraryRepo.Result r = LibraryRepo.load(this, origin, true, cursor, net);
+                LibraryRepo.Result r = LibraryRepo.load(this, origin, true, cursor, net, requestedCategory);
                 runOnUiThread(() -> {
                     loading = false;
+                    if (isDestroyed()) return;
+                    if (!java.util.Objects.equals(category, requestedCategory)) { refresh(); return; }
+                    categories.addAll(r.categories);
                     for (Item n : r.items) {
+                        categories.add(n.category);
                         boolean known = false;
                         for (Item o : items) if (o.id.equals(n.id)) { known = true; break; }
                         if (!known) items.add(n);
@@ -303,10 +392,11 @@ public final class LibraryActivity extends DsActivity implements Host {
 
     // ---- Dibujo ----
     private boolean matches(Item i) {
+        if (category != null && !category.equals(i.category)) return false;
         if ("video".equals(filter) && i.isAudio()) return false;
         if ("audio".equals(filter) && !i.isAudio()) return false;
-        if (query.isEmpty()) return true;
-        return (i.title + " " + i.host).toLowerCase(Locale.ROOT).contains(query);
+        String needle = query.trim().toLowerCase(Locale.ROOT);
+        return (i.title + " " + i.host).toLowerCase(Locale.ROOT).contains(needle);
     }
 
     private void render() {
@@ -327,7 +417,6 @@ public final class LibraryActivity extends DsActivity implements Host {
         if (items.isEmpty()) { empty(); return; }
         if (shown.isEmpty()) {
             Ds.add(list, Ds.text(this, t("No hay resultados. Prueba con otra búsqueda o filtro."), 16, Ds.MUTED, 600), 24);
-            return;
         }
 
         section(shown, ItemState.Group.ATTENTION, t("Necesita atención"));
@@ -335,6 +424,11 @@ public final class LibraryActivity extends DsActivity implements Host {
         section(shown, ItemState.Group.SAVED, t("En tu teléfono"));
         section(shown, ItemState.Group.PAST, t("Anteriores"));
 
+        if (loaded && restoreScroll > 0) {
+            int position = restoreScroll;
+            restoreScroll = 0;
+            libraryScroll.post(() -> libraryScroll.scrollTo(0, position));
+        }
         if (!nextCursor.isEmpty()) {
             Button more = Ds.button(this, t("Ver más"), Ds.Kind.SECONDARY);
             more.setOnClickListener(v -> loadMore());
@@ -372,6 +466,17 @@ public final class LibraryActivity extends DsActivity implements Host {
         TextView m = Ds.text(this, meta, 13, Ds.MUTED, 500);
         m.setMaxLines(1);
         Ds.add(col, m, 2);
+        if (!i.outbox) {
+            TextView categoryText = Ds.text(this, i.category.isEmpty() ? t("Sin categoría") : i.category, 13, Ds.BRAND_DARK, 600);
+            categoryText.setMaxLines(2);
+            categoryText.setEllipsize(android.text.TextUtils.TruncateAt.END);
+            Ds.add(col, categoryText, 2);
+        }
+        if (!i.audioTrack.equals("original") || !i.audioLanguage.isEmpty()) {
+            String audioLabel = i.audioLanguage.isEmpty() ? i.audioTrack.split("~")[0] : i.audioLanguage;
+            TextView track = Ds.text(this, t("Audio") + " · " + audioLabel + (i.audioVerified ? " · " + t("Verificado") : ""), 13, Ds.MUTED, 600);
+            Ds.add(col, track, 2);
+        }
         Ds.add(col, Ds.badge(this, ItemFlows.stateLabel(this, i), ItemFlows.tone(i)),
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0, 6, 0, 0);
         int pct = i.state == ItemState.SAVING ? i.phonePercent() : i.state == ItemState.PREPARING ? i.serverPercent() : -1;

@@ -25,7 +25,13 @@ final class AddLinkSheet {
     private TextView info;
     private android.widget.ImageView thumbnail;
     private LinearLayout optionsBox;
-    private Button tabVideo, tabAudio, add;
+    private Button tabVideo, tabAudio, add, audioChoiceButton;
+    private TextView audioNotice;
+    private String audioTrack = "original";
+    private final java.util.List<AudioTrack> audioTracks = new java.util.ArrayList<>();
+    private final android.os.Handler analysisTimer = new android.os.Handler(android.os.Looper.getMainLooper());
+    private int analysisVersion;
+    private final Runnable analyzeLater = this::analyzeIfShowing;
     private final String knownTitle;
     private volatile String analyzedUrl = "";
 
@@ -97,6 +103,13 @@ final class AddLinkSheet {
         optionsBox = Ds.column(a);
         Ds.add(body, optionsBox, 12);
 
+        audioChoiceButton = Ds.button(a, a.t("Pista de audio: Original"), Ds.Kind.SECONDARY);
+        audioChoiceButton.setContentDescription(a.t("Elegir pista de audio"));
+        audioChoiceButton.setOnClickListener(v -> chooseAudio());
+        Ds.add(body, audioChoiceButton, -1, -2, 0, 12, 0, 0);
+        audioNotice = Ds.text(a, a.t("Consulta el enlace para ver las pistas disponibles. Los subtítulos no son pistas de audio."), 14, Ds.MUTED, 500);
+        Ds.add(body, audioNotice, 8);
+
         TextView note = Ds.text(a, a.t("Si la fuente no ofrece esa calidad, se guarda la más cercana disponible. La descarga empieza con Wi-Fi."), 14, Ds.MUTED, 500);
         Ds.add(body, note, 12);
 
@@ -106,15 +119,23 @@ final class AddLinkSheet {
 
         refreshChoices();
         if (!knownTitle.isEmpty()) info.setText(knownTitle);
-        else if (!url.isEmpty()) analyze();
+        if (!url.isEmpty()) analyze();
         input.addTextChangedListener(new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int st, int c, int af) { }
             public void onTextChanged(CharSequence s, int st, int b, int c) { }
-            public void afterTextChanged(Editable e) { analyzedUrl="";thumbnail.setImageDrawable(null);thumbnail.setVisibility(android.view.View.GONE);info.setText(""); }
+            public void afterTextChanged(Editable e) {
+                analysisVersion++; analyzedUrl="";audioTrack="original";audioTracks.clear();
+                audioChoiceButton.setText(a.t("Pista de audio: Original"));
+                audioNotice.setText(a.t("Consulta el enlace para ver las pistas disponibles. Los subtítulos no son pistas de audio."));
+                thumbnail.setImageDrawable(null);thumbnail.setVisibility(android.view.View.GONE);info.setText("");
+                analysisTimer.removeCallbacks(analyzeLater);analysisTimer.postDelayed(analyzeLater,700);
+            }
         });
         input.setOnFocusChangeListener((v,focused)->{if(!focused)analyze();});
         input.setOnEditorActionListener((v, action, ev) -> { analyze(); return false; });
     }
+
+    private void analyzeIfShowing() { if (sheet.isShowing()) analyze(); }
 
     private Button tab(String label) {
         Button b = Ds.button(a, label, Ds.Kind.TEXT);
@@ -172,14 +193,18 @@ final class AddLinkSheet {
         try { url = SharedUrl.parse(input.getText().toString()); } catch (Exception e) { return; }
         if (url.equals(analyzedUrl)) return;
         analyzedUrl = url;
+        final int version = ++analysisVersion;
         info.setText(a.t("Consultando…"));
         host.io().execute(() -> {
             String text;
             android.graphics.Bitmap preview=null;
             String ownerToken=null;
+            java.util.List<AudioTrack> tracks = new java.util.ArrayList<>();
+            boolean analyzed = false;
             try {
                 String token = new SessionStore(a, host.origin()).token();ownerToken=token;
                 MediaInfoClient.Info i = new MediaInfoClient(new ApiClient(host.origin())::request).analyze(url, token);
+                tracks.addAll(i.audioTracks); analyzed = true;
                 preview=Thumbnails.decode(i.thumbnailBase64);
                 String title = i.title == null ? a.t("Sin título disponible") : i.title;
                 String dur = i.durationSeconds == null ? "" : " · " + Item.formatDuration(i.durationSeconds);
@@ -188,11 +213,39 @@ final class AddLinkSheet {
                 text = a.t("Sin conexión: se guardará y se validará cuando vuelva la red.");
             }
             final String result = text;final android.graphics.Bitmap image=preview;final String expectedToken=ownerToken;
-            a.runOnUiThread(() -> { if (!a.isDestroyed() && sheet.isShowing() && input.getText().toString().trim().equals(url)) {
+            final boolean success=analyzed; final java.util.List<AudioTrack> available=tracks;
+            a.runOnUiThread(() -> { if (!a.isDestroyed() && sheet.isShowing() && version==analysisVersion && input.getText().toString().trim().equals(url)) {
                 try{if(expectedToken!=null&&!expectedToken.equals(new SessionStore(a,host.origin()).token()))return;}catch(Exception changed){return;}
+                audioTracks.clear();audioTracks.addAll(available);
+                if (!success) analyzedUrl="";
+                boolean spanish=false;for(AudioTrack track:audioTracks) if(track.language.equals("es")||track.language.startsWith("es-")) spanish=true;
+                audioNotice.setText(!success ? a.t("Sin conexión: puedes guardar la pista original. Consulta las otras pistas al recuperar la red.")
+                    : spanish ? a.t("Elige una pista disponible. Se conservará también al descargar solo audio.")
+                    : a.t("La fuente no expone audio en español. Puedes continuar con Original o cerrar para cancelar."));
                 info.setText(result);thumbnail.setImageBitmap(image);thumbnail.setVisibility(image==null?android.view.View.GONE:android.view.View.VISIBLE);
             } });
         });
+    }
+
+    private String trackLabel(AudioTrack track) {
+        String language = java.util.Locale.forLanguageTag(track.language).getDisplayLanguage(java.util.Locale.forLanguageTag(LanguagePreferences.language(a,host.origin())));
+        String kind = track.kind.equals("auto") ? a.t("Doblaje automático") : track.kind.equals("dubbed") ? a.t("Doblaje")
+                : track.kind.equals("original") ? a.t("Original") : a.t("Procedencia no indicada");
+        return language + " · " + track.language + " · " + kind;
+    }
+
+    private void chooseAudio() {
+        java.util.List<AudioTrack> choices = new java.util.ArrayList<>(audioTracks);
+        String[] labels = new String[choices.size()+1];labels[0]=a.t("Original");
+        int selected=0;
+        for(int n=0;n<choices.size();n++){labels[n+1]=trackLabel(choices.get(n));if(choices.get(n).id.equals(audioTrack))selected=n+1;}
+        new android.app.AlertDialog.Builder(a).setTitle(a.t("Elegir pista de audio"))
+            .setSingleChoiceItems(labels,selected,(dialog,which)->{
+                audioTrack=which==0?"original":choices.get(which-1).id;
+                audioChoiceButton.setText(which==0?a.t("Pista de audio: Original"):labels[which]);
+                dialog.dismiss();
+            }).setNegativeButton(a.t("Cancelar"),null).show();
+        if (audioTracks.isEmpty()) analyze();
     }
 
     private void save() {
@@ -204,6 +257,7 @@ final class AddLinkSheet {
             return;
         }
         final String chosen = audio ? "audio" : selection;
+        final String chosenTrack = audioTrack;
         add.setEnabled(false);
         host.io().execute(() -> {
             String message;
@@ -211,7 +265,7 @@ final class AddLinkSheet {
                 synchronized (SessionStore.class) {
                     JSONObject session = new SessionStore(a, host.origin()).read();
                     if (session == null || !"approved".equals(session.optString("status"))) throw new Exception();
-                    LinkOutboxDispatch.box(a, host.origin(), session).add(url, chosen);
+                    LinkOutboxDispatch.box(a, host.origin(), session).add(url, chosen, chosenTrack);
                 }
                 LinkOutboxDispatch.schedule(a, host.origin());
                 DownloadPolicy.NetworkState n = host.network();
@@ -229,6 +283,16 @@ final class AddLinkSheet {
         DsActivity a = host.act();
         host.io().execute(() -> {
             try {
+                String hostname=java.net.URI.create(url).getHost();
+                boolean youtube=hostname!=null&&(hostname.equals("youtu.be")||hostname.equals("youtube.com")||hostname.endsWith(".youtube.com"));
+                if (youtube && DownloadPolicy.allowsControl(host.network())) {
+                    try {
+                        String token=new SessionStore(a,host.origin()).token();
+                        MediaInfoClient.Info metadata=new MediaInfoClient(new ApiClient(host.origin())::request).analyze(url,token);
+                        boolean alternatives=false;for(AudioTrack track:metadata.audioTracks) if(!track.kind.equals("original"))alternatives=true;
+                        if(alternatives){a.runOnUiThread(()->AddLinkSheet.show(host,url,selection,""));return;}
+                    }catch(Exception unavailable){ /* Preserve original behavior when metadata is unavailable. */ }
+                }
                 synchronized (SessionStore.class) {
                     JSONObject session = new SessionStore(a, host.origin()).read();
                     if (session == null || !"approved".equals(session.optString("status"))) throw new Exception();

@@ -3266,5 +3266,89 @@
   "Vuelve a elegir la carpeta para completar el traslado. Los originales se conservan hasta verificar la copia.": {
     "es": "Vuelve a elegir la carpeta para completar el traslado. Los originales se conservan hasta verificar la copia.",
     "en": "Select the folder again to finish moving. Originals are kept until the copy is verified."
+  },
+  "Todas las categorías": {
+    "es": "Todas las categorías",
+    "en": "All categories"
+  },
+  "Sin categoría": {
+    "es": "Sin categoría",
+    "en": "Uncategorized"
+  },
+  "Categoría": {
+    "es": "Categoría",
+    "en": "Category"
+  },
+  "Pista de audio: Original": {
+    "es": "Pista de audio: Original",
+    "en": "Audio track: Original"
+  },
+  "Elegir pista de audio": {
+    "es": "Elegir pista de audio",
+    "en": "Choose audio track"
+  },
+  "Consulta el enlace para ver las pistas disponibles. Los subtítulos no son pistas de audio.": {
+    "es": "Consulta el enlace para ver las pistas disponibles. Los subtítulos no son pistas de audio.",
+    "en": "Analyze the link to see available audio tracks. Subtitles are not audio tracks."
+  },
+  "Sin conexión: puedes guardar la pista original. Consulta las otras pistas al recuperar la red.": {
+    "es": "Sin conexión: puedes guardar la pista original. Consulta las otras pistas al recuperar la red.",
+    "en": "Offline: you can save the original track. Check other tracks when connected."
+  },
+  "Elige una pista disponible. Se conservará también al descargar solo audio.": {
+    "es": "Elige una pista disponible. Se conservará también al descargar solo audio.",
+    "en": "Choose an available track. Your choice also applies to audio-only downloads."
+  },
+  "La fuente no expone audio en español. Puedes continuar con Original o cerrar para cancelar.": {
+    "es": "La fuente no expone audio en español. Puedes continuar con Original o cerrar para cancelar.",
+    "en": "The source exposes no Spanish audio. You can continue with Original or close to cancel."
+  },
+  "Doblaje automático": {
+    "es": "Doblaje automático",
+    "en": "Auto-dubbed"
+  },
+  "Doblaje": {
+    "es": "Doblaje",
+    "en": "Dubbed"
+  },
+  "Original": {
+    "es": "Original",
+    "en": "Original"
+  },
+  "Procedencia no indicada": {
+    "es": "Procedencia no indicada",
+    "en": "Origin not specified"
+  },
+  "Verificado": {
+    "es": "Verificado",
+    "en": "Verified"
+  },
+  "Pista de audio": {
+    "es": "Pista de audio",
+    "en": "Audio track"
+  },
+  "Cambiar pista de audio": {
+    "es": "Cambiar pista de audio",
+    "en": "Change audio track"
+  },
+  "Elegir otra pista": {
+    "es": "Elegir otra pista",
+    "en": "Choose another track"
+  },
+  "No se cambió la pista. Revisa tu conexión; si la preparación ya comenzó, agrega otra solicitud.": {
+    "es": "No se cambió la pista. Revisa tu conexión; si la preparación ya comenzó, agrega otra solicitud.",
+    "en": "The track was not changed. Check your connection; if processing already started, add another request."
+  },
+  "No se pudieron consultar las pistas. Revisa tu conexión.": {
+    "es": "No se pudieron consultar las pistas. Revisa tu conexión.",
+    "en": "Could not check audio tracks. Check your connection."
+  },
+  "La pista de audio elegida ya no está disponible. Elige Original u otra pista.": {
+    "es": "La pista de audio elegida ya no está disponible. Elige Original u otra pista.",
+    "en": "The selected audio track is no longer available. Choose Original or another track."
+  },
+  "No se pudo verificar el audio del archivo. Reintenta o elige otra pista.": {
+    "es": "No se pudo verificar el audio del archivo. Reintenta o elige otra pista.",
+    "en": "The file audio could not be verified. Retry or choose another track."
   }
 }

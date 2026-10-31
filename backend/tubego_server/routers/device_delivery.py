@@ -143,7 +143,8 @@ def sync(request:Request,principal=Depends(require_approved),
         items=[]
         for row in deliveries[:limit]:
             item=public_resource(row)
-            item.update(delivery_status=row['delivery_status'],downloaded_bytes=row['downloaded_bytes'],
+            item.update(audio_track=read_setting(conn,'resource',row['id'],'audio_track') or 'original',
+                        audio_resolved=read_setting(conn,'resource',row['id'],'audio_resolved'),delivery_status=row['delivery_status'],downloaded_bytes=row['downloaded_bytes'],
                         local_deleted_at=row['local_deleted_at'],sha256=read_setting(conn,'resource',row['id'],'media_sha256'),
                         revision=revision(conn,row['id']),priority=priority(conn,row['id']),server_available=bool(row['ready_at'] and not row['server_deleted_at'] and row['server_path']))
             items.append(item)

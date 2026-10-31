@@ -42,7 +42,7 @@ def enrich(conn,row,device_id=None):
     task=conn.execute('SELECT * FROM tasks WHERE resource_id=? AND user_id=? ORDER BY created_at DESC,id DESC LIMIT 1',(row['id'],row['user_id'])).fetchone()
     delivery=conn.execute('SELECT d.* FROM deliveries d JOIN devices v ON v.id=d.device_id WHERE d.resource_id=? AND d.device_id=? AND v.user_id=? AND v.revoked_at IS NULL',(row['id'],device_id,row['user_id'])).fetchone() if device_id else None
     from tubego_server.resource_revision import current
-    return {'has_thumbnail':bool(value(conn,row['id'],'thumbnail_base64')),'revision':current(conn,row['id']),'latest_task':task_value(conn,task) if task else None,
+    return {'audio_track':value(conn,row['id'],'audio_track','original'),'audio_resolved':value(conn,row['id'],'audio_resolved'),'category':value(conn,row['id'],'category',''),'has_thumbnail':bool(value(conn,row['id'],'thumbnail_base64')),'revision':current(conn,row['id']),'latest_task':task_value(conn,task) if task else None,
             'device_delivery':{key:delivery[key] for key in ('status','downloaded_bytes','confirmed_at','deleted_at')} if delivery else None,
             'last_opened_at':value(conn,row['id'],'last_opened_at'),
             'priority':priority(conn,row['id']),

@@ -111,6 +111,36 @@ final class ItemFlows {
         return sb.toString();
     }
 
+    private static void changeAudio(Host host, Item item, Sheet sheet) {
+        DsActivity a=host.act();
+        host.io().execute(()->{
+            try {
+                String token=new SessionStore(a,host.origin()).token();
+                MediaInfoClient.Info metadata=new MediaInfoClient(new ApiClient(host.origin())::request).analyze(item.sourceUrl,token);
+                String[] labels=new String[metadata.audioTracks.size()+1];labels[0]=a.t("Original");
+                for(int n=0;n<metadata.audioTracks.size();n++) {
+                    AudioTrack track=metadata.audioTracks.get(n);
+                    labels[n+1]=track.language+" · "+(track.kind.equals("auto")?a.t("Doblaje automático"):track.kind.equals("original")?a.t("Original"):track.kind.equals("dubbed")?a.t("Doblaje"):a.t("Procedencia no indicada"));
+                }
+                a.runOnUiThread(()->{
+                    if(a.isDestroyed() || !sheet.isShowing())return;
+                    new android.app.AlertDialog.Builder(a).setTitle(a.t("Cambiar pista de audio"))
+                        .setItems(labels,(dialog,which)->{
+                            String chosen=which==0?"original":metadata.audioTracks.get(which-1).id;
+                            host.io().execute(()->{
+                                try {
+                                    if(!token.equals(new SessionStore(a,host.origin()).token()))return;
+                                    new ApiClient(host.origin()).request("POST","/resources/"+item.id+"/audio-track",
+                                        new org.json.JSONObject().put("audio_track",chosen).put("request_id",java.util.UUID.randomUUID().toString()),token);
+                                    a.runOnUiThread(()->{sheet.dismiss();host.refresh();});
+                                }catch(Exception failed){a.runOnUiThread(()->host.message(a.t("No se cambió la pista. Revisa tu conexión; si la preparación ya comenzó, agrega otra solicitud.")));}
+                            });
+                        }).setNegativeButton(a.t("Cancelar"),null).show();
+                });
+            }catch(Exception failed){a.runOnUiThread(()->host.message(a.t("No se pudieron consultar las pistas. Revisa tu conexión.")));}
+        });
+    }
+
     private static void line(DsActivity a, LinearLayout parent, int icon, String text) {
         LinearLayout row = Ds.row(a);
         row.addView(Ds.icon(a, icon, Ds.MUTED), new LinearLayout.LayoutParams(Ds.dp(a, 22), Ds.dp(a, 22)));
@@ -144,6 +174,13 @@ final class ItemFlows {
         Ds.add(body, header(a, i), 6);
         if (!i.outbox) Ds.add(body, Ds.text(a, meta(a, i), 15, Ds.MUTED, 500), 8);
 
+        if (!i.audioTrack.equals("original") || !i.audioLanguage.isEmpty()) {
+            String effective = i.audioLanguage.isEmpty() ? i.audioTrack.split("~")[0] : i.audioLanguage;
+            Ds.add(body, Ds.text(a, a.t("Pista de audio") + ": " + effective + (i.audioVerified ? " · " + a.t("Verificado") : ""), 15, Ds.MUTED, 600), 8);
+        }
+        if (!i.outbox && "queued".equals(i.taskState)) {
+            big(a, body, a.t("Cambiar pista de audio"), Ds.Kind.SECONDARY, 8, () -> changeAudio(host, i, sheet));
+        }
         if(i.downloaded) {
             TextView location=Ds.text(a,a.t("Ubicación del archivo"),13,Ds.MUTED,500);location.setTextIsSelectable(true);Ds.add(body,location,10);
             host.io().execute(()->{try{
@@ -228,6 +265,9 @@ final class ItemFlows {
                     break;
                 }
                 Ds.add(body, Ds.text(a, failureText(a, i.failureCode), 17, Ds.INK, 500), 14);
+                if (i.failureCode.equals("audio_track_unavailable") || i.failureCode.equals("audio_verification_failed")) {
+                    big(a, body, a.t("Elegir otra pista"), Ds.Kind.PRIMARY, 16, () -> { sheet.dismiss(); AddLinkSheet.show(host, i.sourceUrl, i.selection, i.title); });
+                }
                 if (retryable(i.failureCode)) {
                     int saved = i.phonePercent();
                     if (saved > 0) {
