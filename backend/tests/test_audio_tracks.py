@@ -98,7 +98,7 @@ def test_false_success_rejected_for_wrong_identity_and_broken_file(audio_file):
     # YouTube source container tags can be wrong; checked format identity wins.
     verify_output(en,audio_file,resolve(metadata(),'original'),'audio')
     spanish=metadata()['formats'][3]
-    assert verify_output(spanish,audio_file,es,'audio')['language']=='es-es' 
+    assert verify_output(spanish,audio_file,es,'audio')['language']=='es-es'
     audio_file.write_bytes(b'broken')
     with pytest.raises(MediaError):verify_output(spanish,audio_file,es,'audio')
 
