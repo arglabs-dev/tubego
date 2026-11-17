@@ -1,0 +1,14 @@
+{
+  "version": "0.5.13",
+  "date": "2026-11-15",
+  "unit_tests": 75,
+  "targeted_emulator_tests": 8,
+  "lint": "passed",
+  "gesture_refresh_confirmed_on_emulator": true,
+  "offline_indicator_and_search_test": "passed",
+  "installed_on_physical_oneplus": true,
+  "physical_accessible_refresh_button": true,
+  "physical_success_message_in_uiautomator_dump": false,
+  "physical_success_message_visually_observed": true,
+  "physical_visual_observation": "Screenshot after the gesture showed Biblioteca actualizada on the underlying library while a playback chooser was visible. The dialog excluded underlying text from UIAutomator. A later dump of the library confirmed the accessible refresh button."
+}

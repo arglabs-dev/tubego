@@ -43,16 +43,28 @@ def capabilities(conn):
             'backend_revisions':record.get('backend_revisions',[]) if enabled else [],
             'yt_dlp_versions':record.get('yt_dlp_versions',[]) if enabled else []}
 
-def public(job):return {key:job.get(key) for key in ('id','action','status','phase','progress','result','error_code','created_at','updated_at')}
+def public(job):
+    value={key:job.get(key) for key in ('id','action','status','phase','progress','result','error_code','created_at','updated_at','started_at','finished_at','events','source')}
+    payload=job.get('payload') or {}
+    value['target']={key:payload[key] for key in ('version','revision') if payload.get(key)}
+    return value
 
 def announce(conn,job):
     notify_admins(conn,'admin_maintenance',{'operation':job['action'],'status':job['status'],'error_code':job.get('error_code')},'maintenance:'+job['id']+':'+job['status'])
 
 def save(conn,job):
-    job['updated_at']=utcnow();write_setting(conn,'maintenance',job['id'],'job',job)
+    now=utcnow()
+    events=job.setdefault('events',[])
+    state={'status':job.get('status'),'phase':job.get('phase')}
+    if not events or any(events[-1].get(key)!=value for key,value in state.items()):
+        events.append({**state,'at':now})
+    if job.get('status')=='running' and not job.get('started_at'):job['started_at']=now
+    if job.get('status') in ('succeeded','failed') and not job.get('finished_at'):job['finished_at']=now
+    job['updated_at']=now;write_setting(conn,'maintenance',job['id'],'job',job)
 
 def jobs(conn):
-    return [json.loads(row[0]) for row in conn.execute("SELECT value_json FROM settings WHERE scope='maintenance' AND key='job' ORDER BY updated_at")]
+    values=[json.loads(row[0]) for row in conn.execute("SELECT value_json FROM settings WHERE scope='maintenance' AND key='job'")]
+    return sorted(values,key=lambda job:(job.get('created_at',''),job['id']))
 
 def fixed_json(url):
     with requests.Session() as session:

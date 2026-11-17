@@ -165,3 +165,34 @@ def test_paused_task_without_worker_lease_does_not_deadlock_maintenance(service,
         assert not read_setting(conn,'global','','maintenance_gate')
         assert conn.execute('SELECT status FROM tasks WHERE id=?',(rid,)).fetchone()[0]=='paused'
         assert conn.execute('SELECT server_path FROM resources WHERE id=?',(rid,)).fetchone()[0]
+
+
+def test_public_target_explains_requested_update_without_exposing_session(service,monkeypatch):
+    app,client=service;user=owner(app,role='admin');enable(app,monkeypatch)
+    response=post(client,user,'update_ytdlp',confirmed=True,version='2026.8.19')
+    assert response.status_code==200
+    value=response.json()
+    assert value['target']=={'version':'2026.8.19'}
+    assert 'payload' not in value and 'session_id' not in value and 'user_id' not in value
+    snapshot=client.get('/api/v1/admin/maintenance',headers=user['headers']).json()
+    assert snapshot['jobs'][-1]['target']==value['target']
+    assert snapshot['jobs'][-1]['created_at'] and snapshot['jobs'][-1]['updated_at']
+
+
+def test_job_timeline_preserves_submission_order_when_old_request_changes(service,monkeypatch):
+    from tubego_server.maintenance import save
+    app,client=service;user=owner(app,role='admin')
+    first=post(client,user).json()
+    second=post(client,user,'speed_test',confirmed=True).json()
+    with app.state.db.transaction() as conn:
+        old=read_setting(conn,'maintenance',first['id'],'job')
+        old.update(status='running',phase='checking');save(conn,old)
+        started=old['started_at'];save(conn,old)
+        assert len(old['events'])==2
+        old.update(status='succeeded',phase='finished');save(conn,old)
+        assert old['started_at']==started and old['finished_at']
+    rows=client.get('/api/v1/admin/maintenance',headers=user['headers']).json()['jobs']
+    assert [j['id'] for j in rows]==[first['id'],second['id']]
+    assert [event['status'] for event in rows[0]['events']]==['queued','running','succeeded']
+    assert all('at' in event for event in rows[0]['events'])
+    assert all('session_id' not in event for event in rows[0]['events'])

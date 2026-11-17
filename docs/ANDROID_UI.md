@@ -79,3 +79,25 @@ video se ofrecen únicamente los idiomas que la fuente expone, con variantes
 regionales y señales de doblaje cuando existan. La selección se conserva también
 para Solo audio y al reenviar la cola después de una desconexión. Consulta
 [el contrato, los límites y las pruebas de pistas de audio](AUDIO_TRACKS.md).
+
+## Actualizar la biblioteca con un gesto (0.5.13)
+
+Desde el inicio de la lista, desliza hacia abajo y suelta para actualizar la
+biblioteca. Se muestra un indicador mientras se consulta el servidor y un mensaje
+con el resultado. La búsqueda y los filtros se conservan. El botón accesible
+«Actualizar biblioteca», junto a Ajustes, ejecuta la misma acción. Sin conexión,
+se mantiene visible la biblioteca guardada y el indicador termina igualmente.
+
+La implementación utiliza [SwipeRefreshLayout 1.2.0](https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout)
+con NestedScrollView. Las actualizaciones automáticas no activan el indicador del
+gesto; las peticiones manuales se coordinan con una carga ya en curso para evitar
+solicitudes simultáneas. La regresión `PullRefreshInstrumentedTest` comprueba el
+gesto desde arriba, desplazamiento desde el medio, movimientos cortos, ausencia
+de duplicados y cierre del indicador sin conexión conservando la búsqueda.
+
+
+Validación de 0.5.13: 75 pruebas unitarias, ocho pruebas instrumentadas dirigidas
+(incluidas las dos de gesto/offline), lint y localización ES/EN correctos. La
+actualización se instaló en el OnePlus conectado sin borrar datos; se observó el
+mensaje de biblioteca actualizada después del gesto y se confirmó el botón
+accesible en la jerarquía de la pantalla. [Evidencia](evidence/pull-refresh-2026-11-15.json).

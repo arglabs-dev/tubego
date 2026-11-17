@@ -48,3 +48,27 @@ The fixed project is `tubego-mvp-review`; the script refuses existing containers
 The runner builds and starts API/worker/retention/egress, submits confirmed jobs to the real HTTP API, and executes the real host supervisor/Compose driver. It preserves its private database/report and tears down only the newly created project's containers/network; it does not prune images, remove unrelated projects or delete production files. Inspect any failed rehearsal before rerunning; the script intentionally refuses leftover project artifacts. The supplied checkout must remain unchanged for the whole run.
 
 This rehearsal proves the configured local supervisor path, real container recreation/builds and durable job completion. It does not exercise a different upstream version, migrate production data, interrupt an active video download or prove recovery from a killed supervisor. Existing unit tests cover worker draining, interrupted-write fencing and authorization changes separately. No operations were repeated while versioning this evidence.
+
+## Feedback in Android
+
+The screen distinguishes installed versions, upstream availability and operator-approved
+installation targets. Checking upstream does not approve or install a release. The picker
+omits the installed target, so rebuilding the same version cannot look like an upgrade.
+Local pending requests show their UUID and creation time; accepted jobs show the requested
+target, server acceptance/change times, execution phase, observed result and error code.
+A POST acknowledgement remains visible even if the following status GET fails.
+The API exposes only `version`/`revision` in the public job `target`, never the session payload.
+
+The device journal retains up to 40 requests with attempt counts and local send/
+response timestamps. Only protocol fields enter the POST; journal metadata and
+credentials are excluded. Dispatch is serialized per server and retries reuse the
+UUID. Cached server results update the journal so completed requests remain
+readable offline. The latest local request appears before action buttons.
+Server job lists use stable creation order, and new job saves record a timestamped
+phase/status timeline without duplicating unchanged phases. Read queries and
+write jobs are separate execution lanes, not a global FIFO queue.
+
+On November 10, 2026 the live deployment's approved version was changed from
+2026.8.19 to 2026.10.26 and verified in API and worker. See the
+[incident review](PHONE_TRANSFER_REVIEW.md) and its sanitized evidence. UI/timeline
+source changes in the working branch are separate from that package deployment.

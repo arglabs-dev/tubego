@@ -30,6 +30,7 @@ public final class LibraryActivity extends DsActivity implements Host {
     private final Handler ui = new Handler(Looper.getMainLooper());
     private String origin = "";
     private NetworkMonitor monitor;
+    private ForegroundTransfers foregroundTransfers;
     private volatile DownloadPolicy.NetworkState network = DownloadPolicy.NetworkState.offline();
     private final List<Item> items = new ArrayList<>();
     private String nextCursor = "";
@@ -39,7 +40,9 @@ public final class LibraryActivity extends DsActivity implements Host {
     private String category; // null = all; empty = uncategorized
     private final java.util.Set<String> categories = new java.util.TreeSet<>(String.CASE_INSENSITIVE_ORDER.thenComparing(java.util.Comparator.naturalOrder()));
     private Button categoryButton;
-    private ScrollView libraryScroll;
+    private androidx.core.widget.NestedScrollView libraryScroll;
+    private androidx.swiperefreshlayout.widget.SwipeRefreshLayout swipeRefresh;
+    private boolean userRefreshing;
     private int restoreScroll;
     private boolean wide;
 
@@ -50,6 +53,7 @@ public final class LibraryActivity extends DsActivity implements Host {
         @Override public void run() {
             if (isDestroyed()) return;
             if (hasActive()) {
+                if(foregroundTransfers!=null)foregroundTransfers.wake(origin);
                 TransferJobs.wake(LibraryActivity.this, origin, false);
                 refresh();
             }
@@ -88,9 +92,11 @@ public final class LibraryActivity extends DsActivity implements Host {
                     ? java.util.Collections.emptyList() : state.getStringArrayList("library_categories"));
         }
         build();
+        foregroundTransfers=new ForegroundTransfers(this);
         monitor = new NetworkMonitor(this, s -> {
             network = s;
             if (resumed) {
+                if(foregroundTransfers!=null)foregroundTransfers.wake(origin);
                 TransferJobs.wake(this, origin, false);
                 refresh();
             }
@@ -129,6 +135,7 @@ public final class LibraryActivity extends DsActivity implements Host {
         resumed = true;
         network = monitor.current();
         TransferJobs.register(this, origin);
+        foregroundTransfers.wake(origin);
         ui.removeCallbacks(poll);
         ui.post(poll);
         load(false);
@@ -137,6 +144,8 @@ public final class LibraryActivity extends DsActivity implements Host {
     @Override protected void onPause() {
         super.onPause();
         resumed = false;
+        if(swipeRefresh!=null){userRefreshing=false;swipeRefresh.setRefreshing(false);}
+        if(foregroundTransfers!=null)foregroundTransfers.pause();
         ui.removeCallbacks(poll);
     }
 
@@ -144,6 +153,7 @@ public final class LibraryActivity extends DsActivity implements Host {
         super.onDestroy();
         ui.removeCallbacksAndMessages(null);
         if (monitor != null) monitor.close();
+        if(foregroundTransfers!=null)foregroundTransfers.close();
         io.shutdownNow();
         accountIo.shutdownNow();
     }
@@ -189,6 +199,9 @@ public final class LibraryActivity extends DsActivity implements Host {
         Ds.addWeighted(top, Ds.text(this, t("Mi biblioteca"), wide ? 24 : 30, Ds.INK, 800), 1, 0, 8);
         ImageButton settings = Ds.iconButton(this, R.drawable.ic_ds_sliders, t("Ajustes"));
         settings.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class).putExtra("server_url", origin)));
+        ImageButton refreshButton=Ds.iconButton(this,R.drawable.ic_ds_retry,t("Actualizar biblioteca"));
+        refreshButton.setOnClickListener(v->refreshFromGesture());
+        top.addView(refreshButton,new LinearLayout.LayoutParams(Ds.dp(this,48),Ds.dp(this,48)));
         top.addView(settings, new LinearLayout.LayoutParams(Ds.dp(this, 48), Ds.dp(this, 48)));
         controls.addView(top, new LinearLayout.LayoutParams(-1, -2));
 
@@ -231,15 +244,23 @@ public final class LibraryActivity extends DsActivity implements Host {
         categoryButton.setOnClickListener(v -> chooseCategory());
         Ds.add(controls, categoryButton, -1, -2, 20, 10, 20, 8);
 
-        ScrollView scroll = new ScrollView(this);
+        androidx.core.widget.NestedScrollView scroll = new androidx.core.widget.NestedScrollView(this);
         libraryScroll = scroll;
         scroll.setTag("library_scroll");
         scroll.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        scroll.setFillViewport(true);
         list = Ds.column(this);
         list.setPadding(Ds.dp(this, 20), Ds.dp(this, 4), Ds.dp(this, 20), Ds.dp(this, 16));
         scroll.addView(list, new ScrollView.LayoutParams(-1, -2));
         LinearLayout content = Ds.column(this);
-        content.addView(scroll, new LinearLayout.LayoutParams(-1, 0, 1));
+        swipeRefresh=new androidx.swiperefreshlayout.widget.SwipeRefreshLayout(this);
+        swipeRefresh.setTag("library_refresh");
+        swipeRefresh.setColorSchemeColors(Ds.BRAND);
+        swipeRefresh.setProgressBackgroundColorSchemeColor(0xFFFFFFFF);
+        swipeRefresh.setOnChildScrollUpCallback((parent,child)->libraryScroll.canScrollVertically(-1));
+        swipeRefresh.setOnRefreshListener(this::refreshFromGesture);
+        swipeRefresh.addView(scroll,new android.view.ViewGroup.LayoutParams(-1,-1));
+        content.addView(swipeRefresh, new LinearLayout.LayoutParams(-1, 0, 1));
         page.addView(content, wide ? new LinearLayout.LayoutParams(0, -1, 1) : new LinearLayout.LayoutParams(-1, 0, 1));
         root.addView(page, new FrameLayout.LayoutParams(-1, -1));
 
@@ -322,11 +343,25 @@ public final class LibraryActivity extends DsActivity implements Host {
         return false;
     }
 
+    private void refreshFromGesture(){
+        if(userRefreshing)return;
+        userRefreshing=true;swipeRefresh.setRefreshing(true);
+        if(foregroundTransfers!=null)foregroundTransfers.wake(origin);
+        TransferJobs.wake(this,origin,false);
+        refresh();
+    }
+    private void finishUserRefresh(boolean success){
+        if(!userRefreshing)return;
+        userRefreshing=false;swipeRefresh.setRefreshing(false);
+        if(resumed)message(success?t("Biblioteca actualizada."):t("No se pudo conectar. Se muestra la biblioteca guardada."));
+    }
+
     /** Recarga la biblioteca; con {@code fetch} intenta actualizar desde el servidor. */
     private void load(boolean fetch) {
         if (io.isShutdown()) return;
         if (loading) { reloadPending = true; return; }
         loading = true;
+        final boolean manual=userRefreshing;
         final DownloadPolicy.NetworkState net = network;
         final String requestedCategory = category;
         io.execute(() -> {
@@ -346,17 +381,20 @@ public final class LibraryActivity extends DsActivity implements Host {
                     online = r.online;
                     loaded = true;
                     render();
+                    if(manual)finishUserRefresh(r.online);
                     if (!fetch && resumed && DownloadPolicy.allowsControl(network)) {reloadPending=false;load(true);}
                     else if (resumed && reloadPending) { reloadPending = false; refresh(); }
                 });
             } catch (LibraryRepo.NoSession e) {
                 runOnUiThread(() -> {
                     loading = false;
+                    if(isDestroyed()||isFinishing())return;
+                    finishUserRefresh(false);
                     startActivity(new Intent(this, OnboardingActivity.class).putExtra("server_url", origin));
                     finish();
                 });
             } catch (Exception e) {
-                runOnUiThread(() -> { loading = false; loaded = true; render(); });
+                runOnUiThread(() -> { if(isDestroyed()||isFinishing())return; loading = false; loaded = true; render(); if(manual)finishUserRefresh(false);else if(userRefreshing){reloadPending=false;load(true);} });
             }
         });
     }
@@ -383,9 +421,10 @@ public final class LibraryActivity extends DsActivity implements Host {
                     }
                     nextCursor = r.nextCursor;
                     render();
+                    if(resumed&&(userRefreshing||reloadPending)){reloadPending=false;refresh();}
                 });
             } catch (Exception e) {
-                runOnUiThread(() -> { loading = false; message(t("No se pudo cargar más. Revisa tu conexión.")); });
+                runOnUiThread(() -> { loading = false; message(t("No se pudo cargar más. Revisa tu conexión.")); if(resumed&&userRefreshing){reloadPending=false;refresh();} });
             }
         });
     }
@@ -466,6 +505,14 @@ public final class LibraryActivity extends DsActivity implements Host {
         TextView m = Ds.text(this, meta, 13, Ds.MUTED, 500);
         m.setMaxLines(1);
         Ds.add(col, m, 2);
+        if (ItemFlows.validSource(i.sourceUrl)) {
+            TextView source = Ds.text(this, t("Abrir enlace original") + " · " + i.host, 13, Ds.BRAND_DARK, 600);
+            source.setMaxLines(1);
+            source.setEllipsize(android.text.TextUtils.TruncateAt.END);
+            source.setMinimumHeight(Ds.dp(this, 48));
+            source.setOnClickListener(v -> ItemFlows.openSource(this, i));
+            Ds.add(col, source, 2);
+        }
         if (!i.outbox) {
             TextView categoryText = Ds.text(this, i.category.isEmpty() ? t("Sin categoría") : i.category, 13, Ds.BRAND_DARK, 600);
             categoryText.setMaxLines(2);

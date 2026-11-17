@@ -49,6 +49,7 @@ public final class ResumableTransfer {
             synchronized(storageLock) {if(!alive.getAsBoolean()) return Result.PAUSED;opened=new RandomAccessFile(r.part(),"rw");}
             try(RandomAccessFile output=opened;InputStream input=response.body()) {
                 output.seek(start);byte[] buffer=new byte[65536];long written=start,lastSaved=start;
+                try {
                 while(written<r.size) {
                     if(!permitted.getAsBoolean() || Thread.currentThread().isInterrupted()) {
                         output.getFD().sync();r.state="paused";save(r,storageLock,alive);return Result.PAUSED;
@@ -61,11 +62,14 @@ public final class ResumableTransfer {
                     if(!storage.allows(Math.max(0,r.size-written)))throw pauseStorage(r,storageLock,alive);
                     synchronized(storageLock) {
                         if(!alive.getAsBoolean()) return Result.PAUSED;
-                        output.write(buffer,0,count);output.getFD().sync();written+=count;
+                        output.write(buffer,0,count);written+=count;
                     }
                     if(written-lastSaved>=1024*1024) {output.getFD().sync();save(r,storageLock,alive);lastSaved=written;}
                 }
-                output.getFD().sync();
+                } finally {
+                    // Checkpoint every MiB, plus every exit (pause, disconnect or completion).
+                    output.getFD().sync();
+                }
             }
         } catch(Exception e) {
             if(e instanceof StoragePause)throw e;

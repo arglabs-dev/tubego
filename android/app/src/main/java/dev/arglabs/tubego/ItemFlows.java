@@ -28,8 +28,11 @@ final class ItemFlows {
         switch (i.state) {
             case WAITING_WIFI: return a.t("En espera · Wi-Fi");
             case WAITING_OFFLINE: return a.t("En espera · sin conexión");
-            case PREPARING: return "queued".equals(i.taskState) ? Texts.state(a, "queued") : a.t("En proceso · paso 1 de 2");
-            case SAVING: return a.t("En proceso · paso 2 de 2");
+            case PREPARING: return "queued".equals(i.taskState) ? Texts.state(a, "queued") : a.t("Descargando en el servidor");
+            case SAVING:
+                if ("retry_wait".equals(i.localState)) return a.t("En espera · reintento automático");
+                if (!i.transferring || "pending".equals(i.localState) || "paused".equals(i.localState)) return a.t("En cola para este teléfono");
+                return a.t("Descargando al teléfono") + (i.phonePercent() < 0 ? "" : " · " + i.phonePercent() + " %");
             case READY: return a.t("Listo · en este teléfono");
             case PAUSED_SPACE: return a.t("En pausa · poco espacio");
             case FAILED: return retryable(i.failureCode) ? a.t("Se interrumpió") : a.t("No se pudo descargar");
@@ -37,6 +40,17 @@ final class ItemFlows {
             case UNAVAILABLE: return a.t("Borrado de este teléfono");
             default: return a.t("En el servidor");
         }
+    }
+
+    static boolean validSource(String value) {
+        try { Uri uri = Uri.parse(value); return ("https".equalsIgnoreCase(uri.getScheme()) || "http".equalsIgnoreCase(uri.getScheme())) && uri.getHost() != null; }
+        catch (Exception e) { return false; }
+    }
+
+    static void openSource(Host host, Item item) {
+        if (!validSource(item.sourceUrl)) return;
+        try { host.act().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(item.sourceUrl)).addCategory(Intent.CATEGORY_BROWSABLE)); }
+        catch (ActivityNotFoundException e) { host.message(host.act().t("No hay una aplicación para abrir este enlace.")); }
     }
 
     static Ds.Tone tone(Item i) {
@@ -174,6 +188,12 @@ final class ItemFlows {
         Ds.add(body, header(a, i), 6);
         if (!i.outbox) Ds.add(body, Ds.text(a, meta(a, i), 15, Ds.MUTED, 500), 8);
 
+        if (validSource(i.sourceUrl)) {
+            TextView source = Ds.text(a, i.sourceUrl, 14, Ds.BRAND_DARK, 500);
+            source.setTextIsSelectable(true);
+            Ds.add(body, source, 10);
+            big(a, body, a.t("Abrir enlace original"), Ds.Kind.SECONDARY, 8, () -> openSource(host, i));
+        }
         if (!i.audioTrack.equals("original") || !i.audioLanguage.isEmpty()) {
             String effective = i.audioLanguage.isEmpty() ? i.audioTrack.split("~")[0] : i.audioLanguage;
             Ds.add(body, Ds.text(a, a.t("Pista de audio") + ": " + effective + (i.audioVerified ? " · " + a.t("Verificado") : ""), 15, Ds.MUTED, 600), 8);
@@ -246,6 +266,11 @@ final class ItemFlows {
                 int pct = i.state == ItemState.SAVING ? i.phonePercent() : i.serverPercent();
                 Ds.add(body, Ds.text(a, i.state == ItemState.SAVING ? a.t("Guardando en tu teléfono") : a.t("Preparando en el servidor"), 15, Ds.INK, 700), 14);
                 if (pct >= 0) Ds.add(body, Ds.progress(a, pct, Ds.BRAND, Ds.TRACK, pct + " %"), LinearLayout.LayoutParams.MATCH_PARENT, Ds.dp(a, 10), 0, 8, 0, 0);
+                if (i.state == ItemState.SAVING) {
+                    Ds.add(body, Ds.text(a, stateLabel(a, i) + "\n" + Item.formatSize(i.offsetBytes) + " / " + Item.formatSize(i.sizeBytes), 14, Ds.MUTED, 500), 8);
+                    if (i.nextRetryAt > 0) Ds.add(body, Ds.text(a, a.t("Próximo reintento") + ": " + java.text.DateFormat.getDateTimeInstance().format(new java.util.Date(i.nextRetryAt)) + "\n" + failureText(a, i.failureCode), 14, Ds.MUTED, 500), 8);
+                    big(a, body, a.t("Revisar descarga del teléfono"), Ds.Kind.SECONDARY, 8, () -> { TransferJobs.wake(a, host.origin(), false); host.refresh(); host.message(a.t("Sincronización solicitada. Android puede demorar su ejecución.")); });
+                }
                 if (i.mobileAuthorized) {
                     big(a, body, a.t("Volver a usar solo Wi-Fi"), Ds.Kind.SECONDARY, 14, () -> { sheet.dismiss(); revokeMobile(host, i); });
                 }
