@@ -1,0 +1,61 @@
+{
+  "date": "2026-11-15",
+  "timezone": "America/Mexico_City",
+  "device_model": "OnePlus DN2103",
+  "actions": [
+    "Normal user-authorized reboot",
+    "APK upgraded in place from 0.5.10 (16) to 0.5.12 (18)",
+    "Library opened; existing downloads resumed without deleting app data"
+  ],
+  "baseline_transfer_sample": {
+    "before": {
+      "at": 1794791327.0041234,
+      "bytes": 39688384
+    },
+    "after": {
+      "at": 1794791342.2225611,
+      "bytes": 40425664
+    },
+    "bytes_per_second": 48446.49732823147
+  },
+  "after_reboot_thermal_service_status": 0,
+  "changes": [
+    "Transfer session fence uses an atomically captured durable session generation instead of decrypting the session for every received buffer.",
+    "Partial data is fsynced every MiB and on every stream exit rather than each network read.",
+    "Includes visible-library direct transfer startup from 0.5.11."
+  ],
+  "phone_file_verification": [
+    {
+      "resource_id": "a34b393e-8267-4a20-86a3-696e81f5af9f",
+      "bytes": 56426684,
+      "sha256": "af0d6b16392020cce764720a71f82cd84d10d7e9d74d4a6405690e833b98a3f3",
+      "local_state": "complete",
+      "server_delivery": "complete",
+      "download_started_utc": "2026-11-16T01:11:25.636276Z",
+      "confirmed_utc": "2026-11-16T01:11:34.720285Z",
+      "note": "Resumed existing partial; this is not full-file transfer duration."
+    },
+    {
+      "resource_id": "95f4e639-440b-45d9-a89b-7c07b14e5254",
+      "bytes": 15878417,
+      "sha256": "9488a2df78170e36a25040ea32227c5043f80b245f875d5f513aab29e7130f91",
+      "local_state": "complete",
+      "server_delivery": "complete",
+      "download_started_utc": "2026-11-16T01:11:36.069948Z",
+      "confirmed_utc": "2026-11-16T01:11:46.458925Z",
+      "full_transfer_plus_confirmation_seconds": 10.388977
+    }
+  ],
+  "validation": {
+    "android_unit_tests": 75,
+    "targeted_emulator_tests": 6,
+    "lint": "passed",
+    "localization": "passed",
+    "actual_phone_hashes": "both match server digests"
+  },
+  "limits": [
+    "Before/after files and startup load differ; this is not a controlled speed benchmark.",
+    "Successful foreground delivery does not establish unlimited background execution or permanent resolution of system/vendor thermal reporting.",
+    "Thermal protection was not overridden."
+  ]
+}

@@ -15,19 +15,20 @@ public final class TransferJobService extends JobService {
         notices.createNotificationChannel(new NotificationChannel("transfers",Texts.forOrigin(this,origin,"Descargas en curso"),NotificationManager.IMPORTANCE_LOW));
         if(android.os.Build.VERSION.SDK_INT<33 || checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)==android.content.pm.PackageManager.PERMISSION_GRANTED) notices.notify(params.getJobId(),new Notification.Builder(this,"transfers").setSmallIcon(android.R.drawable.stat_sys_download).setContentTitle(Texts.forOrigin(this,origin,"Tubego · Descargas en curso")).setContentText(Texts.forOrigin(this,origin,"Las transferencias respetan tus permisos de red.")).setOngoing(true).build());
         futures.put(params.getJobId(),executor.submit(()->{
-            TransferDriver.Outcome outcome=TransferDriver.Outcome.RETRY;
-            try {try{AlertSync.poll(this,origin);}catch(Exception ignoredAlerts){}outcome=TransferDriver.run(this,origin,control);}catch(Exception ignored){}
+            TransferDriver.Outcome outcome=TransferDriver.Outcome.RETRY;Exception failure=null;
+            try {try{AlertSync.poll(this,origin);}catch(Exception ignoredAlerts){}outcome=TransferDriver.run(this,origin,control);}catch(Exception error){failure=error;}
             finally {
+                if(!control.stopped)TransferDiagnostics.finish(this,origin,control,outcome,failure);
                 try{org.json.JSONObject current=new SessionStore(this,origin).read();if(current!=null)AlertSync.local(this,origin,current);}catch(Exception ignoredAlerts){}
                 notices.cancel(params.getJobId());controls.remove(params.getJobId());futures.remove(params.getJobId());
                 if(!control.stopped) {
-                                        boolean needsAny=outcome==TransferDriver.Outcome.RETRY || outcome==TransferDriver.Outcome.WAIT_NETWORK;
                     boolean wasWifi=params.getJobId()==TransferJobs.wifiJobId(origin);
-                    jobFinished(params,needsAny && !wasWifi && outcome!=TransferDriver.Outcome.RETRY);
-                    if(outcome==TransferDriver.Outcome.RETRY)new android.os.Handler(getMainLooper()).postDelayed(()->TransferJobs.wakeAt(this,origin,false,control.retryAt),250);
-                    if(needsAny && wasWifi && outcome!=TransferDriver.Outcome.RETRY)TransferJobs.wake(this,origin,false);
-                    if(outcome==TransferDriver.Outcome.WAIT_SPACE)new android.os.Handler(getMainLooper()).postDelayed(()->TransferJobs.wakeAt(this,origin,false,System.currentTimeMillis()+60000),250);
-                    if(outcome==TransferDriver.Outcome.WAIT_WIFI) TransferJobs.wake(this,origin,true);
+                    boolean retry=outcome==TransferDriver.Outcome.RETRY || outcome==TransferDriver.Outcome.WAIT_SPACE
+                        || outcome==TransferDriver.Outcome.WAIT_NETWORK && !wasWifi;
+                    // Persist retries in the scheduler: a Handler callback disappears if Android kills this process.
+                    jobFinished(params,retry);
+                    if(outcome==TransferDriver.Outcome.WAIT_NETWORK && wasWifi)TransferJobs.wake(this,origin,false);
+                    if(outcome==TransferDriver.Outcome.WAIT_WIFI)TransferJobs.wake(this,origin,true);
                 }
             }
         }));return true;

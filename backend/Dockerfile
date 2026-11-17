@@ -1,6 +1,6 @@
 FROM python:3.12-slim
 ARG TUBEGO_BUILD_REVISION
-ARG YTDLP_VERSION=2026.8.19
+ARG YTDLP_VERSION=2026.10.26
 ENV TUBEGO_BUILD_REVISION=$TUBEGO_BUILD_REVISION
 RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg \
     && rm -rf /var/lib/apt/lists/* \

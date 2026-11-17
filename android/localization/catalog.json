@@ -3350,5 +3350,265 @@
   "No se pudo verificar el audio del archivo. Reintenta o elige otra pista.": {
     "es": "No se pudo verificar el audio del archivo. Reintenta o elige otra pista.",
     "en": "The file audio could not be verified. Retry or choose another track."
+  },
+  "Descargando en el servidor": {
+    "es": "Descargando en el servidor",
+    "en": "Downloading on the server"
+  },
+  "En espera · reintento automático": {
+    "es": "En espera · reintento automático",
+    "en": "Waiting · automatic retry"
+  },
+  "En cola para este teléfono": {
+    "es": "En cola para este teléfono",
+    "en": "Queued for this phone"
+  },
+  "Descargando al teléfono": {
+    "es": "Descargando al teléfono",
+    "en": "Downloading to phone"
+  },
+  "Abrir enlace original": {
+    "es": "Abrir enlace original",
+    "en": "Open original link"
+  },
+  "No hay una aplicación para abrir este enlace.": {
+    "es": "No hay una aplicación para abrir este enlace.",
+    "en": "No app is available to open this link."
+  },
+  "Próximo reintento": {
+    "es": "Próximo reintento",
+    "en": "Next retry"
+  },
+  "Revisar descarga del teléfono": {
+    "es": "Revisar descarga del teléfono",
+    "en": "Check phone download"
+  },
+  "Sincronización solicitada. Android puede demorar su ejecución.": {
+    "es": "Sincronización solicitada. Android puede demorar su ejecución.",
+    "en": "Sync requested. Android may delay execution."
+  },
+  "Estado recibido: ": {
+    "es": "Estado recibido: ",
+    "en": "Status received: "
+  },
+  "Guardada en el teléfono; sin confirmación del servidor": {
+    "es": "Guardada en el teléfono; sin confirmación del servidor",
+    "en": "Saved on phone; no server acknowledgement"
+  },
+  "Solicitud: ": {
+    "es": "Solicitud: ",
+    "en": "Request: "
+  },
+  "Creada: ": {
+    "es": "Creada: ",
+    "en": "Created: "
+  },
+  "Disponible en Internet": {
+    "es": "Disponible en Internet",
+    "en": "Available online"
+  },
+  "Consultar versiones no instala actualizaciones. Solo se pueden instalar las versiones aprobadas por el operador.": {
+    "es": "Consultar versiones no instala actualizaciones. Solo se pueden instalar las versiones aprobadas por el operador.",
+    "en": "Checking versions does not install updates. Only operator-approved versions can be installed."
+  },
+  "Aceptada por el servidor: ": {
+    "es": "Aceptada por el servidor: ",
+    "en": "Accepted by server: "
+  },
+  "Última respuesta: ": {
+    "es": "Última respuesta: ",
+    "en": "Last response: "
+  },
+  "Destino solicitado: ": {
+    "es": "Destino solicitado: ",
+    "en": "Requested target: "
+  },
+  "Código: ": {
+    "es": "Código: ",
+    "en": "Code: "
+  },
+  "Solicitud rechazada": {
+    "es": "Solicitud rechazada",
+    "en": "Request rejected"
+  },
+  "Respuesta recibida: ": {
+    "es": "Respuesta recibida: ",
+    "en": "Response received: "
+  },
+  "No hay otra versión aprobada para instalar. El operador debe aprobar la versión disponible y preparar el despliegue.": {
+    "es": "No hay otra versión aprobada para instalar. El operador debe aprobar la versión disponible y preparar el despliegue.",
+    "en": "No other approved version is available to install. The operator must approve the available version and prepare deployment."
+  },
+  "Recibida; pendiente de ejecución": {
+    "es": "Recibida; pendiente de ejecución",
+    "en": "Received; awaiting execution"
+  },
+  "Consultando versiones en Internet": {
+    "es": "Consultando versiones en Internet",
+    "en": "Checking versions online"
+  },
+  "Midiendo la conexión del servidor": {
+    "es": "Midiendo la conexión del servidor",
+    "en": "Measuring server connection"
+  },
+  "Esperando a que terminen las descargas activas": {
+    "es": "Esperando a que terminen las descargas activas",
+    "en": "Waiting for active downloads to finish"
+  },
+  "Aplicando cambios y verificando el servicio": {
+    "es": "Aplicando cambios y verificando el servicio",
+    "en": "Applying changes and verifying service"
+  },
+  "El operador debe preparar la revisión del backend antes de actualizar.": {
+    "es": "El operador debe preparar la revisión del backend antes de actualizar.",
+    "en": "The operator must stage the backend revision before updating."
+  },
+  "La versión solicitada no está aprobada por el operador.": {
+    "es": "La versión solicitada no está aprobada por el operador.",
+    "en": "The requested version is not approved by the operator."
+  },
+  "Mostrando el último estado guardado; esperando respuesta del servidor.": {
+    "es": "Mostrando el último estado guardado; esperando respuesta del servidor.",
+    "en": "Showing last saved status; waiting for a server response."
+  },
+  "Instalado en el servidor": {
+    "es": "Instalado en el servidor",
+    "en": "Installed on server"
+  },
+  "Aprobado para instalar": {
+    "es": "Aprobado para instalar",
+    "en": "Approved to install"
+  },
+  "Último cambio en el servidor: ": {
+    "es": "Último cambio en el servidor: ",
+    "en": "Last server change: "
+  },
+  "Hay una solicitud sin confirmar. Los reintentos conservan su identificador; espera la respuesta antes de enviar otra.": {
+    "es": "Hay una solicitud sin confirmar. Los reintentos conservan su identificador; espera la respuesta antes de enviar otra.",
+    "en": "A request is awaiting confirmation. Retries keep the same ID; wait for the response before sending another."
+  },
+  "Orden: solicitudes más recientes primero, según su creación. Las consultas y los cambios del servicio se procesan por separado; este orden no indica el orden de finalización.": {
+    "es": "Orden: solicitudes más recientes primero, según su creación. Las consultas y los cambios del servicio se procesan por separado; este orden no indica el orden de finalización.",
+    "en": "Order: newest requests first, by creation time. Queries and service changes run separately; this is not completion order."
+  },
+  "Enviando; esperando confirmación del servidor": {
+    "es": "Enviando; esperando confirmación del servidor",
+    "en": "Sending; awaiting server acknowledgement"
+  },
+  "Envío sin confirmar; se reintentará con el mismo identificador": {
+    "es": "Envío sin confirmar; se reintentará con el mismo identificador",
+    "en": "Delivery unconfirmed; retrying with the same ID"
+  },
+  "Aceptada por el servidor": {
+    "es": "Aceptada por el servidor",
+    "en": "Accepted by server"
+  },
+  "Primer intento de envío: ": {
+    "es": "Primer intento de envío: ",
+    "en": "First send attempt: "
+  },
+  "Último intento de envío: ": {
+    "es": "Último intento de envío: ",
+    "en": "Last send attempt: "
+  },
+  "Sin cambio de versión; el servidor ya tenía la versión solicitada.": {
+    "es": "Sin cambio de versión; el servidor ya tenía la versión solicitada.",
+    "en": "No version change; the server already had the requested version."
+  },
+  "Finalizada": {
+    "es": "Finalizada",
+    "en": "Finished"
+  },
+  "Última solicitud de este teléfono": {
+    "es": "Última solicitud de este teléfono",
+    "en": "Latest request from this phone"
+  },
+  "El servidor pidió esperar; reintento pendiente": {
+    "es": "El servidor pidió esperar; reintento pendiente",
+    "en": "Server requested a delay; retry pending"
+  },
+  "Hay otra operación pendiente o el servicio requiere recuperación. Consulta el historial antes de repetirla.": {
+    "es": "Hay otra operación pendiente o el servicio requiere recuperación. Consulta el historial antes de repetirla.",
+    "en": "Another operation is pending or the service requires recovery. Check history before retrying."
+  },
+  "Transferencias del teléfono": {
+    "es": "Transferencias del teléfono",
+    "en": "Phone transfers"
+  },
+  "Trabajo programado: ": {
+    "es": "Trabajo programado: ",
+    "en": "Scheduled job: "
+  },
+  "Todavía no hay un intento registrado.": {
+    "es": "Todavía no hay un intento registrado.",
+    "en": "No attempt has been recorded yet."
+  },
+  "Sí": {
+    "es": "Sí",
+    "en": "Yes"
+  },
+  "No": {
+    "es": "No",
+    "en": "No"
+  },
+  "Validando sesión": {
+    "es": "Validando sesión",
+    "en": "Validating session"
+  },
+  "Sincronizando historial": {
+    "es": "Sincronizando historial",
+    "en": "Syncing history"
+  },
+  "Consultando descargas pendientes": {
+    "es": "Consultando descargas pendientes",
+    "en": "Checking pending downloads"
+  },
+  "Revisando archivos del teléfono": {
+    "es": "Revisando archivos del teléfono",
+    "en": "Checking phone files"
+  },
+  "Procesando cola de descargas": {
+    "es": "Procesando cola de descargas",
+    "en": "Processing download queue"
+  },
+  "Iniciando transferencia": {
+    "es": "Iniciando transferencia",
+    "en": "Starting transfer"
+  },
+  "Sincronización terminada": {
+    "es": "Sincronización terminada",
+    "en": "Sync complete"
+  },
+  "Esperando Wi-Fi": {
+    "es": "Esperando Wi-Fi",
+    "en": "Waiting for Wi-Fi"
+  },
+  "Esperando conexión": {
+    "es": "Esperando conexión",
+    "en": "Waiting for connection"
+  },
+  "Esperando espacio libre": {
+    "es": "Esperando espacio libre",
+    "en": "Waiting for free space"
+  },
+  "Transferencia detenida": {
+    "es": "Transferencia detenida",
+    "en": "Transfer stopped"
+  },
+  "Pendiente de reintento": {
+    "es": "Pendiente de reintento",
+    "en": "Retry pending"
+  },
+  "Actualizar biblioteca": {
+    "es": "Actualizar biblioteca",
+    "en": "Refresh library"
+  },
+  "Biblioteca actualizada.": {
+    "es": "Biblioteca actualizada.",
+    "en": "Library refreshed."
+  },
+  "No se pudo conectar. Se muestra la biblioteca guardada.": {
+    "es": "No se pudo conectar. Se muestra la biblioteca guardada.",
+    "en": "Could not connect. Showing the saved library."
   }
 }

@@ -10,6 +10,8 @@ public final class TransferRuntime {
     public static Object lock(String origin) {return locks.computeIfAbsent(origin,key->new Object());}
     public static final class Control {
         public volatile long retryAt;
+        volatile String phase="starting",sessionToken="";
+        volatile long sessionGeneration=-1;
         public volatile boolean stopped;
         public volatile HttpURLConnection connection;
         public volatile TransferKey transfer;
@@ -22,6 +24,11 @@ public final class TransferRuntime {
         if(control!=null && control.transfer!=null && control.transfer.storageKey().equals(key.storageKey())) {
             HttpURLConnection connection=control.connection;if(connection!=null)connection.disconnect();
         }
+    }
+    public static boolean transferring(String origin,String resource) {
+        Control control=running.get(origin);
+        TransferKey transfer=control==null?null:control.transfer;
+        return control!=null && !control.stopped && transfer!=null && transfer.resourceId.equals(resource);
     }
     public static void stopOrigin(String origin) {Control control=running.get(origin);if(control!=null)control.stop();}
 }

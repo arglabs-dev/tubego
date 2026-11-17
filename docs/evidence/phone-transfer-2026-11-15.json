@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-15",
+  "timezone": "America/Mexico_City",
+  "device_model": "OnePlus DN2103",
+  "installed_app_version": "0.5.10",
+  "installed_version_code": 16,
+  "resource_id": "a34b393e-8267-4a20-86a3-696e81f5af9f",
+  "resource_size_bytes": 56426684,
+  "observed_partial_bytes": 32258845,
+  "job_ids": [
+    1019637600,
+    1019637601
+  ],
+  "stop_reason": "thermal",
+  "last_failed_run_local": "2026-11-15 16:43:03",
+  "failure_count": 6,
+  "retry_backoff_minutes": 16,
+  "thermal_status_reported_by_android": 3,
+  "free_space_approx_gb": 13,
+  "minimum_free_percent_configured": 3,
+  "job_history_lines": [
+    "START: #u0a522/1019637600 dev.arglabs.tubego/.TransferJobService",
+    "START-P: #u0a522/1019637601 dev.arglabs.tubego/.TransferJobService",
+    "STOP: #u0a522/1019637600 dev.arglabs.tubego/.TransferJobService thermal",
+    "STOP-P: #u0a522/1019637601 dev.arglabs.tubego/.TransferJobService thermal"
+  ],
+  "observations": [
+    "Server accepted resumed download with HTTP 206.",
+    "Partial file stopped growing when Android stopped the jobs.",
+    "Library polling continued independently of transfer execution.",
+    "Current UI displays queued but does not explain the thermal stop or scheduler deadline."
+  ],
+  "limits": [
+    "No phone software update performed during diagnosis.",
+    "Current thermal stop does not establish the cause of every earlier failed attempt.",
+    "A short server-side buffer throughput sample is not an end-to-end Wi-Fi speed measurement."
+  ]
+}

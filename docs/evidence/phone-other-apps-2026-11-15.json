@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-15",
+  "timezone": "America/Mexico_City",
+  "scope": "Read-only CPU and thermal inspection; no causation experiment performed.",
+  "followup_sample": "In a subsequent approximately 20-second sample, earlier peaks subsided. Several other processes showed moderate CPU activity. The installed-app inventory is omitted from public evidence.",
+  "thermal_cached": {
+    "status": 3,
+    "cpu_c": 77.929,
+    "skin_c": 51.22
+  },
+  "thermal_live_hal": {
+    "cpu_c": 36.888,
+    "battery_c": 29.525,
+    "skin_c": 32.73,
+    "all_reported_statuses": 0
+  },
+  "conclusion": "Transient load in several other apps is observed, but no individual app is established as the cause of the earlier thermal job stops. The live/cached thermal-state discrepancy is a stronger lead for the ongoing restriction.",
+  "observed_other_apps_cpu_peaks_per_core_percent": [
+    51,
+    93.7,
+    67.3,
+    91.6
+  ]
+}

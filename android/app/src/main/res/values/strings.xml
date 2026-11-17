@@ -13,6 +13,7 @@
   <string name="ui_0208294ea49a" formatted="false">"Sin categoría"</string>
   <string name="ui_020d2b924c4f" formatted="false">"Preguntar calidad o audio para cada enlace"</string>
   <string name="ui_02511d8c7ef1" formatted="false">"Usa entre 12 y 128 caracteres."</string>
+  <string name="ui_03813a5d0ad9" formatted="false">"Todavía no hay un intento registrado."</string>
   <string name="ui_038413907b57" formatted="false">"No se pudo guardar la solicitud. Revisa sesión y almacenamiento."</string>
   <string name="ui_03c66a4b9f67" formatted="false">"Estimación guardada: "</string>
   <string name="ui_03d1fc9b69ef" formatted="false">"Limpiar archivos del servidor"</string>
@@ -21,6 +22,8 @@
   <string name="ui_04fc3218b549" formatted="false">"Conservar archivos en el servidor"</string>
   <string name="ui_050ccf0b0fff" formatted="false">"Cambiar contraseña"</string>
   <string name="ui_054a14ca82b3" formatted="false">"Preferencias sincronizadas de tu cuenta"</string>
+  <string name="ui_054a8b9a8d1f" formatted="false">"Última respuesta: "</string>
+  <string name="ui_057054892659" formatted="false">"Esperando espacio libre"</string>
   <string name="ui_05ac13a6eae8" formatted="false">"Registra tu correo, verifícalo y consulta la aprobación de tu cuenta."</string>
   <string name="ui_05e427a291c2" formatted="false">"Servidor"</string>
   <string name="ui_06211b0cc7c2" formatted="false">"No se pudo cambiar la solicitud. Actualiza e inténtalo nuevamente."</string>
@@ -28,6 +31,7 @@
   <string name="ui_06827e73a06b" formatted="false">"Reiniciar servicio"</string>
   <string name="ui_06fb496f5f8e" formatted="false">"Cargando conservación del servidor…"</string>
   <string name="ui_0706dae54169" formatted="false">"En pausa · poco espacio"</string>
+  <string name="ui_071fb7e79698" formatted="false">"El operador debe preparar la revisión del backend antes de actualizar."</string>
   <string name="ui_07410fbd08bb" formatted="false">"En espera · Wi-Fi"</string>
   <string name="ui_075595345ce1" formatted="false">"Guardadas en el teléfono. Sincronización pendiente."</string>
   <string name="ui_07786e8e649b" formatted="false">"Actualizar permisos y almacenamiento"</string>
@@ -38,6 +42,7 @@
   <string name="ui_093727b79899" formatted="false">"Centro de avisos. No avisamos al terminar cada video. Las notificaciones son opcionales y los avisos quedan disponibles aquí."</string>
   <string name="ui_093b6f7a3655" formatted="false">"Diagnósticos de descargas fallidas"</string>
   <string name="ui_097ed3bc6722" formatted="false">"Conexión y almacenamiento local"</string>
+  <string name="ui_0996e3b8de52" formatted="false">"Transferencia detenida"</string>
   <string name="ui_09a60097cd46" formatted="false">"Reserva de espacio libre"</string>
   <string name="ui_0a164fa4c787" formatted="false">"Tu sesión venció. Inicia sesión nuevamente."</string>
   <string name="ui_0a23de230baf" formatted="false">"Doblaje"</string>
@@ -76,8 +81,10 @@
   <string name="ui_1313e908c101" formatted="false">"Solo administradores"</string>
   <string name="ui_131b57bc128e" formatted="false">"Enviando acción…"</string>
   <string name="ui_13a90b45b657" formatted="false">"Usuarios · Bloquear / Eliminar / Estado y rol"</string>
+  <string name="ui_13b640b03a53" formatted="false">"Próximo reintento"</string>
   <string name="ui_13e51a210f45" formatted="false">"Guardar"</string>
   <string name="ui_13fe25bf17dd" formatted="false">"El archivo ya no está en el servidor. Puedes pedirlo otra vez."</string>
+  <string name="ui_148f09786847" formatted="false">"Envío sin confirmar; se reintentará con el mismo identificador"</string>
   <string name="ui_14a433147337" formatted="false">"Contraseña actual"</string>
   <string name="ui_1560029ff96c" formatted="false">"No se pudo abrir la administración."</string>
   <string name="ui_15e7b4da8932" formatted="false">"Además libera espacio en el servidor. Para tenerlo otra vez, habrá que volver a solicitarlo."</string>
@@ -89,6 +96,7 @@
   <string name="ui_17c9b124aa7d" formatted="false">"Al cerrar sesión se borra la biblioteca privada de TubeGo. Los archivos de Descargas o de tu carpeta elegida se conservan. ¿Continuar?"</string>
   <string name="ui_17f064c0fd57" formatted="false">"En proceso · paso 1 de 2"</string>
   <string name="ui_184f9f08775f" formatted="false">"Falló"</string>
+  <string name="ui_198b3acc5f21" formatted="false">"Destino solicitado: "</string>
   <string name="ui_1a1b3e6ecc51" formatted="false">"Administración"</string>
   <string name="ui_1a46d1d8ce21" formatted="false">"Idioma de la cuenta"</string>
   <string name="ui_1a4d28dbf5cc" formatted="false">"Listo: se descargará antes que los demás."</string>
@@ -96,6 +104,7 @@
   <string name="ui_1b615c5dcd17" formatted="false">"Borrado de este teléfono"</string>
   <string name="ui_1bc2b0b9f05b" formatted="false">"Buscar / Actualizar"</string>
   <string name="ui_1c484dc4f940" formatted="false">"Sesión cerrada. Archivos locales borrados; el servidor recibirá el cierre cuando haya conexión."</string>
+  <string name="ui_1c51538c80ef" formatted="false">"Hay otra operación pendiente o el servicio requiere recuperación. Consulta el historial antes de repetirla."</string>
   <string name="ui_1c6f868fe01b" formatted="false">"Reintentar descarga del servidor"</string>
   <string name="ui_1cae794a88b6" formatted="false">"Acceso administrativo no disponible."</string>
   <string name="ui_1d108ffd905c" formatted="false">"Acciones pendientes y errores"</string>
@@ -106,6 +115,8 @@
   <string name="ui_1da4621c878a" formatted="false">"elegida"</string>
   <string name="ui_1db0d1d3324b" formatted="false">"No se pudieron consultar las descargas fallidas."</string>
   <string name="ui_1dea727b3d3d" formatted="false">"No hay un reproductor compatible. Instala VLC u otro reproductor que admita archivos locales y vuelve a intentarlo."</string>
+  <string name="ui_1ea442a134b2" formatted="false">"No"</string>
+  <string name="ui_1eaf3f6fc1d2" formatted="false">"Primer intento de envío: "</string>
   <string name="ui_1eed2f26542f" formatted="false">"Tu sesión fue revocada o tu cuenta no está disponible."</string>
   <string name="ui_1f27ebc00b87" formatted="false">"Servidor de Tubego"</string>
   <string name="ui_1fe81142feda" formatted="false">"Reintentar la limpieza pendiente de archivos del servidor."</string>
@@ -127,7 +138,9 @@
   <string name="ui_25b9cd4a07d6" formatted="false">"No se pudo consultar. Inicia sesión o revisa tu conexión."</string>
   <string name="ui_25f2e43a67f3" formatted="false">"Solicitar "</string>
   <string name="ui_2640f6153be5" formatted="false">"Libera espacio en el servidor"</string>
+  <string name="ui_2642af6c6156" formatted="false">"Aceptada por el servidor: "</string>
   <string name="ui_2649b3c4d02c" formatted="false">"\nÚltima conexión: "</string>
+  <string name="ui_2715bab29fd4" formatted="false">"No hay otra versión aprobada para instalar. El operador debe aprobar la versión disponible y preparar el despliegue."</string>
   <string name="ui_27f99f49ba94" formatted="false">"Configura una URL HTTPS válida."</string>
   <string name="ui_28a3c50ea273" formatted="false">"Administración del servidor"</string>
   <string name="ui_296ae8e9d0dc" formatted="false">"Estado no disponible"</string>
@@ -135,6 +148,7 @@
   <string name="ui_2a0515602d31" formatted="false">"Rechazar"</string>
   <string name="ui_2a78b5bb393d" formatted="false">"Sin sesión"</string>
   <string name="ui_2aa5e104f96a" formatted="false">"Preferencias guardadas para todos tus dispositivos"</string>
+  <string name="ui_2b2b7fdc5495" formatted="false">"Descargando al teléfono"</string>
   <string name="ui_2b53adf7d2a8" formatted="false">"Herramientas avanzadas"</string>
   <string name="ui_2b54eb2db01f" formatted="false">"Este teléfono"</string>
   <string name="ui_2b8760135ab3" formatted="false">"Correo verificado. Espera aprobación del administrador."</string>
@@ -177,6 +191,7 @@
   <string name="ui_34bdc3d8a526" formatted="false">"PiP y audio con pantalla bloqueada dependen del reproductor."</string>
   <string name="ui_34f0198378a8" formatted="false">" · intentos: "</string>
   <string name="ui_35286b0c70d0" formatted="false">"Esta dirección se usa solo en esta app. Si cambias de servidor, inicia sesión con una cuenta de ese servidor."</string>
+  <string name="ui_35434d716a9b" formatted="false">"Última solicitud de este teléfono"</string>
   <string name="ui_359490b518e4" formatted="false">"Tu biblioteca empieza aquí"</string>
   <string name="ui_35cfb018e97a" formatted="false">"Nueva contraseña (12–128 caracteres)"</string>
   <string name="ui_363c09f2dcab" formatted="false">"Mi cuenta / Estado de aprobación"</string>
@@ -209,6 +224,7 @@
   <string name="ui_3e09874d5e80" formatted="false">"Reintentar descarga"</string>
   <string name="ui_3e67b10ad5c6" formatted="false">"Este enlace no es compatible con las plataformas disponibles."</string>
   <string name="ui_3e8cc6348bc9" formatted="false">"Esta calidad no está disponible para este enlace. Prueba con otra o con solo audio."</string>
+  <string name="ui_3edc7f130c9d" formatted="false">"Consultando versiones en Internet"</string>
   <string name="ui_3ef94586edae" formatted="false">"Preparando archivo"</string>
   <string name="ui_3f1948830ce6" formatted="false">"Sin archivo disponible"</string>
   <string name="ui_4022e43f58cd" formatted="false">"Revisa la dirección del servidor: debe empezar con https://"</string>
@@ -228,26 +244,33 @@
   <string name="ui_43600d8e671f" formatted="false">"Desvincular / cerrar sesión"</string>
   <string name="ui_437314bcf036" formatted="false">"No hay un reproductor compatible. Instala VLC u otro reproductor de archivos locales."</string>
   <string name="ui_43b13bba0593" formatted="false">"Agrega a tu biblioteca un enlace recibido desde otra app."</string>
+  <string name="ui_43d2eef1e978" formatted="false">"Abrir enlace original"</string>
   <string name="ui_43df60f6bb1b" formatted="false">"No hay recursos disponibles en la biblioteca."</string>
   <string name="ui_43f558bba584" formatted="false">"Cuenta cambió"</string>
   <string name="ui_44ac004d2d65" formatted="false">"Volver a usar solo Wi-Fi"</string>
   <string name="ui_4575f2990ad6" formatted="false">"Wi-Fi disponible. Las descargas pueden continuar."</string>
   <string name="ui_4589acddd88f" formatted="false">"Se interrumpió la descarga"</string>
   <string name="ui_467017e0979c" formatted="false">"Descargando en teléfono"</string>
+  <string name="ui_46d4ef16c477" formatted="false">"La versión solicitada no está aprobada por el operador."</string>
   <string name="ui_473c8eb8174a" formatted="false">"Descargados en este teléfono"</string>
   <string name="ui_473d27a4aecf" formatted="false">"No se pudo descargar"</string>
   <string name="ui_47467a163f37" formatted="false">"Actualización de Tubego"</string>
   <string name="ui_474a73d1dfab" formatted="false">"Prioridad guardada"</string>
   <string name="ui_481b278aece1" formatted="false">"Diagnóstico y mantenimiento administrativo"</string>
   <string name="ui_483b168dd05d" formatted="false">"No se pudieron consultar las pistas. Revisa tu conexión."</string>
+  <string name="ui_48cbe7045635" formatted="false">"Esperando conexión"</string>
   <string name="ui_499a5c37dcd6" formatted="false">"Agregar enlace"</string>
   <string name="ui_49b85ee08c7a" formatted="false">". Los archivos del teléfono no cambian."</string>
+  <string name="ui_4a1178e5ff6a" formatted="false">"Sincronización solicitada. Android puede demorar su ejecución."</string>
   <string name="ui_4a361079bdc6" formatted="false">"Reproducción local. No requiere conexión."</string>
   <string name="ui_4ab01ea96c47" formatted="false">"Cambiar el mínimo libre"</string>
   <string name="ui_4ab9c5d5e893" formatted="false">"No hay archivos guardados en este teléfono."</string>
   <string name="ui_4ae35727d09d" formatted="false">"Reserva espacio libre para que las descargas se pausen antes de llenar tu teléfono."</string>
   <string name="ui_4b0cbc39f277" formatted="false">"No se pudo guardar el idioma. Revisa tu sesión y almacenamiento."</string>
   <string name="ui_4b59798403fd" formatted="false">"Usa tu correo y contraseña para entrar o recuperar el acceso."</string>
+  <string name="ui_4bdd2bbf98d3" formatted="false">"Guardada en el teléfono; sin confirmación del servidor"</string>
+  <string name="ui_4bf27618ce88" formatted="false">"No hay una aplicación para abrir este enlace."</string>
+  <string name="ui_4c00be9fde13" formatted="false">"Validando sesión"</string>
   <string name="ui_4c7b2043ec72" formatted="false">"Acceso revocado; limpieza pendiente, se reintentará automáticamente."</string>
   <string name="ui_4c89c2f1231d" formatted="false">"Contraseña actualizada."</string>
   <string name="ui_4cac34fb3a60" formatted="false">"Permisos de datos móviles por archivo"</string>
@@ -257,6 +280,7 @@
   <string name="ui_4e0a6bb7a45e" formatted="false">"\nRevisión: "</string>
   <string name="ui_4e2e3d43cbf4" formatted="false">"Libera %s en este teléfono. Elige hasta dónde."</string>
   <string name="ui_4e4e2da6c4f5" formatted="false">"Comprueba la red, la versión de la app y la respuesta del servidor."</string>
+  <string name="ui_4eaaa3692b94" formatted="false">"Revisando archivos del teléfono"</string>
   <string name="ui_4f165afe3977" formatted="false">"Las prioridades y los plazos se aplican a los usuarios del servidor."</string>
   <string name="ui_4f2debbbf4fa" formatted="false">"Ajustes"</string>
   <string name="ui_4f5d5fa59df2" formatted="false">"Ocupado · libre · marca: límite de pausa"</string>
@@ -267,9 +291,11 @@
   <string name="ui_5032ea51552f" formatted="false">"Cuentas y acceso"</string>
   <string name="ui_517d49a81a82" formatted="false">"Cambio pendiente preparado para enviar cuando haya conexión."</string>
   <string name="ui_518bd027de9f" formatted="false">"Consultar versión y conexión del servidor"</string>
+  <string name="ui_5194ed7ed367" formatted="false">"Descargando en el servidor"</string>
   <string name="ui_5230bdb160b1" formatted="false">"No se pudo conectar. Revisa la URL y tu conexión."</string>
   <string name="ui_529993135894" formatted="false">"La plataforma o colección de este enlace no es compatible."</string>
   <string name="ui_52fadddb772f" formatted="false">"Revisar"</string>
+  <string name="ui_5396e45841ed" formatted="false">"Disponible en Internet"</string>
   <string name="ui_53d02d717e25" formatted="false">"Servicio y mantenimiento"</string>
   <string name="ui_53dfa390077b" formatted="false">"Tu avance se conserva · %d %%"</string>
   <string name="ui_53e7468e7e84" formatted="false">"Limpieza global"</string>
@@ -299,13 +325,16 @@
   <string name="ui_5b02dc3615d5" formatted="false">"PiP y audio con pantalla bloqueada dependen del reproductor elegido."</string>
   <string name="ui_5b365e552723" formatted="false">"Consultar título y duración (con conexión)"</string>
   <string name="ui_5b4830cf8024" formatted="false">"La copia del servidor ya no está disponible"</string>
+  <string name="ui_5ba738cb32fa" formatted="false">"Hay una solicitud sin confirmar. Los reintentos conservan su identificador; espera la respuesta antes de enviar otra."</string>
   <string name="ui_5bef764a9f25" formatted="false">"No se pudo cargar más. Revisa tu conexión."</string>
   <string name="ui_5c21c8009e97" formatted="false">"Se recuperará esta variante sin crear otra ficha. Tus dispositivos que ya tengan el archivo completo no lo descargarán otra vez. Si lo habías borrado, autorizas descargarlo de nuevo en este teléfono; tus otros dispositivos necesitarán su propia aprobación."</string>
   <string name="ui_5c3c3725e0d9" formatted="false">"Acción pendiente"</string>
   <string name="ui_5c5ba72d6027" formatted="false">"Biblioteca / Borrar recursos"</string>
   <string name="ui_5c97ed84d1d6" formatted="false">"Espacio insuficiente"</string>
+  <string name="ui_5cc8f4e1e0b1" formatted="false">"Trabajo programado: "</string>
   <string name="ui_5cdc024b10cb" formatted="false">"El retroceso debe ser un entero entre 0 y 120."</string>
   <string name="ui_5ce3002c5dea" formatted="false">"Se requiere una cuenta de administrador aprobada."</string>
+  <string name="ui_5d18111e1f2b" formatted="false">"Aceptada por el servidor"</string>
   <string name="ui_5d3279a2b17b" formatted="false">"Necesita atención"</string>
   <string name="ui_5d3ac549b59b" formatted="false">"Activar avisos del sistema"</string>
   <string name="ui_5d43ed8d81c3" formatted="false">"Elige hasta dónde."</string>
@@ -328,6 +357,7 @@
   <string name="ui_63125fac1a48" formatted="false">"Enviar cambio pendiente"</string>
   <string name="ui_631e7831c88f" formatted="false">"Mis copias del servidor"</string>
   <string name="ui_63614ffde2d3" formatted="false">"Usuario"</string>
+  <string name="ui_636c7b850c4d" formatted="false">"Finalizada"</string>
   <string name="ui_63c161b0b216" formatted="false">"Se esperará a que terminen las descargas del servidor. ¿Reiniciar el servicio?"</string>
   <string name="ui_640d6761c178" formatted="false">"Aceptar"</string>
   <string name="ui_64d46e935ec5" formatted="false">"Acción rechazada. Revisa los permisos y el estado del recurso antes de volver a solicitarla."</string>
@@ -346,10 +376,14 @@
   <string name="ui_686c584a6de3" formatted="false">" · correo sin verificar"</string>
   <string name="ui_68a15ecaa266" formatted="false">"Mi cuenta y seguridad"</string>
   <string name="ui_68ab269bbe43" formatted="false">"De un enlace a tu biblioteca. Así de simple."</string>
+  <string name="ui_68de18d7b6a6" formatted="false">"Esperando Wi-Fi"</string>
   <string name="ui_68def20ffbb3" formatted="false">"No se pudo reintentar. Revisa tu sesión."</string>
   <string name="ui_691137879368" formatted="false">"Si la fuente no ofrece esa calidad, se guarda la más cercana disponible. La descarga empieza con Wi-Fi."</string>
   <string name="ui_6935202e3961" formatted="false">"Guarda una vez.\nEscucha donde quieras."</string>
   <string name="ui_69492fe4f319" formatted="false">"No hay archivos descargados en este teléfono."</string>
+  <string name="ui_699813d85430" formatted="false">"Sincronización terminada"</string>
+  <string name="ui_6a40ec2897c1" formatted="false">"Pendiente de reintento"</string>
+  <string name="ui_6aa53f737646" formatted="false">"Sincronizando historial"</string>
   <string name="ui_6aecc2fba492" formatted="false">" Los parciales también se limpian y las tareas se cancelan. Tus copias del teléfono y el historial se conservarán. El bot de Telegram mantiene su almacenamiento independiente."</string>
   <string name="ui_6afdc5a2914c" formatted="false">"La medición descarga 5 MB en el servidor. El teléfono recibe solo el resultado."</string>
   <string name="ui_6b0b3ebf5dcd" formatted="false">"%.1f GiB"</string>
@@ -357,6 +391,7 @@
   <string name="ui_6b7cd3ab0b0f" formatted="false">"CONEXIÓN"</string>
   <string name="ui_6c54a29e11ce" formatted="false">"Correo del servidor"</string>
   <string name="ui_6c5f8a46c1b8" formatted="false">"Verifica tu correo desde el enlace enviado. Puedes reenviarlo en Crear cuenta."</string>
+  <string name="ui_6cd19e0e41bf" formatted="false">"Revisar descarga del teléfono"</string>
   <string name="ui_6d681d21c534" formatted="false">"¿Usar datos móviles para “%s” (%s)? El permiso dura hasta completar o cancelar esta descarga. No incluye otros archivos ni dispositivos."</string>
   <string name="ui_6d6db0a3dac1" formatted="false">"Revisar impacto y guardar plazos"</string>
   <string name="ui_6d95af6781dc" formatted="false">"Solicitudes verificadas pendientes"</string>
@@ -380,8 +415,10 @@
   <string name="ui_7239c8d7c9e5" formatted="false">"Sin conexión. Puedes reproducir lo guardado y agregar enlaces; se envían al volver la red."</string>
   <string name="ui_72608992f48f" formatted="false">"Se requiere una sesión activa de administrador para consultar diagnósticos."</string>
   <string name="ui_73327ef00c45" formatted="false">"Diagnóstico de esta cuenta"</string>
+  <string name="ui_739215889580" formatted="false">"Sí"</string>
   <string name="ui_73d2b4f59152" formatted="false">"Video 480p"</string>
   <string name="ui_7426e15876c1" formatted="false">"Activar limpieza automática"</string>
+  <string name="ui_7442f8c04701" formatted="false">"Estado recibido: "</string>
   <string name="ui_74abe2683078" formatted="false">" segundos"</string>
   <string name="ui_74c764f14f21" formatted="false">"Leyendo archivos del teléfono…"</string>
   <string name="ui_753d7e4e1c80" formatted="false">"Decide qué copias conserva el servidor y cuándo puede limpiarlas."</string>
@@ -407,6 +444,7 @@
   <string name="ui_7b31e2574ff4" formatted="false">"Descargas"</string>
   <string name="ui_7b8b20584c16" formatted="false">"Los plazos afectan a archivos existentes y nuevos. Solo borran copias del servidor."</string>
   <string name="ui_7bf133b8243f" formatted="false">"Plazos globales (horas). Aplican también a archivos existentes."</string>
+  <string name="ui_7c01d6410631" formatted="false">"Último cambio en el servidor: "</string>
   <string name="ui_7c056cdb7c20" formatted="false">"Aprueba o rechaza solicitudes que ya verificaron su correo."</string>
   <string name="ui_7c1ac5649b71" formatted="false">"Velocidad del servidor"</string>
   <string name="ui_7c341e634f7c" formatted="false">"No se puede compartir este video. Comprueba que siga descargado y que tu sesión esté disponible."</string>
@@ -418,8 +456,11 @@
   <string name="ui_7e9721138c26" formatted="false">"Esta limpieza afecta solo a tus archivos del servidor. Conserva tus copias del teléfono y tu historial."</string>
   <string name="ui_7ea7c797739a" formatted="false">"Biblioteca e historial"</string>
   <string name="ui_7f1289c15d7f" formatted="false">"Ligero"</string>
+  <string name="ui_7f139fd4c8c4" formatted="false">"Enviando; esperando confirmación del servidor"</string>
+  <string name="ui_7f355394df49" formatted="false">"Aplicando cambios y verificando el servicio"</string>
   <string name="ui_7f738750a243" formatted="false">"Conecta tu cuenta"</string>
   <string name="ui_7f7ed5289742" formatted="false">"Reintentar en el servidor"</string>
+  <string name="ui_7f92b83e9e69" formatted="false">"Respuesta recibida: "</string>
   <string name="ui_802fce120088" formatted="false">"Guardando acción…"</string>
   <string name="ui_8070dcdfbc0a" formatted="false">"No se puede realizar: cuenta propia, último administrador, estado inválido o limpieza pendiente."</string>
   <string name="ui_809826447fd3" formatted="false">"Configura tu servidor para comenzar."</string>
@@ -433,6 +474,7 @@
   <string name="ui_836a074f5d36" formatted="false">"No se guardaron las preferencias. Reintenta cuando tengas conexión."</string>
   <string name="ui_8382b5c7211a" formatted="false">"La sesión de administrador ya no está disponible."</string>
   <string name="ui_83d4251ae9ff" formatted="false">"Máximo desde la primera entrega (horas)"</string>
+  <string name="ui_845cf28c6325" formatted="false">"Instalado en el servidor"</string>
   <string name="ui_85239d437a0c" formatted="false">"Aprobar "</string>
   <string name="ui_8548607eee01" formatted="false">"Mantenimiento"</string>
   <string name="ui_856641d2b3ee" formatted="false">"Completado"</string>
@@ -445,6 +487,7 @@
   <string name="ui_876c3b1477cc" formatted="false">"Guardar prioridad"</string>
   <string name="ui_877cf3d3089a" formatted="false">"Descargas por Wi-Fi. Reproducción sin conexión."</string>
   <string name="ui_87975751a514" formatted="false">"No se pudo guardar el permiso. Revisa tu sesión."</string>
+  <string name="ui_8802543f6851" formatted="false">"Consultando descargas pendientes"</string>
   <string name="ui_88196f4ef841" formatted="false">"Servidor inválido"</string>
   <string name="ui_888381c696f4" formatted="false">"Tubego · Descargas en curso"</string>
   <string name="ui_88b80b4e325d" formatted="false">"Consultar estado de mi cuenta"</string>
@@ -482,6 +525,7 @@
   <string name="ui_93630c1ada50" formatted="false">"No se pudo reintentar. Revisa la conexión y tu sesión."</string>
   <string name="ui_93a4626d38a8" formatted="false">"Con error"</string>
   <string name="ui_93bdeb8c1a5a" formatted="false">"Actualizar o reiniciar afecta a todos los usuarios y requiere confirmación."</string>
+  <string name="ui_93c978b9a781" formatted="false">"En cola para este teléfono"</string>
   <string name="ui_93fe7142e1fb" formatted="false">"Iniciar o cerrar sesión"</string>
   <string name="ui_9415ac2416c5" formatted="false">"Enviando…"</string>
   <string name="ui_946f09de378d" formatted="false">"Verificando permisos administrativos…"</string>
@@ -517,6 +561,7 @@
   <string name="ui_9a29ddb8ae42" formatted="false">"Usuarios y permisos"</string>
   <string name="ui_9a46365466f3" formatted="false">"No se pudieron consultar descargas. Revisa tu conexión y tu sesión."</string>
   <string name="ui_9abae33619fa" formatted="false">"Se enviará cuando vuelva la conexión. No tienes que hacer nada."</string>
+  <string name="ui_9b037f8960f6" formatted="false">"Aprobado para instalar"</string>
   <string name="ui_9b0cee2cd4ba" formatted="false">"Cada opción indica si cambia este teléfono, tu cuenta o el servidor."</string>
   <string name="ui_9c2e3ca3d8a7" formatted="false">"Aprende a descargar, reproducir sin conexión y gestionar tus archivos."</string>
   <string name="ui_9c450588dc2c" formatted="false">"720p"</string>
@@ -537,7 +582,9 @@
   <string name="ui_a34fd9940dfa" formatted="false">"Porcentaje mínimo libre (1–90)"</string>
   <string name="ui_a38017c9161a" formatted="false">"Verificando archivo local…"</string>
   <string name="ui_a3a151779a90" formatted="false">"Tu contenido, siempre contigo."</string>
+  <string name="ui_a3a5521832b3" formatted="false">"Mostrando el último estado guardado; esperando respuesta del servidor."</string>
   <string name="ui_a441b554ac64" formatted="false">"Inicia sesión con una cuenta aprobada."</string>
+  <string name="ui_a4a63520abe5" formatted="false">"Esperando a que terminen las descargas activas"</string>
   <string name="ui_a4f743a28684" formatted="false">"Agregado: %s. Lo verás en “Ahora”."</string>
   <string name="ui_a526628b993f" formatted="false">"Errores de todas las descargas"</string>
   <string name="ui_a58968d5df17" formatted="false">"Solo audio"</string>
@@ -608,14 +655,17 @@
   <string name="ui_b8a1e269aed4" formatted="false">"La plataforma limita el acceso a este contenido, por ejemplo por país, edad o permisos."</string>
   <string name="ui_b8fba2065a4d" formatted="false">"Consultando metadatos…"</string>
   <string name="ui_b916aded84f5" formatted="false">"Espacio disponible"</string>
+  <string name="ui_b91b9daa3ad9" formatted="false">"Recibida; pendiente de ejecución"</string>
   <string name="ui_b921ef61c58b" formatted="false">"Inicia sesión como administrador."</string>
   <string name="ui_b92d56caac01" formatted="false">"Sin conexión: puedes guardar la pista original. Consulta las otras pistas al recuperar la red."</string>
   <string name="ui_b94c579a7fcc" formatted="false">"Versión aprobada"</string>
   <string name="ui_b985d76a6ff3" formatted="false">"Cargando solicitudes verificadas…"</string>
   <string name="ui_b9d0c5e9c1a6" formatted="false">"Este contenido ya no está disponible en su plataforma."</string>
   <string name="ui_ba37f704ecc3" formatted="false">"Al cerrar sesión se borran las descargas de ese teléfono con confirmación. Puedes cerrar sesiones o desvincular dispositivos desde Mi cuenta. Bloquear o eliminar una cuenta revoca el acceso y ordena borrar sus archivos al próximo contacto; las copias exportadas a otras apps quedan fuera del control de Tubego."</string>
+  <string name="ui_ba3ec2d8c38e" formatted="false">"Biblioteca actualizada."</string>
   <string name="ui_bb234d4d9d7a" formatted="false">"Consultando dispositivos…"</string>
   <string name="ui_bb6e430ce0a7" formatted="false">"Pendientes"</string>
+  <string name="ui_bb98be114c25" formatted="false">"Creada: "</string>
   <string name="ui_bb9dbb406dcb" formatted="false">"Cancelar"</string>
   <string name="ui_bbbb73892271" formatted="false">"Reproducir con…"</string>
   <string name="ui_bbfeaa790697" formatted="false">" · no disponible en esta versión"</string>
@@ -634,9 +684,14 @@
   <string name="ui_be16d8f6aaa1" formatted="false">"La limpieza y los cambios de conservación aplican al servidor. Bloquear o eliminar usuarios revoca su acceso y ordena borrar sus copias locales al próximo contacto. Cada acción destructiva pide confirmación en su pantalla. No se permite administrar sin conexión."</string>
   <string name="ui_bf48a33d54c7" formatted="false">"Usar Descargas/TubeGo"</string>
   <string name="ui_bf7a3ac249c1" formatted="false">"Borrar archivos"</string>
+  <string name="ui_bf86f6a3d9f8" formatted="false">"Midiendo la conexión del servidor"</string>
+  <string name="ui_bf94b9d1de46" formatted="false">"Solicitud rechazada"</string>
   <string name="ui_bf9fc1983ffa" formatted="false">"Sin resultados"</string>
+  <string name="ui_bfd56a38e9dc" formatted="false">"Sin cambio de versión; el servidor ya tenía la versión solicitada."</string>
   <string name="ui_c0523a6eeb87" formatted="false">"Conexión y diagnóstico"</string>
+  <string name="ui_c08a06cc2067" formatted="false">"Consultar versiones no instala actualizaciones. Solo se pueden instalar las versiones aprobadas por el operador."</string>
   <string name="ui_c08d985cfe11" formatted="false">"Video 720p"</string>
+  <string name="ui_c10e3d0ba3d6" formatted="false">"Solicitud: "</string>
   <string name="ui_c14c1b4d5c69" formatted="false">"Ayuda y actividad"</string>
   <string name="ui_c1a65bf46f7f" formatted="false">"Administración de usuarios"</string>
   <string name="ui_c275b3d6f18d" formatted="false">"Pendiente de sincronización"</string>
@@ -650,10 +705,13 @@
   <string name="ui_c5f8f231a6c5" formatted="false">"Agregar a la cola"</string>
   <string name="ui_c67d542c780c" formatted="false">"Calidad o formato"</string>
   <string name="ui_c69147d8bb55" formatted="false">"Biblioteca / Historial"</string>
+  <string name="ui_c6aa01f2f99f" formatted="false">"En espera · reintento automático"</string>
   <string name="ui_c6b9529bc15f" formatted="false">"No se pudo leer el enlace compartido."</string>
   <string name="ui_c6df43a8476c" formatted="false">"Solo administradores · afecta al servidor y sus usuarios"</string>
   <string name="ui_c6e6960395f4" formatted="false">"Cerrar sesión"</string>
   <string name="ui_c76786b89397" formatted="false">"Ver ficha · "</string>
+  <string name="ui_c81e2559b83d" formatted="false">"No se pudo conectar. Se muestra la biblioteca guardada."</string>
+  <string name="ui_c85392a81153" formatted="false">"Código: "</string>
   <string name="ui_c865c461d1b2" formatted="false">"La pista de audio elegida ya no está disponible. Elige Original u otra pista."</string>
   <string name="ui_c87ece2bf312" formatted="false">". Se esperará a las descargas activas y se comprobará el servicio al terminar."</string>
   <string name="ui_c8a74ca68d39" formatted="false">"Detalles"</string>
@@ -721,7 +779,9 @@
   <string name="ui_da0f23b03f69" formatted="false">" archivos conocidos · "</string>
   <string name="ui_da3e1e6f12da" formatted="false">"Mis archivos en el servidor"</string>
   <string name="ui_da711670a691" formatted="false">"No se pudo verificar el audio del archivo. Reintenta o elige otra pista."</string>
+  <string name="ui_da735c2eb6c9" formatted="false">"Actualizar biblioteca"</string>
   <string name="ui_dafbb9edb30b" formatted="false">"Solicitud guardada. Se enviará cuando haya conexión."</string>
+  <string name="ui_db17fdcf1179" formatted="false">"Transferencias del teléfono"</string>
   <string name="ui_db53eb937e37" formatted="false">"No se pudo guardar la acción. Revisa la sesión y el espacio del teléfono."</string>
   <string name="ui_db587178e257" formatted="false">"Guardado. Copias del servidor retiradas: "</string>
   <string name="ui_db6b205d9d1f" formatted="false">"Las descargas esperan espacio suficiente. Tus archivos se conservan."</string>
@@ -729,6 +789,9 @@
   <string name="ui_dbfb33f5aebf" formatted="false">"Mi biblioteca"</string>
   <string name="ui_dc45d76bad9b" formatted="false">"Un administrador aprueba cuentas después de verificar el correo. Solo administradores cambian prioridades de usuarios, conservación, plazos, limpieza global y mantenimiento. Si no se conservan archivos en el servidor, se borran cuando todos los dispositivos confirman la descarga o al vencer el plazo: inicialmente cuatro horas desde la primera entrega y como máximo tres días desde que quedó listo. Los administradores pueden cambiar esos plazos para todos los archivos existentes."</string>
   <string name="ui_dc4b8f21100c" formatted="false">"Estos archivos ocupan espacio en tu teléfono. Los más grandes, primero."</string>
+  <string name="ui_dc8f92a84ad9" formatted="false">"Orden: solicitudes más recientes primero, según su creación. Las consultas y los cambios del servicio se procesan por separado; este orden no indica el orden de finalización."</string>
+  <string name="ui_dd02e40afc23" formatted="false">"Procesando cola de descargas"</string>
+  <string name="ui_dd04d3196039" formatted="false">"El servidor pidió esperar; reintento pendiente"</string>
   <string name="ui_de382028f386" formatted="false">"No se pudo abrir el archivo local: "</string>
   <string name="ui_de9d52c45c28" formatted="false">"Máxima disponible"</string>
   <string name="ui_dee248d6803b" formatted="false">"TU COLA"</string>
@@ -808,6 +871,7 @@
   <string name="ui_f6cd8d5c9dd1" formatted="false">"No se pudo medir el almacenamiento del servidor. Las descargas quedan pausadas."</string>
   <string name="ui_f6de826199d4" formatted="false">"Revisa los cambios guardados que esperan enviarse al servidor."</string>
   <string name="ui_f72249109119" formatted="false">"Consultando almacenamiento real del servidor…"</string>
+  <string name="ui_f72c2ba822f3" formatted="false">"Último intento de envío: "</string>
   <string name="ui_f7643f022fba" formatted="false">"Comprueba el correo, libera espacio y revisa el funcionamiento del servidor."</string>
   <string name="ui_f7803a0c103e" formatted="false">"Se requiere una sesión activa de administrador. Revisa tu cuenta y conexión."</string>
   <string name="ui_f816b77d6bf4" formatted="false">"Puedes reproducir sin conexión con VLC u otro reproductor instalado. En VLC configura el modo de segundo plano o PiP y autoriza la ventana flotante. Para escuchar con la pantalla bloqueada, usa la opción de reproducir como audio o el modo de audio en segundo plano. Las funciones y los gestos dependen de tu reproductor; Tubego no reproduce ni descarga otra copia al abrir un archivo local."</string>
@@ -825,6 +889,7 @@
   <string name="ui_fb60e45ad48c" formatted="false">"Verifica tu correo antes de utilizar el servicio."</string>
   <string name="ui_fb9e3cf46f20" formatted="false">"Las descargas se pausan sin borrar archivos. Solo continúan cuando el archivo pendiente cabe manteniendo el porcentaje libre. Los mensajes y acciones pequeñas siguen funcionando."</string>
   <string name="ui_fbc2faab81be" formatted="false">"Mis dispositivos"</string>
+  <string name="ui_fbfca72a74a4" formatted="false">"Iniciando transferencia"</string>
   <string name="ui_fc3399db4f6e" formatted="false">"Cancelar descarga del servidor"</string>
   <string name="ui_fc732603b65f" formatted="false">"La conexión o la fuente falló temporalmente. Reintenta más tarde."</string>
   <string name="ui_fd0a6b16fb1b" formatted="false">"Sesión revocada. Se han retirado las descargas locales de esta cuenta."</string>

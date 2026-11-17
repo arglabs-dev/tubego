@@ -171,6 +171,8 @@ final class LibraryRepo {
         }
         if (record != null) {
             item.localState = localState;
+            item.transferring = TransferRuntime.transferring(origin,item.id);
+            item.nextRetryAt = record.nextRetryAt;
             item.pauseReason = record.pauseReason == null ? "" : record.pauseReason;
             if (!record.failureCode.isEmpty()) item.failureCode = record.failureCode;
             item.sizeBytes = record.size;

@@ -1,0 +1,217 @@
+{
+  "installed_api": {
+    "tubego": "0.1.0",
+    "backend_revision": "38b2b4a8183b393fa2600dacf06f9c3bb9bdc3f0",
+    "yt_dlp": "2026.10.26"
+  },
+  "jobs": [
+    {
+      "id": "fb1b7820-74d0-46fb-b4b8-799a0d8482ff",
+      "action": "update_ytdlp",
+      "created_at": "2026-11-09T04:53:04.742377+00:00",
+      "updated_at": "2026-11-09T04:53:05.633865+00:00",
+      "status": "failed",
+      "phase": "finished",
+      "error_code": "revision_not_staged_for_installed_backend",
+      "result": null,
+      "source": null,
+      "target": {
+        "version": "2026.8.19"
+      }
+    },
+    {
+      "id": "ce2a0c61-547e-4a3f-a8f3-2ec7ddb17ab5",
+      "action": "update_backend",
+      "created_at": "2026-11-09T04:53:39.065458+00:00",
+      "updated_at": "2026-11-09T04:53:56.169865+00:00",
+      "status": "succeeded",
+      "phase": "finished",
+      "error_code": null,
+      "result": {
+        "installed": {
+          "tubego": "0.1.0",
+          "backend_revision": "38b2b4a8183b393fa2600dacf06f9c3bb9bdc3f0",
+          "yt_dlp": "2026.8.19"
+        },
+        "service_healthy": true
+      },
+      "source": null,
+      "target": {
+        "revision": "38b2b4a8183b393fa2600dacf06f9c3bb9bdc3f0"
+      }
+    },
+    {
+      "id": "4086b088-195e-45c4-843a-c3b7fa0c6fd1",
+      "action": "speed_test",
+      "created_at": "2026-11-09T04:55:50.761063+00:00",
+      "updated_at": "2026-11-09T04:55:51.480562+00:00",
+      "status": "succeeded",
+      "phase": "finished",
+      "error_code": null,
+      "result": {
+        "server_download_mbps": 62.68,
+        "bytes": 5000000,
+        "seconds": 0.64,
+        "location": "server",
+        "direction": "download"
+      },
+      "source": null,
+      "target": {}
+    },
+    {
+      "id": "6c7eba3e-fa42-4c92-bf26-bd0d1f79f68c",
+      "action": "check_versions",
+      "created_at": "2026-11-09T04:56:19.033037+00:00",
+      "updated_at": "2026-11-09T04:56:20.556571+00:00",
+      "status": "succeeded",
+      "phase": "finished",
+      "error_code": null,
+      "result": {
+        "installed": {
+          "tubego": "0.1.0",
+          "backend_revision": "38b2b4a8183b393fa2600dacf06f9c3bb9bdc3f0",
+          "yt_dlp": "2026.8.19"
+        },
+        "available": {
+          "yt_dlp": "2026.10.26",
+          "backend_revision": "6f878c1bae882d8b9a5602db3f1fc40c113d40d2"
+        }
+      },
+      "source": null,
+      "target": {}
+    },
+    {
+      "id": "13d0e931-f801-4e3e-a005-546bb40a0703",
+      "action": "check_versions",
+      "created_at": "2026-11-09T04:57:21.768668+00:00",
+      "updated_at": "2026-11-09T04:57:23.467327+00:00",
+      "status": "succeeded",
+      "phase": "finished",
+      "error_code": null,
+      "result": {
+        "installed": {
+          "tubego": "0.1.0",
+          "backend_revision": "38b2b4a8183b393fa2600dacf06f9c3bb9bdc3f0",
+          "yt_dlp": "2026.8.19"
+        },
+        "available": {
+          "yt_dlp": "2026.10.26",
+          "backend_revision": "6f878c1bae882d8b9a5602db3f1fc40c113d40d2"
+        }
+      },
+      "source": null,
+      "target": {}
+    },
+    {
+      "id": "86792eb2-de9c-471e-815a-ff6d52e3395c",
+      "action": "update_ytdlp",
+      "created_at": "2026-11-09T04:58:01.107699+00:00",
+      "updated_at": "2026-11-09T04:58:27.472317+00:00",
+      "status": "succeeded",
+      "phase": "finished",
+      "error_code": null,
+      "result": {
+        "installed": {
+          "tubego": "0.1.0",
+          "backend_revision": "38b2b4a8183b393fa2600dacf06f9c3bb9bdc3f0",
+          "yt_dlp": "2026.8.19"
+        },
+        "service_healthy": true
+      },
+      "source": null,
+      "target": {
+        "version": "2026.8.19"
+      }
+    },
+    {
+      "id": "006e4418-9818-4996-ac91-4f72f1a5245e",
+      "action": "check_versions",
+      "created_at": "2026-11-10T14:39:47.615468+00:00",
+      "updated_at": "2026-11-10T14:39:49.166386+00:00",
+      "status": "succeeded",
+      "phase": "finished",
+      "error_code": null,
+      "result": {
+        "installed": {
+          "tubego": "0.1.0",
+          "backend_revision": "38b2b4a8183b393fa2600dacf06f9c3bb9bdc3f0",
+          "yt_dlp": "2026.8.19"
+        },
+        "available": {
+          "yt_dlp": "2026.10.26",
+          "backend_revision": "6f878c1bae882d8b9a5602db3f1fc40c113d40d2"
+        }
+      },
+      "source": null,
+      "target": {}
+    },
+    {
+      "id": "4fb844f3-f021-4a19-b11d-e3b1fdb7248b",
+      "action": "check_versions",
+      "created_at": "2026-11-10T14:47:29.675100+00:00",
+      "updated_at": "2026-11-10T14:47:31.473526+00:00",
+      "status": "succeeded",
+      "phase": "finished",
+      "error_code": null,
+      "result": {
+        "installed": {
+          "tubego": "0.1.0",
+          "backend_revision": "38b2b4a8183b393fa2600dacf06f9c3bb9bdc3f0",
+          "yt_dlp": "2026.8.19"
+        },
+        "available": {
+          "yt_dlp": "2026.10.26",
+          "backend_revision": "6f878c1bae882d8b9a5602db3f1fc40c113d40d2"
+        }
+      },
+      "source": null,
+      "target": {}
+    },
+    {
+      "id": "a6966964-235a-4d91-b3aa-a58f700f112a",
+      "action": "update_ytdlp",
+      "created_at": "2026-11-10T14:51:03.653325+00:00",
+      "updated_at": "2026-11-10T14:52:37.317247+00:00",
+      "status": "succeeded",
+      "phase": "finished",
+      "error_code": null,
+      "result": {
+        "installed": {
+          "tubego": "0.1.0",
+          "backend_revision": "38b2b4a8183b393fa2600dacf06f9c3bb9bdc3f0",
+          "yt_dlp": "2026.10.26"
+        },
+        "service_healthy": true
+      },
+      "source": "operator",
+      "target": {
+        "version": "2026.10.26"
+      }
+    }
+  ],
+  "maintenance_supervisor": {
+    "seen_at": "2026-11-10T14:57:11.847483+00:00",
+    "backend_revisions": [
+      "38b2b4a8183b393fa2600dacf06f9c3bb9bdc3f0"
+    ],
+    "yt_dlp_versions": [
+      "2026.10.26"
+    ]
+  },
+  "maintenance_gate": null,
+  "installed_worker": {
+    "yt-dlp": "2026.10.26",
+    "yt-dlp-ejs": "0.8.0",
+    "deno": "2.9.5"
+  },
+  "health": {
+    "status": "ok",
+    "version": "0.1.0",
+    "database": "ok"
+  },
+  "observed_before": {
+    "yt_dlp": "2026.8.19",
+    "backend_revision": "38b2b4a8183b393fa2600dacf06f9c3bb9bdc3f0"
+  },
+  "scope": "Existing tubego Compose deployment; operator-approved package upgrade with unchanged backend revision. No phone download tested."
+}

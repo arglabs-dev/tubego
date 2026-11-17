@@ -22,8 +22,10 @@ public final class TransferDriver {
     }
     private static Outcome execute(Context context,String origin,TransferRuntime.Control control) throws Exception {
         SessionLifecycle.flush(context);
-        SessionStore store=new SessionStore(context,origin);JSONObject session=store.read();
+        SessionStore store=new SessionStore(context,origin);JSONObject session;
+        synchronized(SessionStore.class){session=store.read();control.sessionGeneration=store.generation();}
         if(session==null || control.stopped || !"approved".equals(session.optString("status"))) return Outcome.STOPPED;
+        control.sessionToken=session.getString("token");control.phase="authorizing";
         String token=session.getString("token"),user=session.getString("user_id"),device=session.getString("device_id");
         ApiClient api=new ApiClient(origin);
         // Validate authorization before accessing managed files, even with a persisted queue.
@@ -34,7 +36,9 @@ public final class TransferDriver {
             if(!sameSession(store,token,control))return Outcome.STOPPED;
             if(!root.isDirectory() && !root.mkdirs()) throw new IOException("No se pudo crear la biblioteca");
         }
+        control.phase="opening_history";
         HistoryOpened.flush(context,origin,token,root);
+        control.phase="device_sync";
         String eventKey=TransferKey.accountPrefix(origin,user,device)+"event_cursor";
         var preferences=context.getSharedPreferences("tubego_transfer_sync",Context.MODE_PRIVATE);
         long eventCursor=preferences.getLong(eventKey,0);String cursor="";List<JSONObject> rows=new ArrayList<>(),events=new ArrayList<>();
@@ -71,6 +75,7 @@ public final class TransferDriver {
             if((kind.equals("delete_local") || kind.equals("local_deleted")) && payload!=null && payload.has("resource_id")) removeRecord(context,root,payload.getString("resource_id"));
         }
         }
+        control.phase="reconciling_files";
         List<TransferRecord> queue=new ArrayList<>(),missing=new ArrayList<>();Set<String> confirmed=new HashSet<>();
         synchronized(SessionStore.class) {
         if(!sameSession(store,token,control))return Outcome.STOPPED;
@@ -136,6 +141,7 @@ public final class TransferDriver {
         ConnectivityManager manager=context.getSystemService(ConnectivityManager.class);
         AndroidStorageGuard storage=new AndroidStorageGuard(context,origin,user,device);
         boolean waitWifi=false,waitAny=false,waitSpace=false,retryPending=false;
+        control.phase="transfer_queue";
         while(!queue.isEmpty()) {
             if(control.stopped) return Outcome.STOPPED;
             TransferRecord record=QueueOrder.next(queue,readQueuePriorities(api,token));
@@ -211,9 +217,10 @@ public final class TransferDriver {
         } while(!cursor.isEmpty());
         return priorities;
     }
-    private static boolean sameSession(SessionStore store,String token,TransferRuntime.Control control) {
-        if(control.stopped)return false;
-        try {return token.equals(store.token());}catch(Exception e){return false;}
+    static boolean sameSession(SessionStore store,String token,TransferRuntime.Control control) {
+        // save()/clear() advance this epoch for a new token or identity. No Keystore roundtrip per buffer.
+        return !control.stopped && control.sessionGeneration>=0 && token.equals(control.sessionToken)
+            && control.sessionGeneration==store.generation();
     }
     private static void confirm(ApiClient api,String token,TransferRecord record) throws Exception {
         api.request("POST","/resources/"+record.id+"/deliveries/confirm",new JSONObject().put("size_bytes",record.size).put("sha256",record.sha256),token);

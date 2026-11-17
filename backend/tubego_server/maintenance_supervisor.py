@@ -64,7 +64,7 @@ class ComposeDriver:
             except (MaintenanceError,ValueError):time.sleep(2)
         if not observed or observed.get('yt_dlp')!=version:raise MaintenanceError('deployment_verification_failed')
         if (action!='restart' or operator_recovery) and observed.get('backend_revision')!=self.revision:raise MaintenanceError('deployment_verification_failed')
-        return {'installed':observed,'service_healthy':True}
+        return {'installed':observed,'previous_installed':before,'version_changed':before.get('yt_dlp')!=observed.get('yt_dlp'),'service_healthy':True}
 
 class Supervisor:
     def __init__(self,db,driver):self.db=db;self.driver=driver
