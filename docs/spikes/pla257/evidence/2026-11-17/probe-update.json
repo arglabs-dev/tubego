@@ -1,0 +1,6 @@
+{
+  "certificate_sha256": "9afed715ef049bee6fba4041987c984d27b0ac701ef73d198d3f5db4700fced1",
+  "apk_sha256": "ce4ac460eb994edd1bba7efa50b10ece7029f410ffbd99db397836b2702a463d",
+  "command": "adb install -r",
+  "reason": "Persist command consumption across process death; foreground commands, raw extras, caller lifecycle controls, and two exact synthetic fixture URIs"
+}

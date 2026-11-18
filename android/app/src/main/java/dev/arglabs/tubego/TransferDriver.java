@@ -38,6 +38,7 @@ public final class TransferDriver {
         }
         control.phase="opening_history";
         HistoryOpened.flush(context,origin,token,root);
+        try { PlaybackProgress.sync(context,origin,token); } catch(Exception pendingPlayback) { /* Durable snapshots retry independently of media downloads. */ }
         control.phase="device_sync";
         String eventKey=TransferKey.accountPrefix(origin,user,device)+"event_cursor";
         var preferences=context.getSharedPreferences("tubego_transfer_sync",Context.MODE_PRIVATE);

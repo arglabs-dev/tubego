@@ -1,0 +1,6 @@
+{
+  "package": "dev.arglabs.tubego.playbacktest",
+  "pid_before": "26378",
+  "command": "adb shell am force-stop dev.arglabs.tubego.playbacktest",
+  "pid_after": null
+}

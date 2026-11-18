@@ -1,7 +1,7 @@
 plugins { id 'com.android.application' }
 android {
     namespace 'dev.arglabs.tubego'
-    compileSdk 35
+    compileSdk 36
     useLibrary 'android.test.runner'
     useLibrary 'android.test.base'
     useLibrary 'android.test.mock'
@@ -9,8 +9,9 @@ android {
         applicationId 'dev.arglabs.tubego'
         minSdk 29
         targetSdk 35
-        versionCode 19
-        versionName '0.5.13'
+        versionCode 21
+        versionName '0.6.1'
+        if (project.hasProperty('playbackHarness')) applicationIdSuffix '.playbacktest'
         testInstrumentationRunner 'android.test.InstrumentationTestRunner'
     }
     buildFeatures { buildConfig true }
@@ -20,6 +21,8 @@ android {
     }
 }
 dependencies {
+    implementation 'org.videolan.android:libvlc-all:3.7.7'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0'
+    testImplementation 'org.json:json:20240303'
     testImplementation 'junit:junit:4.13.2'
 }

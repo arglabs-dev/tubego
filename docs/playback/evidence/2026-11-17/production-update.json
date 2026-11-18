@@ -1,0 +1,22 @@
+{
+  "command": "adb install -r",
+  "certificate_sha256": "9afed715ef049bee6fba4041987c984d27b0ac701ef73d198d3f5db4700fced1",
+  "apk_sha256": "7a8ef4eba4d412603018d84629af6b0a35c3b491e62bd1c7729f66bd71824f4f",
+  "before": {
+    "version_name": "0.5.13",
+    "version_code": "19",
+    "uid": "10522",
+    "data_dir": "/data/user/0/dev.arglabs.tubego",
+    "encrypted_sessions_sha256": "830e42e4bd616a2ad76c6750923ee1e898d3978e98790814262d23af8bc52dd7",
+    "private_media_file_count": 217
+  },
+  "after": {
+    "version_name": "0.6.0",
+    "version_code": "20",
+    "uid": "10522",
+    "data_dir": "/data/user/0/dev.arglabs.tubego",
+    "encrypted_sessions_sha256": "830e42e4bd616a2ad76c6750923ee1e898d3978e98790814262d23af8bc52dd7",
+    "private_media_file_count": 217
+  },
+  "result": "Performing Streamed Install\nSuccess"
+}

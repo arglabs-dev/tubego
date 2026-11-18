@@ -1,0 +1,2489 @@
+[
+  {
+    "trial": "ed59919f-dbf1-4696-b62c-7c04787e8439",
+    "launch_utc": "2026-11-17T16:40:08.709740Z",
+    "scenario": "normal",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 258,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:40:27.782579Z",
+        "request": 258,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 27251,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "9d127abe-0985-433c-9037-14b00a6555e7",
+    "launch_utc": "2026-11-17T16:41:05.356546Z",
+    "scenario": "cold-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 259,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:41:13.557915Z",
+        "request": 259,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 16502,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "e62c5f92-c3e5-407b-b81a-08be420cb389",
+    "launch_utc": "2026-11-17T16:41:20.893494Z",
+    "scenario": "cold-2",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 260,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:41:28.806079Z",
+        "request": 260,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 16509,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "7bf6907b-39f3-40f1-8a96-775909ce9a3f",
+    "launch_utc": "2026-11-17T16:41:36.284596Z",
+    "scenario": "cold-3",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 261,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:41:42.316617Z",
+        "request": 261,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 14504,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "e28777b2-9930-4384-ab78-4dda0b6c144d",
+    "launch_utc": "2026-11-17T16:41:55.879213Z",
+    "scenario": "zero-1",
+    "saved_ms": 5000,
+    "rewind_s": 10,
+    "requested_ms": 0,
+    "request": 262,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:41:59.892255Z",
+        "request": 262,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extra_position_type": "java.lang.Long",
+        "extra_position": -1,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "835b53b5-80a3-4b28-a030-4484554c7dae",
+    "launch_utc": "2026-11-17T16:42:07.469033Z",
+    "scenario": "zero-2",
+    "saved_ms": 5000,
+    "rewind_s": 10,
+    "requested_ms": 0,
+    "request": 263,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:42:11.252862Z",
+        "request": 263,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extra_position_type": "java.lang.Long",
+        "extra_position": -1,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "774cdf2e-6948-40e6-bea7-c7ad313c88af",
+    "launch_utc": "2026-11-17T16:42:19.020613Z",
+    "scenario": "zero-3",
+    "saved_ms": 5000,
+    "rewind_s": 10,
+    "requested_ms": 0,
+    "request": 264,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:42:22.761Z",
+        "request": 264,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extra_position_type": "java.lang.Long",
+        "extra_position": -1,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "a20e34ee-53a9-47a8-ae0d-5263e7ce9f4c",
+    "launch_utc": "2026-11-17T16:42:30.356147Z",
+    "scenario": "natural-1",
+    "saved_ms": 43000,
+    "rewind_s": 10,
+    "requested_ms": 33000,
+    "request": 265,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:44:16.588012Z",
+        "request": 265,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 3901,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "1bfc4656-dbbf-4f9f-8864-1150c7f5c66b",
+    "launch_utc": "2026-11-17T16:44:23.641844Z",
+    "scenario": "force_stop-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 266,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:44:31.795612Z",
+        "request": 266,
+        "result": 0,
+        "action": null,
+        "extra_position_type": "missing",
+        "extra_position": null,
+        "extra_duration_type": "missing",
+        "extra_duration": null,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "c6ca04a3-7879-4e2e-8b59-e0b25f9a09cb",
+    "launch_utc": "2026-11-17T16:44:40.040377Z",
+    "scenario": "force_stop-2",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 267,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:44:47.854290Z",
+        "request": 267,
+        "result": 0,
+        "action": null,
+        "extra_position_type": "missing",
+        "extra_position": null,
+        "extra_duration_type": "missing",
+        "extra_duration": null,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "6a075de6-9898-4769-a7c4-0e7448ed4683",
+    "launch_utc": "2026-11-17T16:44:56.456942Z",
+    "scenario": "force_stop-3",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 268,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:45:02.093483Z",
+        "request": 268,
+        "result": 0,
+        "action": null,
+        "extra_position_type": "missing",
+        "extra_position": null,
+        "extra_duration_type": "missing",
+        "extra_duration": null,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "b8ae18cf-cab6-4aff-95e8-d21e1138ff5e",
+    "launch_utc": "2026-11-17T16:45:42.841368Z",
+    "scenario": "automated-smoke",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 269,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:46:05.261786Z",
+        "request": 269,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 10000
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 10000,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "7439b9a6-add0-4309-bebe-3bfd35caf4d6",
+    "launch_utc": "2026-11-17T16:46:42.884212Z",
+    "scenario": "natural-v3-1",
+    "saved_ms": 43000,
+    "rewind_s": 10,
+    "requested_ms": 33000,
+    "request": 270,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:47:40.589561Z",
+        "request": 270,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 0
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 0
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 0,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 0,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "85f3d318-5497-4987-a4f3-894a37046da8",
+    "launch_utc": "2026-11-17T16:47:51.173483Z",
+    "scenario": "natural-v2-1",
+    "saved_ms": 43000,
+    "rewind_s": 10,
+    "requested_ms": 33000,
+    "request": 271,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:48:03.664408Z",
+        "request": 271,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 0
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 0
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 0,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 0,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "037cc0db-72ac-47bd-b75f-b0c0713d678f",
+    "launch_utc": "2026-11-17T16:48:09.990984Z",
+    "scenario": "natural-v2-2",
+    "saved_ms": 43000,
+    "rewind_s": 10,
+    "requested_ms": 33000,
+    "request": 272,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:48:22.327180Z",
+        "request": 272,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 0
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 0
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 0,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 0,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "039d4e9f-401b-4bf1-83d4-291a5069eb62",
+    "launch_utc": "2026-11-17T16:48:28.798836Z",
+    "scenario": "natural-v2-3",
+    "saved_ms": 43000,
+    "rewind_s": 10,
+    "requested_ms": 33000,
+    "request": 273,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:48:41.164606Z",
+        "request": 273,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 0
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 0
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 0,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 0,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "e3e1b59c-1684-4827-98c6-09d478dfb8cc",
+    "launch_utc": "2026-11-17T16:48:51.396586Z",
+    "scenario": "warm-v2-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 274,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:48:57.155959Z",
+        "request": 274,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 14502
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 14502,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "6a1c1002-9725-4fbf-8559-91c45b074a06",
+    "launch_utc": "2026-11-17T16:48:59.210349Z",
+    "scenario": "warm-v2-2",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 275,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:49:05.028739Z",
+        "request": 275,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 14252
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 14252,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "2c5a87fa-68ee-4052-8efa-d38ab3a78008",
+    "launch_utc": "2026-11-17T16:49:07.128049Z",
+    "scenario": "warm-v2-3",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 276,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:49:12.889145Z",
+        "request": 276,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 14015
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 14015,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "204a68c5-2566-4c65-be04-c25fb0ff9b89",
+    "launch_utc": "2026-11-17T16:49:14.498172Z",
+    "scenario": "zero-v2-1",
+    "saved_ms": 5000,
+    "rewind_s": 10,
+    "requested_ms": 0,
+    "request": 277,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:49:20.192336Z",
+        "request": 277,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 3651
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 3651,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "69cc30e4-8d89-4816-9361-685e5f24bd48",
+    "launch_utc": "2026-11-17T16:49:21.821707Z",
+    "scenario": "zero-v2-2",
+    "saved_ms": 5000,
+    "rewind_s": 10,
+    "requested_ms": 0,
+    "request": 278,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:49:27.473224Z",
+        "request": 278,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 4401
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 4401,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "caddfc1a-23f9-47c4-abb7-316194ea492c",
+    "launch_utc": "2026-11-17T16:49:29.074698Z",
+    "scenario": "zero-v2-3",
+    "saved_ms": 5000,
+    "rewind_s": 10,
+    "requested_ms": 0,
+    "request": 279,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:49:34.787897Z",
+        "request": 279,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 4402
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 4402,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "3bd69513-08bd-4050-a94e-a0afeed75fa3",
+    "launch_utc": "2026-11-17T16:49:36.487087Z",
+    "scenario": "home-v2-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 280,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:49:42.216276Z",
+        "request": 280,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 14501
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 14501,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "acbcb477-01d6-4d62-96d9-b7a66564ddf7",
+    "launch_utc": "2026-11-17T16:49:43.830373Z",
+    "scenario": "home-v2-2",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 281,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:49:49.619409Z",
+        "request": 281,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 14502
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 14502,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "e9ff5748-8647-4f58-8c6b-ba54bea475ee",
+    "launch_utc": "2026-11-17T16:49:51.312656Z",
+    "scenario": "home-v2-3",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 282,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:49:57.044389Z",
+        "request": 282,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 14001
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 14001,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "3a347a46-958b-4e56-b635-f61b4d913056",
+    "launch_utc": "2026-11-17T16:49:58.751519Z",
+    "scenario": "caller_kill-v2-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 283,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:50:03.397118Z",
+        "request": 283,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 13502
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 13502,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "c63fdf5b-4608-4264-baca-906ea6c1354d",
+    "launch_utc": "2026-11-17T16:50:05.121220Z",
+    "scenario": "caller_kill-v2-2",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 284,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:50:09.750754Z",
+        "request": 284,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 13503
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 13503,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "e2de55bc-2d5e-4ef8-8921-3c6983bd8aff",
+    "launch_utc": "2026-11-17T16:50:11.408822Z",
+    "scenario": "caller_kill-v2-3",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 285,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:50:16.081703Z",
+        "request": 285,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 13502
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 13502,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "ee89adf0-4abf-4401-a682-2f03c4eebfaa",
+    "launch_utc": "2026-11-17T16:50:27.564987Z",
+    "scenario": "caller_kill-v3-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 286,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:51:03.190832Z",
+        "request": 286,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 0
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 0
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 0,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 0,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "7f022ac4-bd49-4ef2-9ce1-933f87e4411e",
+    "launch_utc": "2026-11-17T16:52:06.221308Z",
+    "scenario": "caller_kill-v4-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 287,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:52:09.619534Z",
+        "request": 287,
+        "result": 0,
+        "action": null,
+        "extras": {},
+        "extra_position_type": "missing",
+        "extra_position": null,
+        "extra_duration_type": "missing",
+        "extra_duration": null,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": [
+      {
+        "utc": "2026-11-17T16:52:09.244063Z",
+        "elapsed_ms": 143247909,
+        "event": "caller_die",
+        "trial": "7f022ac4-bd49-4ef2-9ce1-933f87e4411e",
+        "detail": {
+          "pid": 23160
+        }
+      }
+    ]
+  },
+  {
+    "trial": "f3450639-8809-4560-9757-3ffb8d30b637",
+    "launch_utc": "2026-11-17T16:52:09.636264Z",
+    "scenario": "caller_kill-v4-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 288,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:52:10.868320Z",
+        "request": 288,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 10000
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 10000,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": [
+      {
+        "utc": "2026-11-17T16:52:12.848758Z",
+        "elapsed_ms": 143251514,
+        "event": "caller_die",
+        "trial": "f3450639-8809-4560-9757-3ffb8d30b637",
+        "detail": {
+          "pid": 23337
+        }
+      }
+    ]
+  },
+  {
+    "trial": "71d4f8cc-ec9d-4dbb-9a4c-0f05fb3fd690",
+    "launch_utc": "2026-11-17T16:52:12.633478Z",
+    "scenario": "caller_kill-v4-2",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 289,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [],
+    "caller_events": [
+      {
+        "utc": "2026-11-17T16:52:20.229363Z",
+        "elapsed_ms": 143258895,
+        "event": "abandoned",
+        "trial": "71d4f8cc-ec9d-4dbb-9a4c-0f05fb3fd690",
+        "detail": {
+          "source": "adb_command"
+        }
+      }
+    ]
+  },
+  {
+    "trial": "504dc104-f2ce-4899-98c7-52f5547f5c9e",
+    "launch_utc": "2026-11-17T16:52:20.276695Z",
+    "scenario": "caller_kill-v4-3",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 290,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:52:23.762102Z",
+        "request": 290,
+        "result": 0,
+        "action": null,
+        "extras": {},
+        "extra_position_type": "missing",
+        "extra_position": null,
+        "extra_duration_type": "missing",
+        "extra_duration": null,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": [
+      {
+        "utc": "2026-11-17T16:52:23.293442Z",
+        "elapsed_ms": 143261959,
+        "event": "caller_die",
+        "trial": "504dc104-f2ce-4899-98c7-52f5547f5c9e",
+        "detail": {
+          "pid": 30077
+        }
+      }
+    ]
+  },
+  {
+    "trial": "0bc33ea2-777e-43e7-ab6a-0d068804ceba",
+    "launch_utc": "2026-11-17T16:52:27.061819Z",
+    "scenario": "recreate-v4-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 291,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:52:32.239456Z",
+        "request": 291,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 14005
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 14005,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": [
+      {
+        "utc": "2026-11-17T16:52:30.214865Z",
+        "elapsed_ms": 143268880,
+        "event": "caller_recreate",
+        "trial": "0bc33ea2-777e-43e7-ab6a-0d068804ceba",
+        "detail": {
+          "pid": 29550
+        }
+      }
+    ]
+  },
+  {
+    "trial": "1b78209e-2705-4b98-8672-ac5356fc598d",
+    "launch_utc": "2026-11-17T16:52:33.952530Z",
+    "scenario": "recreate-v4-2",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 292,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:52:39.011914Z",
+        "request": 292,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 14020
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 14020,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": [
+      {
+        "utc": "2026-11-17T16:52:37.110123Z",
+        "elapsed_ms": 143275775,
+        "event": "caller_recreate",
+        "trial": "1b78209e-2705-4b98-8672-ac5356fc598d",
+        "detail": {
+          "pid": 29550
+        }
+      }
+    ]
+  },
+  {
+    "trial": "d0286676-ad23-4fff-857f-95da670d164b",
+    "launch_utc": "2026-11-17T16:52:40.812065Z",
+    "scenario": "recreate-v4-3",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 293,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:52:46.170935Z",
+        "request": 293,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 13506
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 13506,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": [
+      {
+        "utc": "2026-11-17T16:52:43.978660Z",
+        "elapsed_ms": 143282644,
+        "event": "caller_recreate",
+        "trial": "d0286676-ad23-4fff-857f-95da670d164b",
+        "detail": {
+          "pid": 29550
+        }
+      }
+    ]
+  },
+  {
+    "trial": "bc3329de-019f-46ad-9ed5-9dc592d52952",
+    "launch_utc": "2026-11-17T16:52:47.610669Z",
+    "scenario": "jump_end-v1-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 294,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:52:55.320725Z",
+        "request": 294,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 16252
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 16252,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "203afeef-f86a-4d8d-a4ba-8eb251273446",
+    "launch_utc": "2026-11-17T16:52:56.567004Z",
+    "scenario": "jump_end-v1-2",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 295,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:53:00.451495Z",
+        "request": 295,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 0
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 43866
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 43866,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 0,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "6c7fc67d-1a00-4fe3-bbe1-0fb9b8a0d8cb",
+    "launch_utc": "2026-11-17T16:53:04.469963Z",
+    "scenario": "jump_end-v1-3",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 296,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:53:12.140280Z",
+        "request": 296,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 16501
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 16501,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "41ec950e-84da-4144-9bb9-ac36c8fb0ded",
+    "launch_utc": "2026-11-17T16:53:13.408964Z",
+    "scenario": "audio-v1-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 297,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:53:17.218639Z",
+        "request": 297,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 0
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 43866
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 43866,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 0,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "082841db-f498-4a56-b1c0-0d14d72b9a58",
+    "launch_utc": "2026-11-17T16:54:08.238155Z",
+    "scenario": "caller_kill-v5-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 298,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:54:11.622355Z",
+        "request": 298,
+        "result": 0,
+        "action": null,
+        "extras": {},
+        "extra_position_type": "missing",
+        "extra_position": null,
+        "extra_duration_type": "missing",
+        "extra_duration": null,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": [
+      {
+        "utc": "2026-11-17T16:54:11.255409Z",
+        "elapsed_ms": 143369921,
+        "event": "caller_die",
+        "trial": "082841db-f498-4a56-b1c0-0d14d72b9a58",
+        "detail": {
+          "pid": 31367
+        }
+      }
+    ]
+  },
+  {
+    "trial": "a7437d0c-79b3-473d-88ca-80df58b8b509",
+    "launch_utc": "2026-11-17T16:54:14.775627Z",
+    "scenario": "caller_kill-v5-2",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 299,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:54:18.486686Z",
+        "request": 299,
+        "result": 0,
+        "action": null,
+        "extras": {},
+        "extra_position_type": "missing",
+        "extra_position": null,
+        "extra_duration_type": "missing",
+        "extra_duration": null,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": [
+      {
+        "utc": "2026-11-17T16:54:17.982905Z",
+        "elapsed_ms": 143376648,
+        "event": "caller_die",
+        "trial": "a7437d0c-79b3-473d-88ca-80df58b8b509",
+        "detail": {
+          "pid": 5491
+        }
+      }
+    ]
+  },
+  {
+    "trial": "65b29d52-0a43-472e-9cac-dba0d06d28ae",
+    "launch_utc": "2026-11-17T16:54:21.439545Z",
+    "scenario": "caller_kill-v5-3",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 300,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:54:25.123094Z",
+        "request": 300,
+        "result": 0,
+        "action": null,
+        "extras": {},
+        "extra_position_type": "missing",
+        "extra_position": null,
+        "extra_duration_type": "missing",
+        "extra_duration": null,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": [
+      {
+        "utc": "2026-11-17T16:54:24.635572Z",
+        "elapsed_ms": 143383301,
+        "event": "caller_die",
+        "trial": "65b29d52-0a43-472e-9cac-dba0d06d28ae",
+        "detail": {
+          "pid": 6235
+        }
+      }
+    ]
+  },
+  {
+    "trial": "2e4f6b43-21c4-4338-920a-54d33d41f603",
+    "launch_utc": "2026-11-17T16:54:28.107179Z",
+    "scenario": "audio-v1-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 301,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:54:33.001066Z",
+        "request": 301,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 13005
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 13005,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "10c3d60c-537e-4081-bcbb-7a48b5762b72",
+    "launch_utc": "2026-11-17T16:55:08.117593Z",
+    "scenario": "audio-v1-2",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 302,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:55:12.756641Z",
+        "request": 302,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 13511
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 13511,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "0404b505-3295-461f-8e8d-40c4937881c4",
+    "launch_utc": "2026-11-17T16:55:47.817532Z",
+    "scenario": "audio-v1-3",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 303,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:55:52.346436Z",
+        "request": 303,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 13253
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 13253,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "ddaed68f-8fa6-4c10-9b0e-ecf7600a5486",
+    "launch_utc": "2026-11-17T16:56:54.112258Z",
+    "scenario": "long-resume-15m-v1-1",
+    "saved_ms": 932000,
+    "rewind_s": 10,
+    "requested_ms": 922000,
+    "request": 304,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_uri": "content://dev.arglabs.tubego.vlcprobe.clip/long.mp4",
+    "clip_duration_ms": 1200031,
+    "clip_sha256": "d738dee1a1358968e1e15b432b99c9b287c0aa9bcdc9b16bf9493ee74a480c11",
+    "results": [
+      {
+        "utc": "2026-11-17T16:57:04.241401Z",
+        "request": 304,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 1200008
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/long.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 930507
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 930507,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 1200008,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "50928222-3168-481b-a2cb-0a3b218ad052",
+    "launch_utc": "2026-11-17T16:57:05.581717Z",
+    "scenario": "long-resume-15m-v1-2",
+    "saved_ms": 930507,
+    "rewind_s": 10,
+    "requested_ms": 920507,
+    "request": 305,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_uri": "content://dev.arglabs.tubego.vlcprobe.clip/long.mp4",
+    "clip_duration_ms": 1200031,
+    "clip_sha256": "d738dee1a1358968e1e15b432b99c9b287c0aa9bcdc9b16bf9493ee74a480c11",
+    "results": [
+      {
+        "utc": "2026-11-17T16:57:15.998135Z",
+        "request": 305,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 1200008
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/long.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 928107
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 928107,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 1200008,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "4a149b22-774a-4348-b987-7427d2ca5d4e",
+    "launch_utc": "2026-11-17T16:57:17.323485Z",
+    "scenario": "long-resume-15m-v1-3",
+    "saved_ms": 928107,
+    "rewind_s": 10,
+    "requested_ms": 918107,
+    "request": 306,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_uri": "content://dev.arglabs.tubego.vlcprobe.clip/long.mp4",
+    "clip_duration_ms": 1200031,
+    "clip_sha256": "d738dee1a1358968e1e15b432b99c9b287c0aa9bcdc9b16bf9493ee74a480c11",
+    "results": [
+      {
+        "utc": "2026-11-17T16:57:27.775869Z",
+        "request": 306,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 1200008
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/long.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 926707
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 926707,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 1200008,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "e9cfe788-cb6f-4fcc-bd20-c0d4d4da9063",
+    "launch_utc": "2026-11-17T16:57:29.070128Z",
+    "scenario": "recents-v1-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 307,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_uri": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4",
+    "clip_duration_ms": 45023,
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [],
+    "caller_events": [
+      {
+        "utc": "2026-11-17T16:57:39.043440Z",
+        "elapsed_ms": 143577709,
+        "event": "abandoned",
+        "trial": "e9cfe788-cb6f-4fcc-bd20-c0d4d4da9063",
+        "detail": {
+          "source": "adb_command"
+        }
+      }
+    ]
+  },
+  {
+    "trial": "5d491bb7-8e8c-4dec-9847-95038c5d9836",
+    "launch_utc": "2026-11-17T16:57:39.129102Z",
+    "scenario": "recents-v1-2",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 308,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_uri": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4",
+    "clip_duration_ms": 45023,
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [],
+    "caller_events": [
+      {
+        "utc": "2026-11-17T16:57:48.652661Z",
+        "elapsed_ms": 143587318,
+        "event": "abandoned",
+        "trial": "5d491bb7-8e8c-4dec-9847-95038c5d9836",
+        "detail": {
+          "source": "adb_command"
+        }
+      }
+    ]
+  },
+  {
+    "trial": "4f22eeac-8d8d-47ac-8148-d5386b6d8cf5",
+    "launch_utc": "2026-11-17T16:57:48.731011Z",
+    "scenario": "recents-v1-3",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 309,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_uri": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4",
+    "clip_duration_ms": 45023,
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [],
+    "caller_events": [
+      {
+        "utc": "2026-11-17T16:57:58.457622Z",
+        "elapsed_ms": 143597123,
+        "event": "abandoned",
+        "trial": "4f22eeac-8d8d-47ac-8148-d5386b6d8cf5",
+        "detail": {
+          "source": "adb_command"
+        }
+      }
+    ]
+  },
+  {
+    "trial": "28f20053-a94f-4183-a10e-5fc333b197d9",
+    "launch_utc": "2026-11-17T16:58:08.301301Z",
+    "scenario": "jump_end-v2-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 310,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_uri": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4",
+    "clip_duration_ms": 45023,
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:58:12.218273Z",
+        "request": 310,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 0
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 43866
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 43866,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 0,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "3af56f1f-9c81-4562-acad-3ab6cc379f51",
+    "launch_utc": "2026-11-17T16:58:16.537790Z",
+    "scenario": "jump_end-v2-2",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 311,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_uri": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4",
+    "clip_duration_ms": 45023,
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:58:24.103188Z",
+        "request": 311,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 15752
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 15752,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "4c549ab9-3c3a-48ed-9c10-d8e4b54c2df8",
+    "launch_utc": "2026-11-17T16:58:25.445818Z",
+    "scenario": "jump_end-v2-3",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 312,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_uri": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4",
+    "clip_duration_ms": 45023,
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:58:32.917416Z",
+        "request": 312,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 15751
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 15751,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "8af5d379-352e-4105-8792-c2ffa743a44d",
+    "launch_utc": "2026-11-17T16:59:06.561581Z",
+    "scenario": "jump-menu-inspect-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 313,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_uri": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4",
+    "clip_duration_ms": 45023,
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:59:27.262237Z",
+        "request": 313,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 0
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 0
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 0,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 0,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "5f312127-60b1-4880-81e6-49f7c39c51a7",
+    "launch_utc": "2026-11-17T16:59:42.507675Z",
+    "scenario": "jump-menu-v1-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 314,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_uri": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4",
+    "clip_duration_ms": 45023,
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T16:59:50.762293Z",
+        "request": 314,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 0
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 0
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 0,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 0,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "dd9943cd-5e7e-4043-b773-61a4d6e32a6b",
+    "launch_utc": "2026-11-17T16:59:53.578729Z",
+    "scenario": "jump-menu-v1-2",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 315,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_uri": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4",
+    "clip_duration_ms": 45023,
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T17:00:01.772004Z",
+        "request": 315,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 0
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 0
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 0,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 0,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "970412e0-8134-4141-aa29-25b24691988c",
+    "launch_utc": "2026-11-17T17:00:04.623442Z",
+    "scenario": "jump-menu-v1-3",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 316,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_uri": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4",
+    "clip_duration_ms": 45023,
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T17:00:12.866209Z",
+        "request": 316,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 0
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 0
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 0,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 0,
+        "accepted_checkpoint": false
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "ed21bec4-4aa7-43de-8da1-c6b25832cb13",
+    "launch_utc": "2026-11-17T17:00:17.330113Z",
+    "scenario": "settings-restore-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 317,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_uri": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4",
+    "clip_duration_ms": 45023,
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T17:00:37.800455Z",
+        "request": 317,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 29253
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 29253,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "7e2a2def-3380-4130-9be0-ba692e1a5ca9",
+    "launch_utc": "2026-11-17T17:01:01.962934Z",
+    "scenario": "screen-lock-v1-1",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 318,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_uri": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4",
+    "clip_duration_ms": 45023,
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T17:06:04.373031Z",
+        "request": 318,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 35402
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 35402,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "b0cd5a74-54f4-4a72-a5ad-e04577221655",
+    "launch_utc": "2026-11-17T17:06:19.088092Z",
+    "scenario": "screen-lock-v1-2",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 319,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_uri": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4",
+    "clip_duration_ms": 45023,
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T17:31:08.275593Z",
+        "request": 319,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 11002
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 11002,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  },
+  {
+    "trial": "a270846d-7a77-4978-9f54-34715da54589",
+    "launch_utc": "2026-11-17T17:31:19.924012Z",
+    "scenario": "screen-lock-v1-3",
+    "saved_ms": 20000,
+    "rewind_s": 10,
+    "requested_ms": 10000,
+    "request": 320,
+    "model": "DN2103",
+    "api": 33,
+    "vlc": "3.7.2 (13070209)",
+    "tubego": "0.5.13 (19)",
+    "clip_uri": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4",
+    "clip_duration_ms": 45023,
+    "clip_sha256": "88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3",
+    "results": [
+      {
+        "utc": "2026-11-17T17:40:29.010503Z",
+        "request": 320,
+        "result": -1,
+        "action": "org.videolan.vlc.player.result",
+        "extras": {
+          "extra_duration": {
+            "type": "java.lang.Long",
+            "value": 45000
+          },
+          "extra_uri": {
+            "type": "java.lang.String",
+            "value": "content://dev.arglabs.tubego.vlcprobe.clip/sample.mp4"
+          },
+          "extra_position": {
+            "type": "java.lang.Long",
+            "value": 11001
+          }
+        },
+        "extra_position_type": "java.lang.Long",
+        "extra_position": 11001,
+        "extra_duration_type": "java.lang.Long",
+        "extra_duration": 45000,
+        "accepted_checkpoint": true
+      }
+    ],
+    "caller_events": []
+  }
+]

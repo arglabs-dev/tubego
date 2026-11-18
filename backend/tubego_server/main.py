@@ -12,7 +12,7 @@ from tubego_server.mail import SmtpMailer
 from tubego_server.maintenance import ReadRunner
 from tubego_server.routers import maintenance
 from tubego_server.account_cleanup import CleanupRunner
-from tubego_server.routers import admin_users, commands, web
+from tubego_server.routers import admin_users, commands, web, playback
 from tubego_server.resource_cleanup import Runner as ResourceCleanupRunner
 
 
@@ -70,6 +70,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(alerts.router,prefix="/api/v1")
     app.include_router(maintenance.router, prefix="/api/v1")
     app.include_router(commands.router, prefix="/api/v1")
+    app.include_router(playback.router, prefix="/api/v1")
     app.include_router(web.router)
     return app
 

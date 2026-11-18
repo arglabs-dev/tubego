@@ -77,3 +77,35 @@ sigue siendo `.mp4` o `.mp3` según el formato; el título dentro de la app no c
 Al aplicar de nuevo la carpeta de descargas también se reemplazan archivos
 anteriores cuyo nombre contenga espacios o signos, conservando una sola copia
 verificada. Los manifiestos de nombres antiguos siguen siendo compatibles.
+
+
+## Reproductor externo predeterminado
+
+En Ajustes → Preferencias de reproducción y descarga → Reproductor externo
+predeterminado se elige una aplicación para video y otra para audio. La selección
+se guarda solo en este teléfono y funciona sin conexión. **Preguntar cada vez**
+restaura el selector (con una única aplicación compatible se abre directamente).
+VLC aparece primero cuando está instalado. Si el componente guardado ya no está
+disponible o no admite el MIME, vuelve al selector sin borrar ni descargar archivos.
+La preferencia afecta tanto a la biblioteca principal como a Biblioteca e historial.
+Elegir un reproductor no habilita por sí solo posición, reanudación ni finalización;
+los resultados y las validaciones pendientes están en [PLA-257](spikes/PLA-257-vlc.md).
+En DN2103/API 33 con VLC 3.7.2, la salida normal entrega posición, pero fin
+natural/salto al final, cierre forzado y conversión a audio no permiten un
+seguimiento completo. No se habilitó progreso productivo a partir de estos
+ensayos; [evidencia física](spikes/pla257/evidence/2026-11-17/README.md).
+
+
+## Seguimiento integrado desde Android 0.6.0
+
+El reproductor predeterminado integrado usa LibVLC 3.7.7 con controles y gestos
+propios. Guarda checkpoints cada cinco segundos y al pausar/salir, reanuda con el
+retroceso de la cuenta y distingue Sin empezar / En progreso / Terminado. El
+marcado manual se ofrece en la ficha, historial y reproductor. Se conservan el
+modo externo y sus componentes preferidos, con límites de seguimiento explícitos.
+
+[Modelo de cobertura, sincronización y validación](PLAYBACK_PROGRESS.md).
+La sincronización requiere desplegar los nuevos endpoints del backend. El
+integrado se pausa al salir o bloquear; PiP/audio de fondo siguen disponibles
+mediante un reproductor externo. El registro previo de PLA-257 conserva la
+evidencia de VLC externo; no describe el motor integrado.

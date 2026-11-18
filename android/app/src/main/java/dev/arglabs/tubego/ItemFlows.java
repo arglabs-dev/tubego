@@ -186,6 +186,18 @@ final class ItemFlows {
         sheet.title(i.state == ItemState.FAILED ? (retryable(i.failureCode) ? a.t("Se interrumpió la descarga") : a.t("No se pudo descargar")) : a.t("Detalle"), a.t("Cerrar"));
         LinearLayout body = sheet.body();
         Ds.add(body, header(a, i), 6);
+        if(!i.outbox) {
+            Ds.add(body,Ds.text(a,PlaybackProgress.label(a,i.playbackStatus),15,Ds.INK,600),8);
+            big(a,body,a.t(i.playbackStatus.equals("finished")?"Marcar como no visto":"Marcar como visto"),Ds.Kind.SECONDARY,8,()->{
+                host.io().execute(()->{try{
+                    String token; synchronized(SessionStore.class){JSONObject current=new SessionStore(a,host.origin()).read();
+                        if(current==null||!current.optString("user_id").equals(i.accountUserId)||!current.optString("device_id").equals(i.accountDeviceId))throw new SecurityException();token=current.getString("token");}
+                    PlaybackProgress.mark(a,host.origin(),token,i.id,!i.playbackStatus.equals("finished"));
+                    a.runOnUiThread(()->{sheet.dismiss();host.refresh();});
+                }catch(Exception failed){a.runOnUiThread(()->host.message(a.t("No se pudo guardar el progreso. Revisa la sesión y el espacio libre.")));}});
+            });
+            if(i.downloaded)big(a,body,a.t("Abrir externamente"),Ds.Kind.TEXT,4,()->{sheet.dismiss();playExternal(host,i);});
+        }
         if (!i.outbox) Ds.add(body, Ds.text(a, meta(a, i), 15, Ds.MUTED, 500), 8);
 
         if (validSource(i.sourceUrl)) {
@@ -490,8 +502,12 @@ final class ItemFlows {
         });
     }
 
-    /** Abre el archivo local con un reproductor externo (VLC primero). */
     static void play(Host host, Item i) {
+        PlaybackLaunch.open(host.act(),host.origin(),i.id,()->playExternal(host,i));
+    }
+
+    /** Explicit external playback retains the device-selected component. */
+    static void playExternal(Host host, Item i) {
         DsActivity a = host.act();
         host.io().execute(() -> {
             try {
@@ -503,20 +519,7 @@ final class ItemFlows {
                     if (a.isDestroyed()) return;
                     Intent view = new Intent(Intent.ACTION_VIEW).setDataAndType(uri, mime).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     view.setClipData(ClipData.newRawUri("TubeGo", uri));
-                    List<ResolveInfo> players = a.getPackageManager().queryIntentActivities(view, 0);
-                    players.sort(Comparator.comparing(p -> !"org.videolan.vlc".equals(p.activityInfo.packageName)));
-                    if (players.isEmpty()) {
-                        new AlertDialog.Builder(a).setMessage(a.t("No hay un reproductor compatible. Instala VLC u otro y vuelve a intentarlo."))
-                                .setPositiveButton(a.t("Aceptar"), null).show();
-                        return;
-                    }
-                    Runnable launch = null;
-                    final ResolveInfo only = players.size() == 1 ? players.get(0) : null;
-                    if (only != null) { start(host, i, view, only, openingToken); return; }
-                    String[] names = new String[players.size()];
-                    for (int n = 0; n < names.length; n++) names[n] = players.get(n).loadLabel(a.getPackageManager()).toString();
-                    new AlertDialog.Builder(a).setTitle(a.t("Reproducir con…"))
-                            .setItems(names, (dialog, which) -> start(host, i, view, players.get(which), openingToken)).show();
+                    ExternalPlayers.choose(a, view, player -> start(host, i, view, player, openingToken));
                 });
             } catch (Exception e) {
                 a.runOnUiThread(() -> host.message(a.t("No se pudo abrir el archivo local: ") + Texts.error(a, e)));
@@ -528,9 +531,10 @@ final class ItemFlows {
         DsActivity a = host.act();
         Intent explicit = new Intent(view).setComponent(new ComponentName(player.activityInfo.packageName, player.activityInfo.name));
         try {
+            if (!token.equals(new SessionStore(a, host.origin()).token())) throw new SecurityException();
             a.startActivity(explicit);
             host.io().execute(() -> { try { HistoryOpened.record(a, host.origin(), i.id, token); } catch (Exception ignored) { } });
-        } catch (ActivityNotFoundException e) {
+        } catch (Exception e) {
             host.message(a.t("El reproductor ya no está disponible."));
         }
     }

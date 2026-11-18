@@ -1,0 +1,16 @@
+{
+  "tests": 87,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "translation_strings_es_en": 998,
+  "lint_errors": 0,
+  "build": "BUILD SUCCESSFUL",
+  "version_name": "0.6.1",
+  "version_code": 21,
+  "closing_backend_and_channel_storage": {
+    "passed": 367,
+    "warnings": 3,
+    "seconds": 44.1
+  }
+}

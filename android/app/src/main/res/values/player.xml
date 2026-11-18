@@ -1,0 +1,6 @@
+<resources>
+    <style name="PlayerDialog" parent="android:style/Theme.Material.Dialog.Alert">
+        <item name="android:colorAccent">#FF610A</item>
+        <item name="android:colorControlActivated">#FF610A</item>
+    </style>
+</resources>

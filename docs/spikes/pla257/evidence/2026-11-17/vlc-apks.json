@@ -1,0 +1,20 @@
+{
+  "installer": "com.android.vending",
+  "apks": [
+    {
+      "file": "base.apk",
+      "bytes": 47996867,
+      "sha256": "ae2f48274c9525e454fe7268c29fa91d148f4f408a67b7fb012a44fccf41489e"
+    },
+    {
+      "file": "split_config.arm64_v8a.apk",
+      "bytes": 52552116,
+      "sha256": "f91fcd3134fab173642785153cd665fe93e3a595191161ba2d9dd108e0a4cbcf"
+    },
+    {
+      "file": "split_config.xxhdpi.apk",
+      "bytes": 354655,
+      "sha256": "6956bf5bf15d9f99810ec18be846f2d3960cb88c44d66945f443379ca40a7856"
+    }
+  ]
+}

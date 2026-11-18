@@ -1,0 +1,22 @@
+{
+  "ready": true,
+  "checkpoint": {
+    "position_ms": 15901,
+    "duration_ms": 45000,
+    "position_at_ms": 1794939335559,
+    "position_id": "e402b49a-9e49-44f1-b3d7-c158b29d3b54",
+    "ranges": [
+      [
+        150,
+        15901
+      ]
+    ],
+    "ended": false,
+    "manual_seen": null,
+    "manual_at_ms": 0,
+    "manual_id": "00000000-0000-0000-0000-000000000000",
+    "dirty": "69a4e00d-ef65-4c8d-abbf-08e10ebb7c62"
+  },
+  "libvlc_version": "3.0.25 Vetinari",
+  "libvlc_changeset": "3.0.24-35-gc7e5d68ee5"
+}

@@ -69,6 +69,7 @@ final class LibraryRepo {
         if (fetch) {
             try {
                 HistoryOpened.flush(ctx, origin, token, root);
+                try { PlaybackProgress.sync(ctx,origin,token); } catch(Exception pendingPlayback) { /* Preserve offline progress and still load the library. */ }
                 String path = "/resources?order=newest&limit=50&cursor=" + java.net.URLEncoder.encode(cursor == null ? "" : cursor, "UTF-8");
                 if (category != null) path += "&category=" + java.net.URLEncoder.encode(category, "UTF-8");
                 JSONObject page = new ApiClient(origin).request("GET", path, null, token);
@@ -129,9 +130,10 @@ final class LibraryRepo {
     }
 
     private static Item toItem(Context ctx,JSONObject row, File root, String origin, String userId, String deviceId,
-                               DownloadPermissions permissions, DownloadPolicy.NetworkState network) {
+                               DownloadPermissions permissions, DownloadPolicy.NetworkState network) throws Exception {
         Item item = new Item();
         item.id = row.optString("id");
+        item.accountUserId=userId;item.accountDeviceId=deviceId;
         item.audioTrack = row.optString("audio_track", "original");
         JSONObject resolved = row.optJSONObject("audio_resolved");
         if (resolved != null) {
@@ -148,6 +150,12 @@ final class LibraryRepo {
         item.sourceUrl = row.optString("source_url", "");
         item.host = hostOf(item.sourceUrl);
         item.createdAt = row.optString("created_at", "");
+        synchronized(SessionStore.class) {
+            JSONObject s=new SessionStore(ctx,origin).read();
+            if(s==null || !s.optString("user_id").equals(userId) || !s.optString("device_id").equals(deviceId))throw new NoSession();
+            JSONObject progress=new PlaybackStore(root).read(row.getString("id"));
+            item.playbackStatus=PlaybackState.status(progress);item.positionMillis=progress.optLong("position_ms");
+        }
         item.lastOpenedAt = row.isNull("last_opened_at") ? "" : row.optString("last_opened_at", "");
         item.serverAvailable = row.optBoolean("server_available", false);
         if (!row.isNull("duration_seconds")) item.durationSeconds = row.optDouble("duration_seconds", -1);

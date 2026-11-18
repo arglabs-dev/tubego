@@ -1,0 +1,9 @@
+{
+  "format": {
+    "duration": "1200.008005",
+    "size": "15765272"
+  },
+  "sha256": "d738dee1a1358968e1e15b432b99c9b287c0aa9bcdc9b16bf9493ee74a480c11",
+  "generator": "ffmpeg 6.1.1-3ubuntu5",
+  "command": "ffmpeg -hide_banner -loglevel error -stream_loop -1 -i android/app/src/androidTest/res/raw/vlc_sample.mp4 -t 1200 -c copy -movflags +faststart /tmp/pla257-long.mp4"
+}

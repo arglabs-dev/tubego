@@ -7,6 +7,9 @@ final class Item {
     String id = "", title = "", mediaFormat = "video", selection = "best", sourceUrl = "", host = "";
     String audioTrack = "original", audioLanguage = "", audioKind = "";
     boolean audioVerified;
+    String accountUserId="",accountDeviceId="";
+    String playbackStatus="not_started";
+    long positionMillis;
     String category = "";
     String createdAt = "", lastOpenedAt = "", thumbnailKey = "";
     String taskId = "", taskState = "", localState = "", pauseReason = "", failureCode = "", qualityNoticeCode = "";

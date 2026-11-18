@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <queries><package android:name="org.videolan.vlc"/><package android:name="dev.arglabs.tubego"/></queries>
+    <application android:label="TubeGo VLC Probe" android:allowBackup="false" android:theme="@android:style/Theme.Material.Light.NoActionBar">
+        <activity android:name=".ProbeActivity" android:exported="true">
+            <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+        </activity>
+        <provider android:name=".ProbeMediaProvider" android:authorities="dev.arglabs.tubego.vlcprobe.clip" android:exported="false" android:grantUriPermissions="true"/>
+    </application>
+</manifest>
