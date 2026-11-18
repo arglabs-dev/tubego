@@ -1,0 +1,15 @@
+{
+  "productive_app_nodes": 0,
+  "known_ui_labels": {
+    "Mi biblioteca": 0,
+    "Sin empezar": 0,
+    "En progreso": 0,
+    "Terminado": 0,
+    "Conecta tu cuenta": 0,
+    "Iniciar sesión": 0
+  },
+  "screen_locked": true,
+  "productive_process_running": true,
+  "fatal_exception_observed": false,
+  "limitation": "La pantalla se bloqueó automáticamente; no se validó visualmente la biblioteca productiva ni se volvió a bloquear de forma deliberada."
+}

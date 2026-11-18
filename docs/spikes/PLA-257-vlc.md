@@ -2,7 +2,38 @@
 
 Estado: investigación de código y prototipo aislado. **Validación Android/VLC pendiente; no cerrar la tarjeta como Done.** Fecha: 2026-10-08.
 
-## Decisión para el MVP
+## Sesión 2026-11-17
+
+Git comenzó limpio en `main`. Se consultó PLA-257 en Linear: sigue **In Progress**. No se modificó la tarjeta. `adb devices -l` volvió a fallar antes de enumerar dispositivos: `could not install *smartsocket* listener: Operation not permitted`. Por tanto, las versiones TubeGo 0.5.13 (19), VLC 3.7.2 (13070209), modelo DN2103 y serial R4HAEIVC9DQKXCDI son datos proporcionados por el usuario, **no verificados por esta sesión**. No hubo instalación, desinstalación ni acceso a datos del teléfono. La matriz continúa pendiente.
+
+Se añadió un [APK de diagnóstico aislado y su procedimiento](pla257/app/README.md), que usa el helper existente, una Activity real con `startActivityForResult`, proveedor privado y el clip sintético existente. Persiste ensayos y resultados crudos. Compilarlo no demuestra callbacks ni compatibilidad del teléfono. No usa los archivos, sesiones ni proveedor productivo de TubeGo.
+
+La preferencia de reproductor externo se implementó en ambos flujos de la app: Ajustes → Preferencias de reproducción y descarga → Reproductor externo predeterminado. Guarda componente por audio/video en este teléfono, permite Preguntar cada vez, destaca VLC y vuelve al selector si el componente no resuelve para el MIME actual. Sigue registrando solo aperturas; no habilita seguimiento no validado.
+
+Verificaciones de esta sesión: fuentes Java productivas compiladas contra API 35 y dependencias locales; catálogo ES/EN validado; las 13 comprobaciones `ResumePositionTest` pasan; fuentes del probe compiladas, empaquetadas con AAPT2/D8 y firma del APK comprobada. Hubo advertencias de anotaciones Kotlin ausentes al compilar contra las dependencias cacheadas. El build Gradle completo (incluidos lint/JUnit) no se ejecutó: el entorno impide escribir el archivo de bloqueo de la biblioteca nativa en `~/.gradle/native`. Estas comprobaciones parciales no equivalen a un build Gradle ni a pruebas instrumentadas.
+
+### Recomendación provisional y trabajo siguiente
+
+| Alternativa | Seguimiento | Experiencia y coste |
+|---|---|---|
+| VLC externo | Posible checkpoint al salir, pendiente de matriz; sin canal periódico en este prototipo | Conserva interfaz y gestos de VLC; útil como opción externa |
+| LibVLC dentro de TubeGo | Permite observar eventos del motor y persistir mientras reproduce | Requiere controles propios, gestos de avance/volumen/brillo, servicio multimedia, PiP y manejo de ciclo de vida |
+| App complementaria | Si es propia, puede exponer un protocolo de checkpoints | Duplica instalación, autenticación, permisos y ciclo de vida; no ofrece ventaja clara frente a integrar el motor |
+
+Para cumplir **todos** los comportamientos pedidos, la recomendación provisional es LibVLC integrado más la opción de reproductor externo. No se agregó LibVLC en esta entrega: la prueba en dispositivo, la decisión final y la implementación del seguimiento siguen pendientes. Un callback externo incluso fiable no proporciona por sí solo guardado periódico, cobertura vista ni recuperación del último checkpoint ante muerte del reproductor. El modo externo deberá explicar su alcance al usuario y permitir el marcado manual.
+
+El [README oficial de VideoLAN](https://github.com/videolan/vlc-android/blob/master/README.md?plain=1), consultado el 2026-11-17, distingue la aplicación VLC (GPLv2 o posterior) del motor Android LibVLC (LGPLv2). No reutilizar su UI como si fuera parte de la API del motor. Antes de distribuir una integración hay que revisar la versión/binarios concretos y sus licencias y componentes; esta nota no es un análisis de cumplimiento. Crear controles y gestos propios evita incorporar por accidente código de la UI GPL.
+
+La implementación posterior debe separar checkpoint, cobertura y marcado manual:
+
+- Identidad: origen + usuario + recurso + revisión del medio; el dispositivo y el ID de sesión identifican el origen del evento. Nunca asociar por título ni URI devuelta.
+- Persistencia: checkpoint local atómico cada 5 s mientras se reproduce, al pausar y salir; reanudar con `max(0, posición - retroceso)` usando la preferencia existente (10 s). Guardar antes de confirmar eventos y conservar el último checkpoint válido tras un cierre inesperado. El intervalo es una propuesta, no una garantía de precisión.
+- Cobertura: acumular intervalos observados durante reproducción continua y acotados por tiempo transcurrido y velocidad; un seek abre otro intervalo y no acredita el hueco saltado. El fin natural por sí solo tampoco demuestra haber visto todo.
+- Estados: Sin empezar sin reproducción observada; En progreso al recibir evidencia válida; Terminado por marcado manual o por política explícita que combine cobertura suficiente y fin natural. Definir umbral antes de habilitar finalización automática. Abrir un archivo no cambia estos estados.
+- Sincronización: outbox durable sin conexión, eventos idempotentes con secuencia por sesión, autorización del recurso en servidor y revisión de conflicto para marcado/desmarcado manual. No resolver conflictos por el máximo de posición: impediría retroceder y confundiría saltos con cobertura. Cambios de cuenta deben cancelar/aislar operaciones de la cuenta anterior.
+- Probar reanudación entre sesiones/dispositivos, desconexión/reconexión, logout, seek al final, reproducción acelerada, finalización natural, marcado/desmarcado offline y cierres inesperados antes de publicar seguimiento.
+
+## Decisión para el MVP (histórica, 2026-10-08)
 
 Mantener reproductor externo e historial de apertura. No prometer posición exacta, sincronización del punto de reproducción ni reanudación automática hasta probar la matriz de abajo. No añadir LibVLC ni reproductor embebido. Este spike no bloquea el MVP.
 
@@ -82,3 +113,49 @@ Probar al menos un dispositivo físico y un emulador Android soportados por el M
 | Solo audio y fin natural | Comportamiento documentado; no asumir contrato del video | Pendiente |
 
 Criterio de salida: anexar evidencia y límites por versión. Si posición/retorno no son fiables en los escenarios soportados, documentar resultado negativo y mantener solo historial de apertura. No requerir reproductor integrado para cerrar la investigación.
+
+## Continuación en dispositivo: 2026-11-17
+
+ADB operativo en DN2103/API 33. Versiones instaladas confirmadas: TubeGo
+0.5.13 (19), VLC 3.7.2 (13070209). Se compiló el probe con Gradle y se
+instaló por primera vez en su paquete aislado. TubeGo no se actualizó ni
+se borraron datos. Tras desbloquear se ejecutaron los ensayos físicos del registro enlazado: hay
+callbacks reales de salida, PiP, recreación, audio y reanudación de un fixture
+de veinte minutos. Se completaron las tres repeticiones de bloqueo y sus retornos después de
+desbloquear y salir con Atrás (request 318–320).
+Véase [registro y evidencia cruda](pla257/evidence/2026-11-17/README.md).
+Las referencias anteriores al bloqueo de ADB corresponden a la sesión previa.
+
+### Hallazgos físicos que cambian la evaluación
+
+VLC 3.7.2 devuelve RESULT_OK con posición/duración Long válidas al salir normalmente
+(6 ensayos, VLC cerrado o abierto), y aplica el retroceso incluso alrededor del
+minuto 15 de un archivo sintético de 20 minutos. La matriz detallada y los request
+codes están en el [registro físico](pla257/evidence/2026-11-17/README.md).
+
+En tres finales naturales y tres saltos a 44 s devuelve el mismo 0/0; el helper lo
+rechaza. Tres force-stop de VLC y tres muertes reales del probe dan cancelación
+sin checkpoint. PiP no emite checkpoints durante reproducción; convertir a audio
+emite un resultado al cambiar de modo y no otro al terminar. Quitar de recientes
+la tarjeta compartida del probe/VLC tampoco entrega resultado en la observación.
+Recrear la Activity sí conserva la asociación y devuelve posición (3/3).
+
+Por tanto, esta versión permite checkpoints oportunistas al salir, pero Activity
+Result no cumple el guardado periódico ni acredita cobertura/finalización. No se
+flexibiliza el validador para aceptar -1, 0/0 o duración cero. La implementación
+productiva de progreso/sincronización y la elección de interfaz siguen pendientes;
+no se añadió LibVLC y PLA-257 no se marcó terminada. En los tres bloqueos la sesión multimedia se observó stopped y no hubo callback
+durante la ventana de cuatro segundos; tras desbloquear y salir con Atrás
+se recibieron checkpoints válidos 35402, 11002 y 11001 / 45000. Esto no acredita
+audio continuo bajo bloqueo. No queda ensayo pendiente; consultar el registro físico.
+La tabla original se conserva como alcance pendiente de cierre completo, no como
+negación de los resultados físicos anexos.
+
+
+## Implementación posterior autorizada
+
+El 17 de noviembre el usuario pidió continuar con la implementación después de
+revisar los resultados. Se implementa LibVLC integrado conservando el modo externo;
+[detalle y pruebas](../PLAYBACK_PROGRESS.md). Las recomendaciones anteriores
+reflejan el estado previo a esa autorización. PLA-257 no se cierra ni modifica
+automáticamente; los ensayos externos conservan su alcance y limitaciones.

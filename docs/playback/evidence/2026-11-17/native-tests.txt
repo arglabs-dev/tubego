@@ -1,0 +1,6 @@
+
+dev.arglabs.tubego.PlaybackInstrumentedTest:....
+Test results for InstrumentationTestRunner=....
+Time: 89.52
+
+OK (4 tests)

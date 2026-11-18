@@ -1,0 +1,591 @@
+{"utc":"2026-11-17T16:25:10.188480Z","elapsed_ms":141628854,"event":"created","trial":"","detail":{}}
+{"utc":"2026-11-17T16:25:10.207654Z","elapsed_ms":141628873,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:25:10.459837Z","elapsed_ms":141629125,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:25:10.609491Z","elapsed_ms":141629275,"event":"stop","trial":"","detail":{}}
+{"utc":"2026-11-17T16:29:07.064110Z","elapsed_ms":141865729,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:29:07.070262Z","elapsed_ms":141865735,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:29:07.122096Z","elapsed_ms":141865787,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:29:07.469045Z","elapsed_ms":141866134,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:29:07.484948Z","elapsed_ms":141866150,"event":"stop","trial":"","detail":{}}
+{"utc":"2026-11-17T16:39:40.019101Z","elapsed_ms":142498684,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:40:08.709740Z","elapsed_ms":142527375,"event":"launch","trial":"ed59919f-dbf1-4696-b62c-7c04787e8439","detail":{"scenario":"normal","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":258,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:40:08.754823Z","elapsed_ms":142527420,"event":"launch_return","trial":"ed59919f-dbf1-4696-b62c-7c04787e8439","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:40:08.773383Z","elapsed_ms":142527438,"event":"pause","trial":"ed59919f-dbf1-4696-b62c-7c04787e8439","detail":{}}
+{"utc":"2026-11-17T16:40:09.251648Z","elapsed_ms":142527917,"event":"stop","trial":"ed59919f-dbf1-4696-b62c-7c04787e8439","detail":{}}
+{"utc":"2026-11-17T16:40:27.782579Z","elapsed_ms":142546448,"event":"activity_result","trial":"ed59919f-dbf1-4696-b62c-7c04787e8439","detail":{"request":258,"result":-1,"action":"org.videolan.vlc.player.result","extra_position_type":"java.lang.Long","extra_position":27251,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:40:27.789379Z","elapsed_ms":142546454,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:40:27.867905Z","elapsed_ms":142546533,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:40:28.444947Z","elapsed_ms":142547110,"event":"stop","trial":"","detail":{}}
+{"utc":"2026-11-17T16:40:58.708707Z","elapsed_ms":142577374,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:41:05.356546Z","elapsed_ms":142584022,"event":"launch","trial":"9d127abe-0985-433c-9037-14b00a6555e7","detail":{"scenario":"cold-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":259,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:41:05.397126Z","elapsed_ms":142584062,"event":"launch_return","trial":"9d127abe-0985-433c-9037-14b00a6555e7","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:41:05.407341Z","elapsed_ms":142584072,"event":"pause","trial":"9d127abe-0985-433c-9037-14b00a6555e7","detail":{}}
+{"utc":"2026-11-17T16:41:05.751908Z","elapsed_ms":142584417,"event":"stop","trial":"9d127abe-0985-433c-9037-14b00a6555e7","detail":{}}
+{"utc":"2026-11-17T16:41:13.557915Z","elapsed_ms":142592223,"event":"activity_result","trial":"9d127abe-0985-433c-9037-14b00a6555e7","detail":{"request":259,"result":-1,"action":"org.videolan.vlc.player.result","extra_position_type":"java.lang.Long","extra_position":16502,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:41:13.578232Z","elapsed_ms":142592243,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:41:20.893494Z","elapsed_ms":142599559,"event":"launch","trial":"e62c5f92-c3e5-407b-b81a-08be420cb389","detail":{"scenario":"cold-2","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":260,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:41:20.918279Z","elapsed_ms":142599583,"event":"launch_return","trial":"e62c5f92-c3e5-407b-b81a-08be420cb389","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:41:20.930024Z","elapsed_ms":142599595,"event":"pause","trial":"e62c5f92-c3e5-407b-b81a-08be420cb389","detail":{}}
+{"utc":"2026-11-17T16:41:21.274432Z","elapsed_ms":142599940,"event":"stop","trial":"e62c5f92-c3e5-407b-b81a-08be420cb389","detail":{}}
+{"utc":"2026-11-17T16:41:28.806079Z","elapsed_ms":142607471,"event":"activity_result","trial":"e62c5f92-c3e5-407b-b81a-08be420cb389","detail":{"request":260,"result":-1,"action":"org.videolan.vlc.player.result","extra_position_type":"java.lang.Long","extra_position":16509,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:41:28.821605Z","elapsed_ms":142607487,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:41:36.284596Z","elapsed_ms":142614950,"event":"launch","trial":"7bf6907b-39f3-40f1-8a96-775909ce9a3f","detail":{"scenario":"cold-3","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":261,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:41:36.324016Z","elapsed_ms":142614989,"event":"launch_return","trial":"7bf6907b-39f3-40f1-8a96-775909ce9a3f","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:41:36.336019Z","elapsed_ms":142615001,"event":"pause","trial":"7bf6907b-39f3-40f1-8a96-775909ce9a3f","detail":{}}
+{"utc":"2026-11-17T16:41:36.671467Z","elapsed_ms":142615337,"event":"stop","trial":"7bf6907b-39f3-40f1-8a96-775909ce9a3f","detail":{}}
+{"utc":"2026-11-17T16:41:42.316617Z","elapsed_ms":142620982,"event":"activity_result","trial":"7bf6907b-39f3-40f1-8a96-775909ce9a3f","detail":{"request":261,"result":-1,"action":"org.videolan.vlc.player.result","extra_position_type":"java.lang.Long","extra_position":14504,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:41:42.347086Z","elapsed_ms":142621012,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:41:55.879213Z","elapsed_ms":142634544,"event":"launch","trial":"e28777b2-9930-4384-ab78-4dda0b6c144d","detail":{"scenario":"zero-1","saved_ms":5000,"rewind_s":10,"requested_ms":0,"request":262,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:41:55.917563Z","elapsed_ms":142634583,"event":"launch_return","trial":"e28777b2-9930-4384-ab78-4dda0b6c144d","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:41:55.929815Z","elapsed_ms":142634595,"event":"pause","trial":"e28777b2-9930-4384-ab78-4dda0b6c144d","detail":{}}
+{"utc":"2026-11-17T16:41:56.022944Z","elapsed_ms":142634688,"event":"stop","trial":"e28777b2-9930-4384-ab78-4dda0b6c144d","detail":{}}
+{"utc":"2026-11-17T16:41:59.892255Z","elapsed_ms":142638557,"event":"activity_result","trial":"e28777b2-9930-4384-ab78-4dda0b6c144d","detail":{"request":262,"result":-1,"action":"org.videolan.vlc.player.result","extra_position_type":"java.lang.Long","extra_position":-1,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:41:59.909825Z","elapsed_ms":142638575,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:42:07.469033Z","elapsed_ms":142646134,"event":"launch","trial":"835b53b5-80a3-4b28-a030-4484554c7dae","detail":{"scenario":"zero-2","saved_ms":5000,"rewind_s":10,"requested_ms":0,"request":263,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:42:07.514064Z","elapsed_ms":142646179,"event":"launch_return","trial":"835b53b5-80a3-4b28-a030-4484554c7dae","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:42:07.530135Z","elapsed_ms":142646195,"event":"pause","trial":"835b53b5-80a3-4b28-a030-4484554c7dae","detail":{}}
+{"utc":"2026-11-17T16:42:07.628123Z","elapsed_ms":142646293,"event":"stop","trial":"835b53b5-80a3-4b28-a030-4484554c7dae","detail":{}}
+{"utc":"2026-11-17T16:42:11.252862Z","elapsed_ms":142649918,"event":"activity_result","trial":"835b53b5-80a3-4b28-a030-4484554c7dae","detail":{"request":263,"result":-1,"action":"org.videolan.vlc.player.result","extra_position_type":"java.lang.Long","extra_position":-1,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:42:11.277664Z","elapsed_ms":142649943,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:42:19.020613Z","elapsed_ms":142657686,"event":"launch","trial":"774cdf2e-6948-40e6-bea7-c7ad313c88af","detail":{"scenario":"zero-3","saved_ms":5000,"rewind_s":10,"requested_ms":0,"request":264,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:42:19.054162Z","elapsed_ms":142657719,"event":"launch_return","trial":"774cdf2e-6948-40e6-bea7-c7ad313c88af","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:42:19.071152Z","elapsed_ms":142657736,"event":"pause","trial":"774cdf2e-6948-40e6-bea7-c7ad313c88af","detail":{}}
+{"utc":"2026-11-17T16:42:19.180925Z","elapsed_ms":142657846,"event":"stop","trial":"774cdf2e-6948-40e6-bea7-c7ad313c88af","detail":{}}
+{"utc":"2026-11-17T16:42:22.761Z","elapsed_ms":142661426,"event":"activity_result","trial":"774cdf2e-6948-40e6-bea7-c7ad313c88af","detail":{"request":264,"result":-1,"action":"org.videolan.vlc.player.result","extra_position_type":"java.lang.Long","extra_position":-1,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:42:22.786148Z","elapsed_ms":142661451,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:42:30.356147Z","elapsed_ms":142669021,"event":"launch","trial":"a20e34ee-53a9-47a8-ae0d-5263e7ce9f4c","detail":{"scenario":"natural-1","saved_ms":43000,"rewind_s":10,"requested_ms":33000,"request":265,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:42:30.404145Z","elapsed_ms":142669069,"event":"launch_return","trial":"a20e34ee-53a9-47a8-ae0d-5263e7ce9f4c","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:42:30.424292Z","elapsed_ms":142669089,"event":"pause","trial":"a20e34ee-53a9-47a8-ae0d-5263e7ce9f4c","detail":{}}
+{"utc":"2026-11-17T16:42:30.530257Z","elapsed_ms":142669195,"event":"stop","trial":"a20e34ee-53a9-47a8-ae0d-5263e7ce9f4c","detail":{}}
+{"utc":"2026-11-17T16:44:16.588012Z","elapsed_ms":142775253,"event":"activity_result","trial":"a20e34ee-53a9-47a8-ae0d-5263e7ce9f4c","detail":{"request":265,"result":-1,"action":"org.videolan.vlc.player.result","extra_position_type":"java.lang.Long","extra_position":3901,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:44:16.612726Z","elapsed_ms":142775278,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:44:16.733447Z","elapsed_ms":142775399,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:44:16.845453Z","elapsed_ms":142775511,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:44:23.641844Z","elapsed_ms":142782307,"event":"launch","trial":"1bfc4656-dbbf-4f9f-8864-1150c7f5c66b","detail":{"scenario":"force_stop-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":266,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:44:23.694986Z","elapsed_ms":142782360,"event":"launch_return","trial":"1bfc4656-dbbf-4f9f-8864-1150c7f5c66b","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:44:23.717075Z","elapsed_ms":142782382,"event":"pause","trial":"1bfc4656-dbbf-4f9f-8864-1150c7f5c66b","detail":{}}
+{"utc":"2026-11-17T16:44:23.812582Z","elapsed_ms":142782478,"event":"stop","trial":"1bfc4656-dbbf-4f9f-8864-1150c7f5c66b","detail":{}}
+{"utc":"2026-11-17T16:44:31.795612Z","elapsed_ms":142790461,"event":"activity_result","trial":"1bfc4656-dbbf-4f9f-8864-1150c7f5c66b","detail":{"request":266,"result":0,"action":null,"extra_position_type":"missing","extra_position":null,"extra_duration_type":"missing","extra_duration":null,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:44:31.860541Z","elapsed_ms":142790526,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:44:40.040377Z","elapsed_ms":142798705,"event":"launch","trial":"c6ca04a3-7879-4e2e-8b59-e0b25f9a09cb","detail":{"scenario":"force_stop-2","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":267,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:44:40.089812Z","elapsed_ms":142798755,"event":"launch_return","trial":"c6ca04a3-7879-4e2e-8b59-e0b25f9a09cb","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:44:40.114447Z","elapsed_ms":142798780,"event":"pause","trial":"c6ca04a3-7879-4e2e-8b59-e0b25f9a09cb","detail":{}}
+{"utc":"2026-11-17T16:44:40.461322Z","elapsed_ms":142799126,"event":"stop","trial":"c6ca04a3-7879-4e2e-8b59-e0b25f9a09cb","detail":{}}
+{"utc":"2026-11-17T16:44:47.854290Z","elapsed_ms":142806519,"event":"activity_result","trial":"c6ca04a3-7879-4e2e-8b59-e0b25f9a09cb","detail":{"request":267,"result":0,"action":null,"extra_position_type":"missing","extra_position":null,"extra_duration_type":"missing","extra_duration":null,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:44:47.887816Z","elapsed_ms":142806553,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:44:56.456942Z","elapsed_ms":142815122,"event":"launch","trial":"6a075de6-9898-4769-a7c4-0e7448ed4683","detail":{"scenario":"force_stop-3","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":268,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:44:56.509486Z","elapsed_ms":142815175,"event":"launch_return","trial":"6a075de6-9898-4769-a7c4-0e7448ed4683","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:44:56.536471Z","elapsed_ms":142815202,"event":"pause","trial":"6a075de6-9898-4769-a7c4-0e7448ed4683","detail":{}}
+{"utc":"2026-11-17T16:44:56.853405Z","elapsed_ms":142815519,"event":"stop","trial":"6a075de6-9898-4769-a7c4-0e7448ed4683","detail":{}}
+{"utc":"2026-11-17T16:45:02.093483Z","elapsed_ms":142820759,"event":"activity_result","trial":"6a075de6-9898-4769-a7c4-0e7448ed4683","detail":{"request":268,"result":0,"action":null,"extra_position_type":"missing","extra_position":null,"extra_duration_type":"missing","extra_duration":null,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:45:02.121516Z","elapsed_ms":142820787,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:45:42.824481Z","elapsed_ms":142861490,"event":"created","trial":"","detail":{}}
+{"utc":"2026-11-17T16:45:42.829200Z","elapsed_ms":142861494,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:45:42.841368Z","elapsed_ms":142861507,"event":"launch","trial":"b8ae18cf-cab6-4aff-95e8-d21e1138ff5e","detail":{"scenario":"automated-smoke","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":269,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:45:42.877541Z","elapsed_ms":142861543,"event":"launch_return","trial":"b8ae18cf-cab6-4aff-95e8-d21e1138ff5e","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:45:42.885647Z","elapsed_ms":142861551,"event":"pause","trial":"b8ae18cf-cab6-4aff-95e8-d21e1138ff5e","detail":{}}
+{"utc":"2026-11-17T16:45:43.358481Z","elapsed_ms":142862024,"event":"stop","trial":"b8ae18cf-cab6-4aff-95e8-d21e1138ff5e","detail":{}}
+{"utc":"2026-11-17T16:46:05.261786Z","elapsed_ms":142883927,"event":"activity_result","trial":"b8ae18cf-cab6-4aff-95e8-d21e1138ff5e","detail":{"request":269,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":10000}},"extra_position_type":"java.lang.Long","extra_position":10000,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:46:05.270734Z","elapsed_ms":142883936,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:46:05.576795Z","elapsed_ms":142884242,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:46:06.306594Z","elapsed_ms":142884972,"event":"stop","trial":"","detail":{}}
+{"utc":"2026-11-17T16:46:19.105948Z","elapsed_ms":142897771,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:46:30.280080Z","elapsed_ms":142908945,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:46:30.341642Z","elapsed_ms":142909007,"event":"stop","trial":"","detail":{}}
+{"utc":"2026-11-17T16:46:31.736522Z","elapsed_ms":142910402,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:46:42.788267Z","elapsed_ms":142921453,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:46:42.812157Z","elapsed_ms":142921477,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:46:42.838917Z","elapsed_ms":142921504,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:46:42.884212Z","elapsed_ms":142921549,"event":"launch","trial":"7439b9a6-add0-4309-bebe-3bfd35caf4d6","detail":{"scenario":"natural-v3-1","saved_ms":43000,"rewind_s":10,"requested_ms":33000,"request":270,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:46:42.929781Z","elapsed_ms":142921595,"event":"launch_return","trial":"7439b9a6-add0-4309-bebe-3bfd35caf4d6","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:46:42.958169Z","elapsed_ms":142921623,"event":"pause","trial":"7439b9a6-add0-4309-bebe-3bfd35caf4d6","detail":{}}
+{"utc":"2026-11-17T16:46:43.081224Z","elapsed_ms":142921746,"event":"stop","trial":"7439b9a6-add0-4309-bebe-3bfd35caf4d6","detail":{}}
+{"utc":"2026-11-17T16:47:40.589561Z","elapsed_ms":142979255,"event":"activity_result","trial":"7439b9a6-add0-4309-bebe-3bfd35caf4d6","detail":{"request":270,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":0},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":0}},"extra_position_type":"java.lang.Long","extra_position":0,"extra_duration_type":"java.lang.Long","extra_duration":0,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:47:40.663176Z","elapsed_ms":142979328,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:47:51.036144Z","elapsed_ms":142989701,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:47:51.107542Z","elapsed_ms":142989773,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:47:51.134478Z","elapsed_ms":142989800,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:47:51.173483Z","elapsed_ms":142989839,"event":"launch","trial":"85f3d318-5497-4987-a4f3-894a37046da8","detail":{"scenario":"natural-v2-1","saved_ms":43000,"rewind_s":10,"requested_ms":33000,"request":271,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:47:51.220473Z","elapsed_ms":142989886,"event":"launch_return","trial":"85f3d318-5497-4987-a4f3-894a37046da8","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:47:51.251367Z","elapsed_ms":142989916,"event":"pause","trial":"85f3d318-5497-4987-a4f3-894a37046da8","detail":{}}
+{"utc":"2026-11-17T16:47:51.399714Z","elapsed_ms":142990065,"event":"stop","trial":"85f3d318-5497-4987-a4f3-894a37046da8","detail":{}}
+{"utc":"2026-11-17T16:48:03.664408Z","elapsed_ms":143002330,"event":"activity_result","trial":"85f3d318-5497-4987-a4f3-894a37046da8","detail":{"request":271,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":0},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":0}},"extra_position_type":"java.lang.Long","extra_position":0,"extra_duration_type":"java.lang.Long","extra_duration":0,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:48:03.703336Z","elapsed_ms":143002368,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:48:09.841038Z","elapsed_ms":143008506,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:48:09.925825Z","elapsed_ms":143008591,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:48:09.954047Z","elapsed_ms":143008619,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:48:09.990984Z","elapsed_ms":143008656,"event":"launch","trial":"037cc0db-72ac-47bd-b75f-b0c0713d678f","detail":{"scenario":"natural-v2-2","saved_ms":43000,"rewind_s":10,"requested_ms":33000,"request":272,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:48:10.029721Z","elapsed_ms":143008695,"event":"launch_return","trial":"037cc0db-72ac-47bd-b75f-b0c0713d678f","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:48:10.062413Z","elapsed_ms":143008728,"event":"pause","trial":"037cc0db-72ac-47bd-b75f-b0c0713d678f","detail":{}}
+{"utc":"2026-11-17T16:48:10.174052Z","elapsed_ms":143008839,"event":"stop","trial":"037cc0db-72ac-47bd-b75f-b0c0713d678f","detail":{}}
+{"utc":"2026-11-17T16:48:22.327180Z","elapsed_ms":143020992,"event":"activity_result","trial":"037cc0db-72ac-47bd-b75f-b0c0713d678f","detail":{"request":272,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":0},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":0}},"extra_position_type":"java.lang.Long","extra_position":0,"extra_duration_type":"java.lang.Long","extra_duration":0,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:48:22.415776Z","elapsed_ms":143021081,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:48:28.643705Z","elapsed_ms":143027309,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:48:28.729315Z","elapsed_ms":143027394,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:48:28.759720Z","elapsed_ms":143027425,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:48:28.798836Z","elapsed_ms":143027464,"event":"launch","trial":"039d4e9f-401b-4bf1-83d4-291a5069eb62","detail":{"scenario":"natural-v2-3","saved_ms":43000,"rewind_s":10,"requested_ms":33000,"request":273,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:48:28.838755Z","elapsed_ms":143027504,"event":"launch_return","trial":"039d4e9f-401b-4bf1-83d4-291a5069eb62","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:48:28.873213Z","elapsed_ms":143027538,"event":"pause","trial":"039d4e9f-401b-4bf1-83d4-291a5069eb62","detail":{}}
+{"utc":"2026-11-17T16:48:28.994783Z","elapsed_ms":143027660,"event":"stop","trial":"039d4e9f-401b-4bf1-83d4-291a5069eb62","detail":{}}
+{"utc":"2026-11-17T16:48:41.164606Z","elapsed_ms":143039830,"event":"activity_result","trial":"039d4e9f-401b-4bf1-83d4-291a5069eb62","detail":{"request":273,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":0},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":0}},"extra_position_type":"java.lang.Long","extra_position":0,"extra_duration_type":"java.lang.Long","extra_duration":0,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:48:41.239355Z","elapsed_ms":143039905,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:48:50.746054Z","elapsed_ms":143049411,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:48:51.284467Z","elapsed_ms":143049950,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:48:51.338184Z","elapsed_ms":143050003,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:48:51.396586Z","elapsed_ms":143050062,"event":"launch","trial":"e3e1b59c-1684-4827-98c6-09d478dfb8cc","detail":{"scenario":"warm-v2-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":274,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:48:51.433121Z","elapsed_ms":143050098,"event":"launch_return","trial":"e3e1b59c-1684-4827-98c6-09d478dfb8cc","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:48:51.472305Z","elapsed_ms":143050137,"event":"pause","trial":"e3e1b59c-1684-4827-98c6-09d478dfb8cc","detail":{}}
+{"utc":"2026-11-17T16:48:51.599863Z","elapsed_ms":143050265,"event":"stop","trial":"e3e1b59c-1684-4827-98c6-09d478dfb8cc","detail":{}}
+{"utc":"2026-11-17T16:48:57.155959Z","elapsed_ms":143055821,"event":"activity_result","trial":"e3e1b59c-1684-4827-98c6-09d478dfb8cc","detail":{"request":274,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":14502}},"extra_position_type":"java.lang.Long","extra_position":14502,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:48:57.222963Z","elapsed_ms":143055888,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:48:58.576669Z","elapsed_ms":143057242,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:48:59.065098Z","elapsed_ms":143057730,"event":"stop","trial":"","detail":{}}
+{"utc":"2026-11-17T16:48:59.145964Z","elapsed_ms":143057811,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:48:59.175533Z","elapsed_ms":143057841,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:48:59.210349Z","elapsed_ms":143057876,"event":"launch","trial":"6a1c1002-9725-4fbf-8559-91c45b074a06","detail":{"scenario":"warm-v2-2","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":275,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:48:59.247023Z","elapsed_ms":143057912,"event":"launch_return","trial":"6a1c1002-9725-4fbf-8559-91c45b074a06","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:48:59.308277Z","elapsed_ms":143057973,"event":"pause","trial":"6a1c1002-9725-4fbf-8559-91c45b074a06","detail":{}}
+{"utc":"2026-11-17T16:48:59.367960Z","elapsed_ms":143058033,"event":"stop","trial":"6a1c1002-9725-4fbf-8559-91c45b074a06","detail":{}}
+{"utc":"2026-11-17T16:49:05.028739Z","elapsed_ms":143063702,"event":"activity_result","trial":"6a1c1002-9725-4fbf-8559-91c45b074a06","detail":{"request":275,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":14252}},"extra_position_type":"java.lang.Long","extra_position":14252,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:49:05.120579Z","elapsed_ms":143063786,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:06.451140Z","elapsed_ms":143065116,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:06.940843Z","elapsed_ms":143065606,"event":"stop","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:07.047758Z","elapsed_ms":143065713,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:49:07.080823Z","elapsed_ms":143065746,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:07.128049Z","elapsed_ms":143065793,"event":"launch","trial":"2c5a87fa-68ee-4052-8efa-d38ab3a78008","detail":{"scenario":"warm-v2-3","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":276,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:49:07.167313Z","elapsed_ms":143065832,"event":"launch_return","trial":"2c5a87fa-68ee-4052-8efa-d38ab3a78008","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:49:07.231200Z","elapsed_ms":143065896,"event":"pause","trial":"2c5a87fa-68ee-4052-8efa-d38ab3a78008","detail":{}}
+{"utc":"2026-11-17T16:49:07.343053Z","elapsed_ms":143066008,"event":"stop","trial":"2c5a87fa-68ee-4052-8efa-d38ab3a78008","detail":{}}
+{"utc":"2026-11-17T16:49:12.889145Z","elapsed_ms":143071554,"event":"activity_result","trial":"2c5a87fa-68ee-4052-8efa-d38ab3a78008","detail":{"request":276,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":14015}},"extra_position_type":"java.lang.Long","extra_position":14015,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:49:12.976724Z","elapsed_ms":143071642,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:14.322648Z","elapsed_ms":143072988,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:14.409981Z","elapsed_ms":143073075,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:49:14.450849Z","elapsed_ms":143073116,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:14.498172Z","elapsed_ms":143073163,"event":"launch","trial":"204a68c5-2566-4c65-be04-c25fb0ff9b89","detail":{"scenario":"zero-v2-1","saved_ms":5000,"rewind_s":10,"requested_ms":0,"request":277,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:49:14.548239Z","elapsed_ms":143073213,"event":"launch_return","trial":"204a68c5-2566-4c65-be04-c25fb0ff9b89","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:49:14.593954Z","elapsed_ms":143073259,"event":"pause","trial":"204a68c5-2566-4c65-be04-c25fb0ff9b89","detail":{}}
+{"utc":"2026-11-17T16:49:14.713785Z","elapsed_ms":143073379,"event":"stop","trial":"204a68c5-2566-4c65-be04-c25fb0ff9b89","detail":{}}
+{"utc":"2026-11-17T16:49:20.192336Z","elapsed_ms":143078857,"event":"activity_result","trial":"204a68c5-2566-4c65-be04-c25fb0ff9b89","detail":{"request":277,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":3651}},"extra_position_type":"java.lang.Long","extra_position":3651,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:49:20.301429Z","elapsed_ms":143078967,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:21.608730Z","elapsed_ms":143080274,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:21.712493Z","elapsed_ms":143080378,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:49:21.764137Z","elapsed_ms":143080429,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:21.821707Z","elapsed_ms":143080487,"event":"launch","trial":"69cc30e4-8d89-4816-9361-685e5f24bd48","detail":{"scenario":"zero-v2-2","saved_ms":5000,"rewind_s":10,"requested_ms":0,"request":278,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:49:21.882820Z","elapsed_ms":143080548,"event":"launch_return","trial":"69cc30e4-8d89-4816-9361-685e5f24bd48","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:49:21.939030Z","elapsed_ms":143080604,"event":"pause","trial":"69cc30e4-8d89-4816-9361-685e5f24bd48","detail":{}}
+{"utc":"2026-11-17T16:49:22.077976Z","elapsed_ms":143080743,"event":"stop","trial":"69cc30e4-8d89-4816-9361-685e5f24bd48","detail":{}}
+{"utc":"2026-11-17T16:49:27.473224Z","elapsed_ms":143086138,"event":"activity_result","trial":"69cc30e4-8d89-4816-9361-685e5f24bd48","detail":{"request":278,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":4401}},"extra_position_type":"java.lang.Long","extra_position":4401,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:49:27.572509Z","elapsed_ms":143086238,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:28.897715Z","elapsed_ms":143087563,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:28.957564Z","elapsed_ms":143087623,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:49:29.012203Z","elapsed_ms":143087677,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:29.074698Z","elapsed_ms":143087740,"event":"launch","trial":"caddfc1a-23f9-47c4-abb7-316194ea492c","detail":{"scenario":"zero-v2-3","saved_ms":5000,"rewind_s":10,"requested_ms":0,"request":279,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:49:29.146988Z","elapsed_ms":143087812,"event":"launch_return","trial":"caddfc1a-23f9-47c4-abb7-316194ea492c","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:49:29.207592Z","elapsed_ms":143087873,"event":"pause","trial":"caddfc1a-23f9-47c4-abb7-316194ea492c","detail":{}}
+{"utc":"2026-11-17T16:49:29.346799Z","elapsed_ms":143088012,"event":"stop","trial":"caddfc1a-23f9-47c4-abb7-316194ea492c","detail":{}}
+{"utc":"2026-11-17T16:49:34.787897Z","elapsed_ms":143093453,"event":"activity_result","trial":"caddfc1a-23f9-47c4-abb7-316194ea492c","detail":{"request":279,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":4402}},"extra_position_type":"java.lang.Long","extra_position":4402,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:49:34.914881Z","elapsed_ms":143093580,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:36.258513Z","elapsed_ms":143094924,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:36.366198Z","elapsed_ms":143095031,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:49:36.423887Z","elapsed_ms":143095089,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:36.487087Z","elapsed_ms":143095152,"event":"launch","trial":"3bd69513-08bd-4050-a94e-a0afeed75fa3","detail":{"scenario":"home-v2-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":280,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:49:36.559889Z","elapsed_ms":143095225,"event":"launch_return","trial":"3bd69513-08bd-4050-a94e-a0afeed75fa3","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:49:36.623208Z","elapsed_ms":143095288,"event":"pause","trial":"3bd69513-08bd-4050-a94e-a0afeed75fa3","detail":{}}
+{"utc":"2026-11-17T16:49:36.773422Z","elapsed_ms":143095439,"event":"stop","trial":"3bd69513-08bd-4050-a94e-a0afeed75fa3","detail":{}}
+{"utc":"2026-11-17T16:49:42.216276Z","elapsed_ms":143100881,"event":"activity_result","trial":"3bd69513-08bd-4050-a94e-a0afeed75fa3","detail":{"request":280,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":14501}},"extra_position_type":"java.lang.Long","extra_position":14501,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:49:42.280320Z","elapsed_ms":143100945,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:43.642430Z","elapsed_ms":143102308,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:43.707785Z","elapsed_ms":143102373,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:49:43.767042Z","elapsed_ms":143102432,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:43.830373Z","elapsed_ms":143102495,"event":"launch","trial":"acbcb477-01d6-4d62-96d9-b7a66564ddf7","detail":{"scenario":"home-v2-2","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":281,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:49:43.906602Z","elapsed_ms":143102572,"event":"launch_return","trial":"acbcb477-01d6-4d62-96d9-b7a66564ddf7","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:49:43.974263Z","elapsed_ms":143102639,"event":"pause","trial":"acbcb477-01d6-4d62-96d9-b7a66564ddf7","detail":{}}
+{"utc":"2026-11-17T16:49:44.120385Z","elapsed_ms":143102785,"event":"stop","trial":"acbcb477-01d6-4d62-96d9-b7a66564ddf7","detail":{}}
+{"utc":"2026-11-17T16:49:49.619409Z","elapsed_ms":143108285,"event":"activity_result","trial":"acbcb477-01d6-4d62-96d9-b7a66564ddf7","detail":{"request":281,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":14502}},"extra_position_type":"java.lang.Long","extra_position":14502,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:49:49.739591Z","elapsed_ms":143108405,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:51.061148Z","elapsed_ms":143109726,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:51.177791Z","elapsed_ms":143109843,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:49:51.242825Z","elapsed_ms":143109908,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:51.312656Z","elapsed_ms":143109978,"event":"launch","trial":"e9ff5748-8647-4f58-8c6b-ba54bea475ee","detail":{"scenario":"home-v2-3","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":282,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:49:51.382422Z","elapsed_ms":143110048,"event":"launch_return","trial":"e9ff5748-8647-4f58-8c6b-ba54bea475ee","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:49:51.453579Z","elapsed_ms":143110119,"event":"pause","trial":"e9ff5748-8647-4f58-8c6b-ba54bea475ee","detail":{}}
+{"utc":"2026-11-17T16:49:51.607039Z","elapsed_ms":143110272,"event":"stop","trial":"e9ff5748-8647-4f58-8c6b-ba54bea475ee","detail":{}}
+{"utc":"2026-11-17T16:49:57.044389Z","elapsed_ms":143115709,"event":"activity_result","trial":"e9ff5748-8647-4f58-8c6b-ba54bea475ee","detail":{"request":282,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":14001}},"extra_position_type":"java.lang.Long","extra_position":14001,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:49:57.121671Z","elapsed_ms":143115787,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:58.501102Z","elapsed_ms":143117166,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:58.614233Z","elapsed_ms":143117279,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:49:58.680079Z","elapsed_ms":143117345,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:49:58.751519Z","elapsed_ms":143117417,"event":"launch","trial":"3a347a46-958b-4e56-b635-f61b4d913056","detail":{"scenario":"caller_kill-v2-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":283,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:49:58.827820Z","elapsed_ms":143117493,"event":"launch_return","trial":"3a347a46-958b-4e56-b635-f61b4d913056","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:49:58.901089Z","elapsed_ms":143117566,"event":"pause","trial":"3a347a46-958b-4e56-b635-f61b4d913056","detail":{}}
+{"utc":"2026-11-17T16:49:59.052266Z","elapsed_ms":143117717,"event":"stop","trial":"3a347a46-958b-4e56-b635-f61b4d913056","detail":{}}
+{"utc":"2026-11-17T16:50:03.397118Z","elapsed_ms":143122062,"event":"activity_result","trial":"3a347a46-958b-4e56-b635-f61b4d913056","detail":{"request":283,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":13502}},"extra_position_type":"java.lang.Long","extra_position":13502,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:50:03.523751Z","elapsed_ms":143122189,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:50:04.866035Z","elapsed_ms":143123531,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:50:04.989014Z","elapsed_ms":143123654,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:50:05.057781Z","elapsed_ms":143123723,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:50:05.121220Z","elapsed_ms":143123786,"event":"launch","trial":"c63fdf5b-4608-4264-baca-906ea6c1354d","detail":{"scenario":"caller_kill-v2-2","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":284,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:50:05.192061Z","elapsed_ms":143123857,"event":"launch_return","trial":"c63fdf5b-4608-4264-baca-906ea6c1354d","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:50:05.270640Z","elapsed_ms":143123936,"event":"pause","trial":"c63fdf5b-4608-4264-baca-906ea6c1354d","detail":{}}
+{"utc":"2026-11-17T16:50:05.427208Z","elapsed_ms":143124092,"event":"stop","trial":"c63fdf5b-4608-4264-baca-906ea6c1354d","detail":{}}
+{"utc":"2026-11-17T16:50:09.750754Z","elapsed_ms":143128416,"event":"activity_result","trial":"c63fdf5b-4608-4264-baca-906ea6c1354d","detail":{"request":284,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":13503}},"extra_position_type":"java.lang.Long","extra_position":13503,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:50:09.865798Z","elapsed_ms":143128531,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:50:11.159960Z","elapsed_ms":143129825,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:50:11.282719Z","elapsed_ms":143129948,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:50:11.348998Z","elapsed_ms":143130014,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:50:11.408822Z","elapsed_ms":143130074,"event":"launch","trial":"e2de55bc-2d5e-4ef8-8921-3c6983bd8aff","detail":{"scenario":"caller_kill-v2-3","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":285,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:50:11.479154Z","elapsed_ms":143130144,"event":"launch_return","trial":"e2de55bc-2d5e-4ef8-8921-3c6983bd8aff","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:50:11.560840Z","elapsed_ms":143130226,"event":"pause","trial":"e2de55bc-2d5e-4ef8-8921-3c6983bd8aff","detail":{}}
+{"utc":"2026-11-17T16:50:11.726669Z","elapsed_ms":143130392,"event":"stop","trial":"e2de55bc-2d5e-4ef8-8921-3c6983bd8aff","detail":{}}
+{"utc":"2026-11-17T16:50:16.081703Z","elapsed_ms":143134747,"event":"activity_result","trial":"e2de55bc-2d5e-4ef8-8921-3c6983bd8aff","detail":{"request":285,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":13502}},"extra_position_type":"java.lang.Long","extra_position":13502,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:50:16.210706Z","elapsed_ms":143134876,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:50:27.293869Z","elapsed_ms":143145959,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:50:27.416474Z","elapsed_ms":143146082,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:50:27.489516Z","elapsed_ms":143146155,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:50:27.564987Z","elapsed_ms":143146230,"event":"launch","trial":"ee89adf0-4abf-4401-a682-2f03c4eebfaa","detail":{"scenario":"caller_kill-v3-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":286,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:50:27.648551Z","elapsed_ms":143146314,"event":"launch_return","trial":"ee89adf0-4abf-4401-a682-2f03c4eebfaa","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:50:27.738692Z","elapsed_ms":143146404,"event":"pause","trial":"ee89adf0-4abf-4401-a682-2f03c4eebfaa","detail":{}}
+{"utc":"2026-11-17T16:50:27.913633Z","elapsed_ms":143146579,"event":"stop","trial":"ee89adf0-4abf-4401-a682-2f03c4eebfaa","detail":{}}
+{"utc":"2026-11-17T16:51:03.190832Z","elapsed_ms":143181856,"event":"activity_result","trial":"ee89adf0-4abf-4401-a682-2f03c4eebfaa","detail":{"request":286,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":0},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":0}},"extra_position_type":"java.lang.Long","extra_position":0,"extra_duration_type":"java.lang.Long","extra_duration":0,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:51:03.329182Z","elapsed_ms":143181994,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:51:18.040859Z","elapsed_ms":143196706,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:51:18.504269Z","elapsed_ms":143197169,"event":"stop","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:06.203375Z","elapsed_ms":143244869,"event":"created","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:06.208548Z","elapsed_ms":143244874,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:06.221308Z","elapsed_ms":143244886,"event":"launch","trial":"7f022ac4-bd49-4ef2-9ce1-933f87e4411e","detail":{"scenario":"caller_kill-v4-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":287,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:52:06.240316Z","elapsed_ms":143244905,"event":"launch_return","trial":"7f022ac4-bd49-4ef2-9ce1-933f87e4411e","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:52:06.247713Z","elapsed_ms":143244913,"event":"pause","trial":"7f022ac4-bd49-4ef2-9ce1-933f87e4411e","detail":{}}
+{"utc":"2026-11-17T16:52:06.263788Z","elapsed_ms":143244929,"event":"stop","trial":"7f022ac4-bd49-4ef2-9ce1-933f87e4411e","detail":{}}
+{"utc":"2026-11-17T16:52:09.244063Z","elapsed_ms":143247909,"event":"caller_die","trial":"7f022ac4-bd49-4ef2-9ce1-933f87e4411e","detail":{"pid":23160}}
+{"utc":"2026-11-17T16:52:09.611822Z","elapsed_ms":143248277,"event":"recreated","trial":"7f022ac4-bd49-4ef2-9ce1-933f87e4411e","detail":{}}
+{"utc":"2026-11-17T16:52:09.619534Z","elapsed_ms":143248285,"event":"activity_result","trial":"7f022ac4-bd49-4ef2-9ce1-933f87e4411e","detail":{"request":287,"result":0,"action":null,"extras":{},"extra_position_type":"missing","extra_position":null,"extra_duration_type":"missing","extra_duration":null,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:52:09.624619Z","elapsed_ms":143248290,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:09.636264Z","elapsed_ms":143248301,"event":"launch","trial":"f3450639-8809-4560-9757-3ffb8d30b637","detail":{"scenario":"caller_kill-v4-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":288,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:52:09.648138Z","elapsed_ms":143248313,"event":"launch_return","trial":"f3450639-8809-4560-9757-3ffb8d30b637","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:52:09.656582Z","elapsed_ms":143248322,"event":"pause","trial":"f3450639-8809-4560-9757-3ffb8d30b637","detail":{}}
+{"utc":"2026-11-17T16:52:10.062572Z","elapsed_ms":143248728,"event":"stop","trial":"f3450639-8809-4560-9757-3ffb8d30b637","detail":{}}
+{"utc":"2026-11-17T16:52:10.868320Z","elapsed_ms":143249533,"event":"activity_result","trial":"f3450639-8809-4560-9757-3ffb8d30b637","detail":{"request":288,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":10000}},"extra_position_type":"java.lang.Long","extra_position":10000,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:52:10.877050Z","elapsed_ms":143249542,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:12.388571Z","elapsed_ms":143251054,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:12.463191Z","elapsed_ms":143251128,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:52:12.542043Z","elapsed_ms":143251207,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:12.633478Z","elapsed_ms":143251299,"event":"launch","trial":"71d4f8cc-ec9d-4dbb-9a4c-0f05fb3fd690","detail":{"scenario":"caller_kill-v4-2","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":289,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:52:12.722469Z","elapsed_ms":143251388,"event":"launch_return","trial":"71d4f8cc-ec9d-4dbb-9a4c-0f05fb3fd690","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:52:12.848758Z","elapsed_ms":143251514,"event":"caller_die","trial":"f3450639-8809-4560-9757-3ffb8d30b637","detail":{"pid":23337}}
+{"utc":"2026-11-17T16:52:20.223561Z","elapsed_ms":143258889,"event":"created","trial":"71d4f8cc-ec9d-4dbb-9a4c-0f05fb3fd690","detail":{}}
+{"utc":"2026-11-17T16:52:20.227431Z","elapsed_ms":143258893,"event":"resume","trial":"71d4f8cc-ec9d-4dbb-9a4c-0f05fb3fd690","detail":{}}
+{"utc":"2026-11-17T16:52:20.229363Z","elapsed_ms":143258895,"event":"abandoned","trial":"71d4f8cc-ec9d-4dbb-9a4c-0f05fb3fd690","detail":{"source":"adb_command"}}
+{"utc":"2026-11-17T16:52:20.261981Z","elapsed_ms":143258927,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:20.266360Z","elapsed_ms":143258932,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:52:20.267858Z","elapsed_ms":143258933,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:20.276695Z","elapsed_ms":143258942,"event":"launch","trial":"504dc104-f2ce-4899-98c7-52f5547f5c9e","detail":{"scenario":"caller_kill-v4-3","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":290,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:52:20.289378Z","elapsed_ms":143258955,"event":"launch_return","trial":"504dc104-f2ce-4899-98c7-52f5547f5c9e","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:52:20.688149Z","elapsed_ms":143259353,"event":"pause","trial":"504dc104-f2ce-4899-98c7-52f5547f5c9e","detail":{}}
+{"utc":"2026-11-17T16:52:20.988508Z","elapsed_ms":143259654,"event":"stop","trial":"504dc104-f2ce-4899-98c7-52f5547f5c9e","detail":{}}
+{"utc":"2026-11-17T16:52:23.293442Z","elapsed_ms":143261959,"event":"caller_die","trial":"504dc104-f2ce-4899-98c7-52f5547f5c9e","detail":{"pid":30077}}
+{"utc":"2026-11-17T16:52:23.755488Z","elapsed_ms":143262421,"event":"recreated","trial":"504dc104-f2ce-4899-98c7-52f5547f5c9e","detail":{}}
+{"utc":"2026-11-17T16:52:23.762102Z","elapsed_ms":143262427,"event":"activity_result","trial":"504dc104-f2ce-4899-98c7-52f5547f5c9e","detail":{"request":290,"result":0,"action":null,"extras":{},"extra_position_type":"missing","extra_position":null,"extra_duration_type":"missing","extra_duration":null,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:52:23.767400Z","elapsed_ms":143262433,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:23.769488Z","elapsed_ms":143262435,"event":"abandoned","trial":"","detail":{"source":"adb_command"}}
+{"utc":"2026-11-17T16:52:25.457756Z","elapsed_ms":143264123,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:25.941219Z","elapsed_ms":143264606,"event":"stop","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:26.908606Z","elapsed_ms":143265574,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:52:26.983363Z","elapsed_ms":143265648,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:27.061819Z","elapsed_ms":143265727,"event":"launch","trial":"0bc33ea2-777e-43e7-ab6a-0d068804ceba","detail":{"scenario":"recreate-v4-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":291,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:52:27.141281Z","elapsed_ms":143265806,"event":"launch_return","trial":"0bc33ea2-777e-43e7-ab6a-0d068804ceba","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:52:27.271398Z","elapsed_ms":143265937,"event":"pause","trial":"0bc33ea2-777e-43e7-ab6a-0d068804ceba","detail":{}}
+{"utc":"2026-11-17T16:52:27.577110Z","elapsed_ms":143266242,"event":"stop","trial":"0bc33ea2-777e-43e7-ab6a-0d068804ceba","detail":{}}
+{"utc":"2026-11-17T16:52:30.214865Z","elapsed_ms":143268880,"event":"caller_recreate","trial":"0bc33ea2-777e-43e7-ab6a-0d068804ceba","detail":{"pid":29550}}
+{"utc":"2026-11-17T16:52:30.305521Z","elapsed_ms":143268971,"event":"destroy","trial":"0bc33ea2-777e-43e7-ab6a-0d068804ceba","detail":{"finishing":false}}
+{"utc":"2026-11-17T16:52:30.407445Z","elapsed_ms":143269073,"event":"recreated","trial":"0bc33ea2-777e-43e7-ab6a-0d068804ceba","detail":{}}
+{"utc":"2026-11-17T16:52:30.412190Z","elapsed_ms":143269077,"event":"resume","trial":"0bc33ea2-777e-43e7-ab6a-0d068804ceba","detail":{}}
+{"utc":"2026-11-17T16:52:30.421035Z","elapsed_ms":143269086,"event":"pause","trial":"0bc33ea2-777e-43e7-ab6a-0d068804ceba","detail":{}}
+{"utc":"2026-11-17T16:52:30.422424Z","elapsed_ms":143269088,"event":"stop","trial":"0bc33ea2-777e-43e7-ab6a-0d068804ceba","detail":{}}
+{"utc":"2026-11-17T16:52:32.239456Z","elapsed_ms":143270905,"event":"activity_result","trial":"0bc33ea2-777e-43e7-ab6a-0d068804ceba","detail":{"request":291,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":14005}},"extra_position_type":"java.lang.Long","extra_position":14005,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:52:32.250800Z","elapsed_ms":143270916,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:33.648447Z","elapsed_ms":143272314,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:33.792665Z","elapsed_ms":143272458,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:52:33.869920Z","elapsed_ms":143272535,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:33.952530Z","elapsed_ms":143272618,"event":"launch","trial":"1b78209e-2705-4b98-8672-ac5356fc598d","detail":{"scenario":"recreate-v4-2","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":292,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:52:34.042948Z","elapsed_ms":143272708,"event":"launch_return","trial":"1b78209e-2705-4b98-8672-ac5356fc598d","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:52:34.151865Z","elapsed_ms":143272817,"event":"pause","trial":"1b78209e-2705-4b98-8672-ac5356fc598d","detail":{}}
+{"utc":"2026-11-17T16:52:34.332670Z","elapsed_ms":143272998,"event":"stop","trial":"1b78209e-2705-4b98-8672-ac5356fc598d","detail":{}}
+{"utc":"2026-11-17T16:52:37.110123Z","elapsed_ms":143275775,"event":"caller_recreate","trial":"1b78209e-2705-4b98-8672-ac5356fc598d","detail":{"pid":29550}}
+{"utc":"2026-11-17T16:52:37.250100Z","elapsed_ms":143275915,"event":"destroy","trial":"1b78209e-2705-4b98-8672-ac5356fc598d","detail":{"finishing":false}}
+{"utc":"2026-11-17T16:52:37.374202Z","elapsed_ms":143276039,"event":"recreated","trial":"1b78209e-2705-4b98-8672-ac5356fc598d","detail":{}}
+{"utc":"2026-11-17T16:52:37.378492Z","elapsed_ms":143276044,"event":"resume","trial":"1b78209e-2705-4b98-8672-ac5356fc598d","detail":{}}
+{"utc":"2026-11-17T16:52:37.394678Z","elapsed_ms":143276060,"event":"pause","trial":"1b78209e-2705-4b98-8672-ac5356fc598d","detail":{}}
+{"utc":"2026-11-17T16:52:37.397029Z","elapsed_ms":143276062,"event":"stop","trial":"1b78209e-2705-4b98-8672-ac5356fc598d","detail":{}}
+{"utc":"2026-11-17T16:52:39.011914Z","elapsed_ms":143277677,"event":"activity_result","trial":"1b78209e-2705-4b98-8672-ac5356fc598d","detail":{"request":292,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":14020}},"extra_position_type":"java.lang.Long","extra_position":14020,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:52:39.032959Z","elapsed_ms":143277698,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:40.481208Z","elapsed_ms":143279146,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:40.634277Z","elapsed_ms":143279299,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:52:40.721812Z","elapsed_ms":143279387,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:40.812065Z","elapsed_ms":143279477,"event":"launch","trial":"d0286676-ad23-4fff-857f-95da670d164b","detail":{"scenario":"recreate-v4-3","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":293,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:52:40.908305Z","elapsed_ms":143279573,"event":"launch_return","trial":"d0286676-ad23-4fff-857f-95da670d164b","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:52:41.026453Z","elapsed_ms":143279692,"event":"pause","trial":"d0286676-ad23-4fff-857f-95da670d164b","detail":{}}
+{"utc":"2026-11-17T16:52:41.218911Z","elapsed_ms":143279884,"event":"stop","trial":"d0286676-ad23-4fff-857f-95da670d164b","detail":{}}
+{"utc":"2026-11-17T16:52:43.978660Z","elapsed_ms":143282644,"event":"caller_recreate","trial":"d0286676-ad23-4fff-857f-95da670d164b","detail":{"pid":29550}}
+{"utc":"2026-11-17T16:52:44.120281Z","elapsed_ms":143282785,"event":"destroy","trial":"d0286676-ad23-4fff-857f-95da670d164b","detail":{"finishing":false}}
+{"utc":"2026-11-17T16:52:44.239437Z","elapsed_ms":143282905,"event":"recreated","trial":"d0286676-ad23-4fff-857f-95da670d164b","detail":{}}
+{"utc":"2026-11-17T16:52:44.244300Z","elapsed_ms":143282909,"event":"resume","trial":"d0286676-ad23-4fff-857f-95da670d164b","detail":{}}
+{"utc":"2026-11-17T16:52:44.252511Z","elapsed_ms":143282918,"event":"pause","trial":"d0286676-ad23-4fff-857f-95da670d164b","detail":{}}
+{"utc":"2026-11-17T16:52:44.253843Z","elapsed_ms":143282919,"event":"stop","trial":"d0286676-ad23-4fff-857f-95da670d164b","detail":{}}
+{"utc":"2026-11-17T16:52:46.170935Z","elapsed_ms":143284836,"event":"activity_result","trial":"d0286676-ad23-4fff-857f-95da670d164b","detail":{"request":293,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":13506}},"extra_position_type":"java.lang.Long","extra_position":13506,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:52:46.175312Z","elapsed_ms":143284840,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:47.288307Z","elapsed_ms":143285954,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:47.442006Z","elapsed_ms":143286107,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:52:47.520325Z","elapsed_ms":143286185,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:47.610669Z","elapsed_ms":143286276,"event":"launch","trial":"bc3329de-019f-46ad-9ed5-9dc592d52952","detail":{"scenario":"jump_end-v1-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":294,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:52:47.706306Z","elapsed_ms":143286371,"event":"launch_return","trial":"bc3329de-019f-46ad-9ed5-9dc592d52952","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:52:47.832853Z","elapsed_ms":143286498,"event":"pause","trial":"bc3329de-019f-46ad-9ed5-9dc592d52952","detail":{}}
+{"utc":"2026-11-17T16:52:48.032229Z","elapsed_ms":143286697,"event":"stop","trial":"bc3329de-019f-46ad-9ed5-9dc592d52952","detail":{}}
+{"utc":"2026-11-17T16:52:55.320725Z","elapsed_ms":143293986,"event":"activity_result","trial":"bc3329de-019f-46ad-9ed5-9dc592d52952","detail":{"request":294,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":16252}},"extra_position_type":"java.lang.Long","extra_position":16252,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:52:55.484370Z","elapsed_ms":143294149,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:56.286185Z","elapsed_ms":143294951,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:56.385643Z","elapsed_ms":143295051,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:52:56.478049Z","elapsed_ms":143295143,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:52:56.567004Z","elapsed_ms":143295232,"event":"launch","trial":"203afeef-f86a-4d8d-a4ba-8eb251273446","detail":{"scenario":"jump_end-v1-2","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":295,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:52:56.655008Z","elapsed_ms":143295320,"event":"launch_return","trial":"203afeef-f86a-4d8d-a4ba-8eb251273446","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:52:56.791057Z","elapsed_ms":143295456,"event":"pause","trial":"203afeef-f86a-4d8d-a4ba-8eb251273446","detail":{}}
+{"utc":"2026-11-17T16:52:56.979917Z","elapsed_ms":143295645,"event":"stop","trial":"203afeef-f86a-4d8d-a4ba-8eb251273446","detail":{}}
+{"utc":"2026-11-17T16:53:00.451495Z","elapsed_ms":143299117,"event":"activity_result","trial":"203afeef-f86a-4d8d-a4ba-8eb251273446","detail":{"request":295,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":0},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":43866}},"extra_position_type":"java.lang.Long","extra_position":43866,"extra_duration_type":"java.lang.Long","extra_duration":0,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:53:00.565953Z","elapsed_ms":143299231,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:53:04.199448Z","elapsed_ms":143302865,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:53:04.301102Z","elapsed_ms":143302966,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:53:04.384306Z","elapsed_ms":143303049,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:53:04.469963Z","elapsed_ms":143303135,"event":"launch","trial":"6c7fc67d-1a00-4fe3-bbe1-0fb9b8a0d8cb","detail":{"scenario":"jump_end-v1-3","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":296,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:53:04.565676Z","elapsed_ms":143303231,"event":"launch_return","trial":"6c7fc67d-1a00-4fe3-bbe1-0fb9b8a0d8cb","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:53:04.707888Z","elapsed_ms":143303373,"event":"pause","trial":"6c7fc67d-1a00-4fe3-bbe1-0fb9b8a0d8cb","detail":{}}
+{"utc":"2026-11-17T16:53:04.916583Z","elapsed_ms":143303582,"event":"stop","trial":"6c7fc67d-1a00-4fe3-bbe1-0fb9b8a0d8cb","detail":{}}
+{"utc":"2026-11-17T16:53:12.140280Z","elapsed_ms":143310805,"event":"activity_result","trial":"6c7fc67d-1a00-4fe3-bbe1-0fb9b8a0d8cb","detail":{"request":296,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":16501}},"extra_position_type":"java.lang.Long","extra_position":16501,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:53:12.306676Z","elapsed_ms":143310972,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:53:13.117396Z","elapsed_ms":143311783,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:53:13.229810Z","elapsed_ms":143311895,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:53:13.320639Z","elapsed_ms":143311986,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:53:13.408964Z","elapsed_ms":143312074,"event":"launch","trial":"41ec950e-84da-4144-9bb9-ac36c8fb0ded","detail":{"scenario":"audio-v1-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":297,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:53:13.506331Z","elapsed_ms":143312171,"event":"launch_return","trial":"41ec950e-84da-4144-9bb9-ac36c8fb0ded","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:53:13.649780Z","elapsed_ms":143312315,"event":"pause","trial":"41ec950e-84da-4144-9bb9-ac36c8fb0ded","detail":{}}
+{"utc":"2026-11-17T16:53:13.846959Z","elapsed_ms":143312512,"event":"stop","trial":"41ec950e-84da-4144-9bb9-ac36c8fb0ded","detail":{}}
+{"utc":"2026-11-17T16:53:17.218639Z","elapsed_ms":143315884,"event":"activity_result","trial":"41ec950e-84da-4144-9bb9-ac36c8fb0ded","detail":{"request":297,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":0},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":43866}},"extra_position_type":"java.lang.Long","extra_position":43866,"extra_duration_type":"java.lang.Long","extra_duration":0,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:53:17.381569Z","elapsed_ms":143316047,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:54:08.217857Z","elapsed_ms":143366883,"event":"created","trial":"","detail":{}}
+{"utc":"2026-11-17T16:54:08.224143Z","elapsed_ms":143366889,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:54:08.238155Z","elapsed_ms":143366903,"event":"launch","trial":"082841db-f498-4a56-b1c0-0d14d72b9a58","detail":{"scenario":"caller_kill-v5-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":298,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:54:08.251114Z","elapsed_ms":143366916,"event":"launch_return","trial":"082841db-f498-4a56-b1c0-0d14d72b9a58","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:54:08.258188Z","elapsed_ms":143366923,"event":"pause","trial":"082841db-f498-4a56-b1c0-0d14d72b9a58","detail":{}}
+{"utc":"2026-11-17T16:54:08.734776Z","elapsed_ms":143367400,"event":"stop","trial":"082841db-f498-4a56-b1c0-0d14d72b9a58","detail":{}}
+{"utc":"2026-11-17T16:54:11.255409Z","elapsed_ms":143369921,"event":"caller_die","trial":"082841db-f498-4a56-b1c0-0d14d72b9a58","detail":{"pid":31367}}
+{"utc":"2026-11-17T16:54:11.615651Z","elapsed_ms":143370281,"event":"recreated","trial":"082841db-f498-4a56-b1c0-0d14d72b9a58","detail":{}}
+{"utc":"2026-11-17T16:54:11.622355Z","elapsed_ms":143370288,"event":"activity_result","trial":"082841db-f498-4a56-b1c0-0d14d72b9a58","detail":{"request":298,"result":0,"action":null,"extras":{},"extra_position_type":"missing","extra_position":null,"extra_duration_type":"missing","extra_duration":null,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:54:11.628364Z","elapsed_ms":143370294,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:54:13.119546Z","elapsed_ms":143371785,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:54:13.632242Z","elapsed_ms":143372297,"event":"stop","trial":"","detail":{}}
+{"utc":"2026-11-17T16:54:14.572817Z","elapsed_ms":143373238,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:54:14.670708Z","elapsed_ms":143373336,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:54:14.775627Z","elapsed_ms":143373441,"event":"launch","trial":"a7437d0c-79b3-473d-88ca-80df58b8b509","detail":{"scenario":"caller_kill-v5-2","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":299,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:54:14.881247Z","elapsed_ms":143373546,"event":"launch_return","trial":"a7437d0c-79b3-473d-88ca-80df58b8b509","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:54:15.075813Z","elapsed_ms":143373741,"event":"pause","trial":"a7437d0c-79b3-473d-88ca-80df58b8b509","detail":{}}
+{"utc":"2026-11-17T16:54:15.484384Z","elapsed_ms":143374150,"event":"stop","trial":"a7437d0c-79b3-473d-88ca-80df58b8b509","detail":{}}
+{"utc":"2026-11-17T16:54:17.982905Z","elapsed_ms":143376648,"event":"caller_die","trial":"a7437d0c-79b3-473d-88ca-80df58b8b509","detail":{"pid":5491}}
+{"utc":"2026-11-17T16:54:18.479219Z","elapsed_ms":143377145,"event":"recreated","trial":"a7437d0c-79b3-473d-88ca-80df58b8b509","detail":{}}
+{"utc":"2026-11-17T16:54:18.486686Z","elapsed_ms":143377152,"event":"activity_result","trial":"a7437d0c-79b3-473d-88ca-80df58b8b509","detail":{"request":299,"result":0,"action":null,"extras":{},"extra_position_type":"missing","extra_position":null,"extra_duration_type":"missing","extra_duration":null,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:54:18.492203Z","elapsed_ms":143377157,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:54:19.791982Z","elapsed_ms":143378457,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:54:20.281850Z","elapsed_ms":143378947,"event":"stop","trial":"","detail":{}}
+{"utc":"2026-11-17T16:54:21.241775Z","elapsed_ms":143379907,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:54:21.336116Z","elapsed_ms":143380001,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:54:21.439545Z","elapsed_ms":143380105,"event":"launch","trial":"65b29d52-0a43-472e-9cac-dba0d06d28ae","detail":{"scenario":"caller_kill-v5-3","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":300,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:54:21.539741Z","elapsed_ms":143380205,"event":"launch_return","trial":"65b29d52-0a43-472e-9cac-dba0d06d28ae","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:54:21.717119Z","elapsed_ms":143380382,"event":"pause","trial":"65b29d52-0a43-472e-9cac-dba0d06d28ae","detail":{}}
+{"utc":"2026-11-17T16:54:22.058789Z","elapsed_ms":143380724,"event":"stop","trial":"65b29d52-0a43-472e-9cac-dba0d06d28ae","detail":{}}
+{"utc":"2026-11-17T16:54:24.635572Z","elapsed_ms":143383301,"event":"caller_die","trial":"65b29d52-0a43-472e-9cac-dba0d06d28ae","detail":{"pid":6235}}
+{"utc":"2026-11-17T16:54:25.117005Z","elapsed_ms":143383782,"event":"recreated","trial":"65b29d52-0a43-472e-9cac-dba0d06d28ae","detail":{}}
+{"utc":"2026-11-17T16:54:25.123094Z","elapsed_ms":143383788,"event":"activity_result","trial":"65b29d52-0a43-472e-9cac-dba0d06d28ae","detail":{"request":300,"result":0,"action":null,"extras":{},"extra_position_type":"missing","extra_position":null,"extra_duration_type":"missing","extra_duration":null,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:54:25.129676Z","elapsed_ms":143383795,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:54:26.446369Z","elapsed_ms":143385111,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:54:26.944658Z","elapsed_ms":143385610,"event":"stop","trial":"","detail":{}}
+{"utc":"2026-11-17T16:54:27.915697Z","elapsed_ms":143386581,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:54:28.002831Z","elapsed_ms":143386668,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:54:28.107179Z","elapsed_ms":143386772,"event":"launch","trial":"2e4f6b43-21c4-4338-920a-54d33d41f603","detail":{"scenario":"audio-v1-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":301,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:54:28.208967Z","elapsed_ms":143386874,"event":"launch_return","trial":"2e4f6b43-21c4-4338-920a-54d33d41f603","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:54:28.405034Z","elapsed_ms":143387070,"event":"pause","trial":"2e4f6b43-21c4-4338-920a-54d33d41f603","detail":{}}
+{"utc":"2026-11-17T16:54:28.767756Z","elapsed_ms":143387433,"event":"stop","trial":"2e4f6b43-21c4-4338-920a-54d33d41f603","detail":{}}
+{"utc":"2026-11-17T16:54:33.001066Z","elapsed_ms":143391666,"event":"activity_result","trial":"2e4f6b43-21c4-4338-920a-54d33d41f603","detail":{"request":301,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":13005}},"extra_position_type":"java.lang.Long","extra_position":13005,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:54:33.160668Z","elapsed_ms":143391826,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:55:07.750644Z","elapsed_ms":143426416,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:55:07.922420Z","elapsed_ms":143426588,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:55:08.018630Z","elapsed_ms":143426684,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:55:08.117593Z","elapsed_ms":143426783,"event":"launch","trial":"10c3d60c-537e-4081-bcbb-7a48b5762b72","detail":{"scenario":"audio-v1-2","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":302,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:55:08.229345Z","elapsed_ms":143426894,"event":"launch_return","trial":"10c3d60c-537e-4081-bcbb-7a48b5762b72","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:55:08.391378Z","elapsed_ms":143427056,"event":"pause","trial":"10c3d60c-537e-4081-bcbb-7a48b5762b72","detail":{}}
+{"utc":"2026-11-17T16:55:08.601858Z","elapsed_ms":143427267,"event":"stop","trial":"10c3d60c-537e-4081-bcbb-7a48b5762b72","detail":{}}
+{"utc":"2026-11-17T16:55:12.756641Z","elapsed_ms":143431422,"event":"activity_result","trial":"10c3d60c-537e-4081-bcbb-7a48b5762b72","detail":{"request":302,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":13511}},"extra_position_type":"java.lang.Long","extra_position":13511,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:55:12.894883Z","elapsed_ms":143431560,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:55:47.488441Z","elapsed_ms":143466154,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:55:47.614155Z","elapsed_ms":143466279,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:55:47.716085Z","elapsed_ms":143466381,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:55:47.817532Z","elapsed_ms":143466483,"event":"launch","trial":"0404b505-3295-461f-8e8d-40c4937881c4","detail":{"scenario":"audio-v1-3","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":303,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:55:47.928419Z","elapsed_ms":143466594,"event":"launch_return","trial":"0404b505-3295-461f-8e8d-40c4937881c4","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:55:48.101040Z","elapsed_ms":143466766,"event":"pause","trial":"0404b505-3295-461f-8e8d-40c4937881c4","detail":{}}
+{"utc":"2026-11-17T16:55:48.330437Z","elapsed_ms":143466996,"event":"stop","trial":"0404b505-3295-461f-8e8d-40c4937881c4","detail":{}}
+{"utc":"2026-11-17T16:55:52.346436Z","elapsed_ms":143471012,"event":"activity_result","trial":"0404b505-3295-461f-8e8d-40c4937881c4","detail":{"request":303,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":13253}},"extra_position_type":"java.lang.Long","extra_position":13253,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:55:52.515946Z","elapsed_ms":143471181,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:56:53.943018Z","elapsed_ms":143532608,"event":"created","trial":"","detail":{}}
+{"utc":"2026-11-17T16:56:53.978493Z","elapsed_ms":143532644,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:56:54.112258Z","elapsed_ms":143532777,"event":"launch","trial":"ddaed68f-8fa6-4c10-9b0e-ecf7600a5486","detail":{"scenario":"long-resume-15m-v1-1","saved_ms":932000,"rewind_s":10,"requested_ms":922000,"request":304,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_uri":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/long.mp4","clip_duration_ms":1200031,"clip_sha256":"d738dee1a1358968e1e15b432b99c9b287c0aa9bcdc9b16bf9493ee74a480c11"}}
+{"utc":"2026-11-17T16:56:54.131291Z","elapsed_ms":143532796,"event":"launch_return","trial":"ddaed68f-8fa6-4c10-9b0e-ecf7600a5486","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:56:54.139396Z","elapsed_ms":143532805,"event":"pause","trial":"ddaed68f-8fa6-4c10-9b0e-ecf7600a5486","detail":{}}
+{"utc":"2026-11-17T16:56:54.158630Z","elapsed_ms":143532824,"event":"stop","trial":"ddaed68f-8fa6-4c10-9b0e-ecf7600a5486","detail":{}}
+{"utc":"2026-11-17T16:57:04.241401Z","elapsed_ms":143542907,"event":"activity_result","trial":"ddaed68f-8fa6-4c10-9b0e-ecf7600a5486","detail":{"request":304,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":1200008},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/long.mp4"},"extra_position":{"type":"java.lang.Long","value":930507}},"extra_position_type":"java.lang.Long","extra_position":930507,"extra_duration_type":"java.lang.Long","extra_duration":1200008,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:57:04.267064Z","elapsed_ms":143542932,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:57:05.149206Z","elapsed_ms":143543814,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:57:05.307618Z","elapsed_ms":143543973,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:57:05.413113Z","elapsed_ms":143544078,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:57:05.581717Z","elapsed_ms":143544247,"event":"launch","trial":"50928222-3168-481b-a2cb-0a3b218ad052","detail":{"scenario":"long-resume-15m-v1-2","saved_ms":930507,"rewind_s":10,"requested_ms":920507,"request":305,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_uri":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/long.mp4","clip_duration_ms":1200031,"clip_sha256":"d738dee1a1358968e1e15b432b99c9b287c0aa9bcdc9b16bf9493ee74a480c11"}}
+{"utc":"2026-11-17T16:57:05.705848Z","elapsed_ms":143544371,"event":"launch_return","trial":"50928222-3168-481b-a2cb-0a3b218ad052","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:57:05.897276Z","elapsed_ms":143544562,"event":"pause","trial":"50928222-3168-481b-a2cb-0a3b218ad052","detail":{}}
+{"utc":"2026-11-17T16:57:06.112089Z","elapsed_ms":143544777,"event":"stop","trial":"50928222-3168-481b-a2cb-0a3b218ad052","detail":{}}
+{"utc":"2026-11-17T16:57:15.998135Z","elapsed_ms":143554663,"event":"activity_result","trial":"50928222-3168-481b-a2cb-0a3b218ad052","detail":{"request":305,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":1200008},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/long.mp4"},"extra_position":{"type":"java.lang.Long","value":928107}},"extra_position_type":"java.lang.Long","extra_position":928107,"extra_duration_type":"java.lang.Long","extra_duration":1200008,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:57:16.181796Z","elapsed_ms":143554847,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:57:16.902647Z","elapsed_ms":143555568,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:57:17.033174Z","elapsed_ms":143555698,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:57:17.142333Z","elapsed_ms":143555807,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:57:17.323485Z","elapsed_ms":143555989,"event":"launch","trial":"4a149b22-774a-4348-b987-7427d2ca5d4e","detail":{"scenario":"long-resume-15m-v1-3","saved_ms":928107,"rewind_s":10,"requested_ms":918107,"request":306,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_uri":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/long.mp4","clip_duration_ms":1200031,"clip_sha256":"d738dee1a1358968e1e15b432b99c9b287c0aa9bcdc9b16bf9493ee74a480c11"}}
+{"utc":"2026-11-17T16:57:17.461259Z","elapsed_ms":143556126,"event":"launch_return","trial":"4a149b22-774a-4348-b987-7427d2ca5d4e","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:57:17.652056Z","elapsed_ms":143556317,"event":"pause","trial":"4a149b22-774a-4348-b987-7427d2ca5d4e","detail":{}}
+{"utc":"2026-11-17T16:57:17.885700Z","elapsed_ms":143556551,"event":"stop","trial":"4a149b22-774a-4348-b987-7427d2ca5d4e","detail":{}}
+{"utc":"2026-11-17T16:57:27.775869Z","elapsed_ms":143566441,"event":"activity_result","trial":"4a149b22-774a-4348-b987-7427d2ca5d4e","detail":{"request":306,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":1200008},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/long.mp4"},"extra_position":{"type":"java.lang.Long","value":926707}},"extra_position_type":"java.lang.Long","extra_position":926707,"extra_duration_type":"java.lang.Long","extra_duration":1200008,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:57:27.966006Z","elapsed_ms":143566631,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:57:28.689397Z","elapsed_ms":143567355,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:57:28.821043Z","elapsed_ms":143567486,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:57:28.928110Z","elapsed_ms":143567593,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:57:29.070128Z","elapsed_ms":143567735,"event":"launch","trial":"e9cfe788-cb6f-4fcc-bd20-c0d4d4da9063","detail":{"scenario":"recents-v1-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":307,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_uri":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4","clip_duration_ms":45023,"clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:57:29.204587Z","elapsed_ms":143567870,"event":"launch_return","trial":"e9cfe788-cb6f-4fcc-bd20-c0d4d4da9063","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:57:29.395523Z","elapsed_ms":143568061,"event":"pause","trial":"e9cfe788-cb6f-4fcc-bd20-c0d4d4da9063","detail":{}}
+{"utc":"2026-11-17T16:57:29.636287Z","elapsed_ms":143568301,"event":"stop","trial":"e9cfe788-cb6f-4fcc-bd20-c0d4d4da9063","detail":{}}
+{"utc":"2026-11-17T16:57:35.529461Z","elapsed_ms":143574195,"event":"destroy","trial":"e9cfe788-cb6f-4fcc-bd20-c0d4d4da9063","detail":{"finishing":true}}
+{"utc":"2026-11-17T16:57:39.034022Z","elapsed_ms":143577699,"event":"created","trial":"e9cfe788-cb6f-4fcc-bd20-c0d4d4da9063","detail":{}}
+{"utc":"2026-11-17T16:57:39.041437Z","elapsed_ms":143577707,"event":"resume","trial":"e9cfe788-cb6f-4fcc-bd20-c0d4d4da9063","detail":{}}
+{"utc":"2026-11-17T16:57:39.043440Z","elapsed_ms":143577709,"event":"abandoned","trial":"e9cfe788-cb6f-4fcc-bd20-c0d4d4da9063","detail":{"source":"adb_command"}}
+{"utc":"2026-11-17T16:57:39.071347Z","elapsed_ms":143577737,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:57:39.075538Z","elapsed_ms":143577741,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:57:39.077542Z","elapsed_ms":143577743,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:57:39.129102Z","elapsed_ms":143577794,"event":"launch","trial":"5d491bb7-8e8c-4dec-9847-95038c5d9836","detail":{"scenario":"recents-v1-2","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":308,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_uri":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4","clip_duration_ms":45023,"clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:57:39.142457Z","elapsed_ms":143577808,"event":"launch_return","trial":"5d491bb7-8e8c-4dec-9847-95038c5d9836","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:57:39.957414Z","elapsed_ms":143578623,"event":"pause","trial":"5d491bb7-8e8c-4dec-9847-95038c5d9836","detail":{}}
+{"utc":"2026-11-17T16:57:40.476308Z","elapsed_ms":143579141,"event":"stop","trial":"5d491bb7-8e8c-4dec-9847-95038c5d9836","detail":{}}
+{"utc":"2026-11-17T16:57:45.165051Z","elapsed_ms":143583830,"event":"destroy","trial":"5d491bb7-8e8c-4dec-9847-95038c5d9836","detail":{"finishing":true}}
+{"utc":"2026-11-17T16:57:48.643300Z","elapsed_ms":143587309,"event":"created","trial":"5d491bb7-8e8c-4dec-9847-95038c5d9836","detail":{}}
+{"utc":"2026-11-17T16:57:48.650744Z","elapsed_ms":143587316,"event":"resume","trial":"5d491bb7-8e8c-4dec-9847-95038c5d9836","detail":{}}
+{"utc":"2026-11-17T16:57:48.652661Z","elapsed_ms":143587318,"event":"abandoned","trial":"5d491bb7-8e8c-4dec-9847-95038c5d9836","detail":{"source":"adb_command"}}
+{"utc":"2026-11-17T16:57:48.684238Z","elapsed_ms":143587349,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:57:48.688480Z","elapsed_ms":143587354,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:57:48.690480Z","elapsed_ms":143587356,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:57:48.731011Z","elapsed_ms":143587396,"event":"launch","trial":"4f22eeac-8d8d-47ac-8148-d5386b6d8cf5","detail":{"scenario":"recents-v1-3","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":309,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_uri":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4","clip_duration_ms":45023,"clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:57:48.744191Z","elapsed_ms":143587409,"event":"launch_return","trial":"4f22eeac-8d8d-47ac-8148-d5386b6d8cf5","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:57:49.592587Z","elapsed_ms":143588258,"event":"pause","trial":"4f22eeac-8d8d-47ac-8148-d5386b6d8cf5","detail":{}}
+{"utc":"2026-11-17T16:57:50.084610Z","elapsed_ms":143588750,"event":"stop","trial":"4f22eeac-8d8d-47ac-8148-d5386b6d8cf5","detail":{}}
+{"utc":"2026-11-17T16:57:54.932941Z","elapsed_ms":143593598,"event":"destroy","trial":"4f22eeac-8d8d-47ac-8148-d5386b6d8cf5","detail":{"finishing":true}}
+{"utc":"2026-11-17T16:57:58.447267Z","elapsed_ms":143597113,"event":"created","trial":"4f22eeac-8d8d-47ac-8148-d5386b6d8cf5","detail":{}}
+{"utc":"2026-11-17T16:57:58.455521Z","elapsed_ms":143597121,"event":"resume","trial":"4f22eeac-8d8d-47ac-8148-d5386b6d8cf5","detail":{}}
+{"utc":"2026-11-17T16:57:58.457622Z","elapsed_ms":143597123,"event":"abandoned","trial":"4f22eeac-8d8d-47ac-8148-d5386b6d8cf5","detail":{"source":"adb_command"}}
+{"utc":"2026-11-17T16:58:07.868340Z","elapsed_ms":143606533,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:58:08.000034Z","elapsed_ms":143606665,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:58:08.105597Z","elapsed_ms":143606771,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:58:08.301301Z","elapsed_ms":143606966,"event":"launch","trial":"28f20053-a94f-4183-a10e-5fc333b197d9","detail":{"scenario":"jump_end-v2-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":310,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_uri":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4","clip_duration_ms":45023,"clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:58:08.462830Z","elapsed_ms":143607128,"event":"launch_return","trial":"28f20053-a94f-4183-a10e-5fc333b197d9","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:58:08.670454Z","elapsed_ms":143607336,"event":"pause","trial":"28f20053-a94f-4183-a10e-5fc333b197d9","detail":{}}
+{"utc":"2026-11-17T16:58:09.159312Z","elapsed_ms":143607825,"event":"stop","trial":"28f20053-a94f-4183-a10e-5fc333b197d9","detail":{}}
+{"utc":"2026-11-17T16:58:12.218273Z","elapsed_ms":143610883,"event":"activity_result","trial":"28f20053-a94f-4183-a10e-5fc333b197d9","detail":{"request":310,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":0},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":43866}},"extra_position_type":"java.lang.Long","extra_position":43866,"extra_duration_type":"java.lang.Long","extra_duration":0,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:58:12.376418Z","elapsed_ms":143611042,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:58:16.127720Z","elapsed_ms":143614793,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:58:16.277153Z","elapsed_ms":143614942,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:58:16.387829Z","elapsed_ms":143615053,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:58:16.537790Z","elapsed_ms":143615203,"event":"launch","trial":"3af56f1f-9c81-4562-acad-3ab6cc379f51","detail":{"scenario":"jump_end-v2-2","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":311,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_uri":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4","clip_duration_ms":45023,"clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:58:16.697166Z","elapsed_ms":143615362,"event":"launch_return","trial":"3af56f1f-9c81-4562-acad-3ab6cc379f51","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:58:16.906525Z","elapsed_ms":143615572,"event":"pause","trial":"3af56f1f-9c81-4562-acad-3ab6cc379f51","detail":{}}
+{"utc":"2026-11-17T16:58:17.147819Z","elapsed_ms":143615813,"event":"stop","trial":"3af56f1f-9c81-4562-acad-3ab6cc379f51","detail":{}}
+{"utc":"2026-11-17T16:58:24.103188Z","elapsed_ms":143622768,"event":"activity_result","trial":"3af56f1f-9c81-4562-acad-3ab6cc379f51","detail":{"request":311,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":15752}},"extra_position_type":"java.lang.Long","extra_position":15752,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:58:24.287374Z","elapsed_ms":143622952,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:58:25.054464Z","elapsed_ms":143623720,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:58:25.200391Z","elapsed_ms":143623865,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:58:25.314378Z","elapsed_ms":143623979,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:58:25.445818Z","elapsed_ms":143624111,"event":"launch","trial":"4c549ab9-3c3a-48ed-9c10-d8e4b54c2df8","detail":{"scenario":"jump_end-v2-3","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":312,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_uri":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4","clip_duration_ms":45023,"clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:58:25.582887Z","elapsed_ms":143624248,"event":"launch_return","trial":"4c549ab9-3c3a-48ed-9c10-d8e4b54c2df8","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:58:25.799296Z","elapsed_ms":143624464,"event":"pause","trial":"4c549ab9-3c3a-48ed-9c10-d8e4b54c2df8","detail":{}}
+{"utc":"2026-11-17T16:58:26.046694Z","elapsed_ms":143624712,"event":"stop","trial":"4c549ab9-3c3a-48ed-9c10-d8e4b54c2df8","detail":{}}
+{"utc":"2026-11-17T16:58:32.917416Z","elapsed_ms":143631583,"event":"activity_result","trial":"4c549ab9-3c3a-48ed-9c10-d8e4b54c2df8","detail":{"request":312,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":15751}},"extra_position_type":"java.lang.Long","extra_position":15751,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T16:58:33.068143Z","elapsed_ms":143631733,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:59:06.157566Z","elapsed_ms":143664823,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:59:06.302611Z","elapsed_ms":143664968,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:59:06.414364Z","elapsed_ms":143665079,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:59:06.561581Z","elapsed_ms":143665227,"event":"launch","trial":"8af5d379-352e-4105-8792-c2ffa743a44d","detail":{"scenario":"jump-menu-inspect-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":313,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_uri":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4","clip_duration_ms":45023,"clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:59:06.683179Z","elapsed_ms":143665348,"event":"launch_return","trial":"8af5d379-352e-4105-8792-c2ffa743a44d","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:59:06.906901Z","elapsed_ms":143665572,"event":"pause","trial":"8af5d379-352e-4105-8792-c2ffa743a44d","detail":{}}
+{"utc":"2026-11-17T16:59:07.190042Z","elapsed_ms":143665855,"event":"stop","trial":"8af5d379-352e-4105-8792-c2ffa743a44d","detail":{}}
+{"utc":"2026-11-17T16:59:27.262237Z","elapsed_ms":143685927,"event":"activity_result","trial":"8af5d379-352e-4105-8792-c2ffa743a44d","detail":{"request":313,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":0},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":0}},"extra_position_type":"java.lang.Long","extra_position":0,"extra_duration_type":"java.lang.Long","extra_duration":0,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:59:27.509547Z","elapsed_ms":143686175,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:59:42.054752Z","elapsed_ms":143700720,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:59:42.209329Z","elapsed_ms":143700874,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:59:42.339281Z","elapsed_ms":143701004,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:59:42.507675Z","elapsed_ms":143701173,"event":"launch","trial":"5f312127-60b1-4880-81e6-49f7c39c51a7","detail":{"scenario":"jump-menu-v1-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":314,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_uri":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4","clip_duration_ms":45023,"clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:59:42.677236Z","elapsed_ms":143701342,"event":"launch_return","trial":"5f312127-60b1-4880-81e6-49f7c39c51a7","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:59:42.913806Z","elapsed_ms":143701579,"event":"pause","trial":"5f312127-60b1-4880-81e6-49f7c39c51a7","detail":{}}
+{"utc":"2026-11-17T16:59:43.178828Z","elapsed_ms":143701844,"event":"stop","trial":"5f312127-60b1-4880-81e6-49f7c39c51a7","detail":{}}
+{"utc":"2026-11-17T16:59:50.762293Z","elapsed_ms":143709428,"event":"activity_result","trial":"5f312127-60b1-4880-81e6-49f7c39c51a7","detail":{"request":314,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":0},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":0}},"extra_position_type":"java.lang.Long","extra_position":0,"extra_duration_type":"java.lang.Long","extra_duration":0,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T16:59:50.963372Z","elapsed_ms":143709628,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:59:53.133836Z","elapsed_ms":143711799,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T16:59:53.288342Z","elapsed_ms":143711953,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T16:59:53.405426Z","elapsed_ms":143712071,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T16:59:53.578729Z","elapsed_ms":143712244,"event":"launch","trial":"dd9943cd-5e7e-4043-b773-61a4d6e32a6b","detail":{"scenario":"jump-menu-v1-2","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":315,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_uri":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4","clip_duration_ms":45023,"clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T16:59:53.749324Z","elapsed_ms":143712414,"event":"launch_return","trial":"dd9943cd-5e7e-4043-b773-61a4d6e32a6b","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T16:59:53.994503Z","elapsed_ms":143712660,"event":"pause","trial":"dd9943cd-5e7e-4043-b773-61a4d6e32a6b","detail":{}}
+{"utc":"2026-11-17T16:59:54.258184Z","elapsed_ms":143712923,"event":"stop","trial":"dd9943cd-5e7e-4043-b773-61a4d6e32a6b","detail":{}}
+{"utc":"2026-11-17T17:00:01.772004Z","elapsed_ms":143720437,"event":"activity_result","trial":"dd9943cd-5e7e-4043-b773-61a4d6e32a6b","detail":{"request":315,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":0},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":0}},"extra_position_type":"java.lang.Long","extra_position":0,"extra_duration_type":"java.lang.Long","extra_duration":0,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T17:00:01.929037Z","elapsed_ms":143720594,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T17:00:04.136467Z","elapsed_ms":143722802,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T17:00:04.339442Z","elapsed_ms":143723005,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T17:00:04.456775Z","elapsed_ms":143723122,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T17:00:04.623442Z","elapsed_ms":143723289,"event":"launch","trial":"970412e0-8134-4141-aa29-25b24691988c","detail":{"scenario":"jump-menu-v1-3","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":316,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_uri":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4","clip_duration_ms":45023,"clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T17:00:04.768340Z","elapsed_ms":143723433,"event":"launch_return","trial":"970412e0-8134-4141-aa29-25b24691988c","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T17:00:05.007166Z","elapsed_ms":143723672,"event":"pause","trial":"970412e0-8134-4141-aa29-25b24691988c","detail":{}}
+{"utc":"2026-11-17T17:00:05.284203Z","elapsed_ms":143723949,"event":"stop","trial":"970412e0-8134-4141-aa29-25b24691988c","detail":{}}
+{"utc":"2026-11-17T17:00:12.866209Z","elapsed_ms":143731531,"event":"activity_result","trial":"970412e0-8134-4141-aa29-25b24691988c","detail":{"request":316,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":0},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":0}},"extra_position_type":"java.lang.Long","extra_position":0,"extra_duration_type":"java.lang.Long","extra_duration":0,"accepted_checkpoint":false}}
+{"utc":"2026-11-17T17:00:13.093021Z","elapsed_ms":143731758,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T17:00:16.764501Z","elapsed_ms":143735430,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T17:00:16.986154Z","elapsed_ms":143735651,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T17:00:17.113767Z","elapsed_ms":143735779,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T17:00:17.330113Z","elapsed_ms":143735995,"event":"launch","trial":"ed21bec4-4aa7-43de-8da1-c6b25832cb13","detail":{"scenario":"settings-restore-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":317,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_uri":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4","clip_duration_ms":45023,"clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T17:00:17.536225Z","elapsed_ms":143736201,"event":"launch_return","trial":"ed21bec4-4aa7-43de-8da1-c6b25832cb13","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T17:00:17.781579Z","elapsed_ms":143736447,"event":"pause","trial":"ed21bec4-4aa7-43de-8da1-c6b25832cb13","detail":{}}
+{"utc":"2026-11-17T17:00:18.062592Z","elapsed_ms":143736728,"event":"stop","trial":"ed21bec4-4aa7-43de-8da1-c6b25832cb13","detail":{}}
+{"utc":"2026-11-17T17:00:37.800455Z","elapsed_ms":143756466,"event":"activity_result","trial":"ed21bec4-4aa7-43de-8da1-c6b25832cb13","detail":{"request":317,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":29253}},"extra_position_type":"java.lang.Long","extra_position":29253,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T17:00:38.009230Z","elapsed_ms":143756674,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T17:01:01.463385Z","elapsed_ms":143780129,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T17:01:01.671292Z","elapsed_ms":143780336,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T17:01:01.794971Z","elapsed_ms":143780460,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T17:01:01.962934Z","elapsed_ms":143780628,"event":"launch","trial":"7e2a2def-3380-4130-9be0-ba692e1a5ca9","detail":{"scenario":"screen-lock-v1-1","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":318,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_uri":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4","clip_duration_ms":45023,"clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T17:01:02.137641Z","elapsed_ms":143780803,"event":"launch_return","trial":"7e2a2def-3380-4130-9be0-ba692e1a5ca9","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T17:01:02.411942Z","elapsed_ms":143781077,"event":"pause","trial":"7e2a2def-3380-4130-9be0-ba692e1a5ca9","detail":{}}
+{"utc":"2026-11-17T17:01:02.728513Z","elapsed_ms":143781394,"event":"stop","trial":"7e2a2def-3380-4130-9be0-ba692e1a5ca9","detail":{}}
+{"utc":"2026-11-17T17:06:04.373031Z","elapsed_ms":144083038,"event":"activity_result","trial":"7e2a2def-3380-4130-9be0-ba692e1a5ca9","detail":{"request":318,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":35402}},"extra_position_type":"java.lang.Long","extra_position":35402,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T17:06:04.600042Z","elapsed_ms":144083265,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T17:06:18.615730Z","elapsed_ms":144097281,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T17:06:18.783859Z","elapsed_ms":144097449,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T17:06:18.909419Z","elapsed_ms":144097575,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T17:06:19.088092Z","elapsed_ms":144097753,"event":"launch","trial":"b0cd5a74-54f4-4a72-a5ad-e04577221655","detail":{"scenario":"screen-lock-v1-2","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":319,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_uri":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4","clip_duration_ms":45023,"clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T17:06:19.261369Z","elapsed_ms":144097926,"event":"launch_return","trial":"b0cd5a74-54f4-4a72-a5ad-e04577221655","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T17:06:19.521414Z","elapsed_ms":144098187,"event":"pause","trial":"b0cd5a74-54f4-4a72-a5ad-e04577221655","detail":{}}
+{"utc":"2026-11-17T17:06:19.814565Z","elapsed_ms":144098480,"event":"stop","trial":"b0cd5a74-54f4-4a72-a5ad-e04577221655","detail":{}}
+{"utc":"2026-11-17T17:31:08.275593Z","elapsed_ms":145586941,"event":"activity_result","trial":"b0cd5a74-54f4-4a72-a5ad-e04577221655","detail":{"request":319,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":11002}},"extra_position_type":"java.lang.Long","extra_position":11002,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T17:31:08.502547Z","elapsed_ms":145587168,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T17:31:19.434775Z","elapsed_ms":145598100,"event":"pause","trial":"","detail":{}}
+{"utc":"2026-11-17T17:31:19.604708Z","elapsed_ms":145598270,"event":"new_intent","trial":"","detail":{"action":"dev.arglabs.tubego.vlcprobe.RUN"}}
+{"utc":"2026-11-17T17:31:19.733046Z","elapsed_ms":145598398,"event":"resume","trial":"","detail":{}}
+{"utc":"2026-11-17T17:31:19.924012Z","elapsed_ms":145598589,"event":"launch","trial":"a270846d-7a77-4978-9f54-34715da54589","detail":{"scenario":"screen-lock-v1-3","saved_ms":20000,"rewind_s":10,"requested_ms":10000,"request":320,"model":"DN2103","api":33,"vlc":"3.7.2 (13070209)","tubego":"0.5.13 (19)","clip_uri":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4","clip_duration_ms":45023,"clip_sha256":"88458d71d326574e0ba9a86a853724d54c4833b787cfb453631cb5282bbc2ef3"}}
+{"utc":"2026-11-17T17:31:20.114011Z","elapsed_ms":145598779,"event":"launch_return","trial":"a270846d-7a77-4978-9f54-34715da54589","detail":{"status":"STARTED"}}
+{"utc":"2026-11-17T17:31:20.386783Z","elapsed_ms":145599052,"event":"pause","trial":"a270846d-7a77-4978-9f54-34715da54589","detail":{}}
+{"utc":"2026-11-17T17:31:20.699962Z","elapsed_ms":145599365,"event":"stop","trial":"a270846d-7a77-4978-9f54-34715da54589","detail":{}}
+{"utc":"2026-11-17T17:40:29.010503Z","elapsed_ms":146147676,"event":"activity_result","trial":"a270846d-7a77-4978-9f54-34715da54589","detail":{"request":320,"result":-1,"action":"org.videolan.vlc.player.result","extras":{"extra_duration":{"type":"java.lang.Long","value":45000},"extra_uri":{"type":"java.lang.String","value":"content:\/\/dev.arglabs.tubego.vlcprobe.clip\/sample.mp4"},"extra_position":{"type":"java.lang.Long","value":11001}},"extra_position_type":"java.lang.Long","extra_position":11001,"extra_duration_type":"java.lang.Long","extra_duration":45000,"accepted_checkpoint":true}}
+{"utc":"2026-11-17T17:40:29.241645Z","elapsed_ms":146147907,"event":"resume","trial":"","detail":{}}

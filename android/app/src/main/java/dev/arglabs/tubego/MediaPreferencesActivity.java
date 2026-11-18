@@ -29,7 +29,12 @@ public final class MediaPreferencesActivity extends LocalizedActivity {
         layout.addView(UiKit.heading(this,Texts.text(this,"Calidad predeterminada")));
         choice = new Spinner(this); choice.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Texts.labels(this,MediaSelection.LABELS)));
         choice.setSelection(MediaSelection.index("720")); layout.addView(choice);
-        UiKit.sectionCard(layout,"Al continuar la reproducción","El retroceso depende de que tu reproductor sea compatible; no cambia la calidad del archivo.");
+        UiKit.sectionCard(layout,"Reproductor en este teléfono","Elige el reproductor integrado o uno externo. El modo y las aplicaciones externas se guardan solo en este teléfono.");
+        Button mode=new Button(this);mode.setText(Texts.text(this,"Modo de reproducción"));mode.setOnClickListener(v->PlaybackLaunch.configure(this));layout.addView(mode);
+        TextView limits=new TextView(this);limits.setText(Texts.text(this,"El reproductor externo no guarda progreso periódico ni confirma lo visto."));layout.addView(limits);
+        Button player = new Button(this); player.setText(Texts.text(this,"Reproductor externo predeterminado"));
+        player.setOnClickListener(v -> ExternalPlayers.configure(this)); layout.addView(player);
+        UiKit.sectionCard(layout,"Al continuar la reproducción","El reproductor integrado aplica este retroceso al continuar; no cambia la calidad del archivo.");
         TextView rewindLabel = new TextView(this); rewindLabel.setText(Texts.text(MediaPreferencesActivity.this,"Retroceso al continuar (0 a 120 segundos; requiere reproductor compatible)")); layout.addView(rewindLabel);
         rewind = new EditText(this); rewind.setInputType(InputType.TYPE_CLASS_NUMBER); rewind.setText("10"); layout.addView(rewind);
         status = new TextView(this); layout.addView(status);

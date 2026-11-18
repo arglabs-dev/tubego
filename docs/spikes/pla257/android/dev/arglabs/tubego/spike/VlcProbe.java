@@ -17,6 +17,13 @@ public final class VlcProbe {
 
     public static Launch open(Activity activity, Uri privateFileContentUri, String mime,
                               long lastMillis, int userRewindSeconds) {
+        return open(activity, privateFileContentUri, mime, lastMillis, userRewindSeconds, REQUEST);
+    }
+
+    /** Separate request codes let the diagnostic caller associate late results safely. */
+    public static Launch open(Activity activity, Uri privateFileContentUri, String mime,
+                              long lastMillis, int userRewindSeconds, int requestCode) {
+        if (requestCode < 0 || requestCode > 65535) throw new IllegalArgumentException("Invalid request code");
         if (!"content".equals(privateFileContentUri.getScheme())) {
             throw new IllegalArgumentException("Use a narrow read-only FileProvider content URI");
         }
@@ -30,7 +37,7 @@ public final class VlcProbe {
         // Do not set from_start=true: VLC ignores position when that flag is set.
         // No NEW_TASK flag. The VLC manifest's singleTask still requires device testing.
         try {
-            activity.startActivityForResult(intent, REQUEST);
+            activity.startActivityForResult(intent, requestCode);
             return Launch.STARTED;
         } catch (ActivityNotFoundException absent) {
             return Launch.NOT_INSTALLED;

@@ -3610,5 +3610,385 @@
   "No se pudo conectar. Se muestra la biblioteca guardada.": {
     "es": "No se pudo conectar. Se muestra la biblioteca guardada.",
     "en": "Could not connect. Showing the saved library."
+  },
+  "Reproductor en este teléfono": {
+    "es": "Reproductor en este teléfono",
+    "en": "Player on this phone"
+  },
+  "Elige una aplicación para video y otra para audio. Esta preferencia solo cambia este teléfono.": {
+    "es": "Elige una aplicación para video y otra para audio. Esta preferencia solo cambia este teléfono.",
+    "en": "Choose an app for video and one for audio. This preference only affects this phone."
+  },
+  "Reproductor externo predeterminado": {
+    "es": "Reproductor externo predeterminado",
+    "en": "Default external player"
+  },
+  "Preguntar cada vez": {
+    "es": "Preguntar cada vez",
+    "en": "Ask every time"
+  },
+  "Integrado: guardar y continuar": {
+    "es": "Integrado: guardar y continuar",
+    "en": "Built-in: save and resume"
+  },
+  "Externo: seguimiento limitado": {
+    "es": "Externo: seguimiento limitado",
+    "en": "External: limited tracking"
+  },
+  "Modo de reproducción": {
+    "es": "Modo de reproducción",
+    "en": "Playback mode"
+  },
+  "El reproductor externo no guarda progreso periódico ni confirma lo visto.": {
+    "es": "El reproductor externo no guarda progreso periódico ni confirma lo visto.",
+    "en": "The external player does not save periodic progress or confirm watched content."
+  },
+  "Sin empezar": {
+    "es": "Sin empezar",
+    "en": "Not started"
+  },
+  "En progreso": {
+    "es": "En progreso",
+    "en": "In progress"
+  },
+  "Terminado": {
+    "es": "Terminado",
+    "en": "Finished"
+  },
+  "Marcar como visto": {
+    "es": "Marcar como visto",
+    "en": "Mark as watched"
+  },
+  "Marcar como no visto": {
+    "es": "Marcar como no visto",
+    "en": "Mark as unwatched"
+  },
+  "Abrir externamente": {
+    "es": "Abrir externamente",
+    "en": "Open externally"
+  },
+  "Pausar": {
+    "es": "Pausar",
+    "en": "Pause"
+  },
+  "Avance horizontal; brillo a la izquierda y volumen a la derecha": {
+    "es": "Avance horizontal; brillo a la izquierda y volumen a la derecha",
+    "en": "Swipe horizontally to seek; brightness on the left and volume on the right"
+  },
+  "Preparando reproducción…": {
+    "es": "Preparando reproducción…",
+    "en": "Preparing playback…"
+  },
+  "Posición de reproducción": {
+    "es": "Posición de reproducción",
+    "en": "Playback position"
+  },
+  "Guardado local cada 5 s; sincronización pendiente si no hay conexión.": {
+    "es": "Guardado local cada 5 s; sincronización pendiente si no hay conexión.",
+    "en": "Saved locally every 5 s; sync waits when offline."
+  },
+  "Fin de reproducción": {
+    "es": "Fin de reproducción",
+    "en": "Playback ended"
+  },
+  "No se pudo reproducir el archivo. Puedes abrirlo externamente.": {
+    "es": "No se pudo reproducir el archivo. Puedes abrirlo externamente.",
+    "en": "Could not play the file. You can open it externally."
+  },
+  "No se pudo guardar el progreso. Revisa la sesión y el espacio libre.": {
+    "es": "No se pudo guardar el progreso. Revisa la sesión y el espacio libre.",
+    "en": "Could not save progress. Check your session and free space."
+  },
+  "Brillo": {
+    "es": "Brillo",
+    "en": "Brightness"
+  },
+  "Volumen": {
+    "es": "Volumen",
+    "en": "Volume"
+  },
+  "+10 s": {
+    "es": "+10 s",
+    "en": "+10 s"
+  },
+  "−10 s": {
+    "es": "−10 s",
+    "en": "−10 s"
+  },
+  "Reproducción": {
+    "es": "Reproducción",
+    "en": "Playback"
+  },
+  "Continúa tu archivo local y guarda el progreso sin conexión.": {
+    "es": "Continúa tu archivo local y guarda el progreso sin conexión.",
+    "en": "Resume your local file and save progress offline."
+  },
+  "Licencias de reproducción": {
+    "es": "Licencias de reproducción",
+    "en": "Playback licenses"
+  },
+  "El reproductor integrado guarda el progreso cada cinco segundos y al pausar o salir. Continúa con tu retroceso configurado, diez segundos inicialmente. Tras un cierre inesperado recupera el último checkpoint guardado; puede perder algunos segundos. Se pausa al salir o bloquear la pantalla.": {
+    "es": "El reproductor integrado guarda el progreso cada cinco segundos y al pausar o salir. Continúa con tu retroceso configurado, diez segundos inicialmente. Tras un cierre inesperado recupera el último checkpoint guardado; puede perder algunos segundos. Se pausa al salir o bloquear la pantalla.",
+    "en": "The built-in player saves progress every five seconds and when pausing or leaving. It resumes with your configured rewind, initially ten seconds. After an unexpected close it recovers the last saved checkpoint; a few seconds may be lost. It pauses when leaving or locking the screen."
+  },
+  "El progreso se guarda sin conexión y se sincroniza por cuenta y recurso al reconectar. Entre dispositivos se usa la observación más reciente, no el minuto más alto. Mantén correctos los relojes. VLC u otro reproductor externo conserva su interfaz, pero no guarda progreso periódico ni confirma lo visto en TubeGo.": {
+    "es": "El progreso se guarda sin conexión y se sincroniza por cuenta y recurso al reconectar. Entre dispositivos se usa la observación más reciente, no el minuto más alto. Mantén correctos los relojes. VLC u otro reproductor externo conserva su interfaz, pero no guarda progreso periódico ni confirma lo visto en TubeGo.",
+    "en": "Progress is saved offline and syncs by account and resource when reconnected. Devices use the latest observation, not the highest position. Keep device clocks correct. VLC or another external player retains its interface, but does not save periodic progress or confirm watched content in TubeGo."
+  },
+  "Sin empezar, En progreso y Terminado son estados de reproducción, distintos de la descarga. Terminado automático exige 95 por ciento de cobertura observada y un fin real; saltar al final no basta. Puedes marcar y desmarcar como visto. El marcado manual tiene prioridad, incluso después de nuevas reproducciones.": {
+    "es": "Sin empezar, En progreso y Terminado son estados de reproducción, distintos de la descarga. Terminado automático exige 95 por ciento de cobertura observada y un fin real; saltar al final no basta. Puedes marcar y desmarcar como visto. El marcado manual tiene prioridad, incluso después de nuevas reproducciones.",
+    "en": "Not started, In progress and Finished describe playback separately from downloading. Automatic completion requires 95 percent observed coverage and an actual end; skipping to the end is not enough. You can mark and unmark watched content. Manual marking takes priority, including after further playback."
+  },
+  "Puedes reproducir sin conexión con el reproductor integrado o elegir VLC u otra aplicación externa. El integrado ofrece avance horizontal, brillo a la izquierda y volumen a la derecha. En VLC, PiP y audio con pantalla bloqueada dependen de sus ajustes y permisos. Abrir un archivo local no descarga otra copia.": {
+    "es": "Puedes reproducir sin conexión con el reproductor integrado o elegir VLC u otra aplicación externa. El integrado ofrece avance horizontal, brillo a la izquierda y volumen a la derecha. En VLC, PiP y audio con pantalla bloqueada dependen de sus ajustes y permisos. Abrir un archivo local no descarga otra copia.",
+    "en": "You can play offline with the built-in player or choose VLC or another external app. The built-in player offers horizontal seeking, brightness on the left and volume on the right. In VLC, PiP and locked-screen audio depend on its settings and permissions. Opening a local file does not download another copy."
+  },
+  "Elige el reproductor integrado o uno externo. El modo y las aplicaciones externas se guardan solo en este teléfono.": {
+    "es": "Elige el reproductor integrado o uno externo. El modo y las aplicaciones externas se guardan solo en este teléfono.",
+    "en": "Choose the built-in or an external player. The mode and external apps are saved only on this phone."
+  },
+  "El reproductor integrado aplica este retroceso al continuar; no cambia la calidad del archivo.": {
+    "es": "El reproductor integrado aplica este retroceso al continuar; no cambia la calidad del archivo.",
+    "en": "The built-in player applies this rewind when resuming; it does not change file quality."
+  },
+  "No se pudo obtener el audio. Intenta reproducir otra vez.": {
+    "es": "No se pudo obtener el audio. Intenta reproducir otra vez.",
+    "en": "Could not obtain audio focus. Try playing again."
+  },
+  "Bloquear": {
+    "es": "Bloquear",
+    "en": "Lock"
+  },
+  "Controles bloqueados": {
+    "es": "Controles bloqueados",
+    "en": "Controls locked"
+  },
+  "Desliza para desbloquear": {
+    "es": "Desliza para desbloquear",
+    "en": "Slide to unlock"
+  },
+  "Bloquear orientación": {
+    "es": "Bloquear orientación",
+    "en": "Lock orientation"
+  },
+  "Desbloquear orientación": {
+    "es": "Desbloquear orientación",
+    "en": "Unlock orientation"
+  },
+  "Transmitir pantalla": {
+    "es": "Transmitir pantalla",
+    "en": "Cast screen"
+  },
+  "La transmisión de pantalla no está disponible en este dispositivo.": {
+    "es": "La transmisión de pantalla no está disponible en este dispositivo.",
+    "en": "Screen casting is not available on this device."
+  },
+  "Pistas de audio y subtítulos": {
+    "es": "Pistas de audio y subtítulos",
+    "en": "Audio and subtitles"
+  },
+  "Subtítulos": {
+    "es": "Subtítulos",
+    "en": "Subtitles"
+  },
+  "Sincronización de audio": {
+    "es": "Sincronización de audio",
+    "en": "Audio delay"
+  },
+  "Sincronización de subtítulos": {
+    "es": "Sincronización de subtítulos",
+    "en": "Subtitle delay"
+  },
+  "No hay pistas disponibles en este archivo.": {
+    "es": "No hay pistas disponibles en este archivo.",
+    "en": "There are no tracks available in this file."
+  },
+  "Desactivar": {
+    "es": "Desactivar",
+    "en": "Disable"
+  },
+  "Restablecer": {
+    "es": "Restablecer",
+    "en": "Reset"
+  },
+  "Relación de aspecto": {
+    "es": "Relación de aspecto",
+    "en": "Aspect ratio"
+  },
+  "Mejor ajuste": {
+    "es": "Mejor ajuste",
+    "en": "Best fit"
+  },
+  "Ajustar a pantalla": {
+    "es": "Ajustar a pantalla",
+    "en": "Fit screen"
+  },
+  "Rellenar": {
+    "es": "Rellenar",
+    "en": "Fill"
+  },
+  "16:9": {
+    "es": "16:9",
+    "en": "16:9"
+  },
+  "4:3": {
+    "es": "4:3",
+    "en": "4:3"
+  },
+  "Tamaño original": {
+    "es": "Tamaño original",
+    "en": "Original size"
+  },
+  "Más opciones de reproducción": {
+    "es": "Más opciones de reproducción",
+    "en": "More playback options"
+  },
+  "Temporizador": {
+    "es": "Temporizador",
+    "en": "Sleep timer"
+  },
+  "15 minutos": {
+    "es": "15 minutos",
+    "en": "15 minutes"
+  },
+  "30 minutos": {
+    "es": "30 minutos",
+    "en": "30 minutes"
+  },
+  "60 minutos": {
+    "es": "60 minutos",
+    "en": "60 minutes"
+  },
+  "Temporizador activado": {
+    "es": "Temporizador activado",
+    "en": "Sleep timer enabled"
+  },
+  "Temporizador desactivado": {
+    "es": "Temporizador desactivado",
+    "en": "Sleep timer disabled"
+  },
+  "Temporizador finalizado": {
+    "es": "Temporizador finalizado",
+    "en": "Sleep timer finished"
+  },
+  "Velocidad de reproducción": {
+    "es": "Velocidad de reproducción",
+    "en": "Playback speed"
+  },
+  "Ir al tiempo": {
+    "es": "Ir al tiempo",
+    "en": "Jump to time"
+  },
+  "Introduce un tiempo válido": {
+    "es": "Introduce un tiempo válido",
+    "en": "Enter a valid time"
+  },
+  "Ecualizador": {
+    "es": "Ecualizador",
+    "en": "Equalizer"
+  },
+  "Reproductor miniatura": {
+    "es": "Reproductor miniatura",
+    "en": "Pop-up player"
+  },
+  "Activa el permiso de imagen en imagen para TubeGo.": {
+    "es": "Activa el permiso de imagen en imagen para TubeGo.",
+    "en": "Enable Picture-in-Picture permission for TubeGo."
+  },
+  "Repetir archivo actual": {
+    "es": "Repetir archivo actual",
+    "en": "Repeat current file"
+  },
+  "Desactivar repetición": {
+    "es": "Desactivar repetición",
+    "en": "Disable repeat"
+  },
+  "No repetir": {
+    "es": "No repetir",
+    "en": "No repeat"
+  },
+  "Repetir A-B": {
+    "es": "Repetir A-B",
+    "en": "A-B repeat"
+  },
+  "Establecer final B": {
+    "es": "Establecer final B",
+    "en": "Set end point B"
+  },
+  "Desactivar repetición A-B": {
+    "es": "Desactivar repetición A-B",
+    "en": "Disable A-B repeat"
+  },
+  "Inicio A establecido": {
+    "es": "Inicio A establecido",
+    "en": "Start point A set"
+  },
+  "El final B debe estar después del inicio A": {
+    "es": "El final B debe estar después del inicio A",
+    "en": "End point B must be after start point A"
+  },
+  "Repetición A-B activada": {
+    "es": "Repetición A-B activada",
+    "en": "A-B repeat enabled"
+  },
+  "Repetición A-B desactivada": {
+    "es": "Repetición A-B desactivada",
+    "en": "A-B repeat disabled"
+  },
+  "Información del vídeo": {
+    "es": "Información del vídeo",
+    "en": "Video information"
+  },
+  "Pistas de vídeo": {
+    "es": "Pistas de vídeo",
+    "en": "Video tracks"
+  },
+  "Pistas de audio": {
+    "es": "Pistas de audio",
+    "en": "Audio tracks"
+  },
+  "Configuración de controles": {
+    "es": "Configuración de controles",
+    "en": "Control settings"
+  },
+  "Gesto de volumen": {
+    "es": "Gesto de volumen",
+    "en": "Volume gesture"
+  },
+  "Gesto de brillo": {
+    "es": "Gesto de brillo",
+    "en": "Brightness gesture"
+  },
+  "Doble toque para avanzar o retroceder": {
+    "es": "Doble toque para avanzar o retroceder",
+    "en": "Double tap to seek"
+  },
+  "Botones de avance de 10 segundos": {
+    "es": "Botones de avance de 10 segundos",
+    "en": "10-second seek buttons"
+  },
+  "Mantener pulsado para reproducir a 2×": {
+    "es": "Mantener pulsado para reproducir a 2×",
+    "en": "Press and hold for 2× playback"
+  },
+  "Zoom con dos dedos": {
+    "es": "Zoom con dos dedos",
+    "en": "Pinch to zoom"
+  },
+  "Avanzar 10 segundos": {
+    "es": "Avanzar 10 segundos",
+    "en": "Forward 10 seconds"
+  },
+  "Retroceder 10 segundos": {
+    "es": "Retroceder 10 segundos",
+    "en": "Rewind 10 seconds"
+  },
+  "El reproductor integrado guarda el progreso cada cinco segundos y al pausar o salir. Continúa con tu retroceso configurado, diez segundos inicialmente. Tras un cierre inesperado recupera el último checkpoint guardado; puede perder algunos segundos. Se pausa al salir o bloquear la pantalla, salvo reproducción en ventana flotante activada desde el menú.": {
+    "es": "El reproductor integrado guarda el progreso cada cinco segundos y al pausar o salir. Continúa con tu retroceso configurado, diez segundos inicialmente. Tras un cierre inesperado recupera el último checkpoint guardado; puede perder algunos segundos. Se pausa al salir o bloquear la pantalla, salvo reproducción en ventana flotante activada desde el menú.",
+    "en": "The built-in player saves progress every five seconds and when pausing or leaving. It resumes with your configured rewind, initially ten seconds. After an unexpected exit it recovers the last saved checkpoint; a few seconds may be lost. Playback pauses when leaving or locking the screen, except when picture-in-picture is enabled from the menu."
+  },
+  "Doble toque lateral: salta diez segundos; central: pausa o reproduce. Mantén pulsado para 2× temporal y pellizca para ajustar la imagen. El menú permite bloquear controles, cambiar velocidad, activar ventana flotante y configurar gestos.": {
+    "es": "Doble toque lateral: salta diez segundos; central: pausa o reproduce. Mantén pulsado para 2× temporal y pellizca para ajustar la imagen. El menú permite bloquear controles, cambiar velocidad, activar ventana flotante y configurar gestos.",
+    "en": "Double tap the sides to skip ten seconds or the center to pause or play. Press and hold for temporary 2× playback, and pinch to fit the image. The menu lets you lock controls, change speed, enable picture-in-picture and configure gestures."
   }
 }

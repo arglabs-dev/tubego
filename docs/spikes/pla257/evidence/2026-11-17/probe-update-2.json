@@ -1,0 +1,6 @@
+{
+  "certificate_sha256": "9afed715ef049bee6fba4041987c984d27b0ac701ef73d198d3f5db4700fced1",
+  "apk_sha256": "a6391d1f6000d5930fc57f03ef3f725c4d0fec906f3b5d70ccb805debe185bee",
+  "command": "adb install -r",
+  "reason": "Foreground Activity automation and raw callback extras; validator unchanged"
+}

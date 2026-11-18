@@ -5,3 +5,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = 'Tubego'
 include ':app'
+
+// Opt-in diagnostic APK; never included in normal app builds.
+if (providers.gradleProperty('vlcProbe').isPresent()) {
+    include ':vlcProbe'
+    project(':vlcProbe').projectDir = file('../docs/spikes/pla257/app')
+}

@@ -1,0 +1,12 @@
+> Task :app:packageDebug
+> Task :app:createDebugApkListingFileRedirect UP-TO-DATE
+> Task :app:assembleDebug
+> Task :app:lintAnalyzeDebugUnitTest
+> Task :app:lintAnalyzeDebugAndroidTest
+> Task :app:lintAnalyzeDebug
+> Task :app:lintReportDebug UP-TO-DATE
+> Task :app:lintDebug
+[Incubating] Problems report is available at: file:///home/areyes/datos/git/arglabs-dev/tubego/android/build/reports/problems/problems-report.html
+
+BUILD SUCCESSFUL in 25s
+50 actionable tasks: 14 executed, 36 up-to-date

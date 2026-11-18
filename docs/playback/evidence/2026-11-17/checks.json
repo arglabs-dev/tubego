@@ -1,0 +1,16 @@
+{
+  "android": {
+    "tests": 85,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "lint": {
+    "Warning": 1003
+  },
+  "backend_tests": 361,
+  "backend_failures": 0,
+  "native_tests": 4,
+  "native_crash_recovery_tests": 1,
+  "translations_es_en": 939
+}

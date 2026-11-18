@@ -5,6 +5,7 @@ final class ScreenInfo {
     record Info(String title, String description, String scope, int icon, boolean admin) {}
     static Info forScreen(Class<?> screen) {
         return switch (screen.getSimpleName()) {
+            case "PlayerActivity" -> new Info("Reproducción", "Continúa tu archivo local y guarda el progreso sin conexión.", "Tu cuenta", R.drawable.ic_ds_video, false);
             case "MainActivity" -> new Info("Servidor", "Conecta esta app a la dirección HTTPS de tu servidor.", "Este teléfono", R.drawable.ic_ds_link, false);
             case "LoginActivity" -> new Info("Mi cuenta y seguridad", "Inicia sesión, cambia tu contraseña o cierra el acceso de este teléfono.", "Tu cuenta", R.drawable.ic_ds_info, false);
             case "RegistrationActivity" -> new Info("Crear cuenta", "Registra tu correo, verifícalo y consulta la aprobación de tu cuenta.", "Tu cuenta", R.drawable.ic_ds_plus, false);

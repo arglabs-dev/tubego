@@ -1,0 +1,13 @@
+TubeGo uses org.videolan.android:libvlc-all:3.7.7, unmodified.
+Copyright VLC authors and VideoLAN.
+Android bindings: GNU Lesser General Public License 2.1 or later.
+See LGPL-2.1.txt and https://www.videolan.org/vlc/libvlc.html
+Artifact and Java sources: https://repo.maven.apache.org/maven2/org/videolan/android/libvlc-all/3.7.7/
+Project/native build sources: https://code.videolan.org/videolan/libvlcjni
+The player interface and gestures in TubeGo are TubeGo code, not VLC app UI.
+Exact Android source tag: https://github.com/videolan/vlc-android/tree/libvlc-3.7.7
+Tag commit: 7a7c8f14be6759f9bb1b9a934fd086259473e20e
+The unmodified upstream Lua source scripts are retained in assets/lua, including
+copyright/license headers. Some are GPL-2.0-or-later; see GPL-2.txt.
+Observed native engine on ARM64: 3.0.25 Vetinari, changeset 3.0.24-35-gc7e5d68ee5.
+Native source revision: https://code.videolan.org/videolan/vlc/-/tree/c7e5d68ee5

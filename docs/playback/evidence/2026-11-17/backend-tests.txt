@@ -1,0 +1,21 @@
+........................................................................ [ 19%]
+........................................................................ [ 39%]
+........................................................................ [ 59%]
+........................................................................ [ 79%]
+........................................................................ [ 99%]
+.                                                                        [100%]
+=============================== warnings summary ===============================
+../../../../.local/share/tubego-toolchain/python-env/lib/python3.12/site-packages/starlette/testclient.py:37
+  /home/areyes/.local/share/tubego-toolchain/python-env/lib/python3.12/site-packages/starlette/testclient.py:37: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = typing.Callable[[], typing.ContextManager[anyio.abc.BlockingPortal]]
+
+backend/tests/test_mobile_onboarding_tcp.py::test_real_smtp_registration_verification_admin_approval_reset_and_reauth
+  /home/areyes/.local/share/tubego-toolchain/python-env/lib/python3.12/site-packages/websockets/legacy/__init__.py:6: DeprecationWarning: websockets.legacy is deprecated; see https://websockets.readthedocs.io/en/stable/howto/upgrade.html for upgrade instructions
+    warnings.warn(  # deprecated in 14.0 - 2024-11-09
+
+backend/tests/test_mobile_onboarding_tcp.py::test_real_smtp_registration_verification_admin_approval_reset_and_reauth
+  /home/areyes/.local/share/tubego-toolchain/python-env/lib/python3.12/site-packages/uvicorn/protocols/websockets/websockets_impl.py:17: DeprecationWarning: websockets.server.WebSocketServerProtocol is deprecated
+    from websockets.server import WebSocketServerProtocol
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+361 passed, 3 warnings in 51.30s

@@ -41,6 +41,7 @@ public final class LocalLibraryActivity extends LocalizedActivity {
     final String currentToken=token;File currentRoot=root;
     try {
      HistoryOpened.flush(this,origin,currentToken,currentRoot);
+     try{PlaybackProgress.sync(this,origin,currentToken);}catch(Exception pendingPlayback){}
      String path="/resources?order=newest&limit=50&search="+java.net.URLEncoder.encode(query,"UTF-8")+"&cursor="+java.net.URLEncoder.encode(cursor,"UTF-8");
      if(selected==2)path+="&status=pending";if(selected==3)path+="&status=error";if(selected==4)path+="&status=unavailable";
      JSONObject page=new ApiClient(origin).request("GET",path,null,currentToken);JSONArray items=page.getJSONArray("items");Map<String,String> cache=new HashMap<>();
@@ -57,7 +58,8 @@ public final class LocalLibraryActivity extends LocalizedActivity {
  }
  private TransferRecord local(String id){try{return root==null?null:OfflineMediaAccess.record(root,id);}catch(Exception e){return null;}}
  private String phase(String phase){switch(phase){case "pending":case "queued":return Texts.text(LocalLibraryActivity.this,"Pendiente");case "analysis":case "analyzing":return Texts.text(LocalLibraryActivity.this,"Analizando");case "downloading":case "server_download":return Texts.text(LocalLibraryActivity.this,"Descargando");case "postprocessing":return Texts.text(LocalLibraryActivity.this,"Preparando archivo");case "cancelling":return Texts.text(LocalLibraryActivity.this,"Cancelando");case "ready":return Texts.text(LocalLibraryActivity.this,"Listo en servidor");case "paused":case "retry_wait":return Texts.text(LocalLibraryActivity.this,"Pausado");case "complete":return Texts.text(LocalLibraryActivity.this,"Completado");case "cancelled":return Texts.text(LocalLibraryActivity.this,"Cancelado");case "error":case "failed":return Texts.text(LocalLibraryActivity.this,"Error");default:return Texts.state(this,phase);}}
- private void render(String query,int selected){list.removeAllViews();int matches=0;List<JSONObject> ordered=new ArrayList<>(rows.values());ordered.sort(Comparator.comparing((JSONObject r)->r.optString("created_at")).reversed().thenComparing(r->r.optString("id")));
+ private String playbackQuery="";private int playbackFilter;
+ private void render(String query,int selected){playbackQuery=query;playbackFilter=selected;list.removeAllViews();int matches=0;List<JSONObject> ordered=new ArrayList<>(rows.values());ordered.sort(Comparator.comparing((JSONObject r)->r.optString("created_at")).reversed().thenComparing(r->r.optString("id")));
   for(JSONObject row:ordered){String id=row.optString("id"),title=row.optString("title",Texts.text(LocalLibraryActivity.this,"Sin título"));if(!title.toLowerCase(Locale.ROOT).contains(query.toLowerCase(Locale.ROOT)))continue;
    TransferRecord record=local(id);boolean downloaded=false;try{downloaded=record!=null&&SharedMedia.available(this,record);}catch(Exception ignored){}
    JSONObject task=row.optJSONObject("latest_task");String taskState=task==null?"":task.optString("status"),localState=record==null?"":record.state;
@@ -88,6 +90,11 @@ public final class LocalLibraryActivity extends LocalizedActivity {
    if(pending){ProgressBar progress=new ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal);progress.setMax(100);progress.setProgress(record!=null&&record.size>0?(int)Math.min(100,record.offset()*100/record.size):(int)Math.round(task==null?0:task.optDouble("progress",0)*100));card.addView(progress,new LinearLayout.LayoutParams(-1,UiKit.dp(this,5)));UiKit.margin(progress,14,4);}
    label.setText(details);label.setTextIsSelectable(true);label.setVisibility(android.view.View.GONE);card.addView(label);UiKit.margin(label,12,4);
    menu.getMenu().add(Texts.text(this,"Detalles")).setOnMenuItemClickListener(item->{label.setVisibility(label.getVisibility()==android.view.View.GONE?android.view.View.VISIBLE:android.view.View.GONE);return true;});
+   try{JSONObject progress=PlaybackProgress.read(this,origin,token,id);String playback=PlaybackState.status(progress);
+    TextView playbackLabel=UiKit.text(this,PlaybackProgress.label(this,playback),13,UiKit.MUTED);card.addView(playbackLabel);
+    menu.getMenu().add(Texts.text(this,playback.equals("finished")?"Marcar como no visto":"Marcar como visto")).setOnMenuItemClickListener(item->{disk.execute(()->{try{PlaybackProgress.mark(this,origin,token,id,!playback.equals("finished"));runOnUiThread(()->{if(!isDestroyed())render(query,selected);});}catch(Exception saveFailed){runOnUiThread(()->status.setText(Texts.text(this,"No se pudo guardar el progreso. Revisa la sesión y el espacio libre.")));}});return true;});
+    if(downloaded)menu.getMenu().add(Texts.text(this,"Abrir externamente")).setOnMenuItemClickListener(item->{openExternal(id);return true;});
+   }catch(Exception unavailableProgress){}
    if(downloaded)addButton(Texts.text(LocalLibraryActivity.this,"Reproducir archivo local"),()->open(id));
    if(pending||row.optBoolean("server_available"))addButton(Texts.text(LocalLibraryActivity.this,"Poner siguiente en la cola"),()->action("/resources/"+id+"/priority",true));
    if(task!=null && Arrays.asList("queued","running","paused").contains(taskState))addButton(Texts.text(LocalLibraryActivity.this,"Cancelar descarga del servidor"),()->action("/tasks/"+task.optString("id")+"/cancel",false));
@@ -112,18 +119,16 @@ public final class LocalLibraryActivity extends LocalizedActivity {
   runOnUiThread(()->{if(!isDestroyed())status.setText(Texts.text(LocalLibraryActivity.this,"Acción guardada. Se enviará con cualquier conexión; consulta Acciones pendientes y errores."));});CommandDispatch.flush(this,origin);
  }catch(Exception e){runOnUiThread(()->{if(!isDestroyed())status.setText(Texts.text(LocalLibraryActivity.this,"No se pudo guardar la acción. Revisa la sesión y el espacio del teléfono."));});}});}
 
- private void open(String id){status.setText(Texts.text(LocalLibraryActivity.this,"Verificando archivo local…"));disk.execute(()->{
+ private void open(String id){PlaybackLaunch.open(this,origin,id,()->openExternal(id));}
+ private void openExternal(String id){status.setText(Texts.text(LocalLibraryActivity.this,"Verificando archivo local…"));disk.execute(()->{
   try{String openingToken=new SessionStore(this,origin).token();Uri uri=PrivateMediaContentProvider.create(this,origin,id);if(!openingToken.equals(new SessionStore(this,origin).token()))throw new SecurityException(Texts.text(LocalLibraryActivity.this,"La sesión cambió"));String mime=getContentResolver().getType(uri);
    runOnUiThread(()->{if(isDestroyed())return;Intent view=new Intent(Intent.ACTION_VIEW).setDataAndType(uri,mime).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);view.setClipData(ClipData.newRawUri("Tubego",uri));
-    List<ResolveInfo> players=getPackageManager().queryIntentActivities(view,0);players.sort(Comparator.comparing(p->!"org.videolan.vlc".equals(p.activityInfo.packageName)));
-    if(players.isEmpty()){new AlertDialog.Builder(this).setMessage(Texts.text(LocalLibraryActivity.this,"No hay un reproductor compatible. Instala VLC u otro reproductor de archivos locales.")).setPositiveButton(Texts.text(LocalLibraryActivity.this,"Aceptar"),null).show();return;}
-    String[] names=new String[players.size()];for(int i=0;i<names.length;i++)names[i]=players.get(i).loadLabel(getPackageManager()).toString();
-    new AlertDialog.Builder(this).setTitle(Texts.text(LocalLibraryActivity.this,"Reproducir archivo local")).setItems(names,(dialog,which)->{ResolveInfo player=players.get(which);Intent explicit=new Intent(view).setComponent(new ComponentName(player.activityInfo.packageName,player.activityInfo.name));
-     try{startActivity(explicit);disk.execute(()->{try{HistoryOpened.record(this,origin,id,openingToken);}catch(Exception ignored){}});status.setText(Texts.text(LocalLibraryActivity.this,"PiP y audio con pantalla bloqueada dependen del reproductor."));}catch(ActivityNotFoundException e){status.setText(Texts.text(LocalLibraryActivity.this,"El reproductor ya no está disponible."));}
-    }).show();
+    ExternalPlayers.choose(this,view,player->{Intent explicit=new Intent(view).setComponent(new ComponentName(player.activityInfo.packageName,player.activityInfo.name));
+     try{if(!openingToken.equals(new SessionStore(this,origin).token()))throw new SecurityException();startActivity(explicit);disk.execute(()->{try{HistoryOpened.record(this,origin,id,openingToken);}catch(Exception ignored){}});status.setText(Texts.text(LocalLibraryActivity.this,"PiP y audio con pantalla bloqueada dependen del reproductor."));}catch(Exception e){status.setText(Texts.text(LocalLibraryActivity.this,"El reproductor ya no está disponible."));}
+    });
    });
   }catch(Exception e){runOnUiThread(()->{if(!isDestroyed())status.setText(Texts.text(LocalLibraryActivity.this,"No se pudo abrir el archivo local: ")+Texts.error(this,e));});}
  });}
- @Override protected void onResume(){super.onResume();if(origin!=null&&token!=null)disk.execute(()->{if(!sessionCurrent())runOnUiThread(()->{if(!isDestroyed()){rows.clear();list.removeAllViews();status.setText(Texts.text(LocalLibraryActivity.this,"Sesión no disponible."));}});});}
+ @Override protected void onResume(){super.onResume();if(list!=null&&token!=null&&sessionCurrent())render(playbackQuery,playbackFilter);if(origin!=null&&token!=null)disk.execute(()->{if(!sessionCurrent())runOnUiThread(()->{if(!isDestroyed()){rows.clear();list.removeAllViews();status.setText(Texts.text(LocalLibraryActivity.this,"Sesión no disponible."));}});});}
  @Override protected void onDestroy(){disk.shutdownNow();super.onDestroy();}
 }

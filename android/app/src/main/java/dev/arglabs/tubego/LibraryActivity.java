@@ -526,6 +526,7 @@ public final class LibraryActivity extends DsActivity implements Host {
         }
         Ds.add(col, Ds.badge(this, ItemFlows.stateLabel(this, i), ItemFlows.tone(i)),
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0, 6, 0, 0);
+        if(!i.outbox) Ds.add(col,Ds.text(this,PlaybackProgress.label(this,i.playbackStatus)+(i.positionMillis>0?" · "+Item.formatDuration(i.positionMillis/1000.0):""),13,Ds.MUTED,500),4);
         int pct = i.state == ItemState.SAVING ? i.phonePercent() : i.state == ItemState.PREPARING ? i.serverPercent() : -1;
         if (pct >= 0) Ds.add(col, Ds.progress(this, pct, Ds.BRAND, Ds.TRACK, pct + " %"), LinearLayout.LayoutParams.MATCH_PARENT, Ds.dp(this, 6), 0, 8, 0, 0);
         Ds.addWeighted(card, col, 1, 12, 0);

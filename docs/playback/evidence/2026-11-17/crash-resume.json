@@ -1,0 +1,37 @@
+{
+  "before": {
+    "position_ms": 15901,
+    "duration_ms": 45000,
+    "position_at_ms": 1794939335559,
+    "position_id": "e402b49a-9e49-44f1-b3d7-c158b29d3b54",
+    "ranges": [
+      [
+        150,
+        15901
+      ]
+    ],
+    "ended": false,
+    "manual_seen": null,
+    "manual_at_ms": 0,
+    "manual_id": "00000000-0000-0000-0000-000000000000",
+    "dirty": "69a4e00d-ef65-4c8d-abbf-08e10ebb7c62"
+  },
+  "after": {
+    "position_ms": 5901,
+    "duration_ms": 45000,
+    "position_at_ms": 1794939338144,
+    "position_id": "6de7f89a-1594-4eaf-9aeb-ec5e088c78bd",
+    "ranges": [
+      [
+        150,
+        15901
+      ]
+    ],
+    "ended": false,
+    "manual_seen": null,
+    "manual_at_ms": 0,
+    "manual_id": "00000000-0000-0000-0000-000000000000",
+    "dirty": "42e6a39e-38a3-42c1-9356-29dd70cfb831"
+  },
+  "requested_ms": 5901
+}

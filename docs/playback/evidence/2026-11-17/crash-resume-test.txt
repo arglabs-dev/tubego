@@ -1,0 +1,6 @@
+
+dev.arglabs.tubego.PlaybackCrashInstrumentedTest:.
+Test results for InstrumentationTestRunner=.
+Time: 1.292
+
+OK (1 test)
